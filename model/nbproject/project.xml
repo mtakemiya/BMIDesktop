@@ -6,7 +6,9 @@
             <code-name-base>jp.atr.dni.bmi.desktop.model</code-name-base>
             <suite-component/>
             <module-dependencies/>
-            <public-packages/>
+            <public-packages>
+                <package>jp.atr.dni.bmi.desktop.model</package>
+            </public-packages>
         </data>
     </configuration>
 </project>
