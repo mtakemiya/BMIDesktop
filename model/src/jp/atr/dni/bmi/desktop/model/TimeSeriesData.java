@@ -2,10 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package jp.atr.dni.bmi.desktop.model;
-
-import java.util.ArrayList;
 
 /**
  *
@@ -13,52 +10,58 @@ import java.util.ArrayList;
  */
 public class TimeSeriesData {
 
-    private String label;
-    private double resolution;
-    private ArrayList<Double> values;
+   /**
+    * Label for this series of data
+    */
+   private String label;
+   /**
+    * Description of the data. This can include things like frequency or type of data.
+    */
+   private String description;
+   /**
+    * Time, value pairs of data.
+    */
+   private TimeVal[] values;
 
-    /**
-     * @return the label
-     */
-    public String getLabel() {
-        return label;
-    }
+   /**
+    * @return the label
+    */
+   public String getLabel() {
+      return label;
+   }
 
-    /**
-     * @param label the label to set
-     */
-    public void setLabel(String label) {
-        this.label = label;
-    }
+   /**
+    * @param label the label to set
+    */
+   public void setLabel(String label) {
+      this.label = label;
+   }
 
-    /**
-     * @return the resolution
-     */
-    public double getResolution() {
-        return resolution;
-    }
+   /**
+    * @return the values
+    */
+   public TimeVal[] getValues() {
+      return values;
+   }
 
-    /**
-     * @param resolution the resolution to set
-     */
-    public void setResolution(double resolution) {
-        this.resolution = resolution;
-    }
+   /**
+    * @param values the values to set
+    */
+   public void setValues(TimeVal[] values) {
+      this.values = values;
+   }
 
-    /**
-     * @return the values
-     */
-    public ArrayList<Double> getValues() {
-        return values;
-    }
+   /**
+    * @return the description
+    */
+   public String getDescription() {
+      return description;
+   }
 
-    /**
-     * @param values the values to set
-     */
-    public void setValues(ArrayList<Double> values) {
-        this.values = values;
-    }
-
-
-
+   /**
+    * @param description the description to set
+    */
+   public void setDescription(String description) {
+      this.description = description;
+   }
 }
