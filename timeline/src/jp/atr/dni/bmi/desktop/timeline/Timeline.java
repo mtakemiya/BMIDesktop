@@ -10,14 +10,13 @@
  */
 package jp.atr.dni.bmi.desktop.timeline;
 
-import javax.swing.JPanel;
 import org.openide.windows.TopComponent;
 
 /**
  *
  * @author makoto
  */
-public class Timeline extends JPanel {
+public class Timeline extends TopComponent {
 
    /** Creates new form Timeline */
    public Timeline() {
