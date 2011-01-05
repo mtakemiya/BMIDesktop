@@ -3,8 +3,8 @@
 <windowmanager version="2.1">
     <main-window>
   <joined-properties
-   x="148"
-   y="67"
+   x="122"
+   y="55"
    width="1728"
    height="948"
    relative-x="0.0"
@@ -40,5 +40,11 @@
   <bounds x="633" y="252" width="806" height="463" />
     </editor-area>
     <screen width="1920" height="1080"/>
+    <active-mode name="editor"/>
     <toolbar configuration="Standard" preferred-icon-size="24"/>
+    <tc-list>
+  <tc-id id="timelineTopComponent"/>
+  <tc-id id="properties"/>
+  <tc-id id="output"/>
+    </tc-list>
 </windowmanager>

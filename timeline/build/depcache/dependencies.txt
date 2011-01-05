@@ -1,10 +1,10 @@
 ||:jp.atr.dni.bmi.desktop.timeline.Timeline
-javax.swing.JPanel
 javax.swing.GroupLayout$SequentialGroup
 org.openide.util.NbBundle
 javax.swing.GroupLayout
 javax.swing.GroupLayout$ParallelGroup
 javax.swing.GroupLayout$Alignment
 jp.atr.dni.bmi.desktop.timeline.Timeline
+org.openide.windows.TopComponent
 javax.swing.JLabel
 javax.swing.GroupLayout$Group
