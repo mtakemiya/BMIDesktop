@@ -4,7 +4,15 @@
  */
 package jp.atr.dni.bmi.desktop.timeline;
 
+import com.jogamp.opengl.util.Animator;
 import java.util.logging.Logger;
+import javax.media.opengl.GL;
+import javax.media.opengl.GL2;
+import javax.media.opengl.GLAutoDrawable;
+import javax.media.opengl.GLCapabilities;
+import javax.media.opengl.GLEventListener;
+import javax.media.opengl.GLProfile;
+import javax.media.opengl.awt.GLCanvas;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
@@ -16,7 +24,15 @@ import org.netbeans.api.settings.ConvertAsProperties;
  */
 @ConvertAsProperties(dtd = "-//jp.atr.dni.bmi.desktop.timeline//timeline//EN",
 autostore = false)
-public final class TimelineTopComponent extends TopComponent {
+public final class TimelineTopComponent extends TopComponent implements GLEventListener {
+
+   private double theta = 0;
+
+   private double s = 0;
+
+   private double c = 0;
+
+   private GLCanvas glCanvas;
 
    private static TimelineTopComponent instance;
    /** path to the icon used by the component and its open action */
@@ -24,7 +40,8 @@ public final class TimelineTopComponent extends TopComponent {
    private static final String PREFERRED_ID = "timelineTopComponent";
 
    public TimelineTopComponent() {
-      initComponents();
+//      initComponents();
+      initGL();
       setName(NbBundle.getMessage(TimelineTopComponent.class, "CTL_timelineTopComponent"));
       setToolTipText(NbBundle.getMessage(TimelineTopComponent.class, "HINT_timelineTopComponent"));
       setIcon(ImageUtilities.loadImage(ICON_PATH, true));
@@ -39,19 +56,95 @@ public final class TimelineTopComponent extends TopComponent {
    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
    private void initComponents() {
 
+      jLabel1 = new javax.swing.JLabel();
+      jPanel1 = new javax.swing.JPanel();
+
+      org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(TimelineTopComponent.class, "TimelineTopComponent.jLabel1.text")); // NOI18N
+
+      javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+      jPanel1.setLayout(jPanel1Layout);
+      jPanel1Layout.setHorizontalGroup(
+         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+         .addGap(0, 310, Short.MAX_VALUE)
+      );
+      jPanel1Layout.setVerticalGroup(
+         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+         .addGap(0, 300, Short.MAX_VALUE)
+      );
+
       javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
       this.setLayout(layout);
       layout.setHorizontalGroup(
          layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-         .addGap(0, 400, Short.MAX_VALUE)
+         .addGroup(layout.createSequentialGroup()
+            .addComponent(jLabel1)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
       );
       layout.setVerticalGroup(
          layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-         .addGap(0, 300, Short.MAX_VALUE)
+         .addGroup(layout.createSequentialGroup()
+            .addGap(43, 43, 43)
+            .addComponent(jLabel1)
+            .addContainerGap(241, Short.MAX_VALUE))
+         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
       );
    }// </editor-fold>//GEN-END:initComponents
 
+   /**
+    * code to initialize the openGL timeline
+    */
+   private void initGL() {
+      GLProfile.initSingleton();
+      GLProfile glp = GLProfile.getDefault();
+      GLCapabilities caps = new GLCapabilities(glp);
+      glCanvas = new GLCanvas(caps);
+
+      glCanvas.addGLEventListener(this);
+
+      Animator animator = new Animator(glCanvas);
+      animator.add(glCanvas);
+      animator.start();
+
+      jLabel1 = new javax.swing.JLabel();
+      jPanel1 = new javax.swing.JPanel();
+
+      org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(TimelineTopComponent.class, "TimelineTopComponent.jLabel1.text")); // NOI18N
+
+      javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+      jPanel1.setLayout(jPanel1Layout);
+      jPanel1Layout.setHorizontalGroup(
+         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+         .addGap(0, 310, Short.MAX_VALUE)
+      );
+      jPanel1Layout.setVerticalGroup(
+         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+         .addGap(0, 300, Short.MAX_VALUE)
+      );
+
+      javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+      this.setLayout(layout);
+      layout.setHorizontalGroup(
+         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+         .addGroup(layout.createSequentialGroup()
+            .addComponent(glCanvas)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+      );
+      layout.setVerticalGroup(
+         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+         .addGroup(layout.createSequentialGroup()
+            .addGap(43, 43, 43)
+            .addComponent(glCanvas)
+            .addContainerGap(241, Short.MAX_VALUE))
+         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+      );
+
+   }
+
    // Variables declaration - do not modify//GEN-BEGIN:variables
+   private javax.swing.JLabel jLabel1;
+   private javax.swing.JPanel jPanel1;
    // End of variables declaration//GEN-END:variables
    /**
     * Gets default instance. Do not use directly: reserved for *.settings files only,
@@ -122,5 +215,49 @@ public final class TimelineTopComponent extends TopComponent {
    @Override
    protected String preferredID() {
       return PREFERRED_ID;
+   }
+
+   @Override
+   public void display(GLAutoDrawable drawable) {
+      update();
+      render(drawable);
+   }
+
+   @Override
+   public void dispose(GLAutoDrawable arg0) {
+      // TODO Auto-generated method stub
+
+   }
+
+   @Override
+   public void init(GLAutoDrawable drawable) {
+      drawable.getGL().setSwapInterval(1);
+   }
+
+   @Override
+   public void reshape(GLAutoDrawable arg0, int arg1, int arg2, int arg3, int arg4) {
+      // TODO Auto-generated method stub
+
+   }
+
+   private void update() {
+      theta += 0.01;
+      s = Math.sin(theta);
+      c = Math.cos(theta);
+   }
+
+   private void render(GLAutoDrawable drawable) {
+      GL2 gl = drawable.getGL().getGL2();
+
+      gl.glClear(GL.GL_COLOR_BUFFER_BIT);
+      // draw a triangle filling the window
+      gl.glBegin(GL.GL_TRIANGLES);
+      gl.glColor3f(1, 0, 0);
+      gl.glVertex2d(-c, -c);
+      gl.glColor3f(0, 1, 0);
+      gl.glVertex2d(0, c);
+      gl.glColor3f(0, 0, 1);
+      gl.glVertex2d(s, -s);
+      gl.glEnd();
    }
 }

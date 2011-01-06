@@ -4,7 +4,7 @@
     <folder name="Actions">
         <folder name="Window">
             <file name="jp-atr-dni-bmi-desktop-timeline-timelineAction.instance">
-                <attr name="component" methodvalue="jp.atr.dni.bmi.desktop.timeline.timelineTopComponent.findInstance"/>
+                <attr name="component" methodvalue="jp.atr.dni.bmi.desktop.timeline.TimelineTopComponent.findInstance"/>
                 <attr name="displayName" bundlevalue="jp.atr.dni.bmi.desktop.timeline.Bundle#CTL_timelineAction"/>
                 <attr name="iconBase" stringvalue="jp/atr/dni/bmi/desktop/timeline/graphPrev.png"/>
                 <attr name="instanceCreate" methodvalue="org.openide.windows.TopComponent.openAction"/>
