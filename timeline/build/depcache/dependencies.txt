@@ -35,7 +35,6 @@ javax.swing.LayoutStyle$ComponentPlacement
 javax.swing.JLabel
 jp.atr.dni.bmi.desktop.timeline.TimelineTopComponent
 javax.media.opengl.GLProfile
-javax.swing.JPanel
 javax.media.opengl.GLAutoDrawable
 java.util.Properties
 javax.swing.GroupLayout$SequentialGroup
