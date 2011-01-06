@@ -247,13 +247,18 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
       gl.glClear(GL.GL_COLOR_BUFFER_BIT);
       // draw a triangle filling the window
-      gl.glBegin(GL.GL_TRIANGLES);
       gl.glColor3f(1, 0, 0);
-      gl.glVertex2d(-c, -c);
-      gl.glColor3f(0, 1, 0);
-      gl.glVertex2d(0, c);
-      gl.glColor3f(0, 0, 1);
-      gl.glVertex2d(s, -s);
+      gl.glBegin(GL.GL_LINES); /* 4 lines */
+      int max = 333;
+      for (int i = 0; i < max; i++) {
+         double x1 = -1;
+         double x2 = i + 1 / max;
+         double y1 = Math.random();
+         double y2 = -Math.random();
+
+         gl.glVertex3d(x1, y1, 0.0);
+         gl.glVertex3d(x2, y2, 0.0);
+      }
       gl.glEnd();
    }
 }

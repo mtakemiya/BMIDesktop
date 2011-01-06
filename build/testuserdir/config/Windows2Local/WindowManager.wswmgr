@@ -3,10 +3,10 @@
 <windowmanager version="2.1">
     <main-window>
   <joined-properties
-   x="41"
-   y="92"
-   width="1124"
-   height="467"
+   x="780"
+   y="29"
+   width="846"
+   height="989"
    relative-x="0.0"
    relative-y="0.0"
    relative-width="0.0"
@@ -39,7 +39,7 @@
   <bounds x="0" y="0" width="0" height="0" />
     </editor-area>
     <screen width="1920" height="1080"/>
-    <active-mode name="anonymousMode_2"/>
+    <active-mode name="editor"/>
     <toolbar configuration="Standard" preferred-icon-size="24"/>
     <tc-list>
   <tc-id id="timelineTopComponent"/>

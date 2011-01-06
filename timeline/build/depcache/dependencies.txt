@@ -44,7 +44,7 @@ javax.swing.GroupLayout$Alignment
 javax.swing.GroupLayout
 javax.media.opengl.GLCapabilities
 java.lang.Math
-javax.media.opengl.GLEventListener
 javax.media.opengl.GL2
+javax.media.opengl.GLEventListener
 javax.swing.GroupLayout$Group
 org.openide.util.ImageUtilities
