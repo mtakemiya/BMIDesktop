@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 /Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform=1294213444000
 /Users/makoto/Documents/nWorkspace/BMIDesktop/build/cluster=1294732840000
 /Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform=1294213444000
 build/testuserdir=1294732840000
+=======
+C:\Program Files\NetBeans 6.9.1\platform=1294792859698
+C:\Users\kharada\00_CSK_harada\57_Git_Source\BMIDesktop\build\cluster=1294800375308
+C:\Program Files\NetBeans 6.9.1\platform=1294792859698
+C:\Users\kharada\00_CSK_harada\57_Git_Source\BMIDesktop\build\testuserdir=1294800375308
+>>>>>>> 7378543b1f5069f21ad0d9586b83807c273ea01f
 crc=7
