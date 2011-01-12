@@ -18,11 +18,6 @@
                         <folder name="bmi">
                             <folder name="desktop">
                                 <folder name="timeline">
-                                    <file name="timelineTopComponent">
-                                    <!--jp.atr.dni.bmi.desktop.timeline.timelineTopComponent-->
-                                    <attr
-                                    name="settings.providerPath" stringvalue="xml/lookups//jp_atr_dni_bmi_desktop_timeline/timeline.instance"/>
-                                    </file>
                                     <file name="TimelineTopComponent">
                                     <!--jp.atr.dni.bmi.desktop.timeline.TimelineTopComponent-->
                                     <attr

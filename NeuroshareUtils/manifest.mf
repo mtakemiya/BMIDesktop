@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+OpenIDE-Module: jp.atr.dni.bmi.desktop.neuroshareutils
+OpenIDE-Module-Layer: jp/atr/dni/bmi/desktop/neuroshareutils/layer.xml
+OpenIDE-Module-Localizing-Bundle: jp/atr/dni/bmi/desktop/neuroshareutils/Bundle.properties
+OpenIDE-Module-Specification-Version: 1.0
+

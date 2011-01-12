@@ -10,7 +10,8 @@
     <path orientation="horizontal" number="80" weight="0.3"/>
     <path orientation="vertical" number="80" weight="0.5"/>
   </constraints>
-  <bounds x="1440" y="590" width="288" height="337" />
+  <bounds x="1260" y="571" width="252" height="326" />
   <frame state="0"/>
+    <active-tc  id="properties" />
     <empty-behavior permanent="true"/>
 </mode>
