@@ -40,10 +40,10 @@
   <bounds x="554" y="244" width="705" height="448" />
     </editor-area>
     <screen width="1680" height="1050"/>
-    <active-mode name="editor"/>
+    <active-mode name="properties"/>
     <toolbar configuration="Standard" preferred-icon-size="24"/>
     <tc-list>
-  <tc-id id="ExplorerEditor"/>
   <tc-id id="properties"/>
+  <tc-id id="ExplorerEditor"/>
     </tc-list>
 </windowmanager>

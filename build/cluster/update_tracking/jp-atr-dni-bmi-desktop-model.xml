@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module codename="jp.atr.dni.bmi.desktop.model">
-    <module_version install_time="1294800370255" last="true" origin="installer" specification_version="1.0">
+    <module_version install_time="1294802311936" last="true" origin="installer" specification_version="1.0">
         <file crc="4017697256" name="config/Modules/jp-atr-dni-bmi-desktop-model.xml"/>
-        <file crc="3179456880" name="modules/jp-atr-dni-bmi-desktop-model.jar"/>
+        <file crc="1892574712" name="modules/jp-atr-dni-bmi-desktop-model.jar"/>
     </module_version>
 </module>
