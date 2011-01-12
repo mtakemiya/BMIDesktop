@@ -11,6 +11,12 @@ jp.atr.dni.bmi.desktop.timeline.timelineTopComponent
 org.openide.windows.TopComponent
 java.util.Properties
 javax.swing.GroupLayout$Group
+||:jp.atr.dni.bmi.desktop.timeline.TimelineTopComponent$4
+java.awt.event.ComponentAdapter
+jp.atr.dni.bmi.desktop.timeline.TimelineTopComponent$4
+java.awt.Dimension
+jp.atr.dni.bmi.desktop.timeline.TimelineTopComponent
+javax.media.opengl.awt.GLCanvas
 ||:jp.atr.dni.bmi.desktop.timeline.Timeline
 javax.swing.GroupLayout$SequentialGroup
 org.openide.util.NbBundle
@@ -51,6 +57,7 @@ org.openide.windows.TopComponent
 org.openide.awt.Mnemonics
 javax.swing.GroupLayout$ParallelGroup
 java.awt.geom.Point2D
+jp.atr.dni.bmi.desktop.timeline.TimelineTopComponent$4
 org.openide.util.NbBundle
 javax.swing.LayoutStyle$ComponentPlacement
 jp.atr.dni.bmi.desktop.timeline.TimelineTopComponent$3

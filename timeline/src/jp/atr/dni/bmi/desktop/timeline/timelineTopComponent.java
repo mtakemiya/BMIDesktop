@@ -5,7 +5,11 @@
 package jp.atr.dni.bmi.desktop.timeline;
 
 import com.jogamp.opengl.util.Animator;
+import java.awt.Canvas;
+import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -38,7 +42,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 	private double TRANSLATE_AMOUNT = 10.0;
 
 	/** the amout to scale the canvas */
-	private double SCALE_AMOUNT = 1.001;
+	private double SCALE_AMOUNT = 1.0001;
    
    private double theta = 0;
 
@@ -78,6 +82,9 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
    /** the transform for screen to virtual coordinates */
    private AffineTransform inverseTransform = new AffineTransform();
 
+   /** the current size of the panel */
+	private Dimension size;
+   
    private GLCanvas glCanvas;
 
    private static TimelineTopComponent instance;
@@ -213,7 +220,6 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
                previousPoint = currentPoint;
             }
 
-
             screenPreviousPoint = me.getPoint();
             previousPoint = getVirtualCoordinates(me.getX(), me.getY());
          }
@@ -265,22 +271,22 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
             .addComponent(jLabel3))
       );
 
-      //TODO:add a resize listener
-//      this.addComponentListener(new ComponentAdapter() {
-//			public void componentResized(ComponentEvent arg0) {
-//
-//				// resize about the center of the scene
-//				if (size != null) {
-//					Dimension newSize = Canvas.this.getSize();
-//					translationX += (newSize.width - size.width)/2.0;
-//					translationY += (newSize.height - size.height)/2.0;
-//				}
-//
-//				// update the view transforms when the canvas is resized
-//				buildTransforms();
-//				size = Canvas.this.getSize();
-//			}
-//		});
+      // add a resize listener
+		glCanvas.addComponentListener(new ComponentAdapter() {
+			public void componentResized(ComponentEvent arg0) {
+
+				// resize about the center of the scene
+				if (size != null) {
+					Dimension newSize = glCanvas.getSize();
+					translationX += (newSize.width - size.width)/2.0;
+					translationY += (newSize.height - size.height)/2.0;
+				}
+
+				// update the view transforms when the canvas is resized
+				buildTransforms();
+				size = glCanvas.getSize();
+			}
+		});		
    }
 
    // Variables declaration - do not modify//GEN-BEGIN:variables
