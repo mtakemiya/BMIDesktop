@@ -1,5 +1,5 @@
 -------------------------------------------------------------------------------
->Log Session: Friday, January 14, 2011 10:11:01 AM JST
+>Log Session: Friday, January 14, 2011 11:19:21 AM JST
 >System Info: 
   Product Version         = BMIDesktop 201011082200
   Operating System        = Windows 7 version 6.1 running on amd64
@@ -31,12 +31,12 @@ INFO [org.netbeans.core.startup.NbEvents]: モジュールを有効化しています:
 	org.netbeans.swing.outline [1.9.1 201007282301]
 	org.openide.explorer [6.28.2 201007282301]
 	org.openide.filesystems [7.38.2 201007282301]
+	org.netbeans.spi.quicksearch [1.6.1 201007282301]
 	org.netbeans.modules.editor.mimelookup/1 [1.16.1 201007282301]
 	org.openide.text [6.30.1 201007282301]
 	org.openide.actions [6.16.1 201007282301]
 	org.netbeans.bootstrap/1 [2.33.4 201012081820]
 	org.netbeans.core.startup/1 [1.25.4 201011082200]
-	org.netbeans.spi.quicksearch [1.6.1 201007282301]
 	org.netbeans.modules.queries/1 [1.19.1 201007282301]
 	org.openide.loaders [7.16.1 201007282301]
 	org.netbeans.modules.keyring [1.1.2 201007282301]
@@ -44,28 +44,30 @@ INFO [org.netbeans.core.startup.NbEvents]: モジュールを有効化しています:
 	org.netbeans.swing.plaf [1.16.1 201007282301]
 	org.netbeans.core/2 [3.20.3 201012081820]
 	org.netbeans.modules.options.api/1 [1.18.1 201007282301]
+	org.netbeans.modules.options.keymap [1.10.1 201007282301]
+	org.netbeans.modules.editor.mimelookup.impl/1 [1.9.1 201007282301]
 	jp.atr.dni.bmi.desktop.neuroshareutils [1.0 110114]
 	jp.atr.dni.bmi.desktop.model [1.0 110114]
 	jp.atr.dni.bmi.desktop.explorereditor [1.0 110114]
-	org.netbeans.libs.jna/1 [1.7.2 201007282301]
-	org.netbeans.modules.keyring.impl [1.0.1 201007282301]
 	org.netbeans.libs.osgi [1.1.1 201007282301]
 	org.netbeans.core.netigso [1.4.5 201011082200]
-	org.netbeans.core.output2/1 [1.18.2 201007282301]
-	org.netbeans.core.ui/1 [1.22.1 201007282301]
-	org.netbeans.modules.masterfs/2 [2.25.2 201007282301]
+	org.netbeans.libs.jna/1 [1.7.2 201007282301]
 	org.netbeans.modules.settings/1 [1.26.1 201007282301]
 	org.netbeans.core.windows/2 [2.21.1 201007282301]
-	jp.atr.dni.bmi.desktop.timeline [1.0 110114]
-	org.netbeans.libs.felix [1.1.1 201007282301]
-	org.netbeans.modules.print [7.5.1 201007282301]
-	jp.atr.dni.bmi.desktop.timeseriesdata.provider [1.0 110114]
 	org.netbeans.core.nativeaccess/1 [1.7.1 201007282301]
-	org.netbeans.core.io.ui/1 [1.8.1 201007282301]
-	org.netbeans.modules.options.keymap [1.10.1 201007282301]
-	org.netbeans.modules.editor.mimelookup.impl/1 [1.9.1 201007282301]
+	org.netbeans.core.ui/1 [1.22.1 201007282301]
+	jp.atr.dni.bmi.desktop.timeline [1.0 110114]
 	org.netbeans.modules.progress.ui [1.12.1 201007282301]
-INFO [org.netbeans.core.windows.persistence]: [PersistenceManager.getTopComponentForID] Problem when deserializing TopComponent for tcID:'timelineTopComponent'. Reason: jp.atr.dni.bmi.desktop.timeline.timelineTopComponent starting from SystemClassLoader[46 modules] with possible defining loaders [ModuleCL@4402a6ff[jp.atr.dni.bmi.desktop.timeline]] and declared parents [org.netbeans.MainImpl$BootClassLoader@13fcf0ce, ModuleCL@7df1bd98[org.netbeans.core.io.ui], ModuleCL@7461f533[org.netbeans.core.windows], ModuleCL@32dfcb47[org.netbeans.swing.outline], ModuleCL@163b4b1e[org.netbeans.core.netigso], ModuleCL@57d840cd[org.openide.text], ModuleCL@495b0e2c[org.openide.io], ModuleCL@6bd9e2c7[jp.atr.dni.bmi.desktop.neuroshareutils], ModuleCL@78dc9766[org.netbeans.core.nativeaccess], ModuleCL@62c8769b[org.openide.windows], ModuleCL@3fbfbfb8[org.netbeans.libs.felix], ModuleCL@141dddba[org.netbeans.modules.options.keymap], ModuleCL@172fb0af[org.netbeans.api.progress], ModuleCL@64bef361[org.netbeans.modules.editor.mimelookup], ModuleCL@2a62610b[org.netbeans.libs.jna], ModuleCL@20d9896e[org.openide.awt], ModuleCL@7449cf9f[org.netbeans.modules.queries], ModuleCL@6bdc64a5[org.netbeans.core.ui], ModuleCL@760951a0[jp.atr.dni.bmi.desktop.model], ModuleCL@30c06258[org.openide.dialogs], ModuleCL@20a29c6e[org.netbeans.libs.osgi], ModuleCL@6e4bb3c[org.openide.nodes], ModuleCL@1f0dc656[org.netbeans.swing.tabcontrol], ModuleCL@259a8416[jp.atr.dni.bmi.desktop.timeseriesdata.provider], ModuleCL@257b40fe[org.netbeans.modules.keyring.impl], ModuleCL@24e33e18[org.netbeans.modules.masterfs], ModuleCL@c970c0e[org.openide.loaders], ModuleCL@3496212a[org.netbeans.swing.plaf], ModuleCL@34e93999[org.netbeans.modules.progress.ui], ModuleCL@1b0c6cfc[org.netbeans.modules.print], ModuleCL@6d7e4dee[org.netbeans.spi.quicksearch], ModuleCL@fa7f9dc[org.netbeans.modules.keyring], ModuleCL@31f9338f[org.netbeans.core.output2], ModuleCL@715f1f9c[org.netbeans.modules.settings], ModuleCL@4402a6ff[jp.atr.dni.bmi.desktop.timeline], ModuleCL@68acfc3[jp.atr.dni.bmi.desktop.explorereditor], ModuleCL@6d732ed2[org.netbeans.modules.editor.mimelookup.impl], ModuleCL@580754fc[org.netbeans.modules.options.api], ModuleCL@e4c6320[org.netbeans.core], ModuleCL@288b567c[org.openide.actions], ModuleCL@1278dc4c[org.openide.explorer]]
+	jp.atr.dni.bmi.desktop.timeseriesdata.provider [1.0 110114]
+	org.netbeans.libs.felix [1.1.1 201007282301]
+	org.netbeans.modules.masterfs/2 [2.25.2 201007282301]
+	org.netbeans.modules.print [7.5.1 201007282301]
+	org.netbeans.core.output2/1 [1.18.2 201007282301]
+	org.netbeans.modules.keyring.impl [1.0.1 201007282301]
+	org.netbeans.core.io.ui/1 [1.8.1 201007282301]
+WARNING [null]: Note - jp.atr.dni.bmi.desktop.explorereditor.ExplorerEditor ought to override getPersistenceType() rather than using the client property or accepting the default.
+WARNING [null]: jp.atr.dni.bmi.desktop.explorereditor.ExplorerEditor should override preferredID()
+INFO [org.netbeans.core.windows.persistence]: [PersistenceManager.getTopComponentForID] Problem when deserializing TopComponent for tcID:'timelineTopComponent'. Reason: jp.atr.dni.bmi.desktop.timeline.timelineTopComponent starting from SystemClassLoader[46 modules] with possible defining loaders [ModuleCL@327124af[jp.atr.dni.bmi.desktop.timeline]] and declared parents [ModuleCL@5e6458a6[org.netbeans.modules.options.api], ModuleCL@63779885[org.netbeans.core.io.ui], ModuleCL@ec0a9f9[org.netbeans.core.netigso], ModuleCL@525c7734[org.openide.io], ModuleCL@7cc792d4[org.netbeans.swing.outline], ModuleCL@64df83e5[org.netbeans.swing.plaf], ModuleCL@7c33788d[org.openide.awt], ModuleCL@40bc5596[org.netbeans.modules.queries], ModuleCL@307b4703[org.netbeans.core.output2], ModuleCL@2b3d9460[org.netbeans.spi.quicksearch], ModuleCL@327124af[jp.atr.dni.bmi.desktop.timeline], ModuleCL@23000bcf[org.netbeans.core], ModuleCL@2719f1f[org.netbeans.modules.editor.mimelookup.impl], ModuleCL@55f157b[jp.atr.dni.bmi.desktop.model], ModuleCL@13cc0a7f[org.netbeans.libs.osgi], ModuleCL@2fa6a1a7[org.openide.explorer], ModuleCL@1164b9b6[org.netbeans.libs.jna], ModuleCL@6bb54362[org.netbeans.modules.keyring], ModuleCL@2a62610b[jp.atr.dni.bmi.desktop.neuroshareutils], ModuleCL@ae0e515[org.netbeans.swing.tabcontrol], ModuleCL@4743bf3d[org.netbeans.api.progress], ModuleCL@44ea5461[org.openide.actions], org.netbeans.MainImpl$BootClassLoader@635b9e68, ModuleCL@710ca208[org.netbeans.core.nativeaccess], ModuleCL@45c3e9ba[org.netbeans.modules.progress.ui], ModuleCL@37b994de[org.netbeans.libs.felix], ModuleCL@6328edf2[org.netbeans.modules.print], ModuleCL@375e293a[org.openide.dialogs], ModuleCL@1b0c6cfc[jp.atr.dni.bmi.desktop.timeseriesdata.provider], ModuleCL@3c2d7440[org.openide.text], ModuleCL@382f8116[org.netbeans.modules.editor.mimelookup], ModuleCL@79b66b06[org.netbeans.core.ui], ModuleCL@7966340c[org.netbeans.modules.settings], ModuleCL@549b6220[org.netbeans.modules.options.keymap], ModuleCL@4c272961[org.openide.windows], ModuleCL@41217e67[org.netbeans.modules.masterfs], ModuleCL@715f1f9c[org.netbeans.core.windows], ModuleCL@14cffc79[org.openide.nodes], ModuleCL@73fc3c84[org.netbeans.modules.keyring.impl], ModuleCL@3ee7f6eb[jp.atr.dni.bmi.desktop.explorereditor], ModuleCL@8497904[org.openide.loaders]]
 java.lang.ClassNotFoundException: jp.atr.dni.bmi.desktop.timeline.timelineTopComponent
 	at java.net.URLClassLoader$1.run(URLClassLoader.java:202)
 	at java.security.AccessController.doPrivileged(Native Method)
@@ -74,7 +76,7 @@ java.lang.ClassNotFoundException: jp.atr.dni.bmi.desktop.timeline.timelineTopCom
 	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:301)
 	at java.lang.ClassLoader.loadClass(ClassLoader.java:248)
 	at org.netbeans.ProxyClassLoader.loadClass(ProxyClassLoader.java:262)
-Caused: java.lang.ClassNotFoundException: jp.atr.dni.bmi.desktop.timeline.timelineTopComponent starting from SystemClassLoader[46 modules] with possible defining loaders [ModuleCL@4402a6ff[jp.atr.dni.bmi.desktop.timeline]] and declared parents [org.netbeans.MainImpl$BootClassLoader@13fcf0ce, ModuleCL@7df1bd98[org.netbeans.core.io.ui], ModuleCL@7461f533[org.netbeans.core.windows], ModuleCL@32dfcb47[org.netbeans.swing.outline], ModuleCL@163b4b1e[org.netbeans.core.netigso], ModuleCL@57d840cd[org.openide.text], ModuleCL@495b0e2c[org.openide.io], ModuleCL@6bd9e2c7[jp.atr.dni.bmi.desktop.neuroshareutils], ModuleCL@78dc9766[org.netbeans.core.nativeaccess], ModuleCL@62c8769b[org.openide.windows], ModuleCL@3fbfbfb8[org.netbeans.libs.felix], ModuleCL@141dddba[org.netbeans.modules.options.keymap], ModuleCL@172fb0af[org.netbeans.api.progress], ModuleCL@64bef361[org.netbeans.modules.editor.mimelookup], ModuleCL@2a62610b[org.netbeans.libs.jna], ModuleCL@20d9896e[org.openide.awt], ModuleCL@7449cf9f[org.netbeans.modules.queries], ModuleCL@6bdc64a5[org.netbeans.core.ui], ModuleCL@760951a0[jp.atr.dni.bmi.desktop.model], ModuleCL@30c06258[org.openide.dialogs], ModuleCL@20a29c6e[org.netbeans.libs.osgi], ModuleCL@6e4bb3c[org.openide.nodes], ModuleCL@1f0dc656[org.netbeans.swing.tabcontrol], ModuleCL@259a8416[jp.atr.dni.bmi.desktop.timeseriesdata.provider], ModuleCL@257b40fe[org.netbeans.modules.keyring.impl], ModuleCL@24e33e18[org.netbeans.modules.masterfs], ModuleCL@c970c0e[org.openide.loaders], ModuleCL@3496212a[org.netbeans.swing.plaf], ModuleCL@34e93999[org.netbeans.modules.progress.ui], ModuleCL@1b0c6cfc[org.netbeans.modules.print], ModuleCL@6d7e4dee[org.netbeans.spi.quicksearch], ModuleCL@fa7f9dc[org.netbeans.modules.keyring], ModuleCL@31f9338f[org.netbeans.core.output2], ModuleCL@715f1f9c[org.netbeans.modules.settings], ModuleCL@4402a6ff[jp.atr.dni.bmi.desktop.timeline], ModuleCL@68acfc3[jp.atr.dni.bmi.desktop.explorereditor], ModuleCL@6d732ed2[org.netbeans.modules.editor.mimelookup.impl], ModuleCL@580754fc[org.netbeans.modules.options.api], ModuleCL@e4c6320[org.netbeans.core], ModuleCL@288b567c[org.openide.actions], ModuleCL@1278dc4c[org.openide.explorer]]
+Caused: java.lang.ClassNotFoundException: jp.atr.dni.bmi.desktop.timeline.timelineTopComponent starting from SystemClassLoader[46 modules] with possible defining loaders [ModuleCL@327124af[jp.atr.dni.bmi.desktop.timeline]] and declared parents [ModuleCL@5e6458a6[org.netbeans.modules.options.api], ModuleCL@63779885[org.netbeans.core.io.ui], ModuleCL@ec0a9f9[org.netbeans.core.netigso], ModuleCL@525c7734[org.openide.io], ModuleCL@7cc792d4[org.netbeans.swing.outline], ModuleCL@64df83e5[org.netbeans.swing.plaf], ModuleCL@7c33788d[org.openide.awt], ModuleCL@40bc5596[org.netbeans.modules.queries], ModuleCL@307b4703[org.netbeans.core.output2], ModuleCL@2b3d9460[org.netbeans.spi.quicksearch], ModuleCL@327124af[jp.atr.dni.bmi.desktop.timeline], ModuleCL@23000bcf[org.netbeans.core], ModuleCL@2719f1f[org.netbeans.modules.editor.mimelookup.impl], ModuleCL@55f157b[jp.atr.dni.bmi.desktop.model], ModuleCL@13cc0a7f[org.netbeans.libs.osgi], ModuleCL@2fa6a1a7[org.openide.explorer], ModuleCL@1164b9b6[org.netbeans.libs.jna], ModuleCL@6bb54362[org.netbeans.modules.keyring], ModuleCL@2a62610b[jp.atr.dni.bmi.desktop.neuroshareutils], ModuleCL@ae0e515[org.netbeans.swing.tabcontrol], ModuleCL@4743bf3d[org.netbeans.api.progress], ModuleCL@44ea5461[org.openide.actions], org.netbeans.MainImpl$BootClassLoader@635b9e68, ModuleCL@710ca208[org.netbeans.core.nativeaccess], ModuleCL@45c3e9ba[org.netbeans.modules.progress.ui], ModuleCL@37b994de[org.netbeans.libs.felix], ModuleCL@6328edf2[org.netbeans.modules.print], ModuleCL@375e293a[org.openide.dialogs], ModuleCL@1b0c6cfc[jp.atr.dni.bmi.desktop.timeseriesdata.provider], ModuleCL@3c2d7440[org.openide.text], ModuleCL@382f8116[org.netbeans.modules.editor.mimelookup], ModuleCL@79b66b06[org.netbeans.core.ui], ModuleCL@7966340c[org.netbeans.modules.settings], ModuleCL@549b6220[org.netbeans.modules.options.keymap], ModuleCL@4c272961[org.openide.windows], ModuleCL@41217e67[org.netbeans.modules.masterfs], ModuleCL@715f1f9c[org.netbeans.core.windows], ModuleCL@14cffc79[org.openide.nodes], ModuleCL@73fc3c84[org.netbeans.modules.keyring.impl], ModuleCL@3ee7f6eb[jp.atr.dni.bmi.desktop.explorereditor], ModuleCL@8497904[org.openide.loaders]]
 	at org.netbeans.ProxyClassLoader.loadClass(ProxyClassLoader.java:264)
 	at org.netbeans.ModuleManager$SystemClassLoader.loadClass(ModuleManager.java:530)
 	at java.lang.ClassLoader.loadClass(ClassLoader.java:248)
@@ -85,7 +87,8 @@ Caused: java.lang.ClassNotFoundException: jp.atr.dni.bmi.desktop.timeline.timeli
 	at org.netbeans.core.windows.persistence.PersistenceManager.getTopComponentPersistentForID(PersistenceManager.java:533)
 	at org.netbeans.core.windows.persistence.PersistenceManager.getTopComponentForID(PersistenceManager.java:643)
 	at org.netbeans.core.windows.PersistenceHandler.getTopComponentForID(PersistenceHandler.java:460)
-	at org.netbeans.core.windows.PersistenceHandler.load(PersistenceHandler.java:163)
+	at org.netbeans.core.windows.PersistenceHandler.initModeFromConfig(PersistenceHandler.java:421)
+	at org.netbeans.core.windows.PersistenceHandler.load(PersistenceHandler.java:206)
 	at org.netbeans.core.windows.WindowSystemImpl.load(WindowSystemImpl.java:73)
 	at org.netbeans.core.GuiRunLevel$2.run(GuiRunLevel.java:181)
 	at java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:209)
@@ -97,7 +100,6 @@ Caused: java.lang.ClassNotFoundException: jp.atr.dni.bmi.desktop.timeline.timeli
 	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:169)
 	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:161)
 [catch] at java.awt.EventDispatchThread.run(EventDispatchThread.java:122)
-WARNING [org.openide.filesystems.Ordering]: Not all children in Menu/File/ marked with the position attribute: [ExplorerEditorAction.shadow], but some are: [Separator2.instance, org-openide-actions-SaveAction.shadow, org-openide-actions-SaveAsAction.shadow, org-openide-actions-SaveAllAction.shadow, Separator3.instance, org-netbeans-modules-print-action-PageSetupAction.shadow, org-netbeans-modules-print-action-PrintAction.shadow, Separator4.instance, org-netbeans-core-actions-SystemExit.shadow]
 Diagnostic information
 Input arguments:
 	-Dnetbeans.logger.console=true
@@ -120,9 +122,8 @@ Heap memory usage: initial 128.0MB maximum 1820.5MB
 Non heap memory usage: initial 23.2MB maximum 132.0MB
 Garbage collector: PS Scavenge (Collections=2 Total time spent=0s)
 Garbage collector: PS MarkSweep (Collections=0 Total time spent=0s)
-Classes: loaded=3474 total loaded=3474 unloaded 0
+Classes: loaded=3969 total loaded=3969 unloaded 0
 INFO [org.netbeans.core.ui.warmup.DiagnosticTask]: Total memory 8,587,472,896
 INFO [null]: 合計物理メモリー 8,587,472,896
+WARNING [org.openide.filesystems.Ordering]: Not all children in Menu/File/ marked with the position attribute: [ExplorerEditorAction.shadow], but some are: [Separator2.instance, org-openide-actions-SaveAction.shadow, org-openide-actions-SaveAsAction.shadow, org-openide-actions-SaveAllAction.shadow, Separator3.instance, org-netbeans-modules-print-action-PageSetupAction.shadow, org-netbeans-modules-print-action-PrintAction.shadow, Separator4.instance, org-netbeans-core-actions-SystemExit.shadow]
 WARNING [org.openide.filesystems.Ordering]: Not all children in Menu/Window/ marked with the position attribute: [timelineAction.shadow], but some are: [org-netbeans-core-windows-actions-GlobalPropertiesAction.shadow, Output, SwitchToRecentDocumentAction.shadow, ProgressListAction.shadow, Separator3.instance, CloseWindowAction.shadow, MaximizeWindowAction.shadow, org-netbeans-core-windows-actions-UndockAction.shadow, Separator4.instance, CloneDocumentAction.shadow, CloseAllDocumentsAction.shadow, CloseAllButThisAction.shadow, DocumentsAction.shadow, Separator5.instance, org-netbeans-core-windows-actions-ResetWindowsAction.shadow]
-WARNING [null]: Note - jp.atr.dni.bmi.desktop.explorereditor.ExplorerEditor ought to override getPersistenceType() rather than using the client property or accepting the default.
-WARNING [null]: jp.atr.dni.bmi.desktop.explorereditor.ExplorerEditor should override preferredID()

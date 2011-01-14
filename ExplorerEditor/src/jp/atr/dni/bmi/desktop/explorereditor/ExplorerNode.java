@@ -135,12 +135,12 @@ public class ExplorerNode extends AbstractNode {
         try {
 
             // Set property value. with using obj's get*** method.
-            Property nameProp = new PropertySupport.Reflection(obj, String.class, "getFileName", null);
-            Property pathProp = new PropertySupport.Reflection(obj, String.class, "getFilePath", null);
-            Property sizeProp = new PropertySupport.Reflection(obj, Long.class, "getFileSize", null);
-            Property typeProp = new PropertySupport.Reflection(obj, String.class, "getFileType", null);
-            Property timeProp = new PropertySupport.Reflection(obj, String.class, "getModifiedTimeString", null);
-            Property commentProp = new PropertySupport.Reflection(obj, String.class, "getComment", null);
+            PropertySupport.Reflection nameProp = new PropertySupport.Reflection(obj, String.class, "getFileName", null);
+            PropertySupport.Reflection pathProp = new PropertySupport.Reflection(obj, String.class, "getFilePath", null);
+            PropertySupport.Reflection sizeProp = new PropertySupport.Reflection(obj, Long.class, "getFileSize", null);
+            PropertySupport.Reflection typeProp = new PropertySupport.Reflection(obj, String.class, "getFileType", null);
+            PropertySupport.Reflection timeProp = new PropertySupport.Reflection(obj, String.class, "getModifiedTimeString", null);
+            PropertySupport.Reflection commentProp = new PropertySupport.Reflection(obj, String.class, "getComment", null);
 
             // Set display name.
             nameProp.setName("Name");
@@ -200,16 +200,16 @@ public class ExplorerNode extends AbstractNode {
             PropertySupport.Reflection fileTypeProp = new PropertySupport.Reflection(fi, String.class, "fileType");
             PropertySupport.Reflection entityCountProp = new PropertySupport.Reflection(fi, Long.class, "getEntityCount", null);
             PropertySupport.Reflection timeStampResProp = new PropertySupport.Reflection(fi, double.class, "timeStampRes");
-            PropertySupport.Reflection timeSpanProp = new PropertySupport.Reflection(fi, Double.class, "getTimeSpan", null);
-            PropertySupport.Reflection appNameProp = new PropertySupport.Reflection(fi, String.class, "getAppName", null);
-            PropertySupport.Reflection yearProp = new PropertySupport.Reflection(fi, Long.class, "getYear", null);
-            PropertySupport.Reflection monthProp = new PropertySupport.Reflection(fi, Long.class, "getMonth", null);
-            PropertySupport.Reflection dayProp = new PropertySupport.Reflection(fi, Long.class, "getDayOfMonth", null);
-            PropertySupport.Reflection hourProp = new PropertySupport.Reflection(fi, Long.class, "getHourOfDay", null);
-            PropertySupport.Reflection minProp = new PropertySupport.Reflection(fi, Long.class, "getMinOfDay", null);
-            PropertySupport.Reflection secProp = new PropertySupport.Reflection(fi, Long.class, "getSecOfDay", null);
-            PropertySupport.Reflection milliSecProp = new PropertySupport.Reflection(fi, Long.class, "getMilliSecOfDay", null);
-            PropertySupport.Reflection commentsProp = new PropertySupport.Reflection(fi, String.class, "getComments", null);
+            PropertySupport.Reflection timeSpanProp = new PropertySupport.Reflection(fi, double.class, "timeSpan");
+            PropertySupport.Reflection appNameProp = new PropertySupport.Reflection(fi, String.class, "appName");
+            PropertySupport.Reflection yearProp = new PropertySupport.Reflection(fi, long.class, "year");
+            PropertySupport.Reflection monthProp = new PropertySupport.Reflection(fi, long.class, "month");
+            PropertySupport.Reflection dayProp = new PropertySupport.Reflection(fi, long.class, "dayOfMonth");
+            PropertySupport.Reflection hourProp = new PropertySupport.Reflection(fi, long.class, "hourOfDay");
+            PropertySupport.Reflection minProp = new PropertySupport.Reflection(fi, long.class, "minOfDay");
+            PropertySupport.Reflection secProp = new PropertySupport.Reflection(fi, long.class, "secOfDay");
+            PropertySupport.Reflection milliSecProp = new PropertySupport.Reflection(fi, long.class, "milliSecOfDay");
+            PropertySupport.Reflection commentsProp = new PropertySupport.Reflection(fi, String.class, "comments");
 
             // Set display name.
             fileTypeProp.setName("File Type"); // need to be identified.
@@ -228,7 +228,7 @@ public class ExplorerNode extends AbstractNode {
 
             // Set description.
             fileTypeProp.setShortDescription("file type. <i><B>ns_FileInfo.szFileType.</B></i>");
-            entityCountProp.setShortDescription("entity count. <i><B>ns_FileInfo.dwEntityCount.</B></i>");
+            entityCountProp.setShortDescription("entity count. <i><B>ns_FileInfo.dwEntityCount.</B></i> \n <font color='red'><B>Unable to modify value.</B></font>");
             timeStampResProp.setShortDescription("time stamp resolution. <i><B>ns_FileInfo.dTimeStampResolution.</B></i>");
             timeSpanProp.setShortDescription("time span. <i><B>ns_FileInfo.dTimeSpan.</B></i>");
             appNameProp.setShortDescription("application name. <i><B>ns_FileInfo.szAppName.</B></i>");
@@ -269,9 +269,9 @@ public class ExplorerNode extends AbstractNode {
                 entityGrp.setValue("tabName", "Neuroshare");
 
                 // Set property value. with using obj's get*** method.
-                Property entityLabelProp = new PropertySupport.Reflection(entityInfo, String.class, "getEntityLabel", null);
-                Property entityTypeProp = new PropertySupport.Reflection(entityInfo, Long.class, "getEntityType", null);
-                Property itemCountProp = new PropertySupport.Reflection(entityInfo, Long.class, "getItemCount", null);
+                PropertySupport.Reflection entityLabelProp = new PropertySupport.Reflection(entityInfo, String.class, "getEntityLabel", null);
+                PropertySupport.Reflection entityTypeProp = new PropertySupport.Reflection(entityInfo, Long.class, "getEntityType", null);
+                PropertySupport.Reflection itemCountProp = new PropertySupport.Reflection(entityInfo, Long.class, "getItemCount", null);
 
                 // Set display name.
                 entityLabelProp.setName("Label"); // need to be identified.
@@ -292,8 +292,8 @@ public class ExplorerNode extends AbstractNode {
                 switch (entity.getTag().getElemType()) {
                     case ENTITY_EVENT:
                         EventInfo eventInfo = (EventInfo) entity;
-                        Property ei_EventTypeProp = new PropertySupport.Reflection(eventInfo, Long.class, "getEventType", null);
-                        Property ei_CSVDescProp = new PropertySupport.Reflection(eventInfo, String.class, "getCsvDesc", null);
+                        PropertySupport.Reflection ei_EventTypeProp = new PropertySupport.Reflection(eventInfo, Long.class, "getEventType", null);
+                        PropertySupport.Reflection ei_CSVDescProp = new PropertySupport.Reflection(eventInfo, String.class, "getCsvDesc", null);
                         ei_EventTypeProp.setName("Event Type"); // need to be identified.
                         ei_CSVDescProp.setName("CSV Desc"); // need to be identified.
                         ei_EventTypeProp.setShortDescription("type of the event. <i><B>ns_EventInfo.dwEventType.</B></i>");
@@ -303,20 +303,20 @@ public class ExplorerNode extends AbstractNode {
                         break;
                     case ENTITY_ANALOG:
                         AnalogInfo analogInfo = (AnalogInfo) entity;
-                        Property ai_SampleRateProp = new PropertySupport.Reflection(analogInfo, Double.class, "getSampleRate", null);
-                        Property ai_UnitsProp = new PropertySupport.Reflection(analogInfo, String.class, "getUnits", null);
-                        Property ai_ResolutionProp = new PropertySupport.Reflection(analogInfo, Double.class, "getResolution", null);
-                        Property ai_LocationXProp = new PropertySupport.Reflection(analogInfo, Double.class, "getLocationX", null);
-                        Property ai_LocationYProp = new PropertySupport.Reflection(analogInfo, Double.class, "getLocationY", null);
-                        Property ai_LocationZProp = new PropertySupport.Reflection(analogInfo, Double.class, "getLocationZ", null);
-                        Property ai_LocationUserProp = new PropertySupport.Reflection(analogInfo, Double.class, "getLocationUser", null);
-                        Property ai_HighFreqCornerProp = new PropertySupport.Reflection(analogInfo, Double.class, "getHighFreqCorner", null);
-                        Property ai_HighFreqOrderProp = new PropertySupport.Reflection(analogInfo, Long.class, "getHighFreqOrder", null);
-                        Property ai_HighFilterTypeProp = new PropertySupport.Reflection(analogInfo, String.class, "getHighFilterType", null);
-                        Property ai_LowFreqCornerProp = new PropertySupport.Reflection(analogInfo, Double.class, "getLowFreqCorner", null);
-                        Property ai_LowFreqOrderProp = new PropertySupport.Reflection(analogInfo, Long.class, "getLowFreqOrder", null);
-                        Property ai_LowFilterTypeProp = new PropertySupport.Reflection(analogInfo, String.class, "getLowFilterType", null);
-                        Property ai_ProbeInfoProp = new PropertySupport.Reflection(analogInfo, String.class, "getProbeInfo", "setProbeInfo");
+                        PropertySupport.Reflection ai_SampleRateProp = new PropertySupport.Reflection(analogInfo, Double.class, "getSampleRate", null);
+                        PropertySupport.Reflection ai_UnitsProp = new PropertySupport.Reflection(analogInfo, String.class, "getUnits", null);
+                        PropertySupport.Reflection ai_ResolutionProp = new PropertySupport.Reflection(analogInfo, Double.class, "getResolution", null);
+                        PropertySupport.Reflection ai_LocationXProp = new PropertySupport.Reflection(analogInfo, Double.class, "getLocationX", null);
+                        PropertySupport.Reflection ai_LocationYProp = new PropertySupport.Reflection(analogInfo, Double.class, "getLocationY", null);
+                        PropertySupport.Reflection ai_LocationZProp = new PropertySupport.Reflection(analogInfo, Double.class, "getLocationZ", null);
+                        PropertySupport.Reflection ai_LocationUserProp = new PropertySupport.Reflection(analogInfo, Double.class, "getLocationUser", null);
+                        PropertySupport.Reflection ai_HighFreqCornerProp = new PropertySupport.Reflection(analogInfo, Double.class, "getHighFreqCorner", null);
+                        PropertySupport.Reflection ai_HighFreqOrderProp = new PropertySupport.Reflection(analogInfo, Long.class, "getHighFreqOrder", null);
+                        PropertySupport.Reflection ai_HighFilterTypeProp = new PropertySupport.Reflection(analogInfo, String.class, "getHighFilterType", null);
+                        PropertySupport.Reflection ai_LowFreqCornerProp = new PropertySupport.Reflection(analogInfo, Double.class, "getLowFreqCorner", null);
+                        PropertySupport.Reflection ai_LowFreqOrderProp = new PropertySupport.Reflection(analogInfo, Long.class, "getLowFreqOrder", null);
+                        PropertySupport.Reflection ai_LowFilterTypeProp = new PropertySupport.Reflection(analogInfo, String.class, "getLowFilterType", null);
+                        PropertySupport.Reflection ai_ProbeInfoProp = new PropertySupport.Reflection(analogInfo, String.class, "getProbeInfo", "setProbeInfo");
                         ai_SampleRateProp.setName("Sample Rate"); // need to be identified.
                         ai_UnitsProp.setName("Unit"); // need to be identified.
                         ai_ResolutionProp.setName("Resolution"); // need to be identified.
@@ -362,9 +362,9 @@ public class ExplorerNode extends AbstractNode {
                         break;
                     case ENTITY_SEGMENT:
                         SegmentInfo segmentInfo = (SegmentInfo) entity;
-                        Property si_SourceCountProp = new PropertySupport.Reflection(segmentInfo, Long.class, "getSourceCount", null);
-                        Property si_SampleRateProp = new PropertySupport.Reflection(segmentInfo, Double.class, "getSampleRate", null);
-                        Property si_UnitsProp = new PropertySupport.Reflection(segmentInfo, String.class, "getUnits", null);
+                        PropertySupport.Reflection si_SourceCountProp = new PropertySupport.Reflection(segmentInfo, Long.class, "getSourceCount", null);
+                        PropertySupport.Reflection si_SampleRateProp = new PropertySupport.Reflection(segmentInfo, Double.class, "getSampleRate", null);
+                        PropertySupport.Reflection si_UnitsProp = new PropertySupport.Reflection(segmentInfo, String.class, "getUnits", null);
                         si_SourceCountProp.setName("Source Count"); // need to be identified.
                         si_SampleRateProp.setName("Sample Rate"); // need to be identified.
                         si_UnitsProp.setName("Unit"); // need to be identified.
@@ -377,9 +377,9 @@ public class ExplorerNode extends AbstractNode {
                         break;
                     case ENTITY_NEURAL:
                         NeuralInfo neuralInfo = (NeuralInfo) entity;
-                        Property ni_SourceEntityIDProp = new PropertySupport.Reflection(neuralInfo, Long.class, "getSourceEntityID", null);
-                        Property ni_SourceUnitIDProp = new PropertySupport.Reflection(neuralInfo, Long.class, "getSourceUnitID", null);
-                        Property ni_ProbeInfoProp = new PropertySupport.Reflection(neuralInfo, String.class, "getProbeInfo", null);
+                        PropertySupport.Reflection ni_SourceEntityIDProp = new PropertySupport.Reflection(neuralInfo, Long.class, "getSourceEntityID", null);
+                        PropertySupport.Reflection ni_SourceUnitIDProp = new PropertySupport.Reflection(neuralInfo, Long.class, "getSourceUnitID", null);
+                        PropertySupport.Reflection ni_ProbeInfoProp = new PropertySupport.Reflection(neuralInfo, String.class, "getProbeInfo", null);
                         ni_SourceEntityIDProp.setName("Source Entity ID"); // need to be identified.
                         ni_SourceUnitIDProp.setName("Source Unit ID"); // need to be identified.
                         ni_ProbeInfoProp.setName("ProbeInfo"); // need to be identified.
