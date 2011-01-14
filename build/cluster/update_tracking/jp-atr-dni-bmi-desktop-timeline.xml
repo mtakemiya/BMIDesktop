@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module codename="jp.atr.dni.bmi.desktop.timeline">
-    <module_version install_time="1294802317800" last="true" origin="installer" specification_version="1.0">
+    <module_version install_time="1294908828773" last="true" origin="installer" specification_version="1.0">
         <file crc="465144966" name="config/Modules/jp-atr-dni-bmi-desktop-timeline.xml"/>
         <file crc="340448678" name="modules/ext/gluegen-rt.jar"/>
         <file crc="552058811" name="modules/ext/jogl.all.jar"/>
         <file crc="1500789783" name="modules/ext/nativewindow.all.jar"/>
         <file crc="3464407329" name="modules/ext/newt.all.jar"/>
-        <file crc="4095672940" name="modules/jp-atr-dni-bmi-desktop-timeline.jar"/>
+        <file crc="2874497507" name="modules/jp-atr-dni-bmi-desktop-timeline.jar"/>
         <file crc="1381938980" name="modules/lib/gluegen-rt-cdc.jar"/>
         <file crc="340448678" name="modules/lib/gluegen-rt.jar"/>
         <file crc="1702491701" name="modules/lib/jogl.all-noawt.jar"/>

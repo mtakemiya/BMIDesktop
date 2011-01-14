@@ -8,155 +8,148 @@ import java.util.ArrayList;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
- * 
- * @author Makoto Takemiya - [武宮 誠] <br />
- * <i>ATR - [株式会社・國際電氣通信基礎技術研究所]</i>
  *
- * @version 2010/04/09
+ * @author kharada
+ * @version 2011/01/13
  */
 @XStreamAlias("segmentInfo")
 public class SegmentInfo extends Entity {
-   private long sourceCount;
 
-   private long minSampleCount;
+    private long sourceCount;
+    private long minSampleCount;
+    private long maxSampleCount;
+    private double sampleRate;
+    private String units;
+    private ArrayList<SegmentSourceInfo> segSourceInfos;
+    private SegmentData segData;
 
-   private long maxSampleCount;
+    /**
+     * @param tag
+     * @param entityInfo
+     */
+    public SegmentInfo(Tag tag, EntityInfo entityInfo) {
+        super(tag, entityInfo);
+    }
 
-   private double sampleRate;
+    /**
+     * @param tag
+     * @param entityInfo
+     * @param sourceCount
+     * @param minSampleCount
+     * @param maxSampleCount
+     * @param sampleRate
+     * @param units
+     */
+    public SegmentInfo(Tag tag, EntityInfo entityInfo, long sourceCount, long minSampleCount,
+            long maxSampleCount, double sampleRate, String units) {
+        super(tag, entityInfo);
 
-   private String units;
+        if (units == null) {
+            units = "";
+        }
 
-   private ArrayList<SegmentSourceInfo> segSourceInfos;
+        this.sourceCount = sourceCount;
+        this.minSampleCount = minSampleCount;
+        this.maxSampleCount = maxSampleCount;
+        this.sampleRate = sampleRate;
+        this.units = units.trim();
+    }
 
-   private SegmentData segData;
+    /**
+     * @return the sourceCount
+     */
+    public long getSourceCount() {
+        return sourceCount;
+    }
 
-   /**
-    * @param tag
-    * @param entityInfo
-    */
-   public SegmentInfo(Tag tag, EntityInfo entityInfo) {
-      super(tag, entityInfo);
-   }
+    /**
+     * @param sourceCount the sourceCount to set
+     */
+    public void setSourceCount(long sourceCount) {
+        this.sourceCount = sourceCount;
+    }
 
-   /**
-    * @param tag
-    * @param entityInfo
-    * @param sourceCount
-    * @param minSampleCount
-    * @param maxSampleCount
-    * @param sampleRate
-    * @param units
-    */
-   public SegmentInfo(Tag tag, EntityInfo entityInfo, long sourceCount, long minSampleCount,
-         long maxSampleCount, double sampleRate, String units) {
-      super(tag, entityInfo);
+    /**
+     * @return the minSampleCount
+     */
+    public long getMinSampleCount() {
+        return minSampleCount;
+    }
 
-      if (units == null) {
-         units = "";
-      }
+    /**
+     * @param minSampleCount the minSampleCount to set
+     */
+    public void setMinSampleCount(long minSampleCount) {
+        this.minSampleCount = minSampleCount;
+    }
 
-      this.sourceCount = sourceCount;
-      this.minSampleCount = minSampleCount;
-      this.maxSampleCount = maxSampleCount;
-      this.sampleRate = sampleRate;
-      this.units = units.trim();
-   }
+    /**
+     * @return the maxSampleCount
+     */
+    public long getMaxSampleCount() {
+        return maxSampleCount;
+    }
 
-   /**
-    * @return the sourceCount
-    */
-   public long getSourceCount() {
-      return sourceCount;
-   }
+    /**
+     * @param maxSampleCount the maxSampleCount to set
+     */
+    public void setMaxSampleCount(long maxSampleCount) {
+        this.maxSampleCount = maxSampleCount;
+    }
 
-   /**
-    * @param sourceCount the sourceCount to set
-    */
-   public void setSourceCount(long sourceCount) {
-      this.sourceCount = sourceCount;
-   }
+    /**
+     * @return the sampleRate
+     */
+    public double getSampleRate() {
+        return sampleRate;
+    }
 
-   /**
-    * @return the minSampleCount
-    */
-   public long getMinSampleCount() {
-      return minSampleCount;
-   }
+    /**
+     * @param sampleRate the sampleRate to set
+     */
+    public void setSampleRate(double sampleRate) {
+        this.sampleRate = sampleRate;
+    }
 
-   /**
-    * @param minSampleCount the minSampleCount to set
-    */
-   public void setMinSampleCount(long minSampleCount) {
-      this.minSampleCount = minSampleCount;
-   }
+    /**
+     * @return the units
+     */
+    public String getUnits() {
+        return units;
+    }
 
-   /**
-    * @return the maxSampleCount
-    */
-   public long getMaxSampleCount() {
-      return maxSampleCount;
-   }
+    /**
+     * @param units the units to set
+     */
+    public void setUnits(String units) {
+        this.units = units;
+    }
 
-   /**
-    * @param maxSampleCount the maxSampleCount to set
-    */
-   public void setMaxSampleCount(long maxSampleCount) {
-      this.maxSampleCount = maxSampleCount;
-   }
+    /**
+     * @return the segSourceInfos
+     */
+    public ArrayList<SegmentSourceInfo> getSegSourceInfos() {
+        return segSourceInfos;
+    }
 
-   /**
-    * @return the sampleRate
-    */
-   public double getSampleRate() {
-      return sampleRate;
-   }
+    /**
+     * @param segSourceInfos the segSourceInfos to set
+     */
+    public void setSegSourceInfos(ArrayList<SegmentSourceInfo> segSourceInfos) {
+        this.segSourceInfos = segSourceInfos;
+    }
 
-   /**
-    * @param sampleRate the sampleRate to set
-    */
-   public void setSampleRate(double sampleRate) {
-      this.sampleRate = sampleRate;
-   }
+    /**
+     * @return the segData
+     */
+    public SegmentData getSegData() {
+        return segData;
+    }
 
-   /**
-    * @return the units
-    */
-   public String getUnits() {
-      return units;
-   }
-
-   /**
-    * @param units the units to set
-    */
-   public void setUnits(String units) {
-      this.units = units;
-   }
-
-   /**
-    * @return the segSourceInfos
-    */
-   public ArrayList<SegmentSourceInfo> getSegSourceInfos() {
-      return segSourceInfos;
-   }
-
-   /**
-    * @param segSourceInfos the segSourceInfos to set
-    */
-   public void setSegSourceInfos(ArrayList<SegmentSourceInfo> segSourceInfos) {
-      this.segSourceInfos = segSourceInfos;
-   }
-
-   /**
-    * @return the segData
-    */
-   public SegmentData getSegData() {
-      return segData;
-   }
-
-   /**
-    * @param segData the segData to set
-    */
-   public void setSegData(SegmentData segData) {
-      this.segData = segData;
-   }
+    /**
+     * @param segData the segData to set
+     */
+    public void setSegData(SegmentData segData) {
+        this.segData = segData;
+    }
 }

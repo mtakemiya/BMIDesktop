@@ -1,5 +1,5 @@
 -------------------------------------------------------------------------------
->Log Session: Wednesday, January 12, 2011 12:18:38 PM JST
+>Log Session: Thursday, January 13, 2011 5:53:49 PM JST
 >System Info: 
   Product Version         = BMIDesktop 201011082200
   Operating System        = Windows 7 version 6.1 running on amd64
@@ -24,6 +24,7 @@ INFO [org.netbeans.core.startup.NbEvents]: モジュールを有効化しています:
 	org.openide.modules [7.17.2 201012081820]
 	org.openide.awt [7.23.1 201007282301]
 	org.netbeans.api.progress/1 [1.20.2 201007282301]
+	org.netbeans.libs.jna/1 [1.7.2 201007282301]
 	org.openide.dialogs [7.15.1 201007282301]
 	org.openide.nodes [7.16.1 201007282301]
 	org.openide.windows [6.33.1 201007282301]
@@ -34,38 +35,37 @@ INFO [org.netbeans.core.startup.NbEvents]: モジュールを有効化しています:
 	org.netbeans.modules.editor.mimelookup/1 [1.16.1 201007282301]
 	org.openide.text [6.30.1 201007282301]
 	org.openide.actions [6.16.1 201007282301]
-	org.netbeans.modules.queries/1 [1.19.1 201007282301]
-	org.openide.loaders [7.16.1 201007282301]
-	jp.atr.dni.bmi.desktop.model [1.0 110112]
-	org.netbeans.modules.masterfs/2 [2.25.2 201007282301]
-	org.openide.io [1.23.1 201007282301]
-	org.netbeans.core.output2/1 [1.18.2 201007282301]
-	jp.atr.dni.bmi.desktop.neuroshareutils [1.0 110112]
-	jp.atr.dni.bmi.desktop.explorereditor [1.0 110112]
 	org.netbeans.bootstrap/1 [2.33.4 201012081820]
 	org.netbeans.core.startup/1 [1.25.4 201011082200]
+	org.netbeans.spi.quicksearch [1.6.1 201007282301]
+	org.netbeans.modules.queries/1 [1.19.1 201007282301]
+	org.openide.loaders [7.16.1 201007282301]
 	org.netbeans.modules.keyring [1.1.2 201007282301]
+	org.openide.io [1.23.1 201007282301]
 	org.netbeans.swing.plaf [1.16.1 201007282301]
 	org.netbeans.core/2 [3.20.3 201012081820]
-	org.netbeans.modules.print [7.5.1 201007282301]
-	org.netbeans.core.io.ui/1 [1.8.1 201007282301]
-	jp.atr.dni.bmi.desktop.timeseriesdata.provider [1.0 110112]
-	org.netbeans.modules.editor.mimelookup.impl/1 [1.9.1 201007282301]
-	org.netbeans.libs.osgi [1.1.1 201007282301]
-	org.netbeans.spi.quicksearch [1.6.1 201007282301]
 	org.netbeans.modules.options.api/1 [1.18.1 201007282301]
-	org.netbeans.modules.options.keymap [1.10.1 201007282301]
-	org.netbeans.core.ui/1 [1.22.1 201007282301]
 	org.netbeans.modules.settings/1 [1.26.1 201007282301]
 	org.netbeans.core.windows/2 [2.21.1 201007282301]
-	jp.atr.dni.bmi.desktop.timeline [1.0 110112]
-	org.netbeans.libs.felix [1.1.1 201007282301]
-	org.netbeans.libs.jna/1 [1.7.2 201007282301]
-	org.netbeans.modules.keyring.impl [1.0.1 201007282301]
-	org.netbeans.core.netigso [1.4.5 201011082200]
-	org.netbeans.modules.progress.ui [1.12.1 201007282301]
 	org.netbeans.core.nativeaccess/1 [1.7.1 201007282301]
-INFO [org.netbeans.core.windows.persistence]: [PersistenceManager.getTopComponentForID] Problem when deserializing TopComponent for tcID:'timelineTopComponent'. Reason: jp.atr.dni.bmi.desktop.timeline.timelineTopComponent starting from SystemClassLoader[46 modules] with possible defining loaders [ModuleCL@327124af[jp.atr.dni.bmi.desktop.timeline]] and declared parents [ModuleCL@495b0e2c[org.netbeans.core.output2], ModuleCL@307bd0d[org.netbeans.modules.settings], ModuleCL@6f03de90[org.netbeans.modules.editor.mimelookup.impl], ModuleCL@53dafbaf[org.netbeans.modules.queries], ModuleCL@11ae9aaa[org.openide.awt], ModuleCL@327124af[jp.atr.dni.bmi.desktop.timeline], ModuleCL@55f157b[jp.atr.dni.bmi.desktop.timeseriesdata.provider], ModuleCL@25474e45[jp.atr.dni.bmi.desktop.neuroshareutils], ModuleCL@2719f1f[jp.atr.dni.bmi.desktop.explorereditor], ModuleCL@4125d61e[org.netbeans.libs.felix], ModuleCL@34e0e90[org.netbeans.modules.print], ModuleCL@29cda59b[org.netbeans.api.progress], ModuleCL@1164b9b6[org.netbeans.modules.options.api], ModuleCL@38c52200[org.netbeans.libs.osgi], ModuleCL@2a62610b[org.netbeans.core.io.ui], ModuleCL@7449cf9f[jp.atr.dni.bmi.desktop.model], ModuleCL@760951a0[org.netbeans.core], ModuleCL@29abc69[org.openide.explorer], ModuleCL@4a3a6e5c[org.netbeans.modules.keyring], ModuleCL@4987b287[org.netbeans.swing.plaf], org.netbeans.MainImpl$BootClassLoader@635b9e68, ModuleCL@4355d3a3[org.netbeans.libs.jna], ModuleCL@34c7e8a7[org.netbeans.modules.progress.ui], ModuleCL@345c98f3[org.openide.text], ModuleCL@26789869[org.openide.nodes], ModuleCL@5a57e787[org.netbeans.modules.keyring.impl], ModuleCL@c970c0e[org.netbeans.modules.masterfs], ModuleCL@3bf8bd0d[org.openide.dialogs], ModuleCL@22e90943[org.netbeans.core.ui], ModuleCL@3c2d7440[org.openide.actions], ModuleCL@fa7f9dc[org.openide.io], ModuleCL@79b66b06[org.netbeans.core.windows], ModuleCL@7966340c[org.netbeans.modules.options.keymap], ModuleCL@56e2ecc7[org.netbeans.swing.tabcontrol], ModuleCL@9d686c1[org.netbeans.core.netigso], ModuleCL@12c063ad[org.openide.windows], ModuleCL@3cc70b0d[org.netbeans.modules.editor.mimelookup], ModuleCL@7f2e7c6a[org.openide.loaders], ModuleCL@41584807[org.netbeans.swing.outline], ModuleCL@ad72200[org.netbeans.spi.quicksearch], ModuleCL@25071521[org.netbeans.core.nativeaccess]]
+	org.netbeans.modules.options.keymap [1.10.1 201007282301]
+	org.netbeans.libs.osgi [1.1.1 201007282301]
+	org.netbeans.modules.editor.mimelookup.impl/1 [1.9.1 201007282301]
+	org.netbeans.modules.print [7.5.1 201007282301]
+	jp.atr.dni.bmi.desktop.neuroshareutils [1.0 110113]
+	jp.atr.dni.bmi.desktop.model [1.0 110113]
+	jp.atr.dni.bmi.desktop.timeseriesdata.provider [1.0 110113]
+	org.netbeans.core.io.ui/1 [1.8.1 201007282301]
+	org.netbeans.core.ui/1 [1.22.1 201007282301]
+	org.netbeans.modules.progress.ui [1.12.1 201007282301]
+	jp.atr.dni.bmi.desktop.explorereditor [1.0 110113]
+	jp.atr.dni.bmi.desktop.timeline [1.0 110113]
+	org.netbeans.core.netigso [1.4.5 201011082200]
+	org.netbeans.modules.keyring.impl [1.0.1 201007282301]
+	org.netbeans.core.output2/1 [1.18.2 201007282301]
+	org.netbeans.modules.masterfs/2 [2.25.2 201007282301]
+	org.netbeans.libs.felix [1.1.1 201007282301]
+INFO [org.netbeans.core.windows.persistence]: [PersistenceManager.getTopComponentForID] Problem when deserializing TopComponent for tcID:'timelineTopComponent'. Reason: jp.atr.dni.bmi.desktop.timeline.timelineTopComponent starting from SystemClassLoader[46 modules] with possible defining loaders [ModuleCL@45c3e9ba[jp.atr.dni.bmi.desktop.timeline]] and declared parents [ModuleCL@1fbb9696[org.netbeans.modules.settings], ModuleCL@1c1474ea[org.netbeans.core.io.ui], ModuleCL@4301ac93[jp.atr.dni.bmi.desktop.timeseriesdata.provider], ModuleCL@7461f533[org.netbeans.core.ui], ModuleCL@4cc72243[org.netbeans.core.netigso], ModuleCL@53dafbaf[org.openide.actions], ModuleCL@72f864fe[org.openide.awt], ModuleCL@5d04e28b[org.netbeans.modules.keyring], ModuleCL@495c998a[org.netbeans.modules.options.api], ModuleCL@55f157b[org.netbeans.modules.print], ModuleCL@2719f1f[org.netbeans.core.windows], ModuleCL@78ff9053[org.openide.io], ModuleCL@20d9896e[org.netbeans.api.progress], ModuleCL@6bdc64a5[jp.atr.dni.bmi.desktop.neuroshareutils], ModuleCL@29abc69[org.netbeans.swing.outline], ModuleCL@4a3a6e5c[org.netbeans.core.nativeaccess], ModuleCL@4987b287[org.netbeans.modules.options.keymap], org.netbeans.MainImpl$BootClassLoader@635b9e68, ModuleCL@36867fc9[org.openide.text], ModuleCL@345c98f3[org.netbeans.modules.editor.mimelookup], ModuleCL@26789869[org.openide.dialogs], ModuleCL@45c3e9ba[jp.atr.dni.bmi.desktop.timeline], ModuleCL@37b994de[org.netbeans.modules.keyring.impl], ModuleCL@6c5b675e[org.netbeans.swing.plaf], ModuleCL@6328edf2[org.netbeans.modules.masterfs], ModuleCL@3bf8bd0d[org.netbeans.libs.jna], ModuleCL@38ffd135[org.netbeans.core], ModuleCL@372c9557[org.netbeans.modules.progress.ui], ModuleCL@7966340c[jp.atr.dni.bmi.desktop.model], ModuleCL@78979f67[org.netbeans.modules.editor.mimelookup.impl], ModuleCL@56e2ecc7[org.openide.windows], ModuleCL@12c063ad[org.openide.nodes], ModuleCL@3cc70b0d[org.openide.explorer], ModuleCL@41217e67[org.netbeans.core.output2], ModuleCL@68acfc3[org.netbeans.libs.osgi], ModuleCL@6d732ed2[org.netbeans.libs.felix], ModuleCL@7f2e7c6a[org.netbeans.spi.quicksearch], ModuleCL@10987197[org.openide.loaders], ModuleCL@58ca3783[jp.atr.dni.bmi.desktop.explorereditor], ModuleCL@41584807[org.netbeans.swing.tabcontrol], ModuleCL@19de0b5e[org.netbeans.modules.queries]]
 java.lang.ClassNotFoundException: jp.atr.dni.bmi.desktop.timeline.timelineTopComponent
 	at java.net.URLClassLoader$1.run(URLClassLoader.java:202)
 	at java.security.AccessController.doPrivileged(Native Method)
@@ -74,7 +74,7 @@ java.lang.ClassNotFoundException: jp.atr.dni.bmi.desktop.timeline.timelineTopCom
 	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:301)
 	at java.lang.ClassLoader.loadClass(ClassLoader.java:248)
 	at org.netbeans.ProxyClassLoader.loadClass(ProxyClassLoader.java:262)
-Caused: java.lang.ClassNotFoundException: jp.atr.dni.bmi.desktop.timeline.timelineTopComponent starting from SystemClassLoader[46 modules] with possible defining loaders [ModuleCL@327124af[jp.atr.dni.bmi.desktop.timeline]] and declared parents [ModuleCL@495b0e2c[org.netbeans.core.output2], ModuleCL@307bd0d[org.netbeans.modules.settings], ModuleCL@6f03de90[org.netbeans.modules.editor.mimelookup.impl], ModuleCL@53dafbaf[org.netbeans.modules.queries], ModuleCL@11ae9aaa[org.openide.awt], ModuleCL@327124af[jp.atr.dni.bmi.desktop.timeline], ModuleCL@55f157b[jp.atr.dni.bmi.desktop.timeseriesdata.provider], ModuleCL@25474e45[jp.atr.dni.bmi.desktop.neuroshareutils], ModuleCL@2719f1f[jp.atr.dni.bmi.desktop.explorereditor], ModuleCL@4125d61e[org.netbeans.libs.felix], ModuleCL@34e0e90[org.netbeans.modules.print], ModuleCL@29cda59b[org.netbeans.api.progress], ModuleCL@1164b9b6[org.netbeans.modules.options.api], ModuleCL@38c52200[org.netbeans.libs.osgi], ModuleCL@2a62610b[org.netbeans.core.io.ui], ModuleCL@7449cf9f[jp.atr.dni.bmi.desktop.model], ModuleCL@760951a0[org.netbeans.core], ModuleCL@29abc69[org.openide.explorer], ModuleCL@4a3a6e5c[org.netbeans.modules.keyring], ModuleCL@4987b287[org.netbeans.swing.plaf], org.netbeans.MainImpl$BootClassLoader@635b9e68, ModuleCL@4355d3a3[org.netbeans.libs.jna], ModuleCL@34c7e8a7[org.netbeans.modules.progress.ui], ModuleCL@345c98f3[org.openide.text], ModuleCL@26789869[org.openide.nodes], ModuleCL@5a57e787[org.netbeans.modules.keyring.impl], ModuleCL@c970c0e[org.netbeans.modules.masterfs], ModuleCL@3bf8bd0d[org.openide.dialogs], ModuleCL@22e90943[org.netbeans.core.ui], ModuleCL@3c2d7440[org.openide.actions], ModuleCL@fa7f9dc[org.openide.io], ModuleCL@79b66b06[org.netbeans.core.windows], ModuleCL@7966340c[org.netbeans.modules.options.keymap], ModuleCL@56e2ecc7[org.netbeans.swing.tabcontrol], ModuleCL@9d686c1[org.netbeans.core.netigso], ModuleCL@12c063ad[org.openide.windows], ModuleCL@3cc70b0d[org.netbeans.modules.editor.mimelookup], ModuleCL@7f2e7c6a[org.openide.loaders], ModuleCL@41584807[org.netbeans.swing.outline], ModuleCL@ad72200[org.netbeans.spi.quicksearch], ModuleCL@25071521[org.netbeans.core.nativeaccess]]
+Caused: java.lang.ClassNotFoundException: jp.atr.dni.bmi.desktop.timeline.timelineTopComponent starting from SystemClassLoader[46 modules] with possible defining loaders [ModuleCL@45c3e9ba[jp.atr.dni.bmi.desktop.timeline]] and declared parents [ModuleCL@1fbb9696[org.netbeans.modules.settings], ModuleCL@1c1474ea[org.netbeans.core.io.ui], ModuleCL@4301ac93[jp.atr.dni.bmi.desktop.timeseriesdata.provider], ModuleCL@7461f533[org.netbeans.core.ui], ModuleCL@4cc72243[org.netbeans.core.netigso], ModuleCL@53dafbaf[org.openide.actions], ModuleCL@72f864fe[org.openide.awt], ModuleCL@5d04e28b[org.netbeans.modules.keyring], ModuleCL@495c998a[org.netbeans.modules.options.api], ModuleCL@55f157b[org.netbeans.modules.print], ModuleCL@2719f1f[org.netbeans.core.windows], ModuleCL@78ff9053[org.openide.io], ModuleCL@20d9896e[org.netbeans.api.progress], ModuleCL@6bdc64a5[jp.atr.dni.bmi.desktop.neuroshareutils], ModuleCL@29abc69[org.netbeans.swing.outline], ModuleCL@4a3a6e5c[org.netbeans.core.nativeaccess], ModuleCL@4987b287[org.netbeans.modules.options.keymap], org.netbeans.MainImpl$BootClassLoader@635b9e68, ModuleCL@36867fc9[org.openide.text], ModuleCL@345c98f3[org.netbeans.modules.editor.mimelookup], ModuleCL@26789869[org.openide.dialogs], ModuleCL@45c3e9ba[jp.atr.dni.bmi.desktop.timeline], ModuleCL@37b994de[org.netbeans.modules.keyring.impl], ModuleCL@6c5b675e[org.netbeans.swing.plaf], ModuleCL@6328edf2[org.netbeans.modules.masterfs], ModuleCL@3bf8bd0d[org.netbeans.libs.jna], ModuleCL@38ffd135[org.netbeans.core], ModuleCL@372c9557[org.netbeans.modules.progress.ui], ModuleCL@7966340c[jp.atr.dni.bmi.desktop.model], ModuleCL@78979f67[org.netbeans.modules.editor.mimelookup.impl], ModuleCL@56e2ecc7[org.openide.windows], ModuleCL@12c063ad[org.openide.nodes], ModuleCL@3cc70b0d[org.openide.explorer], ModuleCL@41217e67[org.netbeans.core.output2], ModuleCL@68acfc3[org.netbeans.libs.osgi], ModuleCL@6d732ed2[org.netbeans.libs.felix], ModuleCL@7f2e7c6a[org.netbeans.spi.quicksearch], ModuleCL@10987197[org.openide.loaders], ModuleCL@58ca3783[jp.atr.dni.bmi.desktop.explorereditor], ModuleCL@41584807[org.netbeans.swing.tabcontrol], ModuleCL@19de0b5e[org.netbeans.modules.queries]]
 	at org.netbeans.ProxyClassLoader.loadClass(ProxyClassLoader.java:264)
 	at org.netbeans.ModuleManager$SystemClassLoader.loadClass(ModuleManager.java:530)
 	at java.lang.ClassLoader.loadClass(ClassLoader.java:248)
@@ -97,7 +97,6 @@ Caused: java.lang.ClassNotFoundException: jp.atr.dni.bmi.desktop.timeline.timeli
 	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:169)
 	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:161)
 [catch] at java.awt.EventDispatchThread.run(EventDispatchThread.java:122)
-WARNING [org.openide.filesystems.Ordering]: Not all children in Menu/File/ marked with the position attribute: [ExplorerEditorAction.shadow], but some are: [Separator2.instance, org-openide-actions-SaveAction.shadow, org-openide-actions-SaveAsAction.shadow, org-openide-actions-SaveAllAction.shadow, Separator3.instance, org-netbeans-modules-print-action-PageSetupAction.shadow, org-netbeans-modules-print-action-PrintAction.shadow, Separator4.instance, org-netbeans-core-actions-SystemExit.shadow]
 Diagnostic information
 Input arguments:
 	-Dnetbeans.logger.console=true
@@ -120,9 +119,177 @@ Heap memory usage: initial 128.0MB maximum 1820.5MB
 Non heap memory usage: initial 23.2MB maximum 132.0MB
 Garbage collector: PS Scavenge (Collections=2 Total time spent=0s)
 Garbage collector: PS MarkSweep (Collections=0 Total time spent=0s)
-Classes: loaded=3473 total loaded=3473 unloaded 0
+Classes: loaded=3282 total loaded=3282 unloaded 0
 INFO [org.netbeans.core.ui.warmup.DiagnosticTask]: Total memory 8,587,472,896
 INFO [null]: 合計物理メモリー 8,587,472,896
+WARNING [org.openide.filesystems.Ordering]: Not all children in Menu/File/ marked with the position attribute: [ExplorerEditorAction.shadow], but some are: [Separator2.instance, org-openide-actions-SaveAction.shadow, org-openide-actions-SaveAsAction.shadow, org-openide-actions-SaveAllAction.shadow, Separator3.instance, org-netbeans-modules-print-action-PageSetupAction.shadow, org-netbeans-modules-print-action-PrintAction.shadow, Separator4.instance, org-netbeans-core-actions-SystemExit.shadow]
 WARNING [org.openide.filesystems.Ordering]: Not all children in Menu/Window/ marked with the position attribute: [timelineAction.shadow], but some are: [org-netbeans-core-windows-actions-GlobalPropertiesAction.shadow, Output, SwitchToRecentDocumentAction.shadow, ProgressListAction.shadow, Separator3.instance, CloseWindowAction.shadow, MaximizeWindowAction.shadow, org-netbeans-core-windows-actions-UndockAction.shadow, Separator4.instance, CloneDocumentAction.shadow, CloseAllDocumentsAction.shadow, CloseAllButThisAction.shadow, DocumentsAction.shadow, Separator5.instance, org-netbeans-core-windows-actions-ResetWindowsAction.shadow]
 WARNING [null]: Note - jp.atr.dni.bmi.desktop.explorereditor.ExplorerEditor ought to override getPersistenceType() rather than using the client property or accepting the default.
 WARNING [null]: jp.atr.dni.bmi.desktop.explorereditor.ExplorerEditor should override preferredID()
+WARNING [jp.atr.dni.bmi.desktop.timeline.TimelineTopComponent]: Cannot find timelineTopComponent component. It will not be located properly in the window system.
+INFO [org.netbeans.core.startup.layers.BinaryFS]: value = jp.atr.dni.bmi.desktop.timeline.TimelineTopComponent.findInstance from Actions/Window/jp-atr-dni-bmi-desktop-timeline-timelineAction.instance
+java.lang.UnsatisfiedLinkError: no gluegen-rt in java.library.path
+	at java.lang.ClassLoader.loadLibrary(ClassLoader.java:1734)
+	at java.lang.Runtime.loadLibrary0(Runtime.java:823)
+	at java.lang.System.loadLibrary(System.java:1028)
+	at com.jogamp.gluegen.runtime.NativeLibLoader.loadLibraryInternal(NativeLibLoader.java:102)
+	at com.jogamp.gluegen.runtime.NativeLibLoader.access$000(NativeLibLoader.java:51)
+	at com.jogamp.gluegen.runtime.NativeLibLoader$1.run(NativeLibLoader.java:70)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at com.jogamp.gluegen.runtime.NativeLibLoader.loadGlueGenRT(NativeLibLoader.java:68)
+	at com.jogamp.common.jvm.JVMUtil.<clinit>(JVMUtil.java:56)
+	at javax.media.nativewindow.NativeWindowFactory.<clinit>(NativeWindowFactory.java:102)
+	at javax.media.opengl.GLProfile.initProfiles(GLProfile.java:855)
+	at javax.media.opengl.GLProfile.access$000(GLProfile.java:59)
+	at javax.media.opengl.GLProfile$1.run(GLProfile.java:989)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.media.opengl.GLProfile.<clinit>(GLProfile.java:987)
+	at jp.atr.dni.bmi.desktop.timeline.TimelineTopComponent.initGL(TimelineTopComponent.java:145)
+	at jp.atr.dni.bmi.desktop.timeline.TimelineTopComponent.<init>(TimelineTopComponent.java:90)
+	at jp.atr.dni.bmi.desktop.timeline.TimelineTopComponent.getDefault(TimelineTopComponent.java:298)
+	at jp.atr.dni.bmi.desktop.timeline.TimelineTopComponent.findInstance(TimelineTopComponent.java:311)
+Caused: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.netbeans.core.startup.layers.BinaryFS$AttrImpl$MethodAndParams.invoke(BinaryFS.java:607)
+	at org.netbeans.core.startup.layers.BinaryFS$AttrImpl.getValue(BinaryFS.java:540)
+	at org.netbeans.core.startup.layers.BinaryFS$BFSBase.getAttribute(BinaryFS.java:386)
+	at org.openide.filesystems.MultiFileObject.getAttribute(MultiFileObject.java:907)
+	at org.openide.filesystems.MultiFileObject.getAttribute(MultiFileObject.java:844)
+	at org.openide.filesystems.MultiFileObject.getAttribute(MultiFileObject.java:903)
+	at org.openide.filesystems.MultiFileObject.getAttribute(MultiFileObject.java:844)
+	at org.openide.filesystems.MultiFileObject.getAttribute(MultiFileObject.java:772)
+	at org.netbeans.core.startup.layers.BinaryFS$FileMap.get(BinaryFS.java:955)
+	at org.openide.windows.OpenComponentAction.getTopComponent(OpenComponentAction.java:74)
+	at org.openide.windows.OpenComponentAction.actionPerformed(OpenComponentAction.java:80)
+	at org.openide.awt.AlwaysEnabledAction$1.run(AlwaysEnabledAction.java:137)
+	at org.openide.util.actions.ActionInvoker$1.run(ActionInvoker.java:95)
+	at org.openide.util.actions.ActionInvoker.doPerformAction(ActionInvoker.java:116)
+	at org.openide.util.actions.ActionInvoker.invokeAction(ActionInvoker.java:99)
+	at org.openide.awt.AlwaysEnabledAction.actionPerformed(AlwaysEnabledAction.java:140)
+	at javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:1995)
+	at javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2318)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:387)
+	at javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:242)
+	at javax.swing.AbstractButton.doClick(AbstractButton.java:357)
+	at javax.swing.plaf.basic.BasicMenuItemUI.doClick(BasicMenuItemUI.java:1223)
+	at javax.swing.plaf.basic.BasicMenuItemUI$Handler.mouseReleased(BasicMenuItemUI.java:1264)
+	at java.awt.Component.processMouseEvent(Component.java:6267)
+	at javax.swing.JComponent.processMouseEvent(JComponent.java:3267)
+	at java.awt.Component.processEvent(Component.java:6032)
+	at java.awt.Container.processEvent(Container.java:2041)
+	at java.awt.Component.dispatchEventImpl(Component.java:4630)
+	at java.awt.Container.dispatchEventImpl(Container.java:2099)
+	at java.awt.Component.dispatchEvent(Component.java:4460)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4577)
+	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:4238)
+	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4168)
+	at java.awt.Container.dispatchEventImpl(Container.java:2085)
+	at java.awt.Window.dispatchEventImpl(Window.java:2478)
+	at java.awt.Component.dispatchEvent(Component.java:4460)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:599)
+	at org.netbeans.core.TimableEventQueue.dispatchEvent(TimableEventQueue.java:137)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:269)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:184)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:174)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:169)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:161)
+[catch] at java.awt.EventDispatchThread.run(EventDispatchThread.java:122)
+WARNING [jp.atr.dni.bmi.desktop.timeline.TimelineTopComponent]: Cannot find timelineTopComponent component. It will not be located properly in the window system.
+INFO [org.netbeans.core.startup.layers.BinaryFS]: value = jp.atr.dni.bmi.desktop.timeline.TimelineTopComponent.findInstance from Actions/Window/jp-atr-dni-bmi-desktop-timeline-timelineAction.instance
+java.lang.NoClassDefFoundError: Could not initialize class javax.media.opengl.GLProfile
+	at jp.atr.dni.bmi.desktop.timeline.TimelineTopComponent.initGL(TimelineTopComponent.java:145)
+	at jp.atr.dni.bmi.desktop.timeline.TimelineTopComponent.<init>(TimelineTopComponent.java:90)
+	at jp.atr.dni.bmi.desktop.timeline.TimelineTopComponent.getDefault(TimelineTopComponent.java:298)
+	at jp.atr.dni.bmi.desktop.timeline.TimelineTopComponent.findInstance(TimelineTopComponent.java:311)
+Caused: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.netbeans.core.startup.layers.BinaryFS$AttrImpl$MethodAndParams.invoke(BinaryFS.java:607)
+	at org.netbeans.core.startup.layers.BinaryFS$AttrImpl.getValue(BinaryFS.java:540)
+	at org.netbeans.core.startup.layers.BinaryFS$BFSBase.getAttribute(BinaryFS.java:386)
+	at org.openide.filesystems.MultiFileObject.getAttribute(MultiFileObject.java:907)
+	at org.openide.filesystems.MultiFileObject.getAttribute(MultiFileObject.java:844)
+	at org.openide.filesystems.MultiFileObject.getAttribute(MultiFileObject.java:903)
+	at org.openide.filesystems.MultiFileObject.getAttribute(MultiFileObject.java:844)
+	at org.openide.filesystems.MultiFileObject.getAttribute(MultiFileObject.java:772)
+	at org.netbeans.core.startup.layers.BinaryFS$FOEntry.getValue(BinaryFS.java:1041)
+	at java.util.AbstractMap.toString(AbstractMap.java:487)
+	at java.lang.String.valueOf(String.java:2826)
+	at java.lang.StringBuilder.append(StringBuilder.java:115)
+	at org.openide.windows.OpenComponentAction.getTopComponent(OpenComponentAction.java:75)
+	at org.openide.windows.OpenComponentAction.actionPerformed(OpenComponentAction.java:80)
+	at org.openide.awt.AlwaysEnabledAction$1.run(AlwaysEnabledAction.java:137)
+	at org.openide.util.actions.ActionInvoker$1.run(ActionInvoker.java:95)
+	at org.openide.util.actions.ActionInvoker.doPerformAction(ActionInvoker.java:116)
+	at org.openide.util.actions.ActionInvoker.invokeAction(ActionInvoker.java:99)
+	at org.openide.awt.AlwaysEnabledAction.actionPerformed(AlwaysEnabledAction.java:140)
+	at javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:1995)
+	at javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2318)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:387)
+	at javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:242)
+	at javax.swing.AbstractButton.doClick(AbstractButton.java:357)
+	at javax.swing.plaf.basic.BasicMenuItemUI.doClick(BasicMenuItemUI.java:1223)
+	at javax.swing.plaf.basic.BasicMenuItemUI$Handler.mouseReleased(BasicMenuItemUI.java:1264)
+	at java.awt.Component.processMouseEvent(Component.java:6267)
+	at javax.swing.JComponent.processMouseEvent(JComponent.java:3267)
+	at java.awt.Component.processEvent(Component.java:6032)
+	at java.awt.Container.processEvent(Container.java:2041)
+	at java.awt.Component.dispatchEventImpl(Component.java:4630)
+	at java.awt.Container.dispatchEventImpl(Container.java:2099)
+	at java.awt.Component.dispatchEvent(Component.java:4460)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4577)
+	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:4238)
+	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4168)
+	at java.awt.Container.dispatchEventImpl(Container.java:2085)
+	at java.awt.Window.dispatchEventImpl(Window.java:2478)
+	at java.awt.Component.dispatchEvent(Component.java:4460)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:599)
+	at org.netbeans.core.TimableEventQueue.dispatchEvent(TimableEventQueue.java:137)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:269)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:184)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:174)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:169)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:161)
+[catch] at java.awt.EventDispatchThread.run(EventDispatchThread.java:122)
+SEVERE [global]
+java.lang.AssertionError: Component cannot be created for {component=null, displayName=timeline, iconBase=jp/atr/dni/bmi/desktop/timeline/graphPrev.png, instanceCreate=AlwaysEnabledAction[timeline]}
+	at org.openide.windows.OpenComponentAction.getTopComponent(OpenComponentAction.java:75)
+	at org.openide.windows.OpenComponentAction.actionPerformed(OpenComponentAction.java:80)
+	at org.openide.awt.AlwaysEnabledAction$1.run(AlwaysEnabledAction.java:137)
+	at org.openide.util.actions.ActionInvoker$1.run(ActionInvoker.java:95)
+	at org.openide.util.actions.ActionInvoker.doPerformAction(ActionInvoker.java:116)
+	at org.openide.util.actions.ActionInvoker.invokeAction(ActionInvoker.java:99)
+	at org.openide.awt.AlwaysEnabledAction.actionPerformed(AlwaysEnabledAction.java:140)
+	at javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:1995)
+	at javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2318)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:387)
+	at javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:242)
+	at javax.swing.AbstractButton.doClick(AbstractButton.java:357)
+	at javax.swing.plaf.basic.BasicMenuItemUI.doClick(BasicMenuItemUI.java:1223)
+	at javax.swing.plaf.basic.BasicMenuItemUI$Handler.mouseReleased(BasicMenuItemUI.java:1264)
+	at java.awt.Component.processMouseEvent(Component.java:6267)
+	at javax.swing.JComponent.processMouseEvent(JComponent.java:3267)
+	at java.awt.Component.processEvent(Component.java:6032)
+	at java.awt.Container.processEvent(Container.java:2041)
+	at java.awt.Component.dispatchEventImpl(Component.java:4630)
+	at java.awt.Container.dispatchEventImpl(Container.java:2099)
+	at java.awt.Component.dispatchEvent(Component.java:4460)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4577)
+	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:4238)
+	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4168)
+	at java.awt.Container.dispatchEventImpl(Container.java:2085)
+	at java.awt.Window.dispatchEventImpl(Window.java:2478)
+	at java.awt.Component.dispatchEvent(Component.java:4460)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:599)
+	at org.netbeans.core.TimableEventQueue.dispatchEvent(TimableEventQueue.java:137)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:269)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:184)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:174)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:169)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:161)
+[catch] at java.awt.EventDispatchThread.run(EventDispatchThread.java:122)

@@ -6,353 +6,335 @@ package jp.atr.dni.bmi.desktop.neuroshareutils;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.util.ArrayList;
 
-
 /**
- * 
- * @author Makoto Takemiya - [武宮 誠] <br />
- * <i>ATR - [株式会社・国際電気通信基礎技術研究所]</i>
  *
- * @version 2009/11/25
+ * @author kharada
+ * @version 2011/01/13
  */
 @XStreamAlias("analogInfo")
 public class AnalogInfo extends Entity {
-   private double sampleRate;
 
-   private double minVal;
+    private double sampleRate;
+    private double minVal;
+    private double maxVal;
+    private String units;
+    private double resolution;
+    private double locationX;
+    private double locationY;
+    private double locationZ;
+    private double locationUser;
+    private double highFreqCorner;
+    private long highFreqOrder;
+    private String highFilterType;
+    private double lowFreqCorner;
+    private long lowFreqOrder;
+    private String lowFilterType;
+    private String probeInfo;
+    private ArrayList<AnalogData> data;
 
-   private double maxVal;
+    /**
+     * @param tag
+     * @param entityInfo
+     */
+    public AnalogInfo(Tag tag, EntityInfo entityInfo) {
+        super(tag, entityInfo);
+    }
 
-   private String units;
+    /**
+     * @param tag
+     * @param entityInfo
+     * @param sampleRate
+     * @param minVal
+     * @param maxVal
+     * @param units
+     * @param resolution
+     * @param locationX
+     * @param locationY
+     * @param locationZ
+     * @param locationUser
+     * @param highFreqCorner
+     * @param highFreqOrder
+     * @param highFilterType
+     * @param lowFreqCorner
+     * @param lowFreqOrder
+     * @param lowFilterType
+     * @param probeInfo
+     */
+    public AnalogInfo(Tag tag, EntityInfo entityInfo, double sampleRate, double minVal, double maxVal,
+            String units, double resolution, double locationX, double locationY, double locationZ,
+            double locationUser, double highFreqCorner, long highFreqOrder, String highFilterType,
+            double lowFreqCorner, long lowFreqOrder, String lowFiltertype, String probeInfo) {
+        super(tag, entityInfo);
 
-   private double resolution;
+        if (units == null) {
+            units = "";
+        }
 
-   private double locationX;
+        if (highFilterType == null) {
+            highFilterType = "";
+        }
 
-   private double locationY;
+        if (lowFiltertype == null) {
+            lowFiltertype = "";
+        }
 
-   private double locationZ;
+        if (probeInfo == null) {
+            probeInfo = "";
+        }
 
-   private double locationUser;
+        this.sampleRate = sampleRate;
+        this.minVal = minVal;
+        this.maxVal = maxVal;
+        this.units = units.trim();
+        this.resolution = resolution;
+        this.locationX = locationX;
+        this.locationY = locationY;
+        this.locationZ = locationZ;
+        this.locationUser = locationUser;
+        this.highFreqCorner = highFreqCorner;
+        this.highFreqOrder = highFreqOrder;
+        this.highFilterType = highFilterType.trim();
+        this.lowFreqCorner = lowFreqCorner;
+        this.lowFreqOrder = lowFreqOrder;
+        this.lowFilterType = lowFiltertype.trim();
+        this.probeInfo = probeInfo.trim();
+    }
 
-   private double highFreqCorner;
+    /**
+     * @return the sampleRate
+     */
+    public double getSampleRate() {
+        return sampleRate;
+    }
 
-   private long highFreqOrder;
+    /**
+     * @param sampleRate the sampleRate to set
+     */
+    public void setSampleRate(double sampleRate) {
+        this.sampleRate = sampleRate;
+    }
 
-   private String highFilterType;
+    /**
+     * @return the minVal
+     */
+    public double getMinVal() {
+        return minVal;
+    }
 
-   private double lowFreqCorner;
+    /**
+     * @param minVal the minVal to set
+     */
+    public void setMinVal(double minVal) {
+        this.minVal = minVal;
+    }
 
-   private long lowFreqOrder;
+    /**
+     * @return the maxVal
+     */
+    public double getMaxVal() {
+        return maxVal;
+    }
 
-   private String lowFilterType;
+    /**
+     * @param maxVal the maxVal to set
+     */
+    public void setMaxVal(double maxVal) {
+        this.maxVal = maxVal;
+    }
 
-   private String probeInfo;
+    /**
+     * @return the units
+     */
+    public String getUnits() {
+        return units;
+    }
 
-   private ArrayList<AnalogData> data;
+    /**
+     * @param units the units to set
+     */
+    public void setUnits(String units) {
+        this.units = units;
+    }
 
-   /**
-    * @param tag
-    * @param entityInfo
-    */
-   public AnalogInfo(Tag tag, EntityInfo entityInfo) {
-      super(tag, entityInfo);
-   }
+    /**
+     * @return the resolution
+     */
+    public double getResolution() {
+        return resolution;
+    }
 
-   /**
-    * @param tag
-    * @param entityInfo
-    * @param sampleRate
-    * @param minVal
-    * @param maxVal
-    * @param units
-    * @param resolution
-    * @param locationX
-    * @param locationY
-    * @param locationZ
-    * @param locationUser
-    * @param highFreqCorner
-    * @param highFreqOrder
-    * @param highFilterType
-    * @param lowFreqCorner
-    * @param lowFreqOrder
-    * @param lowFilterType
-    * @param probeInfo
-    */
-   public AnalogInfo(Tag tag, EntityInfo entityInfo, double sampleRate, double minVal, double maxVal,
-         String units, double resolution, double locationX, double locationY, double locationZ,
-         double locationUser, double highFreqCorner, long highFreqOrder, String highFilterType,
-         double lowFreqCorner, long lowFreqOrder, String lowFiltertype, String probeInfo) {
-      super(tag, entityInfo);
+    /**
+     * @param resolution the resolution to set
+     */
+    public void setResolution(double resolution) {
+        this.resolution = resolution;
+    }
 
-      if (units == null) {
-         units = "";
-      }
+    /**
+     * @return the locationX
+     */
+    public double getLocationX() {
+        return locationX;
+    }
 
-      if (highFilterType == null) {
-         highFilterType = "";
-      }
+    /**
+     * @param locationX the locationX to set
+     */
+    public void setLocationX(double locationX) {
+        this.locationX = locationX;
+    }
 
-      if (lowFiltertype == null) {
-         lowFiltertype = "";
-      }
+    /**
+     * @return the locationY
+     */
+    public double getLocationY() {
+        return locationY;
+    }
 
-      if (probeInfo == null) {
-         probeInfo = "";
-      }
+    /**
+     * @param locationY the locationY to set
+     */
+    public void setLocationY(double locationY) {
+        this.locationY = locationY;
+    }
 
-      this.sampleRate = sampleRate;
-      this.minVal = minVal;
-      this.maxVal = maxVal;
-      this.units = units.trim();
-      this.resolution = resolution;
-      this.locationX = locationX;
-      this.locationY = locationY;
-      this.locationZ = locationZ;
-      this.locationUser = locationUser;
-      this.highFreqCorner = highFreqCorner;
-      this.highFreqOrder = highFreqOrder;
-      this.highFilterType = highFilterType.trim();
-      this.lowFreqCorner = lowFreqCorner;
-      this.lowFreqOrder = lowFreqOrder;
-      this.lowFilterType = lowFiltertype.trim();
-      this.probeInfo = probeInfo.trim();
-   }
+    /**
+     * @return the locationZ
+     */
+    public double getLocationZ() {
+        return locationZ;
+    }
 
-   /**
-    * @return the sampleRate
-    */
-   public double getSampleRate() {
-      return sampleRate;
-   }
+    /**
+     * @param locationZ the locationZ to set
+     */
+    public void setLocationZ(double locationZ) {
+        this.locationZ = locationZ;
+    }
 
-   /**
-    * @param sampleRate the sampleRate to set
-    */
-   public void setSampleRate(double sampleRate) {
-      this.sampleRate = sampleRate;
-   }
+    /**
+     * @return the locationUser
+     */
+    public double getLocationUser() {
+        return locationUser;
+    }
 
-   /**
-    * @return the minVal
-    */
-   public double getMinVal() {
-      return minVal;
-   }
+    /**
+     * @param locationUser the locationUser to set
+     */
+    public void setLocationUser(double locationUser) {
+        this.locationUser = locationUser;
+    }
 
-   /**
-    * @param minVal the minVal to set
-    */
-   public void setMinVal(double minVal) {
-      this.minVal = minVal;
-   }
+    /**
+     * @return the highFreqCorner
+     */
+    public double getHighFreqCorner() {
+        return highFreqCorner;
+    }
 
-   /**
-    * @return the maxVal
-    */
-   public double getMaxVal() {
-      return maxVal;
-   }
+    /**
+     * @param highFreqCorner the highFreqCorner to set
+     */
+    public void setHighFreqCorner(double highFreqCorner) {
+        this.highFreqCorner = highFreqCorner;
+    }
 
-   /**
-    * @param maxVal the maxVal to set
-    */
-   public void setMaxVal(double maxVal) {
-      this.maxVal = maxVal;
-   }
+    /**
+     * @return the highFreqOrder
+     */
+    public long getHighFreqOrder() {
+        return highFreqOrder;
+    }
 
-   /**
-    * @return the units
-    */
-   public String getUnits() {
-      return units;
-   }
+    /**
+     * @param highFreqOrder the highFreqOrder to set
+     */
+    public void setHighFreqOrder(long highFreqOrder) {
+        this.highFreqOrder = highFreqOrder;
+    }
 
-   /**
-    * @param units the units to set
-    */
-   public void setUnits(String units) {
-      this.units = units;
-   }
+    /**
+     * @return the highFilterType
+     */
+    public String getHighFilterType() {
+        return highFilterType;
+    }
 
-   /**
-    * @return the resolution
-    */
-   public double getResolution() {
-      return resolution;
-   }
+    /**
+     * @param highFilterType the highFilterType to set
+     */
+    public void setHighFilterType(String highFilterType) {
+        this.highFilterType = highFilterType;
+    }
 
-   /**
-    * @param resolution the resolution to set
-    */
-   public void setResolution(double resolution) {
-      this.resolution = resolution;
-   }
+    /**
+     * @return the lowFreqCorner
+     */
+    public double getLowFreqCorner() {
+        return lowFreqCorner;
+    }
 
-   /**
-    * @return the locationX
-    */
-   public double getLocationX() {
-      return locationX;
-   }
+    /**
+     * @param lowFreqCorner the lowFreqCorner to set
+     */
+    public void setLowFreqCorner(double lowFreqCorner) {
+        this.lowFreqCorner = lowFreqCorner;
+    }
 
-   /**
-    * @param locationX the locationX to set
-    */
-   public void setLocationX(double locationX) {
-      this.locationX = locationX;
-   }
+    /**
+     * @return the lowFreqOrder
+     */
+    public long getLowFreqOrder() {
+        return lowFreqOrder;
+    }
 
-   /**
-    * @return the locationY
-    */
-   public double getLocationY() {
-      return locationY;
-   }
+    /**
+     * @param lowFreqOrder the lowFreqOrder to set
+     */
+    public void setLowFreqOrder(long lowFreqOrder) {
+        this.lowFreqOrder = lowFreqOrder;
+    }
 
-   /**
-    * @param locationY the locationY to set
-    */
-   public void setLocationY(double locationY) {
-      this.locationY = locationY;
-   }
+    /**
+     * @return the lowFilterType
+     */
+    public String getLowFilterType() {
+        return lowFilterType;
+    }
 
-   /**
-    * @return the locationZ
-    */
-   public double getLocationZ() {
-      return locationZ;
-   }
+    /**
+     * @param lowFilterType the lowFilterType to set
+     */
+    public void setLowFilterType(String lowFilterType) {
+        this.lowFilterType = lowFilterType;
+    }
 
-   /**
-    * @param locationZ the locationZ to set
-    */
-   public void setLocationZ(double locationZ) {
-      this.locationZ = locationZ;
-   }
+    /**
+     * @return the probeInfo
+     */
+    public String getProbeInfo() {
+        return probeInfo;
+    }
 
-   /**
-    * @return the locationUser
-    */
-   public double getLocationUser() {
-      return locationUser;
-   }
+    /**
+     * @param probeInfo the probeInfo to set
+     */
+    public void setProbeInfo(String probeInfo) {
+        this.probeInfo = probeInfo;
+    }
 
-   /**
-    * @param locationUser the locationUser to set
-    */
-   public void setLocationUser(double locationUser) {
-      this.locationUser = locationUser;
-   }
+    /**
+     * @return the data
+     */
+    public ArrayList<AnalogData> getData() {
+        return data;
+    }
 
-   /**
-    * @return the highFreqCorner
-    */
-   public double getHighFreqCorner() {
-      return highFreqCorner;
-   }
-
-   /**
-    * @param highFreqCorner the highFreqCorner to set
-    */
-   public void setHighFreqCorner(double highFreqCorner) {
-      this.highFreqCorner = highFreqCorner;
-   }
-
-   /**
-    * @return the highFreqOrder
-    */
-   public long getHighFreqOrder() {
-      return highFreqOrder;
-   }
-
-   /**
-    * @param highFreqOrder the highFreqOrder to set
-    */
-   public void setHighFreqOrder(long highFreqOrder) {
-      this.highFreqOrder = highFreqOrder;
-   }
-
-   /**
-    * @return the highFilterType
-    */
-   public String getHighFilterType() {
-      return highFilterType;
-   }
-
-   /**
-    * @param highFilterType the highFilterType to set
-    */
-   public void setHighFilterType(String highFilterType) {
-      this.highFilterType = highFilterType;
-   }
-
-   /**
-    * @return the lowFreqCorner
-    */
-   public double getLowFreqCorner() {
-      return lowFreqCorner;
-   }
-
-   /**
-    * @param lowFreqCorner the lowFreqCorner to set
-    */
-   public void setLowFreqCorner(double lowFreqCorner) {
-      this.lowFreqCorner = lowFreqCorner;
-   }
-
-   /**
-    * @return the lowFreqOrder
-    */
-   public long getLowFreqOrder() {
-      return lowFreqOrder;
-   }
-
-   /**
-    * @param lowFreqOrder the lowFreqOrder to set
-    */
-   public void setLowFreqOrder(long lowFreqOrder) {
-      this.lowFreqOrder = lowFreqOrder;
-   }
-
-   /**
-    * @return the lowFilterType
-    */
-   public String getLowFilterType() {
-      return lowFilterType;
-   }
-
-   /**
-    * @param lowFilterType the lowFilterType to set
-    */
-   public void setLowFilterType(String lowFilterType) {
-      this.lowFilterType = lowFilterType;
-   }
-
-   /**
-    * @return the probeInfo
-    */
-   public String getProbeInfo() {
-      return probeInfo;
-   }
-
-   /**
-    * @param probeInfo the probeInfo to set
-    */
-   public void setProbeInfo(String probeInfo) {
-      this.probeInfo = probeInfo;
-   }
-
-   /**
-    * @return the data
-    */
-   public ArrayList<AnalogData> getData() {
-      return data;
-   }
-
-   /**
-    * @param data the data to set
-    */
-   public void setData(ArrayList<AnalogData> data) {
-      this.data = data;
-   }
+    /**
+     * @param data the data to set
+     */
+    public void setData(ArrayList<AnalogData> data) {
+        this.data = data;
+    }
 }

@@ -12,138 +12,130 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 /**
- * This class contains all the information of a neuroshare file. In the NeuroshareXML format, 
- * it can be considered the root node of the tree.
- * 
- * @author Makoto Takemiya - [武宮 誠] <br />
- * <i>ATR - [株式会社・國際電氣通信基礎技術研究所]</i>
  *
- * @version 2010/03/19
+ * @author kharada
+ * @version 2011/01/13
  */
 @XStreamAlias("NeuroshareXML")
 public class NeuroshareFile {
 
-   public static XStream xstream;
+    public static XStream xstream;
 
-   static {
-      xstream = new XStream(new DomDriver());
-      xstream.processAnnotations(NeuroshareFile.class);
-      xstream.processAnnotations(FileInfo.class);
-      xstream.processAnnotations(Entity.class);
-      xstream.processAnnotations(AnalogInfo.class);
-      xstream.processAnnotations(EntityInfo.class);
-      xstream.processAnnotations(EventInfo.class);
-      xstream.processAnnotations(SegmentInfo.class);
-      xstream.processAnnotations(NeuralInfo.class);
-   }
+    static {
+        xstream = new XStream(new DomDriver());
+        xstream.processAnnotations(NeuroshareFile.class);
+        xstream.processAnnotations(FileInfo.class);
+        xstream.processAnnotations(Entity.class);
+        xstream.processAnnotations(AnalogInfo.class);
+        xstream.processAnnotations(EntityInfo.class);
+        xstream.processAnnotations(EventInfo.class);
+        xstream.processAnnotations(SegmentInfo.class);
+        xstream.processAnnotations(NeuralInfo.class);
+    }
+    private String magicCode;
+    private FileInfo fileInfo;
+    @XStreamImplicit
+    private ArrayList<Entity> entities;
+    @XStreamOmitField
+    private boolean lazyLoad;
 
-   private String magicCode;
+    /**
+     *
+     */
+    public NeuroshareFile() {
+        super();
+    }
 
-   private FileInfo fileInfo;
+    /**
+     * @param magicCode
+     * @param fileInfo
+     * @param entities
+     * @param lazyLoad
+     */
+    public NeuroshareFile(String magicCode, FileInfo fileInfo, ArrayList<Entity> entities, boolean lazyLoad) {
+        super();
+        this.magicCode = magicCode;
+        this.fileInfo = fileInfo;
+        this.entities = entities;
+        this.lazyLoad = lazyLoad;
+    }
 
-   @XStreamImplicit
-   private ArrayList<Entity> entities;
+    /**
+     * @return the xstream
+     */
+    public static XStream getXstream() {
+        return xstream;
+    }
 
-   @XStreamOmitField
-   private boolean lazyLoad;
+    /**
+     * @param xstream the xstream to set
+     */
+    public static void setXstream(XStream xstream) {
+        NeuroshareFile.xstream = xstream;
+    }
 
-   /**
-    * 
-    */
-   public NeuroshareFile() {
-      super();
-   }
+    /**
+     * @return the magicCode
+     */
+    public String getMagicCode() {
+        return magicCode;
+    }
 
-   /**
-    * @param magicCode
-    * @param fileInfo
-    * @param entities
-    * @param lazyLoad
-    */
-   public NeuroshareFile(String magicCode, FileInfo fileInfo, ArrayList<Entity> entities, boolean lazyLoad) {
-      super();
-      this.magicCode = magicCode;
-      this.fileInfo = fileInfo;
-      this.entities = entities;
-      this.lazyLoad = lazyLoad;
-   }
+    /**
+     * @param magicCode the magicCode to set
+     */
+    public void setMagicCode(String magicCode) {
+        this.magicCode = magicCode;
+    }
 
-   /**
-    * @return the xstream
-    */
-   public static XStream getXstream() {
-      return xstream;
-   }
+    /**
+     * @return the fileInfo
+     */
+    public FileInfo getFileInfo() {
+        return fileInfo;
+    }
 
-   /**
-    * @param xstream the xstream to set
-    */
-   public static void setXstream(XStream xstream) {
-      NeuroshareFile.xstream = xstream;
-   }
+    /**
+     * @param fileInfo the fileInfo to set
+     */
+    public void setFileInfo(FileInfo fileInfo) {
+        this.fileInfo = fileInfo;
+    }
 
-   /**
-    * @return the magicCode
-    */
-   public String getMagicCode() {
-      return magicCode;
-   }
+    /**
+     * @return the entities
+     */
+    public ArrayList<Entity> getEntities() {
+        return entities;
+    }
 
-   /**
-    * @param magicCode the magicCode to set
-    */
-   public void setMagicCode(String magicCode) {
-      this.magicCode = magicCode;
-   }
+    /**
+     * @param entities the entities to set
+     */
+    public void setEntities(ArrayList<Entity> entities) {
+        this.entities = entities;
+    }
 
-   /**
-    * @return the fileInfo
-    */
-   public FileInfo getFileInfo() {
-      return fileInfo;
-   }
+    /**
+     * @return the lazyLoad
+     */
+    public boolean isLazyLoad() {
+        return lazyLoad;
+    }
 
-   /**
-    * @param fileInfo the fileInfo to set
-    */
-   public void setFileInfo(FileInfo fileInfo) {
-      this.fileInfo = fileInfo;
-   }
+    /**
+     * @param lazyLoad the lazyLoad to set
+     */
+    public void setLazyLoad(boolean lazyLoad) {
+        this.lazyLoad = lazyLoad;
+    }
 
-   /**
-    * @return the entities
-    */
-   public ArrayList<Entity> getEntities() {
-      return entities;
-   }
-
-   /**
-    * @param entities the entities to set
-    */
-   public void setEntities(ArrayList<Entity> entities) {
-      this.entities = entities;
-   }
-
-   /**
-    * @return the lazyLoad
-    */
-   public boolean isLazyLoad() {
-      return lazyLoad;
-   }
-
-   /**
-    * @param lazyLoad the lazyLoad to set
-    */
-   public void setLazyLoad(boolean lazyLoad) {
-      this.lazyLoad = lazyLoad;
-   }
-
-   /**
-    * {@inheritDoc}
-    * @see java.lang.Object#toString()
-    */
-   @Override
-   public String toString() {
-      return xstream.toXML(this);
-   }
+    /**
+     * {@inheritDoc}
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return xstream.toXML(this);
+    }
 }

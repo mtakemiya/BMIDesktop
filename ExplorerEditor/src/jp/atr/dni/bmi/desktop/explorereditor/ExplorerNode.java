@@ -21,6 +21,7 @@ import jp.atr.dni.bmi.desktop.neuroshareutils.FileInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NSReader;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NeuralInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NeuroshareFile;
+import jp.atr.dni.bmi.desktop.neuroshareutils.NsnFileModelConverter;
 import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentInfo;
 import org.openide.ErrorManager;
 import org.openide.nodes.AbstractNode;
@@ -35,12 +36,13 @@ import org.openide.util.lookup.Lookups;
 /**
  *
  * @author kharada
+ * @version 2011/01/13
  */
 public class ExplorerNode extends AbstractNode {
 
     public ExplorerNode(GeneralFileInfo obj) {
         super(new ExplorerChildren(obj.getFilePath()), Lookups.singleton(obj));
-        //setDisplayName(obj.getFileName());
+        setDisplayName(obj.getFileName());
     }
 
     public ExplorerNode() {
@@ -66,10 +68,10 @@ public class ExplorerNode extends AbstractNode {
         switch (type) {
 
             case 1:
-                iconPath = "jp/atr/dni/bmi/desktop/explorereditor/icon1.png";
+                iconPath = "jp/atr/dni/bmi/desktop/explorereditor/folder_blu_n16.png";
                 break;
             case 2:
-                iconPath = "jp/atr/dni/bmi/desktop/explorereditor/icon2.png";
+                iconPath = "jp/atr/dni/bmi/desktop/explorereditor/docu_memo16.png";
                 break;
             case 3:
                 iconPath = "jp/atr/dni/bmi/desktop/explorereditor/icon3.png";
@@ -82,7 +84,7 @@ public class ExplorerNode extends AbstractNode {
 
     @Override
     public Image getOpenedIcon(int i) {
-        return getIcon(i);
+        return getIcon(2);
     }
 
     @Override
@@ -189,24 +191,25 @@ public class ExplorerNode extends AbstractNode {
             // Get Neuroshare Data using NSReader.
             NSReader reader = new NSReader();
             NeuroshareFile nsn = reader.readNSFile(obj.getFilePath(), false);
+            obj.setNsObj(nsn);
 
             FileInfo fi = nsn.getFileInfo();
             ArrayList<Entity> entities = nsn.getEntities();
 
             // Set property value. with using obj's get*** method.
-            Property fileTypeProp = new PropertySupport.Reflection(fi, String.class, "getFileType", null);
-            Property entityCountProp = new PropertySupport.Reflection(fi, Long.class, "getEntityCount", null);
-            Property timeStampResProp = new PropertySupport.Reflection(fi, Double.class, "getTimeStampRes", null);
-            Property timeSpanProp = new PropertySupport.Reflection(fi, Double.class, "getTimeSpan", null);
-            Property appNameProp = new PropertySupport.Reflection(fi, String.class, "getAppName", null);
-            Property yearProp = new PropertySupport.Reflection(fi, Long.class, "getYear", null);
-            Property monthProp = new PropertySupport.Reflection(fi, Long.class, "getMonth", null);
-            Property dayProp = new PropertySupport.Reflection(fi, Long.class, "getDayOfMonth", null);
-            Property hourProp = new PropertySupport.Reflection(fi, Long.class, "getHourOfDay", null);
-            Property minProp = new PropertySupport.Reflection(fi, Long.class, "getMinOfDay", null);
-            Property secProp = new PropertySupport.Reflection(fi, Long.class, "getSecOfDay", null);
-            Property milliSecProp = new PropertySupport.Reflection(fi, Long.class, "getMilliSecOfDay", null);
-            Property commentsProp = new PropertySupport.Reflection(fi, String.class, "getComments", null);
+            PropertySupport.Reflection fileTypeProp = new PropertySupport.Reflection(fi, String.class, "fileType");
+            PropertySupport.Reflection entityCountProp = new PropertySupport.Reflection(fi, Long.class, "getEntityCount", null);
+            PropertySupport.Reflection timeStampResProp = new PropertySupport.Reflection(fi, double.class, "timeStampRes");
+            PropertySupport.Reflection timeSpanProp = new PropertySupport.Reflection(fi, Double.class, "getTimeSpan", null);
+            PropertySupport.Reflection appNameProp = new PropertySupport.Reflection(fi, String.class, "getAppName", null);
+            PropertySupport.Reflection yearProp = new PropertySupport.Reflection(fi, Long.class, "getYear", null);
+            PropertySupport.Reflection monthProp = new PropertySupport.Reflection(fi, Long.class, "getMonth", null);
+            PropertySupport.Reflection dayProp = new PropertySupport.Reflection(fi, Long.class, "getDayOfMonth", null);
+            PropertySupport.Reflection hourProp = new PropertySupport.Reflection(fi, Long.class, "getHourOfDay", null);
+            PropertySupport.Reflection minProp = new PropertySupport.Reflection(fi, Long.class, "getMinOfDay", null);
+            PropertySupport.Reflection secProp = new PropertySupport.Reflection(fi, Long.class, "getSecOfDay", null);
+            PropertySupport.Reflection milliSecProp = new PropertySupport.Reflection(fi, Long.class, "getMilliSecOfDay", null);
+            PropertySupport.Reflection commentsProp = new PropertySupport.Reflection(fi, String.class, "getComments", null);
 
             // Set display name.
             fileTypeProp.setName("File Type"); // need to be identified.
@@ -291,7 +294,7 @@ public class ExplorerNode extends AbstractNode {
                         EventInfo eventInfo = (EventInfo) entity;
                         Property ei_EventTypeProp = new PropertySupport.Reflection(eventInfo, Long.class, "getEventType", null);
                         Property ei_CSVDescProp = new PropertySupport.Reflection(eventInfo, String.class, "getCsvDesc", null);
-                        ei_EventTypeProp.setName("Event Type" ); // need to be identified.
+                        ei_EventTypeProp.setName("Event Type"); // need to be identified.
                         ei_CSVDescProp.setName("CSV Desc"); // need to be identified.
                         ei_EventTypeProp.setShortDescription("type of the event. <i><B>ns_EventInfo.dwEventType.</B></i>");
                         ei_CSVDescProp.setShortDescription("description of the event. <i><B>ns_EventInfo.szCSVDesc.</B></i>");
@@ -313,7 +316,7 @@ public class ExplorerNode extends AbstractNode {
                         Property ai_LowFreqCornerProp = new PropertySupport.Reflection(analogInfo, Double.class, "getLowFreqCorner", null);
                         Property ai_LowFreqOrderProp = new PropertySupport.Reflection(analogInfo, Long.class, "getLowFreqOrder", null);
                         Property ai_LowFilterTypeProp = new PropertySupport.Reflection(analogInfo, String.class, "getLowFilterType", null);
-                        Property ai_ProbeInfoProp = new PropertySupport.Reflection(analogInfo, String.class, "getProbeInfo", null);
+                        Property ai_ProbeInfoProp = new PropertySupport.Reflection(analogInfo, String.class, "getProbeInfo", "setProbeInfo");
                         ai_SampleRateProp.setName("Sample Rate"); // need to be identified.
                         ai_UnitsProp.setName("Unit"); // need to be identified.
                         ai_ResolutionProp.setName("Resolution"); // need to be identified.
@@ -413,7 +416,17 @@ public class ExplorerNode extends AbstractNode {
         @Override
         public void actionPerformed(ActionEvent e) {
             GeneralFileInfo obj = getLookup().lookup(GeneralFileInfo.class);
-            JOptionPane.showMessageDialog(null, "Hello world from " + obj);
+            //JOptionPane.showMessageDialog(null, "Hello world from " + obj);
+            JOptionPane.showMessageDialog(null, "neuroshare obj\n" +"File Type : "+ obj.getNsObj().getFileInfo().getFileType() + "\n"+"Year : "+ obj.getNsObj().getFileInfo().getYear() + "\n"+"Entity(0) Label : "+ obj.getNsObj().getEntities().get(0).getEntityInfo().getEntityLabel() + "\n"+"Entity(0) AnalogInfo probeInfo : "+ ((AnalogInfo)obj.getNsObj().getEntities().get(0)).getProbeInfo() + "\n"+"Entity(0) AnalogInfo data(0) : "+ ((AnalogInfo)obj.getNsObj().getEntities().get(0)).getData().get(0).getAnalogValues().get(0) + "\n");
+
+            // over write - refresh obj....is it needed?
+            //obj.setNsObj(obj.getNsObj());
+
+            // from here.
+//            NsnFileModelConverter.ModelConvert(obj.getNsObj(), obj.getFilePath());
+            NsnFileModelConverter.ModelConvert(obj.getNsObj(), "C:\\Temp\\test001.nsn");
+
+
         }
 
         @Override

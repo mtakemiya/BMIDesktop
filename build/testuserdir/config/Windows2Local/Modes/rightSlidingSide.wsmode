@@ -6,7 +6,8 @@
   <kind type="sliding" />
   <slidingSide side="right" />
   <state type="joined" />
-  <bounds x="0" y="0" width="0" height="0" />
+  <bounds x="1" y="0" width="448" height="731" />
   <frame state="0"/>
+    <active-tc  id="properties" />
     <empty-behavior permanent="true"/>
 </mode>
