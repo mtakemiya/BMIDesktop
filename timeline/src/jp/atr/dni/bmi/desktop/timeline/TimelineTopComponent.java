@@ -424,7 +424,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       gl.glScaled(scale, scale, 0);
 
       gl.glBegin(GL.GL_LINES);
-      int max = 500;
+      int max = 300;
       for (int i = 0; i < max; i++) {
 //         float[] coords = new float[4];
 //
@@ -440,12 +440,18 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 //            gl.glVertex2f(coords[(index + 2) % coords.length], coords[(index + 3) % coords.length]);
 //         }
 
+         double lastX = -Math.sin(theta);
+         double lastY = -Math.random()*Math.cos(theta)-2*i;
+         
          for (int x = 0; x < 1000; x++){
             if (x % 2 == 0) {
-               gl.glVertex2d(-Math.sin(theta)+Math.random()+x, Math.random()*Math.cos(theta) - i);
+               gl.glVertex2d(lastX, lastY);
             } else {
-               gl.glVertex2d(Math.sin(theta)+x, -Math.random()*Math.cos(theta)-i);
+               lastY = -Math.random()*Math.cos(theta)-2*i;
+               gl.glVertex2d(Math.sin(theta)+x, lastY);
             }
+            lastX = Math.sin(theta)+x;
+            
          }
 
 //         Point2D point = getScreenCoordinates(x1, y1);
