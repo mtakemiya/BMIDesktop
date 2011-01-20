@@ -92,5 +92,4 @@ public class EntityInfo {
     public void setTocPath(String tocPath) {
         this.tocPath = tocPath;
     }
-
 }

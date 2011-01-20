@@ -6,6 +6,7 @@ package jp.atr.dni.bmi.desktop.explorereditor;
 
 import java.awt.Image;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.util.ArrayList;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -191,9 +192,9 @@ public class ExplorerNode extends AbstractNode {
 
             // Get Neuroshare Data using NSReader.
             NSReader reader = new NSReader();
-            //NeuroshareFile nsn = reader.readNSFile(obj.getFilePath(), false);
-            NeuroshareFile nsn = reader.readNSFileSaveToc(obj.getFilePath(), "C:\\Temp\\20110119");
-            if(nsn == null){
+            // Read the Neuroshare file and save TOC files in the tocs dir.
+            NeuroshareFile nsn = reader.readNSFileSaveToc(obj.getFilePath(), new File("tocs").getAbsolutePath());
+            if (nsn == null) {
                 return null;
             }
             obj.setNsObj(nsn);

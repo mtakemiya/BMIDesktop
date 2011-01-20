@@ -275,7 +275,7 @@ public class TocUtils {
 //            }
 //            dataByteSize = Integer.reverseBytes(dis.readInt());
 //            eventValue = dis.readUTF();
-            
+
             rtnData.add(new TextEventData(timeStamp, dataByteSize, eventValue));
         }
 
@@ -438,7 +438,7 @@ public class TocUtils {
 //            dataByteSize = Integer.reverseBytes(dis.readInt());
 //            eventValue = Integer.reverseBytes(dis.readInt());
 
-            rtnData.add(new DWordEventData(timeStamp, dataByteSize, ((Integer)eventValue).longValue()));
+            rtnData.add(new DWordEventData(timeStamp, dataByteSize, ((Integer) eventValue).longValue()));
         }
 
         dis.close();

@@ -380,7 +380,7 @@ public class NsnFileModelConverter {
 
     /**
      * @param nsObj
-     *                  All values in the NeuroshareFile. (means includes data of entities.)
+     *                  Some values in the NeuroshareFile. (means NOT includes data of entities.)
      * @param fileFullPath
      *                  output file path.
      */
@@ -503,7 +503,7 @@ public class NsnFileModelConverter {
                                     // Get Event Data (read TOC)
                                     WordEventData wordEventData = (TocUtils.readWordEventDataFromTocFile(tocPath)).get(j);
                                     // ns_EVENT_WORD
-                                    rtnval2 = nsEd.addEventData(wordEventData.getTimestamp(), ((Integer)wordEventData.getData()).shortValue());
+                                    rtnval2 = nsEd.addEventData(wordEventData.getTimestamp(), ((Integer) wordEventData.getData()).shortValue());
                                     if (rtnval2 != 0) {
                                         // add error. - input arg error - or intermediate file i/o error.
                                     }
@@ -512,7 +512,7 @@ public class NsnFileModelConverter {
                                     // Get Event Data (read TOC)
                                     DWordEventData dWordEventData = (TocUtils.readDWordEventDataFromTocFile(tocPath)).get(j);
                                     // ns_EVENT_DWORD
-                                    rtnval2 = nsEd.addEventData(dWordEventData.getTimestamp(),dWordEventData.getData().intValue());
+                                    rtnval2 = nsEd.addEventData(dWordEventData.getTimestamp(), dWordEventData.getData().intValue());
                                     if (rtnval2 != 0) {
                                         // add error. - input arg error - or intermediate file i/o error.
                                     }
@@ -628,7 +628,7 @@ public class NsnFileModelConverter {
                             continue;
                         }
 
-//  Get Segment Data (read TOC)
+                        //  Get Segment Data (read TOC)
                         SegmentData sd = TocUtils.readSegmentDataFromTocFile(tocPath);
 
                         ArrayList<Double> timestampData = sd.getTimeStamp();
