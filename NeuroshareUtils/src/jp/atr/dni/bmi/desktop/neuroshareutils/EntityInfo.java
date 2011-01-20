@@ -10,6 +10,7 @@ package jp.atr.dni.bmi.desktop.neuroshareutils;
  */
 public class EntityInfo {
 
+    private String tocPath = "";
     private String entityLabel;
     private long entityType;
     private long itemCount;
@@ -77,4 +78,19 @@ public class EntityInfo {
     public void setItemCount(long itemCount) {
         this.itemCount = itemCount;
     }
+
+    /**
+     * @return the tocPath
+     */
+    public String getTocPath() {
+        return tocPath;
+    }
+
+    /**
+     * @param tocPath the tocPath to set
+     */
+    public void setTocPath(String tocPath) {
+        this.tocPath = tocPath;
+    }
+
 }

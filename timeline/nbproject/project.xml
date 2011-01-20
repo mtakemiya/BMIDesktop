@@ -58,12 +58,12 @@
             </module-dependencies>
             <public-packages/>
             <class-path-extension>
-                <runtime-relative-path>ext/nativewindow.all.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/nativewindow.all.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
                 <runtime-relative-path>ext/jogl.all.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/jogl.all.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/nativewindow.all.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/nativewindow.all.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
                 <runtime-relative-path>ext/gluegen-rt.jar</runtime-relative-path>
