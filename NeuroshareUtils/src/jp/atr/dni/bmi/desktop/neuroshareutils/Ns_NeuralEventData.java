@@ -27,9 +27,9 @@ public class Ns_NeuralEventData {
      */
     public Ns_NeuralEventData(int ID, String szEntityLabel) {
 
-        this.intermediateFileNameForInfo = (new Const_values()).getHeader() + (new Const_values()).getNeural()
+        this.intermediateFileNameForInfo = Const_values.FN_HEADER + Const_values.NEURAL
                 + "_" + ID + ".neuralEventInfo";
-        this.intermediateFileNameForData = (new Const_values()).getHeader() + (new Const_values()).getNeural()
+        this.intermediateFileNameForData = Const_values.FN_HEADER + Const_values.NEURAL
                 + "_" + ID + ".neuralEventData";
         this.tagElement = new Ns_TagElement(Const_ns_ENTITY.ns_ENTITY_NEURAL);
         this.entityInfo = new Ns_EntityInfo(szEntityLabel, Const_ns_ENTITY.ns_ENTITY_NEURAL);
@@ -55,7 +55,7 @@ public class Ns_NeuralEventData {
 
     public int addNeuralEventData(double dTimestamp) {
 
-        int rtnVal = new Const_values().getNs_OK();
+        int rtnVal = Const_values.NS_OK;
         File tempFile = null;
         FileOutputStream fos = null;
         DataOutputStream dos = null;
@@ -86,22 +86,22 @@ public class Ns_NeuralEventData {
             // Add this.entityInfo.addDwItemCount(some value).
             this.entityInfo.addDwItemCount(1);
 
-            // Then, ns_OK.
-            rtnVal = new Const_values().getNs_OK();
+            // Then, NS_OK.
+            rtnVal = Const_values.NS_OK;
 
         } catch (FileNotFoundException e) {
             // File Not Found.
             e.printStackTrace();
 
-            // Then, ns_FILEERROR.
-            rtnVal = new Const_values().getNs_FILEERROR();
+            // Then, NS_FILEERROR.
+            rtnVal = Const_values.NS_FILEERROR;
 
         } catch (IOException e) {
             // File I/O error.
             e.printStackTrace();
 
-            // Then, ns_FILEERROR.
-            rtnVal = new Const_values().getNs_FILEERROR();
+            // Then, NS_FILEERROR.
+            rtnVal = Const_values.NS_FILEERROR;
 
         } finally {
             try {
@@ -115,7 +115,7 @@ public class Ns_NeuralEventData {
             } catch (IOException e) {
                 // May be sequence doesn't reach here.
                 e.printStackTrace();
-                rtnVal = new Const_values().getNs_FILEERROR();
+                rtnVal = Const_values.NS_FILEERROR;
 
             }
         }
@@ -126,7 +126,7 @@ public class Ns_NeuralEventData {
 
     public int saveNeuralInfo() {
 
-        int rtnVal = new Const_values().getNs_OK();
+        int rtnVal = Const_values.NS_OK;
         File tempFile = null;
         FileOutputStream fos = null;
         DataOutputStream dos = null;
@@ -156,31 +156,31 @@ public class Ns_NeuralEventData {
             // Write in LITTLE Endian (MATLAB Default)
             dos.writeInt(Integer.reverseBytes(this.tagElement.getDwElementType()));
             dos.writeInt(Integer.reverseBytes(this.tagElement.getDwElemLength()));
-            String szEntityLabel = (this.entityInfo.getSzEntityLabel() + (new Const_values()).getBlank32()).substring(0, (new Const_values()).getChar32());
+            String szEntityLabel = (this.entityInfo.getSzEntityLabel() + Const_values.BLANK_CHAR32).substring(0, Const_values.LENGTH_OF_CHAR32);
             dos.writeBytes(szEntityLabel);
             dos.writeInt(Integer.reverseBytes(this.entityInfo.getDwEntityType()));
             dos.writeInt(Integer.reverseBytes(this.entityInfo.getDwItemCount()));
             dos.writeInt(Integer.reverseBytes(this.neuralInfo.getMembers().getDwSourceEntityID()));
             dos.writeInt(Integer.reverseBytes(this.neuralInfo.getMembers().getDwSourceUnitID()));
-            String szProbeInfo = (this.neuralInfo.getMembers().getSzProbeInfo() + (new Const_values()).getBlank128()).substring(0, (new Const_values()).getChar128());
+            String szProbeInfo = (this.neuralInfo.getMembers().getSzProbeInfo() + Const_values.BLANK_CHAR128).substring(0, Const_values.LENGTH_OF_CHAR128);
             dos.writeBytes(szProbeInfo);
 
-            // Then, ns_OK.
-            rtnVal = new Const_values().getNs_OK();
+            // Then, NS_OK.
+            rtnVal = Const_values.NS_OK;
 
         } catch (FileNotFoundException e) {
             // File Not Found.
             e.printStackTrace();
 
-            // Then, ns_FILEERROR.
-            rtnVal = new Const_values().getNs_FILEERROR();
+            // Then, NS_FILEERROR.
+            rtnVal = Const_values.NS_FILEERROR;
 
         } catch (IOException e) {
             // File I/O error.
             e.printStackTrace();
 
-            // Then, ns_FILEERROR.
-            rtnVal = new Const_values().getNs_FILEERROR();
+            // Then, NS_FILEERROR.
+            rtnVal = Const_values.NS_FILEERROR;
 
         } finally {
             try {
@@ -194,7 +194,7 @@ public class Ns_NeuralEventData {
             } catch (IOException e) {
                 // May be sequence doesn't reach here.
                 e.printStackTrace();
-                rtnVal = new Const_values().getNs_FILEERROR();
+                rtnVal = Const_values.NS_FILEERROR;
 
             }
         }

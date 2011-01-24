@@ -87,6 +87,6 @@ public class Ns_NeuralInfo {
         this.setDwSourceEntityID(nsaNeuralInfo.getDwSourceEntityID());
         this.setDwSourceUnitID(nsaNeuralInfo.getDwSourceUnitID());
         this.setSzProbeInfo(nsaNeuralInfo.getSzProbeInfo());
-        return new Const_values().getNs_OK();
+        return Const_values.NS_OK;
     }
 }

@@ -138,6 +138,6 @@ public class Ns_SegmentInfo {
     public int setMembers(Nsa_SegmentInfo nsaSegmentInfo) {
         this.setDSampleRate(nsaSegmentInfo.getDSampleRate());
         this.setSzUnits(nsaSegmentInfo.getSzUnits());
-        return new Const_values().getNs_OK();
+        return Const_values.NS_OK;
     }
 }

@@ -27,9 +27,9 @@ public class Ns_EventData {
      */
     public Ns_EventData(int ID, String szEntityLabel) {
 
-        this.intermediateFileNameForInfo = (new Const_values()).getHeader() + (new Const_values()).getEvent()
+        this.intermediateFileNameForInfo = Const_values.FN_HEADER + Const_values.EVENT
                 + "_" + ID + ".eventInfo";
-        this.intermediateFileNameForData = (new Const_values()).getHeader() + (new Const_values()).getEvent()
+        this.intermediateFileNameForData = Const_values.FN_HEADER + Const_values.EVENT
                 + "_" + ID + ".eventData";
         this.tagElement = new Ns_TagElement(Const_ns_ENTITY.ns_ENTITY_EVENT);
         this.entityInfo = new Ns_EntityInfo(szEntityLabel, Const_ns_ENTITY.ns_ENTITY_EVENT);
@@ -76,11 +76,11 @@ public class Ns_EventData {
         if (0 != this.entityInfo.getDwItemCount()) {
             // It is no need to check If the record is 1st.
             if (this.eventInfo.getDwEventType() != eventType.ordinal()) {
-                return new Const_values().getNs_WRONGDATA();
+                return Const_values.NS_WRONGDATA;
             }
         }
 
-        int rtnVal = new Const_values().getNs_OK();
+        int rtnVal = Const_values.NS_OK;
         File tempFile = null;
         FileOutputStream fos = null;
         DataOutputStream dos = null;
@@ -155,22 +155,22 @@ public class Ns_EventData {
                 this.eventInfo.setDwMinDataLength(eventDataByteSize);
             }
 
-            // Then, ns_OK.
-            rtnVal = new Const_values().getNs_OK();
+            // Then, NS_OK.
+            rtnVal = Const_values.NS_OK;
 
         } catch (FileNotFoundException e) {
             // File Not Found.
             e.printStackTrace();
 
-            // Then, ns_FILEERROR.
-            rtnVal = new Const_values().getNs_FILEERROR();
+            // Then, NS_FILEERROR.
+            rtnVal = Const_values.NS_FILEERROR;
 
         } catch (IOException e) {
             // File I/O error.
             e.printStackTrace();
 
-            // Then, ns_FILEERROR.
-            rtnVal = new Const_values().getNs_FILEERROR();
+            // Then, NS_FILEERROR.
+            rtnVal = Const_values.NS_FILEERROR;
 
         } finally {
             try {
@@ -184,7 +184,7 @@ public class Ns_EventData {
             } catch (IOException e) {
                 // May be sequence doesn't reach here.
                 e.printStackTrace();
-                rtnVal = new Const_values().getNs_FILEERROR();
+                rtnVal = Const_values.NS_FILEERROR;
 
             }
         }
@@ -195,7 +195,7 @@ public class Ns_EventData {
 
     public int saveEventInfo() {
 
-        int rtnVal = new Const_values().getNs_OK();
+        int rtnVal = Const_values.NS_OK;
         File tempFile = null;
         FileOutputStream fos = null;
         DataOutputStream dos = null;
@@ -225,7 +225,7 @@ public class Ns_EventData {
             // Write in LITTLE Endian (MATLAB Default)
             dos.writeInt(Integer.reverseBytes(this.tagElement.getDwElementType()));
             dos.writeInt(Integer.reverseBytes(this.tagElement.getDwElemLength()));
-            String szEntityLabel = (this.entityInfo.getSzEntityLabel() + (new Const_values()).getBlank32()).substring(0, (new Const_values()).getChar32());
+            String szEntityLabel = (this.entityInfo.getSzEntityLabel() + Const_values.BLANK_CHAR32).substring(0, Const_values.LENGTH_OF_CHAR32);
             dos.writeBytes(szEntityLabel);
             dos.writeInt(Integer.reverseBytes(this.entityInfo.getDwEntityType()));
             dos.writeInt(Integer.reverseBytes(this.entityInfo.getDwItemCount()));
@@ -233,25 +233,25 @@ public class Ns_EventData {
             dos.writeInt(Integer.reverseBytes(this.eventInfo.getDwEventType()));
             dos.writeInt(Integer.reverseBytes(this.eventInfo.getDwMinDataLength()));
             dos.writeInt(Integer.reverseBytes(this.eventInfo.getDwMaxDataLength()));
-            String szCSVDesc = (this.eventInfo.getMembers().getSzCSVDesc() + (new Const_values()).getBlank128()).substring(0, (new Const_values()).getChar128());
+            String szCSVDesc = (this.eventInfo.getMembers().getSzCSVDesc() + Const_values.BLANK_CHAR128).substring(0, Const_values.LENGTH_OF_CHAR128);
             dos.writeBytes(szCSVDesc);
 
-            // Then, ns_OK.
-            rtnVal = new Const_values().getNs_OK();
+            // Then, NS_OK.
+            rtnVal = Const_values.NS_OK;
 
         } catch (FileNotFoundException e) {
             // File Not Found.
             e.printStackTrace();
 
-            // Then, ns_FILEERROR.
-            rtnVal = new Const_values().getNs_FILEERROR();
+            // Then, NS_FILEERROR.
+            rtnVal = Const_values.NS_FILEERROR;
 
         } catch (IOException e) {
             // File I/O error.
             e.printStackTrace();
 
-            // Then, ns_FILEERROR.
-            rtnVal = new Const_values().getNs_FILEERROR();
+            // Then, NS_FILEERROR.
+            rtnVal = Const_values.NS_FILEERROR;
 
         } finally {
             try {
@@ -265,7 +265,7 @@ public class Ns_EventData {
             } catch (IOException e) {
                 // May be sequence doesn't reach here.
                 e.printStackTrace();
-                rtnVal = new Const_values().getNs_FILEERROR();
+                rtnVal = Const_values.NS_FILEERROR;
 
             }
         }

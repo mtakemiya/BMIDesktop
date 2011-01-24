@@ -10,10 +10,10 @@ package jp.atr.dni.bmi.desktop.neuroshareutils;
  */
 public class EntityInfo {
 
-    private String tocPath = "";
     private String entityLabel;
     private long entityType;
     private long itemCount;
+    private long dataPosition;
 
     /**
      * Default constructor.
@@ -35,6 +35,7 @@ public class EntityInfo {
         this.entityLabel = entityLabel.trim();
         this.entityType = entityType;
         this.itemCount = itemCount;
+        this.dataPosition=0;
     }
 
     /**
@@ -80,16 +81,17 @@ public class EntityInfo {
     }
 
     /**
-     * @return the tocPath
+     * @return the dataPosition
      */
-    public String getTocPath() {
-        return tocPath;
+    public long getDataPosition() {
+        return dataPosition;
     }
 
     /**
-     * @param tocPath the tocPath to set
+     * @param dataPosition the dataPosition to set
      */
-    public void setTocPath(String tocPath) {
-        this.tocPath = tocPath;
+    public void setDataPosition(long dataPosition) {
+        this.dataPosition = dataPosition;
     }
+
 }

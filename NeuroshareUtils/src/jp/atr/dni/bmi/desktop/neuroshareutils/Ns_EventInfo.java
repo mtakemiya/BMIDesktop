@@ -89,6 +89,6 @@ public class Ns_EventInfo {
 
     public int setMembers(Nsa_EventInfo nsaEventInfo) {
         this.setSzCSVDesc(nsaEventInfo.getSzCSVDesc());
-        return new Const_values().getNs_OK();
+        return Const_values.NS_OK;
     }
 }

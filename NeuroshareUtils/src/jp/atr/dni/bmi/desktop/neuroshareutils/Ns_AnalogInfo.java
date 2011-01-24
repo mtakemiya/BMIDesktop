@@ -312,6 +312,6 @@ public class Ns_AnalogInfo {
         this.setDwLowFreqOrder(nsaAnalogInfo.getDwLowFreqOrder());
         this.setSzLowFilterType(nsaAnalogInfo.getSzLowFilterType());
         this.setSzProbeInfo(nsaAnalogInfo.getSzProbeInfo());
-        return new Const_values().getNs_OK();
+        return Const_values.NS_OK;
     }
 }

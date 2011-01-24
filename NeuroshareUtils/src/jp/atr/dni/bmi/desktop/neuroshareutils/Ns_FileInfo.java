@@ -325,6 +325,6 @@ public class Ns_FileInfo {
         this.setDwTime_Sec(nsaFileInfo.getDwTime_Sec());
         this.setDwTime_MilliSec(nsaFileInfo.getDwTime_MilliSec());
         this.setSzFileComment(nsaFileInfo.getSzFileComment());
-        return new Const_values().getNs_OK();
+        return Const_values.NS_OK;
     }
 }

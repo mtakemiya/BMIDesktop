@@ -6,7 +6,7 @@ package jp.atr.dni.bmi.desktop.neuroshareutils;
 /**
  *
  * @author kharada
- * @version 2011/01/13
+ * @version 2011/01/24
  */
 public class NSReaderTester {
     /*
@@ -16,6 +16,6 @@ public class NSReaderTester {
     public static void main(String[] args) {
 
         NSReader reader = new NSReader();
-        NeuroshareFile nsn = reader.readNSFile("test1.nsn", false);
+        NeuroshareFile nsn = reader.readNSFileAllData("test1.nsn");
     }
 }

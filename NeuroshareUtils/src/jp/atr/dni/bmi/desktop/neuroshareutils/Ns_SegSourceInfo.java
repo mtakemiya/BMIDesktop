@@ -294,6 +294,6 @@ public class Ns_SegSourceInfo {
         this.setDwLowFreqOrder(nsaSegSourceInfo.getDwLowFreqOrder());
         this.setSzLowFilterType(nsaSegSourceInfo.getSzLowFilterType());
         this.setSzProbeInfo(nsaSegSourceInfo.getSzProbeInfo());
-        return new Const_values().getNs_OK();
+        return Const_values.NS_OK;
     }
 }

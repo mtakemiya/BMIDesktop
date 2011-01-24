@@ -6,7 +6,6 @@ package jp.atr.dni.bmi.desktop.explorereditor;
 
 import java.awt.Image;
 import java.awt.event.ActionEvent;
-import java.io.File;
 import java.util.ArrayList;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -192,8 +191,7 @@ public class ExplorerNode extends AbstractNode {
 
             // Get Neuroshare Data using NSReader.
             NSReader reader = new NSReader();
-            // Read the Neuroshare file and save TOC files in the tocs dir.
-            NeuroshareFile nsn = reader.readNSFileSaveToc(obj.getFilePath(), new File("tocs").getAbsolutePath());
+            NeuroshareFile nsn = reader.readNSFileOnlyInfo(obj.getFilePath());
             if (nsn == null) {
                 return null;
             }
@@ -492,6 +490,7 @@ public class ExplorerNode extends AbstractNode {
                         entityGrp.put(ni_SourceEntityIDProp);
                         entityGrp.put(ni_SourceUnitIDProp);
                         entityGrp.put(ni_ProbeInfoProp);
+                        entityGrp.setValue("collapsed", true);
                         sets.add(entityGrp);
                         break;
                     default:
@@ -525,8 +524,8 @@ public class ExplorerNode extends AbstractNode {
             // YES NO Confirm.
             switch (JOptionPane.showConfirmDialog(null, "Over write ok?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) {
                 case JOptionPane.YES_OPTION:
-                    //NsnFileModelConverter.ModelConvert(obj.getNsObj(), obj.getFilePath());
-                    NsnFileModelConverter.ModelConvertWithToc(obj.getNsObj(), obj.getFilePath());
+                    // Overwrite the Neuroshare file.
+                    NsnFileModelConverter.ModelConvert(obj.getNsObj(), obj.getFilePath(), obj.getFilePath());
                     break;
                 case JOptionPane.NO_OPTION:
                     break;

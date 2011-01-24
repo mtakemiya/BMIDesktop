@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module codename="jp.atr.dni.bmi.desktop.timeseriesdata.provider">
-    <module_version install_time="1295508255428" last="true" origin="installer" specification_version="1.0">
+    <module_version install_time="1295846992808" last="true" origin="installer" specification_version="1.0">
         <file crc="1248812674" name="config/Modules/jp-atr-dni-bmi-desktop-timeseriesdata-provider.xml"/>
-        <file crc="2612641674" name="modules/jp-atr-dni-bmi-desktop-timeseriesdata-provider.jar"/>
+        <file crc="2431671081" name="modules/jp-atr-dni-bmi-desktop-timeseriesdata-provider.jar"/>
     </module_version>
 </module>

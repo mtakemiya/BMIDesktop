@@ -32,9 +32,9 @@ public class Ns_SegmentData {
      */
     public Ns_SegmentData(int ID, String szEntityLabel) {
 
-        this.intermediateFileNameForInfo = (new Const_values()).getHeader() + (new Const_values()).getSegment()
+        this.intermediateFileNameForInfo = Const_values.FN_HEADER + Const_values.SEGMENT
                 + "_" + ID + ".segmentInfo";
-        this.intermediateFileNameForData = (new Const_values()).getHeader() + (new Const_values()).getSegment()
+        this.intermediateFileNameForData = Const_values.FN_HEADER + Const_values.SEGMENT
                 + "_" + ID + ".segmentData";
         this.segmentID = ID;
         this.tagElement = new Ns_TagElement(Const_ns_ENTITY.ns_ENTITY_SEGMENT);
@@ -140,9 +140,9 @@ public class Ns_SegmentData {
             // segSourceID : identification num of ns_SEGSOURCEINFO. [ 0,1,2... ]
             segSourceID = this.segSourceInfo.size() - 1;
 
-            // Define intermediate file name for ns_SEGSOURCEINFO.
-            this.intermediateFileNameForSourceInfo.add((new Const_values()).getHeader()
-                    + (new Const_values()).getSegment() + "_" + this.segmentID + "_" + segSourceID
+            // Define intermediate FILE name for ns_SEGSOURCEINFO.
+            this.intermediateFileNameForSourceInfo.add(Const_values.FN_HEADER
+                    + Const_values.SEGMENT + "_" + this.segmentID + "_" + segSourceID
                     + ".segSourceInfo");
             this.tagElement.addDwElemLength(248); // Byte Num of ns_SEGSOURCEINFO
             this.segmentInfo.addDwSourceCount(1); // Byte Num of ns_SEGSOURCEINFO
@@ -162,15 +162,15 @@ public class Ns_SegmentData {
             // File Not Found.
             e.printStackTrace();
 
-            // Then, ns_FILEERROR.
-            segSourceID = new Const_values().getNs_FILEERROR();
+            // Then, NS_FILEERROR.
+            segSourceID = Const_values.NS_FILEERROR;
 
         } catch (IOException e) {
             // File I/O error.
             e.printStackTrace();
 
-            // Then, ns_FILEERROR.
-            segSourceID = new Const_values().getNs_FILEERROR();
+            // Then, NS_FILEERROR.
+            segSourceID = Const_values.NS_FILEERROR;
 
         } finally {
             try {
@@ -184,7 +184,7 @@ public class Ns_SegmentData {
             } catch (IOException e) {
                 // May be sequence doesn't reach here.
                 e.printStackTrace();
-                segSourceID = new Const_values().getNs_FILEERROR();
+                segSourceID = Const_values.NS_FILEERROR;
 
             }
         }
@@ -195,7 +195,7 @@ public class Ns_SegmentData {
 
     public int saveSegmentInfo() {
 
-        int rtnVal = new Const_values().getNs_OK();
+        int rtnVal = Const_values.NS_OK;
         File tempFile = null;
         FileOutputStream fos = null;
         DataOutputStream dos = null;
@@ -226,7 +226,7 @@ public class Ns_SegmentData {
             // Write in LITTLE Endian (MATLAB Default)
             dos.writeInt(Integer.reverseBytes(this.tagElement.getDwElementType()));
             dos.writeInt(Integer.reverseBytes(this.tagElement.getDwElemLength()));
-            String szEntityLabel = (this.entityInfo.getSzEntityLabel() + (new Const_values()).getBlank32()).substring(0, (new Const_values()).getChar32());
+            String szEntityLabel = (this.entityInfo.getSzEntityLabel() + (Const_values.BLANK_CHAR32)).substring(0, Const_values.LENGTH_OF_CHAR32);
             dos.writeBytes(szEntityLabel);
             dos.writeInt(Integer.reverseBytes(this.entityInfo.getDwEntityType()));
             dos.writeInt(Integer.reverseBytes(this.entityInfo.getDwItemCount()));
@@ -235,25 +235,25 @@ public class Ns_SegmentData {
             dos.writeInt(Integer.reverseBytes(this.segmentInfo.getDwMinSampleCount()));
             dos.writeInt(Integer.reverseBytes(this.segmentInfo.getDwMaxSampleCount()));
             dos.writeLong(Long.reverseBytes(Double.doubleToLongBits(this.segmentInfo.getMembers().getDSampleRate())));
-            String szUnits = (this.segmentInfo.getMembers().getSzUnits() + (new Const_values()).getBlank32()).substring(0, (new Const_values()).getChar32());
+            String szUnits = (this.segmentInfo.getMembers().getSzUnits() + Const_values.BLANK_CHAR32).substring(0, Const_values.LENGTH_OF_CHAR32);
             dos.writeBytes(szUnits);
 
-            // Then, ns_OK.
-            rtnVal = new Const_values().getNs_OK();
+            // Then, NS_OK.
+            rtnVal = Const_values.NS_OK;
 
         } catch (FileNotFoundException e) {
             // File Not Found.
             e.printStackTrace();
 
-            // Then, ns_FILEERROR.
-            rtnVal = new Const_values().getNs_FILEERROR();
+            // Then, NS_FILEERROR.
+            rtnVal = Const_values.NS_FILEERROR;
 
         } catch (IOException e) {
             // File I/O error.
             e.printStackTrace();
 
-            // Then, ns_FILEERROR.
-            rtnVal = new Const_values().getNs_FILEERROR();
+            // Then, NS_FILEERROR.
+            rtnVal = Const_values.NS_FILEERROR;
 
         } finally {
             try {
@@ -267,7 +267,7 @@ public class Ns_SegmentData {
             } catch (IOException e) {
                 // May be sequence doesn't reach here.
                 e.printStackTrace();
-                rtnVal = new Const_values().getNs_FILEERROR();
+                rtnVal = Const_values.NS_FILEERROR;
 
             }
         }
@@ -277,7 +277,7 @@ public class Ns_SegmentData {
     }
 
     public int saveSegSourceInfo(int segSourceID) {
-        int rtnVal = new Const_values().getNs_OK();
+        int rtnVal = Const_values.NS_OK;
         File tempFile = null;
         FileOutputStream fos = null;
         DataOutputStream dos = null;
@@ -328,31 +328,31 @@ public class Ns_SegmentData {
             dos.writeLong(Long.reverseBytes(Double.doubleToLongBits(this.segSourceInfo.get(segSourceID).getMembers().getDLocationUser())));
             dos.writeLong(Long.reverseBytes(Double.doubleToLongBits(this.segSourceInfo.get(segSourceID).getMembers().getDHighFreqCorner())));
             dos.writeInt(Integer.reverseBytes(this.segSourceInfo.get(segSourceID).getMembers().getDwHighFreqOrder()));
-            String szHighFilterType = (this.segSourceInfo.get(segSourceID).getMembers().getSzHighFilterType() + (new Const_values()).getBlank16()).substring(0, (new Const_values()).getChar16());
+            String szHighFilterType = (this.segSourceInfo.get(segSourceID).getMembers().getSzHighFilterType() + Const_values.BLANK_CHAR16).substring(0, Const_values.LENGTH_OF_CHAR16);
             dos.writeBytes(szHighFilterType);
             dos.writeLong(Long.reverseBytes(Double.doubleToLongBits(this.segSourceInfo.get(segSourceID).getMembers().getDLowFreqCorner())));
             dos.writeInt(Integer.reverseBytes(this.segSourceInfo.get(segSourceID).getMembers().getDwLowFreqOrder()));
-            String szLowFilterType = (this.segSourceInfo.get(segSourceID).getMembers().getSzLowFilterType() + (new Const_values()).getBlank16()).substring(0, (new Const_values()).getChar16());
+            String szLowFilterType = (this.segSourceInfo.get(segSourceID).getMembers().getSzLowFilterType() + Const_values.BLANK_CHAR16).substring(0, Const_values.LENGTH_OF_CHAR16);
             dos.writeBytes(szLowFilterType);
-            String szProbeInfo = (this.segSourceInfo.get(segSourceID).getMembers().getSzProbeInfo() + (new Const_values()).getBlank128()).substring(0, (new Const_values()).getChar128());
+            String szProbeInfo = (this.segSourceInfo.get(segSourceID).getMembers().getSzProbeInfo() + Const_values.BLANK_CHAR128).substring(0, Const_values.LENGTH_OF_CHAR128);
             dos.writeBytes(szProbeInfo);
 
-            // Then, ns_OK.
-            rtnVal = new Const_values().getNs_OK();
+            // Then, NS_OK.
+            rtnVal = Const_values.NS_OK;
 
         } catch (FileNotFoundException e) {
             // File Not Found.
             e.printStackTrace();
 
-            // Then, ns_FILEERROR.
-            rtnVal = new Const_values().getNs_FILEERROR();
+            // Then, NS_FILEERROR.
+            rtnVal = Const_values.NS_FILEERROR;
 
         } catch (IOException e) {
             // File I/O error.
             e.printStackTrace();
 
-            // Then, ns_FILEERROR.
-            rtnVal = new Const_values().getNs_FILEERROR();
+            // Then, NS_FILEERROR.
+            rtnVal = Const_values.NS_FILEERROR;
 
         } finally {
             try {
@@ -366,7 +366,7 @@ public class Ns_SegmentData {
             } catch (IOException e) {
                 // May be sequence doesn't reach here.
                 e.printStackTrace();
-                rtnVal = new Const_values().getNs_FILEERROR();
+                rtnVal = Const_values.NS_FILEERROR;
 
             }
         }

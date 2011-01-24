@@ -28,9 +28,9 @@ public class Ns_AnalogData {
      */
     public Ns_AnalogData(int ID, String szEntityLabel) {
 
-        this.intermediateFileNameForInfo = (new Const_values()).getHeader() + (new Const_values()).getAnalog()
+        this.intermediateFileNameForInfo = Const_values.FN_HEADER + Const_values.ANALOG
                 + "_" + ID + ".analogInfo";
-        this.intermediateFileNameForData = (new Const_values()).getHeader() + (new Const_values()).getAnalog()
+        this.intermediateFileNameForData = Const_values.FN_HEADER + Const_values.ANALOG
                 + "_" + ID + ".analogData";
         this.tagElement = new Ns_TagElement(Const_ns_ENTITY.ns_ENTITY_ANALOG);
         this.entityInfo = new Ns_EntityInfo(szEntityLabel, Const_ns_ENTITY.ns_ENTITY_ANALOG);
@@ -56,7 +56,7 @@ public class Ns_AnalogData {
 
     public int addAnalogData(double dTimestamp, double[] dAnalogValue) {
 
-        int rtnVal = new Const_values().getNs_OK();
+        int rtnVal = Const_values.NS_OK;
         File tempFile = null;
         FileOutputStream fos = null;
         DataOutputStream dos = null;
@@ -107,22 +107,22 @@ public class Ns_AnalogData {
                 this.analogInfo.setDMinVal(dMinInTheArray);
             }
 
-            // Then, ns_OK.
-            rtnVal = new Const_values().getNs_OK();
+            // Then, NS_OK.
+            rtnVal = Const_values.NS_OK;
 
         } catch (FileNotFoundException e) {
             // File Not Found.
             e.printStackTrace();
 
-            // Then, ns_FILEERROR.
-            rtnVal = new Const_values().getNs_FILEERROR();
+            // Then, NS_FILEERROR.
+            rtnVal = Const_values.NS_FILEERROR;
 
         } catch (IOException e) {
             // File I/O error.
             e.printStackTrace();
 
-            // Then, ns_FILEERROR.
-            rtnVal = new Const_values().getNs_FILEERROR();
+            // Then, NS_FILEERROR.
+            rtnVal = Const_values.NS_FILEERROR;
 
         } finally {
             try {
@@ -136,7 +136,7 @@ public class Ns_AnalogData {
             } catch (IOException e) {
                 // May be sequence doesn't reach here.
                 e.printStackTrace();
-                rtnVal = new Const_values().getNs_FILEERROR();
+                rtnVal = Const_values.NS_FILEERROR;
 
             }
         }
@@ -147,7 +147,7 @@ public class Ns_AnalogData {
 
     public int saveAnalogInfo() {
 
-        int rtnVal = new Const_values().getNs_OK();
+        int rtnVal = Const_values.NS_OK;
         File tempFile = null;
         FileOutputStream fos = null;
         DataOutputStream dos = null;
@@ -195,7 +195,7 @@ public class Ns_AnalogData {
             // Write in LITTLE Endian (MATLAB Default)
             dos.writeInt(Integer.reverseBytes(this.tagElement.getDwElementType()));
             dos.writeInt(Integer.reverseBytes(this.tagElement.getDwElemLength()));
-            String szEntityLabel = (this.entityInfo.getSzEntityLabel() + (new Const_values()).getBlank32()).substring(0, (new Const_values()).getChar32());
+            String szEntityLabel = (this.entityInfo.getSzEntityLabel() + Const_values.BLANK_CHAR32).substring(0, Const_values.LENGTH_OF_CHAR32);
             dos.writeBytes(szEntityLabel);
             dos.writeInt(Integer.reverseBytes(this.entityInfo.getDwEntityType()));
             dos.writeInt(Integer.reverseBytes(this.entityInfo.getDwItemCount()));
@@ -203,7 +203,7 @@ public class Ns_AnalogData {
             dos.writeLong(Long.reverseBytes(Double.doubleToLongBits(this.analogInfo.getMembers().getDSampleRate())));
             dos.writeLong(Long.reverseBytes(Double.doubleToLongBits(this.analogInfo.getMembers().getDMinVal())));
             dos.writeLong(Long.reverseBytes(Double.doubleToLongBits(this.analogInfo.getMembers().getDMaxVal())));
-            String szUnits = (this.analogInfo.getMembers().getSzUnits() + (new Const_values()).getBlank16()).substring(0, (new Const_values()).getChar16());
+            String szUnits = (this.analogInfo.getMembers().getSzUnits() + Const_values.BLANK_CHAR16).substring(0, Const_values.LENGTH_OF_CHAR16);
             dos.writeBytes(szUnits);
             dos.writeLong(Long.reverseBytes(Double.doubleToLongBits(this.analogInfo.getMembers().getDResolution())));
             dos.writeLong(Long.reverseBytes(Double.doubleToLongBits(this.analogInfo.getMembers().getDLocationX())));
@@ -212,31 +212,31 @@ public class Ns_AnalogData {
             dos.writeLong(Long.reverseBytes(Double.doubleToLongBits(this.analogInfo.getMembers().getDLocationUser())));
             dos.writeLong(Long.reverseBytes(Double.doubleToLongBits(this.analogInfo.getMembers().getDHighFreqCorner())));
             dos.writeInt(Integer.reverseBytes(this.analogInfo.getMembers().getDwHighFreqOrder()));
-            String szHighFilterType = (this.analogInfo.getMembers().getSzHighFilterType() + (new Const_values()).getBlank16()).substring(0, (new Const_values()).getChar16());
+            String szHighFilterType = (this.analogInfo.getMembers().getSzHighFilterType() + Const_values.BLANK_CHAR16).substring(0, Const_values.LENGTH_OF_CHAR16);
             dos.writeBytes(szHighFilterType);
             dos.writeLong(Long.reverseBytes(Double.doubleToLongBits(this.analogInfo.getMembers().getDLowFreqCorner())));
             dos.writeInt(Integer.reverseBytes(this.analogInfo.getMembers().getDwLowFreqOrder()));
-            String szLowFilterType = (this.analogInfo.getMembers().getSzLowFilterType() + (new Const_values()).getBlank16()).substring(0, (new Const_values()).getChar16());
+            String szLowFilterType = (this.analogInfo.getMembers().getSzLowFilterType() + Const_values.BLANK_CHAR16).substring(0, Const_values.LENGTH_OF_CHAR16);
             dos.writeBytes(szLowFilterType);
-            String szProbeInfo = (this.analogInfo.getMembers().getSzProbeInfo() + (new Const_values()).getBlank128()).substring(0, (new Const_values()).getChar128());
+            String szProbeInfo = (this.analogInfo.getMembers().getSzProbeInfo() + Const_values.BLANK_CHAR128).substring(0, Const_values.LENGTH_OF_CHAR128);
             dos.writeBytes(szProbeInfo);
 
-            // Then, ns_OK.
-            rtnVal = new Const_values().getNs_OK();
+            // Then, NS_OK.
+            rtnVal = Const_values.NS_OK;
 
         } catch (FileNotFoundException e) {
             // File Not Found.
             e.printStackTrace();
 
-            // Then, ns_FILEERROR.
-            rtnVal = new Const_values().getNs_FILEERROR();
+            // Then, NS_FILEERROR.
+            rtnVal = Const_values.NS_FILEERROR;
 
         } catch (IOException e) {
             // File I/O error.
             e.printStackTrace();
 
-            // Then, ns_FILEERROR.
-            rtnVal = new Const_values().getNs_FILEERROR();
+            // Then, NS_FILEERROR.
+            rtnVal = Const_values.NS_FILEERROR;
 
         } finally {
             try {
@@ -250,7 +250,7 @@ public class Ns_AnalogData {
             } catch (IOException e) {
                 // May be sequence doesn't reach here.
                 e.printStackTrace();
-                rtnVal = new Const_values().getNs_FILEERROR();
+                rtnVal = Const_values.NS_FILEERROR;
 
             }
         }
