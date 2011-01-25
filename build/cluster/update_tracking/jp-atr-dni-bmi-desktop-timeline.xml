@@ -1,23 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module codename="jp.atr.dni.bmi.desktop.timeline">
-<<<<<<< HEAD
-    <module_version install_time="1295245872578" last="true" origin="installer" specification_version="1.0">
-        <file crc="465144966" name="config/Modules/jp-atr-dni-bmi-desktop-timeline.xml"/>
-=======
-    <module_version install_time="1295245774680" last="true" origin="installer" specification_version="1.0">
+    <module_version install_time="1295917668027" last="true" origin="installer" specification_version="1.0">
         <file crc="2020134677" name="config/Modules/jp-atr-dni-bmi-desktop-timeline.xml"/>
->>>>>>> eab326e5a27113399d5c301946dfdfee2ecad533
         <file crc="340448678" name="modules/ext/gluegen-rt.jar"/>
         <file crc="552058811" name="modules/ext/jogl.all.jar"/>
         <file crc="1500789783" name="modules/ext/nativewindow.all.jar"/>
         <file crc="3464407329" name="modules/ext/newt.all.jar"/>
-<<<<<<< HEAD
-        <file crc="2243784861" name="modules/jp-atr-dni-bmi-desktop-timeline.jar"/>
-=======
-        <file crc="629774451" name="modules/jp-atr-dni-bmi-desktop-timeline.jar"/>
->>>>>>> eab326e5a27113399d5c301946dfdfee2ecad533
+        <file crc="1262896521" name="modules/jp-atr-dni-bmi-desktop-timeline.jar"/>
+        <file crc="4010494916" name="modules/lib/gluegen-gl.jar"/>
         <file crc="1381938980" name="modules/lib/gluegen-rt-cdc.jar"/>
         <file crc="340448678" name="modules/lib/gluegen-rt.jar"/>
+        <file crc="4254754733" name="modules/lib/jogl-natives-macosx-universal-cdc.jar"/>
+        <file crc="3664977211" name="modules/lib/jogl-natives-macosx-universal.jar"/>
         <file crc="1702491701" name="modules/lib/jogl.all-noawt.jar"/>
         <file crc="83394176" name="modules/lib/jogl.all.cdc.jar"/>
         <file crc="552058811" name="modules/lib/jogl.all.jar"/>
@@ -71,14 +65,20 @@
         <file crc="3821224133" name="modules/lib/libnativewindow_awt.so"/>
         <file crc="4081024704" name="modules/lib/libnewt.jnilib"/>
         <file crc="4081024704" name="modules/lib/libnewt.so"/>
+        <file crc="1476127803" name="modules/lib/nativewindow-natives-macosx-universal-cdc.jar"/>
+        <file crc="2794107309" name="modules/lib/nativewindow-natives-macosx-universal.jar"/>
         <file crc="2127039597" name="modules/lib/nativewindow.all-noawt.jar"/>
         <file crc="1432978835" name="modules/lib/nativewindow.all.cdc.jar"/>
         <file crc="1500789783" name="modules/lib/nativewindow.all.jar"/>
         <file crc="1626264637" name="modules/lib/nativewindow.awt.jar"/>
         <file crc="2950950704" name="modules/lib/nativewindow.core.cdc.jar"/>
         <file crc="2274842597" name="modules/lib/nativewindow.core.jar"/>
+        <file crc="1540205564" name="modules/lib/nativewindow.os.win.cdc.jar"/>
+        <file crc="2552247480" name="modules/lib/nativewindow.os.win.jar"/>
         <file crc="4233253" name="modules/lib/nativewindow.os.x11.cdc.jar"/>
         <file crc="1609460277" name="modules/lib/nativewindow.os.x11.jar"/>
+        <file crc="3443122418" name="modules/lib/newt-natives-macosx-universal-cdc.jar"/>
+        <file crc="3765213344" name="modules/lib/newt-natives-macosx-universal.jar"/>
         <file crc="1620892519" name="modules/lib/newt.all-noawt.jar"/>
         <file crc="119770301" name="modules/lib/newt.all.cdc.jar"/>
         <file crc="3464407329" name="modules/lib/newt.all.jar"/>
@@ -87,6 +87,11 @@
         <file crc="7862864" name="modules/lib/newt.broadcomegl.jar"/>
         <file crc="920736649" name="modules/lib/newt.core.cdc.jar"/>
         <file crc="2529247671" name="modules/lib/newt.core.jar"/>
+        <file crc="3211845625" name="modules/lib/newt.event.jar"/>
+        <file crc="2184442903" name="modules/lib/newt.hw.broadcomegl.cdc.jar"/>
+        <file crc="1155212514" name="modules/lib/newt.hw.broadcomegl.jar"/>
+        <file crc="3816002247" name="modules/lib/newt.hw.intelgdl.cdc.jar"/>
+        <file crc="3816002247" name="modules/lib/newt.hw.intelgdl.jar"/>
         <file crc="3706301961" name="modules/lib/newt.intelgdl.cdc.jar"/>
         <file crc="3706301961" name="modules/lib/newt.intelgdl.jar"/>
         <file crc="1520183655" name="modules/lib/newt.ogl.cdc.jar"/>
