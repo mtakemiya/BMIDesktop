@@ -193,10 +193,7 @@ public class ExplorerNode extends AbstractNode {
 
             // Get Neuroshare Data using NSReader.
             NSReader reader = new NSReader();
-            NeuroshareFile nsn = reader.readNSFileOnlyInfo(obj.getFilePath());
-            if (nsn == null) {
-                return null;
-            }
+            NeuroshareFile nsn = reader.readNSFile(obj.getFilePath(), false);
             obj.setNsObj(nsn);
 
             FileInfo fi = nsn.getFileInfo();
@@ -500,11 +497,11 @@ public class ExplorerNode extends AbstractNode {
 
             }
 
+
         } catch (IllegalArgumentException ex) {
             Exceptions.printStackTrace(ex);
-
         } catch (NoSuchMethodException ex) {
-            Exceptions.printStackTrace(ex);
+            ErrorManager.getDefault();
         }
 
         return sets;
@@ -521,20 +518,10 @@ public class ExplorerNode extends AbstractNode {
         public void actionPerformed(ActionEvent e) {
             GeneralFileInfo obj = getLookup().lookup(GeneralFileInfo.class);
             //JOptionPane.showMessageDialog(null, "Hello world from " + obj);
-
-            // YES NO Confirm.
-            switch (JOptionPane.showConfirmDialog(null, "Over write ok?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) {
-                case JOptionPane.YES_OPTION:
-                    // Overwrite the Neuroshare file.
-                    NsnFileModelConverter.ModelConvert(obj.getNsObj(), obj.getFilePath(), obj.getFilePath());
-                    break;
-                case JOptionPane.NO_OPTION:
-                    break;
-                case JOptionPane.CLOSED_OPTION:
-                    break;
-                default:
-                    break;
-            }
+            
+            // from here.
+            NsnFileModelConverter.ModelConvert(obj.getNsObj(), obj.getFilePath());
+            //NsnFileModelConverter.ModelConvert(obj.getNsObj(), "C:\\Temp\\test001.nsn");
         }
 
         @Override

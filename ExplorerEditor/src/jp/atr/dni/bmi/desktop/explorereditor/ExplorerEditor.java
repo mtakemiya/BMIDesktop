@@ -40,7 +40,7 @@ public class ExplorerEditor extends TopComponent implements ExplorerManager.Prov
 //        setDisplayName("Explorer Editor");
         mgr.setRootContext(new ExplorerNode());
 //        mgr.setRootContext(new AbstractNode(new ExplorerChildren()));
-        //setDisplayName("Explorer");
+        setDisplayName("Files");
     }
 
     /** This method is called from within the constructor to
