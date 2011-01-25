@@ -24,11 +24,14 @@ import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.GLProfile;
 import javax.media.opengl.awt.GLCanvas;
+import jp.atr.dni.bmi.desktop.model.GeneralFileInfo;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 import org.openide.util.ImageUtilities;
 import org.netbeans.api.settings.ConvertAsProperties;
+import org.openide.util.Lookup;
+import org.openide.util.Utilities;
 
 /**
  * Top component which displays something.
@@ -108,34 +111,40 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
    private void initComponents() {
 
       jLabel1 = new javax.swing.JLabel();
-      jLabel2 = new javax.swing.JLabel();
       jLabel3 = new javax.swing.JLabel();
+      jScrollPane1 = new javax.swing.JScrollPane();
+      jList1 = new javax.swing.JList();
 
       org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(TimelineTopComponent.class, "TimelineTopComponent.jLabel1.text")); // NOI18N
 
-      org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(TimelineTopComponent.class, "TimelineTopComponent.jLabel2.text")); // NOI18N
-
       org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(TimelineTopComponent.class, "TimelineTopComponent.jLabel3.text")); // NOI18N
+
+      jList1.setModel(new javax.swing.AbstractListModel() {
+         String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+         public int getSize() { return strings.length; }
+         public Object getElementAt(int i) { return strings[i]; }
+      });
+      jScrollPane1.setViewportView(jList1);
 
       javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
       this.setLayout(layout);
       layout.setHorizontalGroup(
          layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(layout.createSequentialGroup()
-            .addComponent(jLabel2)
+            .addGap(1, 1, 1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1325, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1304, Short.MAX_VALUE)
             .addGap(10, 10, 10))
          .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1368, Short.MAX_VALUE)
       );
       layout.setVerticalGroup(
          layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(layout.createSequentialGroup()
-            .addContainerGap()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-               .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
-               .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+               .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+               .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE))
+            .addGap(18, 18, 18)
             .addComponent(jLabel3))
       );
    }// </editor-fold>//GEN-END:initComponents
@@ -228,31 +237,38 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       animator.add(glCanvas);
       animator.start();
 
-
-
-      jLabel2 = new javax.swing.JLabel();
       jLabel3 = new javax.swing.JLabel();
+      jScrollPane1 = new javax.swing.JScrollPane();
+      jList1 = new javax.swing.JList();
 
-      org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(TimelineTopComponent.class, "TimelineTopComponent.jLabel2.text")); // NOI18N
       org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(TimelineTopComponent.class, "TimelineTopComponent.jLabel3.text")); // NOI18N
+
+      jList1.setModel(new javax.swing.AbstractListModel() {
+         String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+         public int getSize() { return strings.length; }
+         public Object getElementAt(int i) { return strings[i]; }
+      });
+      jScrollPane1.setViewportView(jList1);
 
       javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
       this.setLayout(layout);
       layout.setHorizontalGroup(
          layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+         .addGroup(layout.createSequentialGroup()
+            .addGap(1, 1, 1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(glCanvas, javax.swing.GroupLayout.PREFERRED_SIZE, 898, javax.swing.GroupLayout.PREFERRED_SIZE))
-         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 936, Short.MAX_VALUE)
+            .addComponent(glCanvas, javax.swing.GroupLayout.DEFAULT_SIZE, 1304, Short.MAX_VALUE)
+            .addGap(10, 10, 10))
+         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1368, Short.MAX_VALUE)
       );
       layout.setVerticalGroup(
          layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-               .addComponent(glCanvas, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
-               .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE))
-            .addGap(4, 4, 4)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+               .addComponent(glCanvas, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+               .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE))
+            .addGap(18, 18, 18)
             .addComponent(jLabel3))
       );
 
@@ -276,8 +292,9 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
    // Variables declaration - do not modify//GEN-BEGIN:variables
    private javax.swing.JLabel jLabel1;
-   private javax.swing.JLabel jLabel2;
    private javax.swing.JLabel jLabel3;
+   private javax.swing.JList jList1;
+   private javax.swing.JScrollPane jScrollPane1;
    // End of variables declaration//GEN-END:variables
    /**
     * Gets default instance. Do not use directly: reserved for *.settings files only,
@@ -419,6 +436,11 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 	}
 
    private void render(GLAutoDrawable drawable) {
+      Lookup global = Utilities.actionsGlobalContext();
+            GeneralFileInfo obj = global.lookup(GeneralFileInfo.class);
+      if (obj == null) {
+         return;
+      }
       int max = 500;
 
       GL2 gl = drawable.getGL().getGL2();

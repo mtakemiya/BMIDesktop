@@ -520,7 +520,6 @@ public class ExplorerNode extends AbstractNode {
             // from here.
             NsnFileModelConverter.ModelConvert(obj.getNsObj(), obj.getFilePath());
             //NsnFileModelConverter.ModelConvert(obj.getNsObj(), "C:\\Temp\\test001.nsn");
-
         }
 
         @Override
