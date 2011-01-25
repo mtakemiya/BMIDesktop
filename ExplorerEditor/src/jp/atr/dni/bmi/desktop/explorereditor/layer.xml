@@ -11,7 +11,7 @@
         </folder>
     </folder>
     <folder name="Menu">
-        <folder name="File">
+        <folder name="Window">
             <file name="ExplorerEditorAction.shadow">
                 <attr name="originalFile" stringvalue="Actions/File/jp-atr-dni-bmi-desktop-explorereditor-ExplorerEditorAction.instance"/>
             </file>

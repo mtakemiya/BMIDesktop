@@ -2,6 +2,8 @@ Manifest-Version: 1.0
 OpenIDE-Module: jp.atr.dni.bmi.desktop.explorereditor
 OpenIDE-Module-Layer: jp/atr/dni/bmi/desktop/explorereditor/layer.xml
 OpenIDE-Module-Localizing-Bundle: jp/atr/dni/bmi/desktop/explorereditor/Bundle.properties
-OpenIDE-Module-Requires: org.openide.windows.IOProvider
+OpenIDE-Module-Requires: 
+  org.openide.windows.IOProvider,
+  org.openide.windows.WindowManager
 OpenIDE-Module-Specification-Version: 1.0
 

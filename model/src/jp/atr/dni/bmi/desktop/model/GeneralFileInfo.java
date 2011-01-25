@@ -2,21 +2,26 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package jp.atr.dni.bmi.desktop.model;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NeuroshareFile;
 
 /**
  *
  * @author kharada
+ * @version 2011/01/24
  */
 public class GeneralFileInfo {
 
+    private List listeners = Collections.synchronizedList(new LinkedList());
+
 //    private List listeners = Collections.synchronizedList(new LinkedList());
-    public GeneralFileInfo(String filePath, String comment) {
+    public GeneralFileInfo(String filePath) {
         File file = new File(filePath);
         if (!file.exists()) {
             boolean mkdirs = file.mkdirs();
@@ -27,7 +32,6 @@ public class GeneralFileInfo {
             this.fileSize = file.length();
             this.fileType = "Application/" + this.getFileExtension(this.fileName);
             this.modifiedTime = file.lastModified();
-            this.comment = comment;
             this.nsObj = null;
         } else if (file.isDirectory()) {
             this.filePath = file.getAbsolutePath();
@@ -35,11 +39,9 @@ public class GeneralFileInfo {
             this.fileSize = file.length();
             this.fileType = "Directory";
             this.modifiedTime = file.lastModified();
-            this.comment = comment;
             this.nsObj = null;
         }
     }
-
     /**
      * file type.
      */
@@ -61,11 +63,10 @@ public class GeneralFileInfo {
      */
     private long modifiedTime;
     /**
-     * comment.
-     */
-    private String comment;
-    /**
      * Neuroshare Object.
+     * Notice : this includes only header information ns_***INFO. not ns_***DATA.
+     * How to use : nsObj.getEntities().get(i).getEntityInfo(). You can get the entity's ns_ENTITYINFO.
+     * See also : NeuroshareUtils.NsnFileModelConverter.java
      */
     private NeuroshareFile nsObj;
 
@@ -77,7 +78,7 @@ public class GeneralFileInfo {
     }
 
     /**
-     * @return the fileType
+     * @return the extention of the file
      */
     public String getFileExtention() {
         return this.getFileExtension(fileName);
@@ -154,20 +155,6 @@ public class GeneralFileInfo {
     }
 
     /**
-     * @return the comment
-     */
-    public String getComment() {
-        return comment;
-    }
-
-    /**
-     * @param comment the comment to set
-     */
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    /**
      * @return the nsObj
      */
     public NeuroshareFile getNsObj() {
@@ -181,7 +168,6 @@ public class GeneralFileInfo {
         this.nsObj = nsObj;
     }
 
-
     private String getFileExtension(String fileName) {
         if (fileName == null) {
             return null;
@@ -192,20 +178,4 @@ public class GeneralFileInfo {
         }
         return fileName.substring(point + 1);
     }
-    // property change listener.
-//    public void addPropertyChangeListener(PropertyChangeListener pcl) {
-//        listeners.add(pcl);
-//    }
-//
-//    public void removePropertyChangeListener(PropertyChangeListener pcl) {
-//        listeners.remove(pcl);
-//    }
-//
-//    private void fire(String propertyName, Object old, Object nue) {
-//        //Passing 0 below on purpose, so we only synchronize for one atomic call:
-//        PropertyChangeListener[] pcls = (PropertyChangeListener[]) listeners.toArray(new PropertyChangeListener[0]);
-//        for (int i = 0; i < pcls.length; i++) {
-//            pcls[i].propertyChange(new PropertyChangeEvent(this, propertyName, old, nue));
-//        }
-//    }
 }

@@ -14,6 +14,8 @@ import javax.swing.JOptionPane;
 public class NsnFileModelConverter {
 
     /**
+     * Create Neuroshare file to the dstFileFullPath with using the header(nsObj) and the data(raw data includes srcFileFullPath).
+     *
      * @param nsObj
      *                  Some values in the NeuroshareFile. (means NOT includes data of entities.)
      * @param srcFileFullPath
@@ -387,7 +389,6 @@ public class NsnFileModelConverter {
             }
 
         } catch (Exception ex) {
-
 
             JOptionPane.showMessageDialog(null, "Code : File Conversion Error\n" + "Todo : Check your file format.\n" + "StackTR : " + ex, "Error", JOptionPane.ERROR_MESSAGE);
 

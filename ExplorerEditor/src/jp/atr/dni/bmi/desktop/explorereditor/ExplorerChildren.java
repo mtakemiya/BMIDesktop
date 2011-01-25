@@ -13,6 +13,7 @@ import org.openide.nodes.Node;
 /**
  *
  * @author kharada
+ * @version 2011/01/24
  */
 public class ExplorerChildren extends Children.Keys {
 
@@ -25,7 +26,7 @@ public class ExplorerChildren extends Children.Keys {
             GeneralFileInfo[] objs = new GeneralFileInfo[length];
 
             for (int c = 0; c < length; c++) {
-                objs[c] = new GeneralFileInfo(listFile[c].getAbsolutePath(),"");
+                objs[c] = new GeneralFileInfo(listFile[c].getAbsolutePath());
             }
 
             setKeys(objs);
@@ -34,19 +35,15 @@ public class ExplorerChildren extends Children.Keys {
 
     public ExplorerChildren() {
         GeneralFileInfo[] objs = new GeneralFileInfo[1];
-        objs[0] = new GeneralFileInfo(new File(Constants.DATA_HOME).getAbsolutePath(),"");
+        objs[0] = new GeneralFileInfo(new File(Constants.DATA_HOME).getAbsolutePath());
         setKeys(objs);
     }
 
     @Override
     protected Node[] createNodes(Object t) {
         GeneralFileInfo obj = (GeneralFileInfo) t;
-//        AbstractNode result = new AbstractNode(new ExplorerChildren(obj.getFilePath()), Lookups.singleton(obj));
-//        result.setDisplayName(obj.toString());
-//        result.setDisplayName(obj.getFileName());
-        return new Node[]{ new ExplorerNode(obj)};
+        return new Node[]{new ExplorerNode(obj)};
     }
-//    @Override
 //    protected void addNotify() {
 //        GeneralFileInfo[] objs = new GeneralFileInfo[5];
 //        for (int i = 0; i < objs.length; i++){

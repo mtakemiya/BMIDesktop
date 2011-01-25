@@ -37,13 +37,14 @@ import org.openide.util.lookup.Lookups;
 /**
  *
  * @author kharada
- * @version 2011/01/13
+ * @version 2011/01/24
  */
 public class ExplorerNode extends AbstractNode {
 
     public ExplorerNode(GeneralFileInfo obj) {
         super(new ExplorerChildren(obj.getFilePath()), Lookups.singleton(obj));
         setDisplayName(obj.getFileName());
+
     }
 
     public ExplorerNode() {
@@ -101,7 +102,6 @@ public class ExplorerNode extends AbstractNode {
         propertyGrp.setDisplayName("General");
         propertyGrp.setName("properties"); //   Do Not Change!
 
-
         GeneralFileInfo obj = getLookup().lookup(GeneralFileInfo.class);
 
         // Case : user selects root. (or directory node)
@@ -111,17 +111,23 @@ public class ExplorerNode extends AbstractNode {
 
         // Case : user selects text file.
         if (obj.getFileExtention().equals("txt")) {
+
+            // Set Default Properties.
             propertyGrp = setDefaultProperties(propertyGrp, obj);
             if (propertyGrp != null) {
                 sheet.put(propertyGrp);
             }
         } // Case : user selects Neuroshare file.
         else if (obj.getFileExtention().equals("nsn")) {
+
+            // Set Default Properties.
             propertyGrp = setDefaultProperties(propertyGrp, obj);
-            ArrayList<Sheet.Set> neurosharePropertyGrp = setNeuroshareProperties(obj);
             if (propertyGrp != null) {
                 sheet.put(propertyGrp);
             }
+
+            // Set Neuroshare Properties.
+            ArrayList<Sheet.Set> neurosharePropertyGrp = setNeuroshareProperties(obj);
             if (neurosharePropertyGrp != null) {
                 for (int ii = 0; ii < neurosharePropertyGrp.size(); ii++) {
                     sheet.put(neurosharePropertyGrp.get(ii));
@@ -141,7 +147,6 @@ public class ExplorerNode extends AbstractNode {
             PropertySupport.Reflection sizeProp = new PropertySupport.Reflection(obj, Long.class, "getFileSize", null);
             PropertySupport.Reflection typeProp = new PropertySupport.Reflection(obj, String.class, "getFileType", null);
             PropertySupport.Reflection timeProp = new PropertySupport.Reflection(obj, String.class, "getModifiedTimeString", null);
-            PropertySupport.Reflection commentProp = new PropertySupport.Reflection(obj, String.class, "getComment", null);
 
             // Set display name.
             nameProp.setName("Name");
@@ -149,7 +154,6 @@ public class ExplorerNode extends AbstractNode {
             sizeProp.setName("Size");
             typeProp.setName("Type");
             timeProp.setName("Last Modified");
-            commentProp.setName("Comment");
 
             // Set description.
             nameProp.setShortDescription("file name.");
@@ -157,7 +161,6 @@ public class ExplorerNode extends AbstractNode {
             sizeProp.setShortDescription("file size [Byte].");
             typeProp.setShortDescription("file type.");
             timeProp.setShortDescription("last modified time.");
-            commentProp.setShortDescription("comment.");
 
             // Set propties to the "General" group.
             propertyGrp.put(nameProp);
@@ -165,7 +168,6 @@ public class ExplorerNode extends AbstractNode {
             propertyGrp.put(sizeProp);
             propertyGrp.put(typeProp);
             propertyGrp.put(timeProp);
-            propertyGrp.put(commentProp);
 
         } catch (IllegalArgumentException ex) {
             Exceptions.printStackTrace(ex);
@@ -490,7 +492,6 @@ public class ExplorerNode extends AbstractNode {
                         entityGrp.put(ni_SourceEntityIDProp);
                         entityGrp.put(ni_SourceUnitIDProp);
                         entityGrp.put(ni_ProbeInfoProp);
-                        entityGrp.setValue("collapsed", true);
                         sets.add(entityGrp);
                         break;
                     default:
