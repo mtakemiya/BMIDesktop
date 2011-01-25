@@ -11,7 +11,6 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import jp.atr.dni.bmi.desktop.model.GeneralFileInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.Entity;
@@ -193,7 +192,7 @@ public class ExplorerNode extends AbstractNode {
 
             // Get Neuroshare Data using NSReader.
             NSReader reader = new NSReader();
-            NeuroshareFile nsn = reader.readNSFile(obj.getFilePath(), false);
+            NeuroshareFile nsn = reader.readNSFileOnlyInfo(obj.getFilePath());
             obj.setNsObj(nsn);
 
             FileInfo fi = nsn.getFileInfo();
@@ -520,7 +519,7 @@ public class ExplorerNode extends AbstractNode {
             //JOptionPane.showMessageDialog(null, "Hello world from " + obj);
             
             // from here.
-            NsnFileModelConverter.ModelConvert(obj.getNsObj(), obj.getFilePath());
+            NsnFileModelConverter.ModelConvert(obj.getNsObj(), obj.getFilePath(), obj.getFilePath());
             //NsnFileModelConverter.ModelConvert(obj.getNsObj(), "C:\\Temp\\test001.nsn");
         }
 
