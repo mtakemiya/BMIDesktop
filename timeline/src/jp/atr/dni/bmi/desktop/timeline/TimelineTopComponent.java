@@ -16,6 +16,7 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
@@ -25,6 +26,10 @@ import javax.media.opengl.GLEventListener;
 import javax.media.opengl.GLProfile;
 import javax.media.opengl.awt.GLCanvas;
 import jp.atr.dni.bmi.desktop.model.GeneralFileInfo;
+import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogData;
+import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogInfo;
+import jp.atr.dni.bmi.desktop.neuroshareutils.ElemType;
+import jp.atr.dni.bmi.desktop.neuroshareutils.Entity;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NSReader;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NeuroshareFile;
 import org.openide.util.NbBundle;
@@ -211,7 +216,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
             double dx = currentPoint.getX() - previousPoint.getX();
             double dy = previousPoint.getY() - currentPoint.getY();
-            System.out.println("dx: " + dx + "\tdy: " + dy);
+//            System.out.println("dx: " + dx + "\tdy: " + dy);
             translationX += dx;
             translationY += dy;
 
@@ -466,7 +471,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
          fileInfo = obj;
           if ((fileInfo.getNsObj()== null ||fileInfo.getNsObj().getFileInfo()==null)&& obj.getFileExtention().equals("nsn")) {
             NSReader reader = new NSReader();
-            NeuroshareFile nsn = reader.readNSFileOnlyInfo(obj.getFilePath());
+            NeuroshareFile nsn = reader.readNSFileAllData(obj.getFilePath());
             obj.setNsObj(nsn);
          }
       }
@@ -482,11 +487,11 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       gl.glTranslated(translationX / (glCanvas.getWidth()*.5), translationY / (glCanvas.getHeight()*.5), 0);
       gl.glScaled(scale, scale, 0);
       
-
+      max = fileInfo.getNsObj().getEntities().size();
       for (int i = 0; i < max; i++) {
          //Draw label
 //         gl.glTranslated(translationX / (glCanvas.getWidth()*.5), translationY / (glCanvas.getHeight()*.5)+i, 0);
-         drawText(gl, fileInfo.getFileName(), (int)(-fileInfo.getFileName().length()*1.5),-3*i, 0.0125f, 2.0f);
+         drawText(gl, fileInfo.getNsObj().getEntities().get(i).getEntityInfo().getEntityLabel(), (int)(-fileInfo.getFileName().length()*1.2),-3*i, 0.0125f, 2.0f);
       }
 
       gl.glLineWidth(1);
@@ -497,20 +502,29 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
       gl.glBegin(GL.GL_LINES);
 
-      for (int i = 0; i < max; i++) {
-//         float[] coords = new float[4];
-//
-//         coords[0] = (float)(-Math.sin(theta)+Math.random());
-//         coords[1] = (float) Math.sin(theta);
-//         coords[2] = (float)(Math.random()*Math.cos(theta));
-//         coords[3] = (float) (-Math.random()*Math.cos(theta));
-//
-//         transform.transform(coords, 0, coords, 0, coords.length / 2);
-//
-//         for (int index = 0; index < 4; index += 2) {
-//            gl.glVertex2f(coords[index], coords[index + 1]);
-//            gl.glVertex2f(coords[(index + 2) % coords.length], coords[(index + 3) % coords.length]);
-//         }
+      int yOffset = 0;
+
+      for (Entity e : fileInfo.getNsObj().getEntities()) {
+         if (e.getTag().getElemType() == ElemType.ENTITY_ANALOG) {
+            AnalogInfo ai = (AnalogInfo)e;
+            if (ai == null || ai.getData() == null) {
+               continue;
+            }
+            for ( AnalogData ad : ai.getData()) {
+               ArrayList<Double> vals = ad.getAnalogValues();
+               for (int i = 0; i < vals.size(); i++) {
+                  if (i > 0){
+                     gl.glVertex2d(i-1, vals.get(i-1) - yOffset);
+                  }
+                  gl.glVertex2d(i, vals.get(i) - yOffset);
+               }
+            }
+            yOffset+=3;
+         }
+      }
+
+    /*  for (int i = 0; i < max; i++) {
+
 
          double lastX = -Math.sin(theta);
          double lastY = -Math.random()*Math.cos(theta)-3*i;
@@ -529,7 +543,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
 //         point = getScreenCoordinates(x2, y2);
 //         gl.glVertex2d(x2, y2);
-      }
+      }*/
       gl.glEnd();
    }
 
