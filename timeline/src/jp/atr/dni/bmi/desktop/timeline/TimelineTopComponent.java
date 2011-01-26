@@ -25,12 +25,17 @@ import javax.media.opengl.GLEventListener;
 import javax.media.opengl.GLProfile;
 import javax.media.opengl.awt.GLCanvas;
 import jp.atr.dni.bmi.desktop.model.GeneralFileInfo;
+import jp.atr.dni.bmi.desktop.neuroshareutils.NSReader;
+import jp.atr.dni.bmi.desktop.neuroshareutils.NeuroshareFile;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 import org.openide.util.ImageUtilities;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.util.Lookup;
+import org.openide.util.Lookup.Result;
+import org.openide.util.LookupEvent;
+import org.openide.util.LookupListener;
 import org.openide.util.Utilities;
 
 /**
@@ -87,6 +92,8 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
    private GLCanvas glCanvas;
 
    private TextRenderer renderer;
+
+   private GeneralFileInfo fileInfo;
 
    private static TimelineTopComponent instance;
    /** path to the icon used by the component and its open action */
@@ -288,6 +295,21 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 //				size = Canvas.this.getSize();
 //			}
 //		});
+
+      Lookup.Result<GeneralFileInfo> fileInfos = Utilities.actionsGlobalContext().lookupResult(GeneralFileInfo.class);
+      fileInfos.allItems();  // THIS IS IMPORTANT
+      fileInfos.addLookupListener(new LookupListener(){
+         @Override
+         public void resultChanged(LookupEvent e){
+            System.out.println("change");
+
+            GeneralFileInfo obj = Utilities.actionsGlobalContext().lookup(GeneralFileInfo.class);
+           
+            if (obj!=null){
+               fileInfo = obj;
+            }
+          }}
+      );
    }
 
    // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -436,16 +458,24 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 	}
 
    private void render(GLAutoDrawable drawable) {
-      Lookup global = Utilities.actionsGlobalContext();
-            GeneralFileInfo obj = global.lookup(GeneralFileInfo.class);
-      if (obj == null) {
+      GL2 gl = drawable.getGL().getGL2();
+      gl.glClear(GL.GL_COLOR_BUFFER_BIT);
+
+      GeneralFileInfo obj = Utilities.actionsGlobalContext().lookup(GeneralFileInfo.class);
+      if (obj !=null){
+         fileInfo = obj;
+          if ((fileInfo.getNsObj()== null ||fileInfo.getNsObj().getFileInfo()==null)&& obj.getFileExtention().equals("nsn")) {
+            NSReader reader = new NSReader();
+            NeuroshareFile nsn = reader.readNSFileOnlyInfo(obj.getFilePath());
+            obj.setNsObj(nsn);
+         }
+      }
+      if (fileInfo == null || fileInfo.getNsObj()== null || fileInfo.getNsObj().getFileInfo()==null) {
          return;
       }
       int max = 500;
 
-      GL2 gl = drawable.getGL().getGL2();
-
-      gl.glClear(GL.GL_COLOR_BUFFER_BIT);
+      
       gl.glColor3d(.6, s*.1, s*.5);
 
       gl.glLoadIdentity();
@@ -456,7 +486,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       for (int i = 0; i < max; i++) {
          //Draw label
 //         gl.glTranslated(translationX / (glCanvas.getWidth()*.5), translationY / (glCanvas.getHeight()*.5)+i, 0);
-         drawText(gl, "your data", -18,-3*i, 0.0125f, 2.0f);
+         drawText(gl, fileInfo.getFileName(), (int)(-fileInfo.getFileName().length()*1.5),-3*i, 0.0125f, 2.0f);
       }
 
       gl.glLineWidth(1);
