@@ -39,7 +39,6 @@ import org.openide.windows.WindowManager;
 import org.openide.util.ImageUtilities;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.util.Lookup;
-import org.openide.util.Lookup.Result;
 import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
 import org.openide.util.Utilities;
@@ -100,6 +99,8 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
    private TextRenderer renderer;
 
    private GeneralFileInfo fileInfo;
+
+   private double divisor;
 
    private static TimelineTopComponent instance;
    /** path to the icon used by the component and its open action */
@@ -481,7 +482,6 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       }
       int max = 500;
 
-      
       gl.glColor3d(.6, s*.1, s*.5);
 
       gl.glLoadIdentity();
@@ -492,11 +492,11 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       for (int i = 0; i < max; i++) {
          //Draw label
 //         gl.glTranslated(translationX / (glCanvas.getWidth()*.5), translationY / (glCanvas.getHeight()*.5)+i, 0);
-         drawText(gl, fileInfo.getNsObj().getEntities().get(i).getEntityInfo().getEntityLabel(), (int)(-fileInfo.getFileName().length()*1.2),-3*i, 0.0125f, 2.0f);
+         drawText(gl, fileInfo.getNsObj().getEntities().get(i).getEntityInfo().getEntityLabel(), (int)(-fileInfo.getFileName().length()*1.2),-5*i, 0.0125f, 2.0f);
       }
 
       gl.glLineWidth(1);
-      
+
       gl.glLoadIdentity();
       gl.glTranslated(translationX / (glCanvas.getWidth()*.5), translationY / (glCanvas.getHeight()*.5), 0);
       gl.glScaled(scale, scale, 0);
@@ -504,25 +504,28 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       gl.glBegin(GL.GL_LINES);
 
       double yOffset = 0;
-      
+
       for (Entity e : fileInfo.getNsObj().getEntities()) {
          if (e.getTag().getElemType() == ElemType.ENTITY_ANALOG) {
             AnalogInfo ai = (AnalogInfo)e;
+
             if (ai == null || ai.getData() == null) {
                continue;
             }
+
+            divisor = Math.max(Math.abs(ai.getMaxVal()),Math.abs(ai.getMinVal()));
 
             for (AnalogData ad : ai.getData()) {
                
                ArrayList<Double> vals = ad.getAnalogValues();
                double lastX = 0;
-               double lastY = vals.get(0)-yOffset*3;
+               double lastY = (vals.get(0) / divisor)-yOffset*5;
 
                for (int i = 0; i < vals.size(); i++) {
                   if (i % 2 == 0) {
                      gl.glVertex2d(lastX, lastY);
                   } else {
-                     lastY = vals.get(i)-yOffset*3;
+                     lastY = (vals.get(i) / divisor)-yOffset*5;
                      gl.glVertex2d(i, lastY);
                   }
                   lastX = i;
