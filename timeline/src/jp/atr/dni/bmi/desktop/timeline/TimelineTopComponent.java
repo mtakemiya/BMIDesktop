@@ -25,6 +25,7 @@ import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.GLProfile;
 import javax.media.opengl.awt.GLCanvas;
+import javax.swing.JOptionPane;
 import jp.atr.dni.bmi.desktop.model.GeneralFileInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogData;
 import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogInfo;
@@ -502,24 +503,32 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
       gl.glBegin(GL.GL_LINES);
 
-      int yOffset = 0;
-
+      double yOffset = 0;
+      
       for (Entity e : fileInfo.getNsObj().getEntities()) {
          if (e.getTag().getElemType() == ElemType.ENTITY_ANALOG) {
             AnalogInfo ai = (AnalogInfo)e;
             if (ai == null || ai.getData() == null) {
                continue;
             }
-            for ( AnalogData ad : ai.getData()) {
+
+            for (AnalogData ad : ai.getData()) {
+               
                ArrayList<Double> vals = ad.getAnalogValues();
+               double lastX = 0;
+               double lastY = vals.get(0)-yOffset*3;
+
                for (int i = 0; i < vals.size(); i++) {
-                  if (i > 0){
-                     gl.glVertex2d(i-1, vals.get(i-1) - yOffset);
+                  if (i % 2 == 0) {
+                     gl.glVertex2d(lastX, lastY);
+                  } else {
+                     lastY = vals.get(i)-yOffset*3;
+                     gl.glVertex2d(i, lastY);
                   }
-                  gl.glVertex2d(i, vals.get(i) - yOffset);
+                  lastX = i;
                }
+               yOffset++;
             }
-            yOffset+=3;
          }
       }
 
