@@ -3,8 +3,8 @@
  */
 package jp.atr.dni.bmi.desktop.neuroshareutils;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,6 +26,7 @@ public class NsnFileModelConverter {
     public static void ModelConvert(NeuroshareFile nsObj, String srcFileFullPath, String dstFileFullPath) {
 
         try {
+
             // It needs NSReader.
             NSReader nsReader = new NSReader();
 
@@ -382,16 +383,15 @@ public class NsnFileModelConverter {
 
                 }
             }
+
             // Close and create.
             int rtnval7 = nsFile.closeFile();
             if (rtnval7 != 0) {
                 // close error.
             }
 
-        } catch (Exception ex) {
-
-            JOptionPane.showMessageDialog(null, "Code : File Conversion Error\n" + "Todo : Check your file format.\n" + "StackTR : " + ex, "Error", JOptionPane.ERROR_MESSAGE);
-
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
 
     }
