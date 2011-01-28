@@ -536,7 +536,7 @@ gl.glLoadIdentity();
         gl.glTranslated(x, y, 0);
         gl.glScalef(size, size, 0.0f);
         gl.glLineWidth(width);
-        glut.glutStrokeString(GLUT.STROKE_MONO_ROMAN, text);
+        glut.glutStrokeString(GLUT.STROKE_ROMAN, text);
         gl.glPopMatrix();
 	}
 
