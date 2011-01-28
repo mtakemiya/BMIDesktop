@@ -44,11 +44,4 @@ public class ExplorerChildren extends Children.Keys {
         GeneralFileInfo obj = (GeneralFileInfo) t;
         return new Node[]{new ExplorerNode(obj)};
     }
-//    protected void addNotify() {
-//        GeneralFileInfo[] objs = new GeneralFileInfo[5];
-//        for (int i = 0; i < objs.length; i++){
-//            objs[i] = new GeneralFileInfo("C:\\Users\\kharada\\99_temp\\20110105\\test001.txt", Integer.toString(i));
-//        }
-//        setKeys(objs);
-//    }
 }

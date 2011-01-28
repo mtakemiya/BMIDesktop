@@ -11,6 +11,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import jp.atr.dni.bmi.desktop.model.GeneralFileInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.Entity;
@@ -90,7 +91,11 @@ public class ExplorerNode extends AbstractNode {
 
     @Override
     public Action[] getActions(boolean popup) {
-        return new Action[]{new ExplorerAction()};
+        return new Action[]{
+                    new ExplorerAction(), // Save -> Over Write
+                    null, //Line.
+                    new ExplorerAction2() // Reload
+                };
     }
 
     @Override
@@ -506,7 +511,7 @@ public class ExplorerNode extends AbstractNode {
         return sets;
     }
 
-    // Right-clicked menu.
+    // Right-clicked menu. OverWrite
     private class ExplorerAction extends AbstractAction implements Presenter.Popup {
 
         public ExplorerAction() {
@@ -517,16 +522,61 @@ public class ExplorerNode extends AbstractNode {
         public void actionPerformed(ActionEvent e) {
             GeneralFileInfo obj = getLookup().lookup(GeneralFileInfo.class);
             //JOptionPane.showMessageDialog(null, "Hello world from " + obj);
-            
-            // from here.
+
+            if (obj == null || !((obj.getFileExtention()).equals("nsn"))) {
+                JOptionPane.showMessageDialog(null, "Select the Neuroshare file.");
+                return;
+            }
+
+            if (obj.getNsObj() == null) {
+                JOptionPane.showMessageDialog(null, "Nothing to change.");
+                return;
+            }
+
+            // Re-Create the Neuroshare file.
             NsnFileModelConverter.ModelConvert(obj.getNsObj(), obj.getFilePath(), obj.getFilePath());
-            //NsnFileModelConverter.ModelConvert(obj.getNsObj(), "C:\\Temp\\test001.nsn");
+
         }
 
         @Override
         public JMenuItem getPopupPresenter() {
             JMenu jmConvertto = new JMenu("Save");
             jmConvertto.add(new JMenuItem(this));
+            jmConvertto.add(new JMenuItem("dummy"));
+            return jmConvertto;
+        }
+    }
+
+    // Right-clicked menu. Reload
+    private class ExplorerAction2 extends AbstractAction implements Presenter.Popup {
+
+        public ExplorerAction2() {
+            putValue(NAME, "Reload");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            GeneralFileInfo obj = getLookup().lookup(GeneralFileInfo.class);
+            //JOptionPane.showMessageDialog(null, "Hello world from " + obj);
+
+            if (obj == null || !((obj.getFileExtention()).equals("nsn"))) {
+                JOptionPane.showMessageDialog(null, "Select the Neuroshare file.");
+                return;
+            }
+
+            if (obj.getNsObj() == null) {
+                JOptionPane.showMessageDialog(null, "Nothing to change.");
+                return;
+            }
+
+            // Re-Create the Neuroshare file.
+            NsnFileModelConverter.ModelConvert(obj.getNsObj(), obj.getFilePath(), obj.getFilePath());
+
+        }
+
+        @Override
+        public JMenuItem getPopupPresenter() {
+            JMenuItem jmConvertto = new JMenuItem(this);
             return jmConvertto;
         }
     }
