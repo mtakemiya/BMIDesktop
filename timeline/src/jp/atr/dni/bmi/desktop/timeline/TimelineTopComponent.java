@@ -39,7 +39,6 @@ import org.openide.windows.WindowManager;
 import org.openide.util.ImageUtilities;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.util.Lookup;
-import org.openide.util.Lookup.Result;
 import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
 import org.openide.util.Utilities;
@@ -101,6 +100,8 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
    private GeneralFileInfo fileInfo;
 
+   private double compression = 1;
+
    private static TimelineTopComponent instance;
    /** path to the icon used by the component and its open action */
    static final String ICON_PATH = "jp/atr/dni/bmi/desktop/timeline/graphPrev.png";
@@ -124,13 +125,10 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
    private void initComponents() {
 
       jLabel1 = new javax.swing.JLabel();
-      jLabel3 = new javax.swing.JLabel();
       jScrollPane1 = new javax.swing.JScrollPane();
       jList1 = new javax.swing.JList();
 
       org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(TimelineTopComponent.class, "TimelineTopComponent.jLabel1.text")); // NOI18N
-
-      org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(TimelineTopComponent.class, "TimelineTopComponent.jLabel3.text")); // NOI18N
 
       jList1.setModel(new javax.swing.AbstractListModel() {
          String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -144,21 +142,15 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       layout.setHorizontalGroup(
          layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(layout.createSequentialGroup()
-            .addGap(1, 1, 1)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1304, Short.MAX_VALUE)
-            .addGap(10, 10, 10))
-         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1368, Short.MAX_VALUE)
+            .addContainerGap())
       );
       layout.setVerticalGroup(
          layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-         .addGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-               .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
-               .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE))
-            .addGap(18, 18, 18)
-            .addComponent(jLabel3))
+         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
       );
    }// </editor-fold>//GEN-END:initComponents
 
@@ -250,11 +242,8 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       animator.add(glCanvas);
       animator.start();
 
-      jLabel3 = new javax.swing.JLabel();
       jScrollPane1 = new javax.swing.JScrollPane();
       jList1 = new javax.swing.JList();
-
-      org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(TimelineTopComponent.class, "TimelineTopComponent.jLabel3.text")); // NOI18N
 
       jList1.setModel(new javax.swing.AbstractListModel() {
          String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -268,21 +257,15 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       layout.setHorizontalGroup(
          layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(layout.createSequentialGroup()
-            .addGap(1, 1, 1)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(glCanvas, javax.swing.GroupLayout.DEFAULT_SIZE, 1304, Short.MAX_VALUE)
-            .addGap(10, 10, 10))
-         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1368, Short.MAX_VALUE)
+            .addContainerGap())
       );
       layout.setVerticalGroup(
          layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-         .addGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-               .addComponent(glCanvas, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
-               .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE))
-            .addGap(18, 18, 18)
-            .addComponent(jLabel3))
+         .addComponent(glCanvas, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
       );
 
       //TODO:add a resize listener
@@ -320,7 +303,6 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
    // Variables declaration - do not modify//GEN-BEGIN:variables
    private javax.swing.JLabel jLabel1;
-   private javax.swing.JLabel jLabel3;
    private javax.swing.JList jList1;
    private javax.swing.JScrollPane jScrollPane1;
    // End of variables declaration//GEN-END:variables
@@ -481,7 +463,6 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       }
       int max = 500;
 
-      
       gl.glColor3d(.6, s*.1, s*.5);
 
       gl.glLoadIdentity();
@@ -492,11 +473,11 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       for (int i = 0; i < max; i++) {
          //Draw label
 //         gl.glTranslated(translationX / (glCanvas.getWidth()*.5), translationY / (glCanvas.getHeight()*.5)+i, 0);
-         drawText(gl, fileInfo.getNsObj().getEntities().get(i).getEntityInfo().getEntityLabel(), (int)(-fileInfo.getFileName().length()*1.2),-3*i, 0.0125f, 2.0f);
+         drawText(gl, fileInfo.getNsObj().getEntities().get(i).getEntityInfo().getEntityLabel(), (int)(-fileInfo.getFileName().length()*1.2),-5*i, 0.0125f, 2.0f);
       }
 
       gl.glLineWidth(1);
-      
+
       gl.glLoadIdentity();
       gl.glTranslated(translationX / (glCanvas.getWidth()*.5), translationY / (glCanvas.getHeight()*.5), 0);
       gl.glScaled(scale, scale, 0);
@@ -504,25 +485,28 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       gl.glBegin(GL.GL_LINES);
 
       double yOffset = 0;
-      
+
       for (Entity e : fileInfo.getNsObj().getEntities()) {
          if (e.getTag().getElemType() == ElemType.ENTITY_ANALOG) {
             AnalogInfo ai = (AnalogInfo)e;
+
             if (ai == null || ai.getData() == null) {
                continue;
             }
+
+            double normalizer = Math.max(Math.abs(ai.getMaxVal()),Math.abs(ai.getMinVal()));
 
             for (AnalogData ad : ai.getData()) {
                
                ArrayList<Double> vals = ad.getAnalogValues();
                double lastX = 0;
-               double lastY = vals.get(0)-yOffset*3;
+               double lastY = (vals.get(0) / normalizer)-yOffset*5;
 
                for (int i = 0; i < vals.size(); i++) {
                   if (i % 2 == 0) {
                      gl.glVertex2d(lastX, lastY);
                   } else {
-                     lastY = vals.get(i)-yOffset*3;
+                     lastY = (vals.get(i) / normalizer)-yOffset*5;
                      gl.glVertex2d(i, lastY);
                   }
                   lastX = i;
