@@ -455,14 +455,13 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 //      gl.glClearColor( .9f, .9f, .9f, 1.0f );
 
       gl.glMatrixMode( GL2.GL_PROJECTION );
-gl.glLoadIdentity();
-//glu.gluOrtho2D (worldWindowRect.x,
-//                worldWindowRect.x + worldWindowRect.width,
-//                worldWindowRect.y,
-//                worldWindowRect.y + worldWindowRect.height);
+      gl.glLoadIdentity();
+//glu.gluOrtho2D (0,
+//                 getWidth(),
+//                0,
+//                getHeight());
 
       gl.glViewport(0, 0, getWidth(), getHeight());//TODO: look into this some more
-//      glCanvas.setBackground(Color.yellow);
 
       GeneralFileInfo obj = Utilities.actionsGlobalContext().lookup(GeneralFileInfo.class);
       if (obj !=null){
@@ -485,15 +484,13 @@ gl.glLoadIdentity();
       max = fileInfo.getNsObj().getEntities().size();
 
       gl.glLoadIdentity();
-      gl.glTranslated(translationX / (glCanvas.getWidth()*.5), translationY / (glCanvas.getHeight()*.5), 0);
+      gl.glTranslated((-scale / (glCanvas.getWidth()*.5))-1, translationY / (glCanvas.getHeight()*.5), 0);
       gl.glScaled(scale, scale, 0);
-      
-      
 
       //Draw labels
       for (int i = 0; i < max; i++) {
          //Draw label
-         drawText(gl, fileInfo.getNsObj().getEntities().get(i).getEntityInfo().getEntityLabel(), (int)(-fileInfo.getFileName().length()*1.2),-5*i, 0.0125f, 2.0f);
+         drawText(gl, fileInfo.getNsObj().getEntities().get(i).getEntityInfo().getEntityLabel(), 0,-5*i, 0.0125f, 2.0f);
       }
 
       gl.glLineWidth(1);
