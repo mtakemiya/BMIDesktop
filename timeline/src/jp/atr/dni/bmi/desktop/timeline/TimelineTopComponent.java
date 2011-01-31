@@ -7,6 +7,7 @@ package jp.atr.dni.bmi.desktop.timeline;
 import com.jogamp.opengl.util.Animator;
 import com.jogamp.opengl.util.awt.TextRenderer;
 import com.jogamp.opengl.util.gl2.GLUT;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
@@ -25,7 +26,7 @@ import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.GLProfile;
 import javax.media.opengl.awt.GLCanvas;
-import javax.swing.JOptionPane;
+import javax.media.opengl.glu.GLU;
 import jp.atr.dni.bmi.desktop.model.GeneralFileInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogData;
 import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogInfo;
@@ -96,6 +97,10 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
    private GLCanvas glCanvas;
 
+   private GLUT glut;
+
+   private GLU glu;
+
    private TextRenderer renderer;
 
    private GeneralFileInfo fileInfo;
@@ -125,32 +130,20 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
    private void initComponents() {
 
       jLabel1 = new javax.swing.JLabel();
-      jScrollPane1 = new javax.swing.JScrollPane();
-      jList1 = new javax.swing.JList();
 
       org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(TimelineTopComponent.class, "TimelineTopComponent.jLabel1.text")); // NOI18N
-
-      jList1.setModel(new javax.swing.AbstractListModel() {
-         String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-         public int getSize() { return strings.length; }
-         public Object getElementAt(int i) { return strings[i]; }
-      });
-      jScrollPane1.setViewportView(jList1);
 
       javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
       this.setLayout(layout);
       layout.setHorizontalGroup(
          layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-         .addGroup(layout.createSequentialGroup()
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1304, Short.MAX_VALUE)
+         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1377, Short.MAX_VALUE)
             .addContainerGap())
       );
       layout.setVerticalGroup(
          layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
-         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
       );
    }// </editor-fold>//GEN-END:initComponents
 
@@ -161,6 +154,9 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       GLProfile.initSingleton();
       GLProfile glp = GLProfile.getDefault();
       GLCapabilities caps = new GLCapabilities(glp);
+
+//      glut = new GLUT();
+//      glu = new GLU();
 
       renderer = new TextRenderer(new Font("SansSerif", Font.BOLD, 12));
               
@@ -206,16 +202,24 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
          public void mouseDragged(MouseEvent me) {
             Point2D currentPoint = me.getPoint();// getVirtualCoordinates(arg0.getX(),
                                                    // arg0.getY());
+            // getVirtualCoordinates(arg0.getX(), arg0.getY());
 
-            double dx = currentPoint.getX() - previousPoint.getX();
-            double dy = previousPoint.getY() - currentPoint.getY();
-//            System.out.println("dx: " + dx + "\tdy: " + dy);
-            translationX += dx;
-            translationY += dy;
+            // left button performs an action
+            if ((me.getModifiers() & MouseEvent.BUTTON1_MASK) > 0) {
+               //TODO:
+            }
+            // right button drags the canvas
+            else if ((me.getModifiers() & MouseEvent.BUTTON3_MASK) > 0) {
+               double dx = currentPoint.getX() - previousPoint.getX();
+               double dy = previousPoint.getY() - currentPoint.getY();
+   //            System.out.println("dx: " + dx + "\tdy: " + dy);
+               translationX += dx;
+               translationY += dy;
 
-            previousPoint = me.getPoint();// getVirtualCoordinates(arg0.getX(), arg0.getY());
+               previousPoint = me.getPoint();
 
-            buildTransforms();
+               buildTransforms();
+            }
          }
 
          @Override
@@ -242,30 +246,17 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       animator.add(glCanvas);
       animator.start();
 
-      jScrollPane1 = new javax.swing.JScrollPane();
-      jList1 = new javax.swing.JList();
-
-      jList1.setModel(new javax.swing.AbstractListModel() {
-         String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-         public int getSize() { return strings.length; }
-         public Object getElementAt(int i) { return strings[i]; }
-      });
-      jScrollPane1.setViewportView(jList1);
-
       javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
       this.setLayout(layout);
       layout.setHorizontalGroup(
          layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-         .addGroup(layout.createSequentialGroup()
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(glCanvas, javax.swing.GroupLayout.DEFAULT_SIZE, 1304, Short.MAX_VALUE)
+         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addComponent(glCanvas, javax.swing.GroupLayout.DEFAULT_SIZE, 1377, Short.MAX_VALUE)
             .addContainerGap())
       );
       layout.setVerticalGroup(
          layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addComponent(glCanvas, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
-         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
       );
 
       //TODO:add a resize listener
@@ -303,8 +294,6 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
    // Variables declaration - do not modify//GEN-BEGIN:variables
    private javax.swing.JLabel jLabel1;
-   private javax.swing.JList jList1;
-   private javax.swing.JScrollPane jScrollPane1;
    // End of variables declaration//GEN-END:variables
    /**
     * Gets default instance. Do not use directly: reserved for *.settings files only,
@@ -391,13 +380,28 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
    @Override
    public void init(GLAutoDrawable drawable) {
+      GL2 gl = (GL2) drawable.getGL();
+		glu = new GLU();
+		glut = new GLUT();
+
+      // set the drawing parameters
+		gl.glClearColor( .9f, .9f, .9f, 1.0f );
+		gl.glPointSize(3.0f);
+      gl.glEnable(GL2.GL_LINE_SMOOTH);
+ 	   gl.glEnable(GL2.GL_BLEND);
+	   gl.glBlendFunc(GL2.GL_SRC_ALPHA, GL2.GL_ONE_MINUS_SRC_ALPHA);
+	   gl.glHint(GL2.GL_LINE_SMOOTH_HINT, GL2.GL_DONT_CARE);
+	   gl.glLineWidth(1.5f);
       drawable.getGL().setSwapInterval(1);
    }
 
    @Override
-   public void reshape(GLAutoDrawable arg0, int arg1, int arg2, int arg3, int arg4) {
-      // TODO Auto-generated method stub
-
+   public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
+      GL2 gl = (GL2) drawable.getGL();
+		gl.glViewport( 0, 0, width, height );
+		gl.glMatrixMode( GL2.GL_PROJECTION );
+		gl.glLoadIdentity();
+		glu.gluOrtho2D( 0.0, width, height, 0);
    }
 
    private void update() {
@@ -447,7 +451,18 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
    private void render(GLAutoDrawable drawable) {
       GL2 gl = drawable.getGL().getGL2();
-      gl.glClear(GL.GL_COLOR_BUFFER_BIT);
+      gl.glClear(GL2.GL_COLOR_BUFFER_BIT);
+//      gl.glClearColor( .9f, .9f, .9f, 1.0f );
+
+      gl.glMatrixMode( GL2.GL_PROJECTION );
+gl.glLoadIdentity();
+//glu.gluOrtho2D (worldWindowRect.x,
+//                worldWindowRect.x + worldWindowRect.width,
+//                worldWindowRect.y,
+//                worldWindowRect.y + worldWindowRect.height);
+
+      gl.glViewport(0, 0, getWidth(), getHeight());//TODO: look into this some more
+//      glCanvas.setBackground(Color.yellow);
 
       GeneralFileInfo obj = Utilities.actionsGlobalContext().lookup(GeneralFileInfo.class);
       if (obj !=null){
@@ -458,21 +473,26 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
             obj.setNsObj(nsn);
          }
       }
+      
       if (fileInfo == null || fileInfo.getNsObj()== null || fileInfo.getNsObj().getFileInfo()==null) {
          return;
       }
+            
       int max = 500;
 
       gl.glColor3d(.6, s*.1, s*.5);
+
+      max = fileInfo.getNsObj().getEntities().size();
 
       gl.glLoadIdentity();
       gl.glTranslated(translationX / (glCanvas.getWidth()*.5), translationY / (glCanvas.getHeight()*.5), 0);
       gl.glScaled(scale, scale, 0);
       
-      max = fileInfo.getNsObj().getEntities().size();
+      
+
+      //Draw labels
       for (int i = 0; i < max; i++) {
          //Draw label
-//         gl.glTranslated(translationX / (glCanvas.getWidth()*.5), translationY / (glCanvas.getHeight()*.5)+i, 0);
          drawText(gl, fileInfo.getNsObj().getEntities().get(i).getEntityInfo().getEntityLabel(), (int)(-fileInfo.getFileName().length()*1.2),-5*i, 0.0125f, 2.0f);
       }
 
@@ -486,6 +506,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
       double yOffset = 0;
 
+      //draw data
       for (Entity e : fileInfo.getNsObj().getEntities()) {
          if (e.getTag().getElemType() == ElemType.ENTITY_ANALOG) {
             AnalogInfo ai = (AnalogInfo)e;
@@ -515,28 +536,6 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
             }
          }
       }
-
-    /*  for (int i = 0; i < max; i++) {
-
-
-         double lastX = -Math.sin(theta);
-         double lastY = -Math.random()*Math.cos(theta)-3*i;
-
-         for (int x = 0; x < 1000; x++) {
-            if (x % 2 == 0) {
-               gl.glVertex2d(lastX, lastY);
-            } else {
-               lastY = -Math.random()*Math.cos(theta)-3*i;
-               gl.glVertex2d(Math.sin(theta)+x, lastY);
-            }
-            lastX = Math.sin(theta)+x;
-         }
-
-//         Point2D point = getScreenCoordinates(x1, y1);
-
-//         point = getScreenCoordinates(x2, y2);
-//         gl.glVertex2d(x2, y2);
-      }*/
       gl.glEnd();
    }
 
@@ -562,14 +561,17 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 //    renderer.endRendering();
 //    gl.glPopMatrix();
 
-      GLUT glut = new GLUT();
-        gl.glPushMatrix();
-        gl.glTranslated(x, y, 0);
-        gl.glScalef(size, size, 0.0f);
-        gl.glLineWidth(width);
-        glut.glutStrokeString(GLUT.STROKE_MONO_ROMAN, text);
-        gl.glPopMatrix();
+      gl.glPushMatrix();
+      gl.glTranslated(x, y, 0);
+      gl.glScalef(size, size, 0.0f);
+      gl.glLineWidth(width);
+      glut.glutStrokeString(GLUT.STROKE_ROMAN, text);
+      gl.glPopMatrix();
 	}
+
+   public void drawTimeline() {
+
+   }
 
    /**
 	 * Gets the tranlation in the x direction.
@@ -612,7 +614,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 	 * Sets the scale and rebuilds the affine transforms.
 	 */
 	public void setScale(double scale) {
-		if (scale < 0.0001 || scale > 1000000) {
+		if (scale < 0.001 || scale > 1) {
 			return;
 		}
 

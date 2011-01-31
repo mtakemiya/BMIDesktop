@@ -20,7 +20,6 @@ public class GeneralFileInfo {
 
     private List listeners = Collections.synchronizedList(new LinkedList());
 
-//    private List listeners = Collections.synchronizedList(new LinkedList());
     public GeneralFileInfo(String filePath) {
         File file = new File(filePath);
         if (!file.exists()) {
