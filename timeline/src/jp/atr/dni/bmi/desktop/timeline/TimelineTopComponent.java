@@ -26,7 +26,7 @@ import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.GLProfile;
 import javax.media.opengl.awt.GLCanvas;
-import javax.swing.JOptionPane;
+import javax.media.opengl.glu.GLU;
 import jp.atr.dni.bmi.desktop.model.GeneralFileInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogData;
 import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogInfo;
@@ -97,6 +97,10 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
    private GLCanvas glCanvas;
 
+   private GLUT glut;
+
+   private GLU glu;
+
    private TextRenderer renderer;
 
    private GeneralFileInfo fileInfo;
@@ -150,6 +154,9 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       GLProfile.initSingleton();
       GLProfile glp = GLProfile.getDefault();
       GLCapabilities caps = new GLCapabilities(glp);
+
+//      glut = new GLUT();
+//      glu = new GLU();
 
       renderer = new TextRenderer(new Font("SansSerif", Font.BOLD, 12));
               
@@ -373,6 +380,18 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
    @Override
    public void init(GLAutoDrawable drawable) {
+      GL2 gl = (GL2) drawable.getGL();
+		glu = new GLU();
+		glut = new GLUT();
+
+      // set the drawing parameters
+		gl.glClearColor( .9f, .9f, .9f, 1.0f );
+		gl.glPointSize(3.0f);
+      gl.glEnable(GL2.GL_LINE_SMOOTH);
+ 	   gl.glEnable(GL2.GL_BLEND);
+	   gl.glBlendFunc(GL2.GL_SRC_ALPHA, GL2.GL_ONE_MINUS_SRC_ALPHA);
+	   gl.glHint(GL2.GL_LINE_SMOOTH_HINT, GL2.GL_DONT_CARE);
+	   gl.glLineWidth(1.5f);
       drawable.getGL().setSwapInterval(1);
    }
 
@@ -382,7 +401,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 		gl.glViewport( 0, 0, width, height );
 		gl.glMatrixMode( GL2.GL_PROJECTION );
 		gl.glLoadIdentity();
-//		glu.gluOrtho2D( 0.0, width, height, 0);
+		glu.gluOrtho2D( 0.0, width, height, 0);
    }
 
    private void update() {
@@ -433,7 +452,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
    private void render(GLAutoDrawable drawable) {
       GL2 gl = drawable.getGL().getGL2();
       gl.glClear(GL2.GL_COLOR_BUFFER_BIT);
-      gl.glClearColor( .9f, .9f, .9f, 1.0f );
+//      gl.glClearColor( .9f, .9f, .9f, 1.0f );
 
       gl.glMatrixMode( GL2.GL_PROJECTION );
 gl.glLoadIdentity();
@@ -542,7 +561,6 @@ gl.glLoadIdentity();
 //    renderer.endRendering();
 //    gl.glPopMatrix();
 
-      GLUT glut = new GLUT();
       gl.glPushMatrix();
       gl.glTranslated(x, y, 0);
       gl.glScalef(size, size, 0.0f);
