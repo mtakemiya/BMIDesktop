@@ -195,12 +195,11 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
          public void mouseDragged(MouseEvent me) {
             Point2D currentPoint = me.getPoint();// getVirtualCoordinates(arg0.getX(),
                                                    // arg0.getY());
-
             // getVirtualCoordinates(arg0.getX(), arg0.getY());
 
             // left button performs an action
             if ((me.getModifiers() & MouseEvent.BUTTON1_MASK) > 0) {
-               //TODO
+               //TODO:
             }
             // right button drags the canvas
             else if ((me.getModifiers() & MouseEvent.BUTTON3_MASK) > 0) {
@@ -210,12 +209,10 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
                translationX += dx;
                translationY += dy;
 
-            previousPoint = me.getPoint();
+               previousPoint = me.getPoint();
 
                buildTransforms();
             }
-
-            
          }
 
          @Override
@@ -380,9 +377,12 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
    }
 
    @Override
-   public void reshape(GLAutoDrawable arg0, int arg1, int arg2, int arg3, int arg4) {
-      // TODO Auto-generated method stub
-
+   public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
+      GL2 gl = (GL2) drawable.getGL();
+		gl.glViewport( 0, 0, width, height );
+		gl.glMatrixMode( GL2.GL_PROJECTION );
+		gl.glLoadIdentity();
+//		glu.gluOrtho2D( 0.0, width, height, 0);
    }
 
    private void update() {
@@ -432,8 +432,8 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
    private void render(GLAutoDrawable drawable) {
       GL2 gl = drawable.getGL().getGL2();
-      gl.glClear(GL.GL_COLOR_BUFFER_BIT);
-      gl.glClearColorIi(1, 0, 1, 1);
+      gl.glClear(GL2.GL_COLOR_BUFFER_BIT);
+      gl.glClearColor( .9f, .9f, .9f, 1.0f );
 
       gl.glMatrixMode( GL2.GL_PROJECTION );
 gl.glLoadIdentity();
