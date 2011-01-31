@@ -30,7 +30,7 @@ public class GeneralFileInfo {
             this.filePath = file.getAbsolutePath();
             this.fileName = file.getName();
             this.fileSize = file.length();
-            this.fileType = "Application/" + this.getFileExtension(this.fileName);
+            this.fileType = "File/" + this.getFileExtension(this.fileName);
             this.modifiedTime = file.lastModified();
             this.nsObj = null;
         } else if (file.isDirectory()) {
