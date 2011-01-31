@@ -196,15 +196,26 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
             Point2D currentPoint = me.getPoint();// getVirtualCoordinates(arg0.getX(),
                                                    // arg0.getY());
 
-            double dx = currentPoint.getX() - previousPoint.getX();
-            double dy = previousPoint.getY() - currentPoint.getY();
-//            System.out.println("dx: " + dx + "\tdy: " + dy);
-            translationX += dx;
-            translationY += dy;
+            // getVirtualCoordinates(arg0.getX(), arg0.getY());
 
-            previousPoint = me.getPoint();// getVirtualCoordinates(arg0.getX(), arg0.getY());
+            // left button performs an action
+            if ((me.getModifiers() & MouseEvent.BUTTON1_MASK) > 0) {
+               //TODO
+            }
+            // right button drags the canvas
+            else if ((me.getModifiers() & MouseEvent.BUTTON3_MASK) > 0) {
+               double dx = currentPoint.getX() - previousPoint.getX();
+               double dy = previousPoint.getY() - currentPoint.getY();
+   //            System.out.println("dx: " + dx + "\tdy: " + dy);
+               translationX += dx;
+               translationY += dy;
 
-            buildTransforms();
+            previousPoint = me.getPoint();
+
+               buildTransforms();
+            }
+
+            
          }
 
          @Override
@@ -532,13 +543,17 @@ gl.glLoadIdentity();
 //    gl.glPopMatrix();
 
       GLUT glut = new GLUT();
-        gl.glPushMatrix();
-        gl.glTranslated(x, y, 0);
-        gl.glScalef(size, size, 0.0f);
-        gl.glLineWidth(width);
-        glut.glutStrokeString(GLUT.STROKE_ROMAN, text);
-        gl.glPopMatrix();
+      gl.glPushMatrix();
+      gl.glTranslated(x, y, 0);
+      gl.glScalef(size, size, 0.0f);
+      gl.glLineWidth(width);
+      glut.glutStrokeString(GLUT.STROKE_ROMAN, text);
+      gl.glPopMatrix();
 	}
+
+   public void drawTimeline() {
+
+   }
 
    /**
 	 * Gets the tranlation in the x direction.
