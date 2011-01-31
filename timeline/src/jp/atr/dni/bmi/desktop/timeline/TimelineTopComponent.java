@@ -157,6 +157,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
 //      glut = new GLUT();
 //      glu = new GLU();
+      scale = .05;
 
       renderer = new TextRenderer(new Font("SansSerif", Font.BOLD, 12));
               
@@ -611,7 +612,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 	 * Sets the scale and rebuilds the affine transforms.
 	 */
 	public void setScale(double scale) {
-		if (scale < 0.001 || scale > 1) {
+		if (scale < 0.01 || scale > .8) {
 			return;
 		}
 
