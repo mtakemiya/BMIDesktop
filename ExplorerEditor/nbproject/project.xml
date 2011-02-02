@@ -75,8 +75,16 @@
                 <package>jp.atr.dni.bmi.desktop.explorereditor</package>
             </public-packages>
             <class-path-extension>
+                <runtime-relative-path>ext/commons-io-2.0.1-javadoc.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/commons-io-2.0.1-javadoc.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
                 <runtime-relative-path>ext/commons-io-2.0.1.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/commons-io-2.0.1.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/commons-io-2.0.1-sources.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/commons-io-2.0.1-sources.jar</binary-origin>
             </class-path-extension>
         </data>
     </configuration>
