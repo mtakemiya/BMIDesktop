@@ -6,7 +6,7 @@ package jp.atr.dni.bmi.desktop.neuroshareutils;
 /**
  *
  * @author kharada
- * @version 2011/01/13
+ * @version 2011/01/28
  */
 public class EntityInfo {
 
@@ -14,6 +14,7 @@ public class EntityInfo {
     private long entityType;
     private long itemCount;
     private long dataPosition;
+    private String filePath;
 
     /**
      * Default constructor.
@@ -36,6 +37,7 @@ public class EntityInfo {
         this.entityType = entityType;
         this.itemCount = itemCount;
         this.dataPosition=0;
+        this.filePath="";
     }
 
     /**
@@ -92,6 +94,20 @@ public class EntityInfo {
      */
     public void setDataPosition(long dataPosition) {
         this.dataPosition = dataPosition;
+    }
+
+    /**
+     * @return the filePath
+     */
+    public String getFilePath() {
+        return filePath;
+    }
+
+    /**
+     * @param filePath the filePath to set
+     */
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 
 }

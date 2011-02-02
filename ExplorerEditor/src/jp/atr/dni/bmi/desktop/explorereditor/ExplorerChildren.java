@@ -17,18 +17,19 @@ import org.openide.nodes.Node;
  */
 public class ExplorerChildren extends Children.Keys {
 
-    public ExplorerChildren(String parentPath) {
-        File target = new File(parentPath);
+    public ExplorerChildren(GeneralFileInfo obj) {
 
-        if (target.isDirectory()) {
+        String nodeType = obj.getFileType();
+        String targetPath = obj.getFilePath();
+
+        if (nodeType.equals("Directory")) {
+            File target = new File(targetPath);
             File[] listFile = target.listFiles();
             int length = target.listFiles().length;
             GeneralFileInfo[] objs = new GeneralFileInfo[length];
-
             for (int c = 0; c < length; c++) {
                 objs[c] = new GeneralFileInfo(listFile[c].getAbsolutePath());
             }
-
             setKeys(objs);
         }
     }
@@ -44,4 +45,13 @@ public class ExplorerChildren extends Children.Keys {
         GeneralFileInfo obj = (GeneralFileInfo) t;
         return new Node[]{new ExplorerNode(obj)};
     }
+
+    public boolean remove(Object t) {
+        GeneralFileInfo obj = (GeneralFileInfo)t;
+        Node a = findChild(obj.getFileName());
+        return remove(a);
+    }
+
+
+
 }
