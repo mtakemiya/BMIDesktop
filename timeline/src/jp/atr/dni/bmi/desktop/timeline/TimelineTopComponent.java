@@ -17,7 +17,9 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.nio.DoubleBuffer;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Logger;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
@@ -50,6 +52,10 @@ import org.openide.util.Utilities;
 @ConvertAsProperties(dtd = "-//jp.atr.dni.bmi.desktop.timeline//timeline//EN",
 autostore = false)
 public final class TimelineTopComponent extends TopComponent implements GLEventListener {
+
+   private boolean SNAP_TO_GRID = false;
+
+   private boolean SHOW_GRID;
 
    /** the amout to translate the canvas */
 	private double TRANSLATE_AMOUNT = 10.0;
@@ -88,7 +94,6 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 	/** the previous mouse location, in virtual coordinates */
 	private Point2D previousPoint;
 
-
    /** the transform for virtual to screen coordinates */
    private AffineTransform transform = new AffineTransform();
 
@@ -108,13 +113,17 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
    private double compression = 1;
 
    private static TimelineTopComponent instance;
+   
    /** path to the icon used by the component and its open action */
    static final String ICON_PATH = "jp/atr/dni/bmi/desktop/timeline/graphPrev.png";
+   
    private static final String PREFERRED_ID = "timelineTopComponent";
 
+   private DoubleBuffer[] colors;
+
    public TimelineTopComponent() {
-//      initComponents();
       initGL();
+      SHOW_GRID = true;
       setName(NbBundle.getMessage(TimelineTopComponent.class, "CTL_timelineTopComponent"));
       setToolTipText(NbBundle.getMessage(TimelineTopComponent.class, "HINT_timelineTopComponent"));
       setIcon(ImageUtilities.loadImage(ICON_PATH, true));
@@ -160,7 +169,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       scale = .05;
 
       renderer = new TextRenderer(new Font("SansSerif", Font.BOLD, 12));
-              
+
       glCanvas = new GLCanvas(caps);
 
       glCanvas.addGLEventListener(this);
@@ -241,7 +250,6 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
             }
          }
       });
-
 
       Animator animator = new Animator(glCanvas);
       animator.add(glCanvas);
@@ -399,10 +407,10 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
    @Override
    public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
       GL2 gl = (GL2) drawable.getGL();
-		gl.glViewport( 0, 0, width, height );
-		gl.glMatrixMode( GL2.GL_PROJECTION );
+		gl.glViewport(0, 0, width, height);
+		gl.glMatrixMode(GL2.GL_PROJECTION);
 		gl.glLoadIdentity();
-		glu.gluOrtho2D( 0.0, width, height, 0);
+		glu.gluOrtho2D(0.0, width, height, 0);
    }
 
    private void update() {
@@ -450,12 +458,25 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 		catch (Exception e) {}
 	}
 
+   /**
+    * Order to draw:
+    * 1) grid
+    * 2) data
+    * 3) labels
+    * 4) timeline
+    *
+    * @param drawable
+    */
    private void render(GLAutoDrawable drawable) {
       GL2 gl = drawable.getGL().getGL2();
       gl.glClear(GL2.GL_COLOR_BUFFER_BIT);
+
+      if (SHOW_GRID){
+         gl.glLoadIdentity();
+      }
 //      gl.glClearColor( .9f, .9f, .9f, 1.0f );
 
-      gl.glMatrixMode( GL2.GL_PROJECTION );
+      gl.glMatrixMode(GL2.GL_PROJECTION);
       gl.glLoadIdentity();
 //glu.gluOrtho2D (0,
 //                 getWidth(),
@@ -465,34 +486,27 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       gl.glViewport(0, 0, getWidth(), getHeight());//TODO: look into this some more
 
       GeneralFileInfo obj = Utilities.actionsGlobalContext().lookup(GeneralFileInfo.class);
-      if (obj !=null){
+      if (obj !=null) {
          fileInfo = obj;
-          if ((fileInfo.getNsObj()== null ||fileInfo.getNsObj().getFileInfo()==null)&& obj.getFileExtention().equals("nsn")) {
+          if ((fileInfo.getNsObj() == null || fileInfo.getNsObj().getFileInfo() == null) && obj.getFileExtention().equals("nsn")) {
             NSReader reader = new NSReader();
             NeuroshareFile nsn = reader.readNSFileAllData(obj.getFilePath());
             obj.setNsObj(nsn);
          }
       }
       
-      if (fileInfo == null || fileInfo.getNsObj()== null || fileInfo.getNsObj().getFileInfo()==null) {
+      if (fileInfo == null || fileInfo.getNsObj()== null || fileInfo.getNsObj().getFileInfo() == null) {
          return;
       }
             
       int max = 500;
 
-      gl.glColor3d(.6, s*.1, s*.5);
+      gl.glColor3d(.6, .1, .5);
 
       max = fileInfo.getNsObj().getEntities().size();
 
-      gl.glLoadIdentity();
-      gl.glTranslated((-scale / (glCanvas.getWidth()*.5))-1, translationY / (glCanvas.getHeight()*.5), 0);
-      gl.glScaled(scale, scale, 0);
-
-      //Draw labels
-      for (int i = 0; i < max; i++) {
-         //Draw label
-         drawText(gl, fileInfo.getNsObj().getEntities().get(i).getEntityInfo().getEntityLabel(), 0,-5*i, 0.0125f, 2.0f);
-      }
+      //Draw data
+      
 
       gl.glLineWidth(1);
 
@@ -516,7 +530,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
             double normalizer = Math.max(Math.abs(ai.getMaxVal()),Math.abs(ai.getMinVal()));
 
             for (AnalogData ad : ai.getData()) {
-               
+
                ArrayList<Double> vals = ad.getAnalogValues();
                double lastX = 0;
                double lastY = (vals.get(0) / normalizer)-yOffset*5;
@@ -535,6 +549,25 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
          }
       }
       gl.glEnd();
+
+      //Draw labels
+      gl.glLoadIdentity();
+      gl.glTranslated((-scale / (glCanvas.getWidth()*.5))-.99, translationY / (glCanvas.getHeight()*.5), 0);
+      gl.glScaled(scale, scale, 0);
+      
+      for (int i = 0; i < max; i++) {
+         //Draw label
+         drawText(gl, fileInfo.getNsObj().getEntities().get(i).getEntityInfo().getEntityLabel(), 0,-5*i, 0.0125f, 2.0f);
+      }
+
+     //Draw timeline
+      gl.glLoadIdentity();
+      gl.glTranslated((translationX / (glCanvas.getWidth()*.5)), -scale / (glCanvas.getHeight()*.5) -.99, 0);
+      gl.glScaled(scale, scale, 0);
+
+      for (int i = 0; i < 1000; i+=35) {
+         drawText(gl, new Date(i).toString(), i,0, 0.0125f, 2.0f);
+      }
    }
 
    /**
@@ -561,6 +594,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
       gl.glPushMatrix();
       gl.glTranslated(x, y, 0);
+//      gl.glRotatef(angle, 0, 0, 1);
       gl.glScalef(size, size, 0.0f);
       gl.glLineWidth(width);
       glut.glutStrokeString(GLUT.STROKE_ROMAN, text);
@@ -612,7 +646,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 	 * Sets the scale and rebuilds the affine transforms.
 	 */
 	public void setScale(double scale) {
-		if (scale < 0.01 || scale > .8) {
+		if (scale < 0.008 || scale > .2) {
 			return;
 		}
 
