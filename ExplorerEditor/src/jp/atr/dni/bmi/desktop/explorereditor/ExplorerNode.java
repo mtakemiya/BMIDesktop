@@ -6,9 +6,12 @@ package jp.atr.dni.bmi.desktop.explorereditor;
 
 import com.sun.corba.se.impl.orbutil.graph.NodeData;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -24,6 +27,7 @@ import jp.atr.dni.bmi.desktop.neuroshareutils.NeuroshareFile;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NsnFileModelConverter;
 import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentSourceInfo;
+import org.apache.commons.io.FileUtils;
 import org.openide.ErrorManager;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.PropertySupport;
@@ -76,7 +80,11 @@ public class ExplorerNode extends AbstractNode {
         return new Action[]{
                     new SaveAction(), // Save -> Over Write
                     null, //Line.
-                    new ReloadAction() // Reload
+                    new ReloadAction(), // Reload
+                    null, //Line.
+                    new AddAction(), // Add
+                    null, //Line.
+                    new DeleteAction() // Delete
                 };
     }
 
@@ -811,7 +819,7 @@ public class ExplorerNode extends AbstractNode {
         return sets;
     }
 
-    // Right-clicked menu. OverWrite
+    // Right-clicked menu. Save
     private class SaveAction extends AbstractAction implements Presenter.Popup {
 
         public SaveAction() {
@@ -822,18 +830,33 @@ public class ExplorerNode extends AbstractNode {
         public void actionPerformed(ActionEvent e) {
             GeneralFileInfo obj = getLookup().lookup(GeneralFileInfo.class);
 
-            if (obj == null || !((obj.getFileExtention()).equals("nsn"))) {
-                JOptionPane.showMessageDialog(null, "Select the Neuroshare file.");
+            //
+            if (obj == null || obj.getFileType().equals("Directory")) {
+                JOptionPane.showMessageDialog(null, "Select a file.");
                 return;
             }
 
-            if (obj.getNsObj() == null) {
-                JOptionPane.showMessageDialog(null, "Nothing to change.");
-                return;
+            // Neuroshare file.
+            if (obj.getFileType().equals("File/nsn")) {
+                if (obj.getNsObj() != null) {
+                    // Re-Create the Neuroshare file.
+                    NsnFileModelConverter.ModelConvert(obj.getNsObj(), obj.getFilePath(), obj.getFilePath());
+                } else {
+                    JOptionPane.showMessageDialog(null, "Nothing to change.");
+                    return;
+                }
             }
 
-            // Re-Create the Neuroshare file.
-            NsnFileModelConverter.ModelConvert(obj.getNsObj(), obj.getFilePath(), obj.getFilePath());
+            // write here if over write other file.
+
+            // refresh obj's value.
+            GeneralFileInfo newFile = new GeneralFileInfo(obj.getFilePath());
+            obj.setModifiedTime(newFile.getModifiedTime());
+            obj.setFileSize(newFile.getFileSize());
+
+            //setName to refresh obj's value.
+            setName(obj.getFileName());
+
 
         }
 
@@ -857,24 +880,117 @@ public class ExplorerNode extends AbstractNode {
         public void actionPerformed(ActionEvent e) {
             GeneralFileInfo obj = getLookup().lookup(GeneralFileInfo.class);
 
-            if (obj == null || !((obj.getFileExtention()).equals("nsn"))) {
-                JOptionPane.showMessageDialog(null, "Select the Neuroshare file.");
+            if (obj == null) {
+                JOptionPane.showMessageDialog(null, "Select a directory or file.");
                 return;
             }
 
-            if (obj.getNsObj() == null) {
-                JOptionPane.showMessageDialog(null, "Nothing to change.");
-                return;
+            // Reload Directory.
+            if (obj.getFileType().equals("Directory")) {
+                setChildren(new ExplorerChildren(obj));
+
+            } // Reload File.
+            else if (obj.getFileType().startsWith("File/")) {
+                GeneralFileInfo tempFile = new GeneralFileInfo(obj.getFilePath());
+                obj.setModifiedTime(tempFile.getModifiedTime());
+                obj.setFileSize(tempFile.getFileSize());
+                setName(tempFile.getFileName());
             }
-
-            // Re-Create the Neuroshare file.
-            NsnFileModelConverter.ModelConvert(obj.getNsObj(), obj.getFilePath(), obj.getFilePath());
-
         }
 
         @Override
         public JMenuItem getPopupPresenter() {
             JMenuItem jmConvertto = new JMenuItem(this);
+            return jmConvertto;
+        }
+    }
+
+    // Right-clicked menu. Delete
+    private class DeleteAction extends AbstractAction implements Presenter.Popup {
+
+        public DeleteAction() {
+            putValue(NAME, "Delete");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            GeneralFileInfo obj = getLookup().lookup(GeneralFileInfo.class);
+
+            if (obj == null) {
+                JOptionPane.showMessageDialog(null, "Select a directory or file.");
+                return;
+            }
+
+            // Delete Directory.
+            if (obj.getFileType().equals("Directory")) {
+                try {
+                    FileUtils.deleteDirectory(new File(obj.getFilePath()));
+                } catch (IOException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+
+            } // Delete File.
+            else if (obj.getFileType().startsWith("File/")) {
+                try {
+                    FileUtils.forceDelete(new File(obj.getFilePath()));
+                } catch (IOException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+            }
+        }
+
+        @Override
+        public JMenuItem getPopupPresenter() {
+            JMenuItem jmConvertto = new JMenuItem(this);
+            return jmConvertto;
+        }
+    }
+
+    // Right-clicked menu. Add
+    private class AddAction extends AbstractAction implements Presenter.Popup {
+
+        public AddAction() {
+            putValue(NAME, "Files");
+            // Options (short cut and nemonic)
+            //putValue(MNEMONIC_KEY, KeyEvent.VK_F);
+            //putValue(DISPLAYED_MNEMONIC_INDEX_KEY, 1);
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            GeneralFileInfo obj = getLookup().lookup(GeneralFileInfo.class);
+
+            if (obj == null || obj.getFileType().startsWith("File/")) {
+                JOptionPane.showMessageDialog(null, "Select a directory.");
+                return;
+            }
+
+            // Choose files
+            JFileChooser fc = new JFileChooser();
+            fc.setMultiSelectionEnabled(true);
+            int selected = fc.showOpenDialog(null);
+            if (selected == JFileChooser.APPROVE_OPTION) {
+                File[] srcFiles = fc.getSelectedFiles();
+                for (int ii = 0; ii < srcFiles.length; ii++) {
+                    String newFilePath = obj.getFilePath() + File.separator + srcFiles[ii].getName();
+                    File newFile = new File(newFilePath);
+                    try {
+                        FileUtils.copyFile(srcFiles[ii], newFile);
+                    } catch (IOException ex) {
+                        Exceptions.printStackTrace(ex);
+                    }
+                }
+
+                // Reset nodes.
+                setChildren(new ExplorerChildren(obj));
+
+            }
+        }
+
+        @Override
+        public JMenuItem getPopupPresenter() {
+            JMenu jmConvertto = new JMenu("Add");
+            jmConvertto.add(new JMenuItem(this));
             return jmConvertto;
         }
     }

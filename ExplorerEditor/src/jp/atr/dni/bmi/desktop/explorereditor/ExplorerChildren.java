@@ -45,4 +45,13 @@ public class ExplorerChildren extends Children.Keys {
         GeneralFileInfo obj = (GeneralFileInfo) t;
         return new Node[]{new ExplorerNode(obj)};
     }
+
+    public boolean remove(Object t) {
+        GeneralFileInfo obj = (GeneralFileInfo)t;
+        Node a = findChild(obj.getFileName());
+        return remove(a);
+    }
+
+
+
 }
