@@ -983,7 +983,6 @@ public class ExplorerNode extends AbstractNode {
 
                 // Reset nodes.
                 setChildren(new ExplorerChildren(obj));
-
             }
         }
 
