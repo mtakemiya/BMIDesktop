@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="Actions">
+        <folder name="Window">
+            <file name="jp-atr-dni-bmi-desktop-channellist-ChannelListAction.instance">
+                <attr name="component" methodvalue="jp.atr.dni.bmi.desktop.channellist.ChannelListTopComponent.findInstance"/>
+                <attr name="displayName" bundlevalue="jp.atr.dni.bmi.desktop.channellist.Bundle#CTL_ChannelListAction"/>
+                <attr name="iconBase" stringvalue="jp/atr/dni/bmi/desktop/channellist/choose.png"/>
+                <attr name="instanceCreate" methodvalue="org.openide.windows.TopComponent.openAction"/>
+            </file>
+        </folder>
+    </folder>
+    <folder name="Menu">
+        <folder name="Window">
+            <file name="ChannelListAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/Window/jp-atr-dni-bmi-desktop-channellist-ChannelListAction.instance"/>
+            </file>
+        </folder>
+    </folder>
+    <folder name="Windows2">
+        <folder name="Components">
+            <file name="ChannelListTopComponent.settings" url="ChannelListTopComponentSettings.xml"/>
+        </folder>
+        <folder name="Modes">
+            <folder name="rightSlidingSide">
+                <file name="ChannelListTopComponent.wstcref" url="ChannelListTopComponentWstcref.xml"/>
+            </folder>
+        </folder>
+    </folder>
+</filesystem>
