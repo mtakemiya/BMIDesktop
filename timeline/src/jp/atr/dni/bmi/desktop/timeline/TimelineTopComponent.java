@@ -494,11 +494,11 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
             obj.setNsObj(nsn);
          }
       }
-      
+
       if (fileInfo == null || fileInfo.getNsObj()== null || fileInfo.getNsObj().getFileInfo() == null) {
          return;
       }
-            
+
       int max = 500;
 
       gl.glColor3d(.6, .1, .5);
@@ -506,8 +506,6 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       max = fileInfo.getNsObj().getEntities().size();
 
       //Draw data
-      
-
       gl.glLineWidth(1);
 
       gl.glLoadIdentity();
@@ -562,7 +560,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
      //Draw timeline
       gl.glLoadIdentity();
-      gl.glTranslated((translationX / (glCanvas.getWidth()*.5)), -scale / (glCanvas.getHeight()*.5) -.99, 0);
+      gl.glTranslated((translationX / (glCanvas.getWidth()*.5)), -scale / (glCanvas.getHeight()*.5) -.9, 0);
       gl.glScaled(scale, scale, 0);
 
       for (int i = 0; i < 1000; i+=35) {
