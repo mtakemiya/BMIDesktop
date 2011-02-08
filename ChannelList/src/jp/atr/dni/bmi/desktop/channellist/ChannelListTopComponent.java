@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import jp.atr.dni.bmi.desktop.model.Channel;
 import jp.atr.dni.bmi.desktop.model.GeneralFileInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NSReader;
@@ -44,9 +45,7 @@ public final class ChannelListTopComponent extends TopComponent implements Looku
         setToolTipText(NbBundle.getMessage(ChannelListTopComponent.class, "HINT_ChannelListTopComponent"));
         setIcon(ImageUtilities.loadImage(ICON_PATH, true));
 
-        // Define relation.
-        jList1.setModel(unSelectedChannelList);
-        jList2.setModel(selectedChannelList);
+        
 
     }
 
@@ -61,33 +60,48 @@ public final class ChannelListTopComponent extends TopComponent implements Looku
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane(jList1);
+        jList1 = new javax.swing.JList(unSelectedChannelList);
         jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane(jList2);
+        jList2 = new javax.swing.JList(selectedChannelList);
 
+        jPanel1.setMaximumSize(null);
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
-        jList1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, org.openide.util.NbBundle.getMessage(ChannelListTopComponent.class, "ChannelListTopComponent.jList1.border.title"), javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("MS UI Gothic", 0, 12), new java.awt.Color(204, 204, 204))); // NOI18N
-        jList1.setMinimumSize(new java.awt.Dimension(51, 113));
-        jList1.setPreferredSize(new java.awt.Dimension(39, 90));
+        jPanel2.setPreferredSize(new java.awt.Dimension(150, 350));
+
+        jLabel1.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(ChannelListTopComponent.class, "ChannelListTopComponent.jLabel1.text")); // NOI18N
+
+        jScrollPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        jList1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jList1.setModel(unSelectedChannelList);
+        jList1.setValueIsAdjusting(true);
         jScrollPane1.setViewportView(jList1);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -98,6 +112,7 @@ public final class ChannelListTopComponent extends TopComponent implements Looku
         gridBagConstraints.weighty = 1.0;
         jPanel1.add(jPanel2, gridBagConstraints);
 
+        jPanel3.setMaximumSize(null);
         jPanel3.setLayout(new java.awt.GridBagLayout());
 
         org.openide.awt.Mnemonics.setLocalizedText(jButton1, org.openide.util.NbBundle.getMessage(ChannelListTopComponent.class, "ChannelListTopComponent.jButton1.text")); // NOI18N
@@ -159,20 +174,30 @@ public final class ChannelListTopComponent extends TopComponent implements Looku
         gridBagConstraints.weighty = 1.0;
         jPanel1.add(jPanel3, gridBagConstraints);
 
-        jList2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, org.openide.util.NbBundle.getMessage(ChannelListTopComponent.class, "ChannelListTopComponent.jList2.border.title"), javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("MS UI Gothic", 0, 12), new java.awt.Color(204, 204, 204))); // NOI18N
-        jList2.setMinimumSize(new java.awt.Dimension(51, 113));
-        jList2.setPreferredSize(new java.awt.Dimension(39, 90));
+        jPanel4.setPreferredSize(new java.awt.Dimension(150, 350));
+
+        jLabel2.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(ChannelListTopComponent.class, "ChannelListTopComponent.jLabel2.text")); // NOI18N
+
+        jList2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jList2.setModel(selectedChannelList);
+        jList2.setValueIsAdjusting(true);
         jScrollPane2.setViewportView(jList2);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -210,6 +235,9 @@ public final class ChannelListTopComponent extends TopComponent implements Looku
             this.moveChannelToUnSelected(tmpChannelList.get(jj));
         }
 
+        jList1.repaint();
+        jList2.repaint();
+
         // fireselectedChannelListUpdated()
         // here.
 
@@ -228,6 +256,9 @@ public final class ChannelListTopComponent extends TopComponent implements Looku
             this.moveChannelToUnSelected(ch);
         }
 
+        jList1.repaint();
+        jList2.repaint();
+
         // fireselectedChannelListUpdated()
         // here.
 
@@ -245,6 +276,9 @@ public final class ChannelListTopComponent extends TopComponent implements Looku
             Channel ch = (Channel) chosen[ii];
             this.moveChannelToSelected(ch);
         }
+
+        jList1.repaint();
+        jList2.repaint();
 
         // fireselectedChannelListUpdated()
         // here.
@@ -266,6 +300,9 @@ public final class ChannelListTopComponent extends TopComponent implements Looku
             this.moveChannelToSelected(tmpChannelList.get(jj));
         }
 
+        jList1.repaint();
+        jList2.repaint();
+
         // fireselectedChannelListUpdated()
         // here.
 
@@ -275,6 +312,8 @@ public final class ChannelListTopComponent extends TopComponent implements Looku
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JList jList1;
     private javax.swing.JList jList2;
     private javax.swing.JPanel jPanel1;
@@ -387,6 +426,8 @@ public final class ChannelListTopComponent extends TopComponent implements Looku
                             Channel ch = new Channel(ii, nsf.getEntities().get(ii));
                             unSelectedChannelList.add(ii, ch);
                         }
+//                        jList1.setListData(unSelectedChannelList.toArray());
+
                     }
                 }
             }
