@@ -121,6 +121,8 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
    private DoubleBuffer[] colors;
 
+   private Lookup.Result result = null;
+
    public TimelineTopComponent() {
       initGL();
       SHOW_GRID = true;
@@ -147,7 +149,8 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       layout.setHorizontalGroup(
          layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1377, Short.MAX_VALUE)
+            .addGap(730, 730, 730)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 647, Short.MAX_VALUE)
             .addContainerGap())
       );
       layout.setVerticalGroup(
@@ -214,12 +217,8 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
                                                    // arg0.getY());
             // getVirtualCoordinates(arg0.getX(), arg0.getY());
 
-            // left button performs an action
+            // left button performs an action or drags the canvas
             if ((me.getModifiers() & MouseEvent.BUTTON1_MASK) > 0) {
-               //TODO:
-            }
-            // right button drags the canvas
-            else if ((me.getModifiers() & MouseEvent.BUTTON3_MASK) > 0) {
                double dx = currentPoint.getX() - previousPoint.getX();
                double dy = previousPoint.getY() - currentPoint.getY();
    //            System.out.println("dx: " + dx + "\tdy: " + dy);
@@ -229,6 +228,10 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
                previousPoint = me.getPoint();
 
                buildTransforms();
+            }
+            
+            else if ((me.getModifiers() & MouseEvent.BUTTON3_MASK) > 0) {
+              
             }
          }
 
@@ -293,10 +296,14 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
             System.out.println("change");
 
             GeneralFileInfo obj = Utilities.actionsGlobalContext().lookup(GeneralFileInfo.class);
-           
-            if (obj!=null){
+
+            if (obj != null && obj.getFileExtention().equals("nsn")) {
+               System.out.println("adding data");
                fileInfo = obj;
-            }
+               NSReader reader = new NSReader();
+               NeuroshareFile nsn = reader.readNSFileAllData(fileInfo.getFilePath());
+               fileInfo.setNsObj(nsn);
+            }     
           }}
       );
    }
@@ -342,7 +349,6 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
    @Override
    public void componentOpened() {
-      // TODO add custom code on component opening
    }
 
    @Override
@@ -485,17 +491,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
       gl.glViewport(0, 0, getWidth(), getHeight());//TODO: look into this some more
 
-      GeneralFileInfo obj = Utilities.actionsGlobalContext().lookup(GeneralFileInfo.class);
-      if (obj !=null) {
-         fileInfo = obj;
-          if ((fileInfo.getNsObj() == null || fileInfo.getNsObj().getFileInfo() == null) && obj.getFileExtention().equals("nsn")) {
-            NSReader reader = new NSReader();
-            NeuroshareFile nsn = reader.readNSFileAllData(obj.getFilePath());
-            obj.setNsObj(nsn);
-         }
-      }
-
-      if (fileInfo == null || fileInfo.getNsObj()== null || fileInfo.getNsObj().getFileInfo() == null) {
+      if (fileInfo == null) {
          return;
       }
 
