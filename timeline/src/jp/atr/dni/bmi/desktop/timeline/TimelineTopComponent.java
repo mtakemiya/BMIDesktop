@@ -4,35 +4,11 @@
  */
 package jp.atr.dni.bmi.desktop.timeline;
 
-import com.jogamp.opengl.util.Animator;
-import com.jogamp.opengl.util.awt.TextRenderer;
-import com.jogamp.opengl.util.gl2.GLUT;
-import java.awt.Font;
-import java.awt.Point;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 import java.nio.DoubleBuffer;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.logging.Logger;
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2;
-import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLCapabilities;
-import javax.media.opengl.GLEventListener;
 import javax.media.opengl.GLProfile;
-import javax.media.opengl.awt.GLCanvas;
-import javax.media.opengl.glu.GLU;
 import jp.atr.dni.bmi.desktop.model.GeneralFileInfo;
-import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogData;
-import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogInfo;
-import jp.atr.dni.bmi.desktop.neuroshareutils.ElemType;
-import jp.atr.dni.bmi.desktop.neuroshareutils.Entity;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NSReader;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NeuroshareFile;
 import org.openide.util.NbBundle;
@@ -49,19 +25,14 @@ import org.openide.util.Utilities;
  * Top component which displays something.
  */
 @ConvertAsProperties(dtd = "-//jp.atr.dni.bmi.desktop.timeline//timeline//EN", autostore = false)
-public final class TimelineTopComponent extends TopComponent {
+public final class TimelineTopComponent extends TopComponent implements LookupListener {
 
    private static TimelineTopComponent instance;
-   
    /** path to the icon used by the component and its open action */
    static final String ICON_PATH = "jp/atr/dni/bmi/desktop/timeline/graphPrev.png";
-   
    private static final String PREFERRED_ID = "timelineTopComponent";
-
    private DoubleBuffer[] colors;
-
    private Lookup.Result result = null;
-
    private TimelineCanvas canvas;
 
    public TimelineTopComponent() {
@@ -80,15 +51,9 @@ public final class TimelineTopComponent extends TopComponent {
       javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
       this.setLayout(layout);
       layout.setHorizontalGroup(
-         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-            .addComponent(canvas, javax.swing.GroupLayout.DEFAULT_SIZE, 1377, Short.MAX_VALUE)
-            .addContainerGap())
-      );
+              layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup().addComponent(canvas, javax.swing.GroupLayout.DEFAULT_SIZE, 1377, Short.MAX_VALUE).addContainerGap()));
       layout.setVerticalGroup(
-         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-         .addComponent(canvas, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
-      );
+              layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(canvas, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE));
    }
 
    /** This method is called from within the constructor to
@@ -117,10 +82,10 @@ public final class TimelineTopComponent extends TopComponent {
          .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
       );
    }// </editor-fold>//GEN-END:initComponents
-
    // Variables declaration - do not modify//GEN-BEGIN:variables
    private javax.swing.JLabel jLabel1;
    // End of variables declaration//GEN-END:variables
+
    /**
     * Gets default instance. Do not use directly: reserved for *.settings files only,
     * i.e. deserialization routines; otherwise you could get a non-deserialized instance.
@@ -156,14 +121,19 @@ public final class TimelineTopComponent extends TopComponent {
    public int getPersistenceType() {
       return TopComponent.PERSISTENCE_ALWAYS;
    }
+   private Lookup.Result fileInfos = null;
 
    @Override
    public void componentOpened() {
+      fileInfos = Utilities.actionsGlobalContext().lookupResult(GeneralFileInfo.class);
+//      fileInfos.allItems();  // This means something. THIS IS IMPORTANT.
+      fileInfos.addLookupListener(this);
    }
 
    @Override
    public void componentClosed() {
-      // TODO add custom code on component closing
+      fileInfos.removeLookupListener(this);
+      fileInfos = null;
    }
 
    void writeProperties(java.util.Properties p) {
@@ -189,5 +159,20 @@ public final class TimelineTopComponent extends TopComponent {
    @Override
    protected String preferredID() {
       return PREFERRED_ID;
+   }
+
+   @Override
+   public void resultChanged(LookupEvent le) {
+      System.out.println("change");
+
+      GeneralFileInfo fileInfo = Utilities.actionsGlobalContext().lookup(GeneralFileInfo.class);
+
+      if (fileInfo != null && fileInfo.getFileExtention().equals("nsn")) {
+         System.out.println("adding data");
+         NSReader reader = new NSReader();
+         NeuroshareFile nsn = reader.readNSFileAllData(fileInfo.getFilePath());
+         fileInfo.setNsObj(nsn);
+         canvas.setFileInfo(fileInfo);
+      }
    }
 }

@@ -22,7 +22,6 @@ import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLEventListener;
-import javax.media.opengl.GLProfile;
 import javax.media.opengl.awt.GLCanvas;
 import javax.media.opengl.glu.GLU;
 
@@ -105,6 +104,7 @@ public class TimelineCanvas extends GLCanvas implements GLEventListener {
     */
    public TimelineCanvas(GLCapabilities caps) {
       super(caps);
+
       initGL();
       SHOW_GRID = true;
    }
@@ -113,6 +113,7 @@ public class TimelineCanvas extends GLCanvas implements GLEventListener {
     * code to initialize the openGL timeline
     */
    private void initGL() {
+      System.out.println("initgl");
       
 
 //      glut = new GLUT();
@@ -223,24 +224,24 @@ public class TimelineCanvas extends GLCanvas implements GLEventListener {
 //			}
 //		});
 
-      Lookup.Result<GeneralFileInfo> fileInfos = Utilities.actionsGlobalContext().lookupResult(GeneralFileInfo.class);
-      fileInfos.allItems();  // This means something. THIS IS IMPORTANT.
-      fileInfos.addLookupListener(new LookupListener(){
-         @Override
-         public void resultChanged(LookupEvent e){
-            System.out.println("change");
-
-            GeneralFileInfo obj = Utilities.actionsGlobalContext().lookup(GeneralFileInfo.class);
-
-            if (obj != null && obj.getFileExtention().equals("nsn")) {
-               System.out.println("adding data");
-               fileInfo = obj;
-               NSReader reader = new NSReader();
-               NeuroshareFile nsn = reader.readNSFileAllData(fileInfo.getFilePath());
-               fileInfo.setNsObj(nsn);
-            }
-          }}
-      );
+//      Lookup.Result<GeneralFileInfo> fileInfos = Utilities.actionsGlobalContext().lookupResult(GeneralFileInfo.class);
+//      fileInfos.allItems();  // This means something. THIS IS IMPORTANT.
+//      fileInfos.addLookupListener(new LookupListener(){
+//         @Override
+//         public void resultChanged(LookupEvent e){
+//            System.out.println("change");
+//
+//            GeneralFileInfo obj = Utilities.actionsGlobalContext().lookup(GeneralFileInfo.class);
+//
+//            if (obj != null && obj.getFileExtention().equals("nsn")) {
+//               System.out.println("adding data");
+//               fileInfo = obj;
+//               NSReader reader = new NSReader();
+//               NeuroshareFile nsn = reader.readNSFileAllData(fileInfo.getFilePath());
+//               fileInfo.setNsObj(nsn);
+//            }
+//          }}
+//      );
    }
 
    /**
@@ -361,7 +362,7 @@ public class TimelineCanvas extends GLCanvas implements GLEventListener {
 
       gl.glViewport(0, 0, width, height);//TODO: look into this some more
 
-      if (fileInfo == null) {
+      if (getFileInfo() == null) {
          return;
       }
 
@@ -369,7 +370,7 @@ public class TimelineCanvas extends GLCanvas implements GLEventListener {
 
       gl.glColor3d(.6, .1, .5);
 
-      max = fileInfo.getNsObj().getEntities().size();
+      max = getFileInfo().getNsObj().getEntities().size();
 
       //Draw data
       gl.glLineWidth(1);
@@ -383,7 +384,7 @@ public class TimelineCanvas extends GLCanvas implements GLEventListener {
       double yOffset = 0;
 
       //draw data
-      for (Entity e : fileInfo.getNsObj().getEntities()) {
+      for (Entity e : getFileInfo().getNsObj().getEntities()) {
          if (e.getTag().getElemType() == ElemType.ENTITY_ANALOG) {
             AnalogInfo ai = (AnalogInfo)e;
 
@@ -421,12 +422,12 @@ public class TimelineCanvas extends GLCanvas implements GLEventListener {
 
       for (int i = 0; i < max; i++) {
          //Draw label
-         drawText(gl, fileInfo.getNsObj().getEntities().get(i).getEntityInfo().getEntityLabel(), 0,-5*i, 0.0125f, 2.0f);
+         drawText(gl, getFileInfo().getNsObj().getEntities().get(i).getEntityInfo().getEntityLabel(), 0,-5*i, 0.0125f, 2.0f);
       }
 
       //Draw bottom time lables
       gl.glLoadIdentity();
-      gl.glTranslated((translationX / (width*.5)), -scale / (height*.5) -.8, 0);
+      gl.glTranslated((translationX / (width*.5)), -scale / (height*.5) -.83, 0);
       gl.glScaled(scale, scale, 0);
 
       for (int i = 0; i < 1000; i+=35) {
@@ -473,13 +474,13 @@ public class TimelineCanvas extends GLCanvas implements GLEventListener {
       gl.glColor3f(1, 0, 0);
       gl.glBegin(GL2.GL_QUADS);
 //      gl.glTexCoord2f(0, 0);
-      gl.glVertex3f(-width / 2, width / 2, 0);
+      gl.glVertex3f(-width / 2, (float) -.85, 0);
 //      gl.glTexCoord2f(0, 1);
-      gl.glVertex3f(-width / 2, -width / 2, 0);
+      gl.glVertex3f(-width / 2, -1, 0);
 //      gl.glTexCoord2f(1, 1);
-      gl.glVertex3f(width / 2, -width / 2, 0);
+      gl.glVertex3f(width / 2, -1, 0);
 //      gl.glTexCoord2f(1, 0);
-      gl.glVertex3f(width / 2, width / 2, 0);
+      gl.glVertex3f(width / 2, (float) -.85, 0);
       gl.glEnd();
    }
 
@@ -517,5 +518,19 @@ public class TimelineCanvas extends GLCanvas implements GLEventListener {
 		gl.glMatrixMode(GL2.GL_PROJECTION);
 		gl.glLoadIdentity();
 		glu.gluOrtho2D(0.0, width, height, 0);
+   }
+
+   /**
+    * @return the fileInfo
+    */
+   public GeneralFileInfo getFileInfo() {
+      return fileInfo;
+   }
+
+   /**
+    * @param fileInfo the fileInfo to set
+    */
+   public void setFileInfo(GeneralFileInfo fileInfo) {
+      this.fileInfo = fileInfo;
    }
 }
