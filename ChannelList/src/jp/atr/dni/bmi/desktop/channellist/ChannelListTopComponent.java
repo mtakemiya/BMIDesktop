@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import jp.atr.dni.bmi.desktop.model.Channel;
 import jp.atr.dni.bmi.desktop.model.GeneralFileInfo;
@@ -334,6 +335,7 @@ public final class ChannelListTopComponent extends TopComponent implements Looku
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         JOptionPane.showMessageDialog(null, "Add Channel to Workspace. UC.");
+        JDialog jD = new JDialog();
         // Add Selected Channels to the Workspace.
         int length = selectedChannelList.size();
         for (int ii = 0; ii < length; ii++) {
