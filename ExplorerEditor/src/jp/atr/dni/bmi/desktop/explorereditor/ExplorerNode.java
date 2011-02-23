@@ -84,7 +84,9 @@ public class ExplorerNode extends AbstractNode {
                     null, //Line.
                     new AddAction(), // Add
                     null, //Line.
-                    new DeleteAction() // Delete
+                    new DeleteAction(), // Delete
+                    null, //Line.
+                    new CopyToWorkspaceAction() // Copy To Workspace
                 };
     }
 
@@ -993,4 +995,34 @@ public class ExplorerNode extends AbstractNode {
             return jmConvertto;
         }
     }
+
+        // Right-clicked menu. Copy to Workspace
+    private class CopyToWorkspaceAction extends AbstractAction implements Presenter.Popup {
+
+        public CopyToWorkspaceAction() {
+            putValue(NAME, "Copy To Workspace");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            GeneralFileInfo obj = getLookup().lookup(GeneralFileInfo.class);
+
+            if (obj == null || !obj.getFileType().startsWith("File/")) {
+                JOptionPane.showMessageDialog(null, "Select a file.");
+                return;
+            }
+
+            // Open ChannelSelecter Dialog.
+            ChannelSelecter cs = new ChannelSelecter(obj);
+            cs.showDialog();
+
+        }
+
+        @Override
+        public JMenuItem getPopupPresenter() {
+            JMenuItem jmConvertto = new JMenuItem(this);
+            return jmConvertto;
+        }
+    }
+
 }

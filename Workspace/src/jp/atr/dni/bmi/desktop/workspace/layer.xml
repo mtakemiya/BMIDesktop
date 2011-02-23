@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="Actions">
+        <folder name="Window">
+            <file name="jp-atr-dni-bmi-desktop-workspace-WorkspaceAction.instance">
+                <attr name="component" methodvalue="jp.atr.dni.bmi.desktop.workspace.WorkspaceTopComponent.findInstance"/>
+                <attr name="displayName" bundlevalue="jp.atr.dni.bmi.desktop.workspace.Bundle#CTL_WorkspaceAction"/>
+                <attr name="iconBase" stringvalue="jp/atr/dni/bmi/desktop/workspace/Briefcase.png"/>
+                <attr name="instanceCreate" methodvalue="org.openide.windows.TopComponent.openAction"/>
+            </file>
+        </folder>
+    </folder>
+    <folder name="Menu">
+        <folder name="Window">
+            <file name="WorkspaceAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/Window/jp-atr-dni-bmi-desktop-workspace-WorkspaceAction.instance"/>
+            </file>
+        </folder>
+    </folder>
+    <folder name="Windows2">
+        <folder name="Components">
+            <file name="WorkspaceTopComponent.settings" url="WorkspaceTopComponentSettings.xml"/>
+        </folder>
+        <folder name="Modes">
+            <folder name="rightSlidingSide">
+                <file name="WorkspaceTopComponent.wstcref" url="WorkspaceTopComponentWstcref.xml"/>
+            </folder>
+        </folder>
+    </folder>
+</filesystem>

@@ -342,7 +342,7 @@ public final class ChannelListTopComponent extends TopComponent implements Looku
             Workspace.addChannel((Channel)selectedChannelList.get(ii));
         }
 
-        JOptionPane.showMessageDialog(null, "Channel Count On the Workspace : " + Workspace.channels.size());
+        JOptionPane.showMessageDialog(null, "Channel Count On the Workspace : " + Workspace.getChannels().size());
 
     }//GEN-LAST:event_jButton5ActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables

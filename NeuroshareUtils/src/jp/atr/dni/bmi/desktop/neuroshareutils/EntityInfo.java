@@ -36,8 +36,8 @@ public class EntityInfo {
         this.entityLabel = entityLabel.trim();
         this.entityType = entityType;
         this.itemCount = itemCount;
-        this.dataPosition=0;
-        this.filePath="";
+        this.dataPosition = 0;
+        this.filePath = "";
     }
 
     /**
@@ -110,4 +110,31 @@ public class EntityInfo {
         this.filePath = filePath;
     }
 
+    /**
+     * @return the label of entity type.
+     */
+    public String getEntityTypeLabel() {
+        String rtnVal = "";
+        switch ((int) this.entityType) {
+            case 0:
+                rtnVal = "Unknown";
+                break;
+            case 1:
+                rtnVal = "Event";
+                break;
+            case 2:
+                rtnVal = "Analog";
+                break;
+            case 3:
+                rtnVal = "Segment";
+                break;
+            case 4:
+                rtnVal = "NeuralEvent";
+                break;
+            default:
+                rtnVal = "Unknown";
+                break;
+        }
+        return rtnVal;
+    }
 }

@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package jp.atr.dni.bmi.desktop.model;
 
 import jp.atr.dni.bmi.desktop.neuroshareutils.Entity;
@@ -10,36 +9,44 @@ import jp.atr.dni.bmi.desktop.neuroshareutils.Entity;
 /**
  *
  * @author kharada
- * @version 2011/02/04
+ * @version 2011/02/23
  */
 public class Channel {
 
     // Channel ID. system orders channels as this value.
     private int channelID;
-
     // Display Name. system displays this value.
     private String displayName;
-
     // Data case.
     private String channelType;
-
+    // Source File Path.
+    private String sourceFilePath;
     // Case : Neuroshare
     private Entity entity;
 
     // Case : ???
     // Add here.
 
+    // Constructor.
+    public Channel() {
+        this.channelID = -1;
+        this.displayName = "";
+        this.channelType = "";
+        this.sourceFilePath = "";
+    }
+
     // Constructor. Case : Neuroshare
-    public Channel(int channelID, Entity entity){
+    public Channel(int channelID, Entity entity) {
         this.channelID = channelID;
         this.displayName = entity.getEntityInfo().getEntityLabel();
-        this.channelType = "NeuroshareEntity";
+        this.channelType = "Neuroshare/" + entity.getEntityInfo().getEntityTypeLabel();
+        this.sourceFilePath = entity.getEntityInfo().getFilePath();
         this.entity = entity;
     }
 
     // Constructor. Case : ???
     // Add here.
-
+    
     /**
      * @return the channelID
      */
@@ -94,6 +101,20 @@ public class Channel {
      */
     public void setEntity(Entity entity) {
         this.entity = entity;
+    }
+
+    /**
+     * @return the sourceFilePath
+     */
+    public String getSourceFilePath() {
+        return sourceFilePath;
+    }
+
+    /**
+     * @param sourceFilePath the sourceFilePath to set
+     */
+    public void setSourceFilePath(String sourceFilePath) {
+        this.sourceFilePath = sourceFilePath;
     }
 
     /**

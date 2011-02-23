@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN"
+                            "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="xml">
+        <folder name="entities">
+            <folder name="jp_atr_dni_bmi_desktop_workspace">
+                <file name="Workspace" url="nbres:/org/netbeans/modules/settings/resources/properties-1_0.dtd">
+                    <!--jp.atr.dni.bmi.desktop.workspace.WorkspaceTopComponent-->
+                    <attr name="hint.originalPublicID" stringvalue="-//jp.atr.dni.bmi.desktop.workspace//Workspace//EN"/>
+                </file>
+            </folder>
+        </folder>
+        <folder name="memory">
+            <folder name="jp">
+                <folder name="atr">
+                    <folder name="dni">
+                        <folder name="bmi">
+                            <folder name="desktop">
+                                <folder name="workspace">
+                                    <file name="WorkspaceTopComponent">
+                                    <!--jp.atr.dni.bmi.desktop.workspace.WorkspaceTopComponent-->
+                                    <attr
+                                    name="settings.providerPath" stringvalue="xml/lookups//jp_atr_dni_bmi_desktop_workspace/Workspace.instance"/>
+                                    </file>
+                                </folder>
+                            </folder>
+                        </folder>
+                    </folder>
+                </folder>
+            </folder>
+        </folder>
+        <folder name="lookups">
+            <folder name="jp_atr_dni_bmi_desktop_workspace">
+                <file name="Workspace.instance">
+                    <!--jp.atr.dni.bmi.desktop.workspace.WorkspaceTopComponent-->
+                    <attr
+                        methodvalue="org.netbeans.api.settings.Factory.create" name="instanceCreate"/>
+                    <attr
+                        methodvalue="org.netbeans.api.settings.Factory.properties" name="settings.convertor"/>
+                    <attr name="settings.instanceClass" stringvalue="jp.atr.dni.bmi.desktop.workspace.WorkspaceTopComponent"/>
+                    <attr name="settings.instanceOf" stringvalue="jp.atr.dni.bmi.desktop.workspace.WorkspaceTopComponent"/>
+                    <attr boolvalue="true" name="xmlproperties.preventStoring"/>
+                </file>
+            </folder>
+        </folder>
+    </folder>
+</filesystem>
