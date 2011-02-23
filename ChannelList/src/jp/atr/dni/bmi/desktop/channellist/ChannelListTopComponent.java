@@ -440,6 +440,7 @@ public final class ChannelListTopComponent extends TopComponent implements Looku
 
     @Override
     public void resultChanged(LookupEvent le) {
+//       System.out.println("channel list top comp result chg");
         Lookup.Result r = (Lookup.Result) le.getSource();
         Collection c = r.allInstances();
 
