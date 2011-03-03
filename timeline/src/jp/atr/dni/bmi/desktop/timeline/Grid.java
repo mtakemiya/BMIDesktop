@@ -12,7 +12,7 @@ import java.awt.geom.Point2D;
  * @author Makoto Takemiya - [武宮 誠] <br />
  * <i>ATR - [株式会社・國際電氣通信基礎技術研究所]</i>
  *
- * @version 2011/03/01
+ * @version 2011/02/02
  */
 public class Grid {
 /** the default spacing of the grid */

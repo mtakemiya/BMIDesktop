@@ -7,7 +7,10 @@ package jp.atr.dni.bmi.desktop.timeline;
 
 import com.jogamp.opengl.util.Animator;
 import com.jogamp.opengl.util.gl2.GLUT;
+import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -95,6 +98,8 @@ public class TimelineCanvas extends GLCanvas implements GLEventListener {
 
    private GLU glu;
 
+   private Dimension size;
+
 //   private TextRenderer renderer;
 
    private GeneralFileInfo fileInfo;
@@ -113,7 +118,7 @@ public class TimelineCanvas extends GLCanvas implements GLEventListener {
     * code to initialize the openGL timeline
     */
    private void initGL() {
-      System.out.println("initgl");
+      System.out.println("initgl2");
       
 
 //      glut = new GLUT();
@@ -192,6 +197,7 @@ public class TimelineCanvas extends GLCanvas implements GLEventListener {
 
          @Override
          public void mouseWheelMoved(MouseWheelEvent mwe) {
+            System.out.println("wheel moved");
             if (mwe.getWheelRotation() < 0) {
                setScale(getScale()*SCALE_AMOUNT);
             }
@@ -204,23 +210,26 @@ public class TimelineCanvas extends GLCanvas implements GLEventListener {
       Animator animator = new Animator(this);
       animator.add(this);
       animator.start();
+      System.out.println("animator started");
 
       
 
       //TODO:add a resize listener
 //      this.addComponentListener(new ComponentAdapter() {
+//         @Override
 //			public void componentResized(ComponentEvent arg0) {
+//            System.out.println("resized");
 //
 //				// resize about the center of the scene
-//				if (size != null) {
-//					Dimension newSize = Canvas.this.getSize();
-//					translationX += (newSize.width - size.width)/2.0;
-//					translationY += (newSize.height - size.height)/2.0;
+//				if (getSize() != null) {
+//					Dimension newSize = TimelineCanvas.this.getSize();
+//					translationX += (newSize.width - getSize().width)/2.0;
+//					translationY += (newSize.height - getSize().height)/2.0;
 //				}
 //
 //				// update the view transforms when the canvas is resized
 //				buildTransforms();
-//				size = Canvas.this.getSize();
+//				setSize(TimelineCanvas.this.getSize());
 //			}
 //		});
 
@@ -342,6 +351,7 @@ public class TimelineCanvas extends GLCanvas implements GLEventListener {
     * @param drawable
     */
    private void render(GLAutoDrawable drawable) {
+      System.out.println("render");
       int width = getWidth();
       int height = getHeight();
 
@@ -532,5 +542,19 @@ public class TimelineCanvas extends GLCanvas implements GLEventListener {
     */
    public void setFileInfo(GeneralFileInfo fileInfo) {
       this.fileInfo = fileInfo;
+   }
+
+   /**
+    * @return the size
+    */
+   public Dimension getSize() {
+      return size;
+   }
+
+   /**
+    * @param size the size to set
+    */
+   public void setSize(Dimension size) {
+      this.size = size;
    }
 }
