@@ -36,6 +36,7 @@ import jp.atr.dni.bmi.desktop.neuroshareutils.ElemType;
 import jp.atr.dni.bmi.desktop.neuroshareutils.Entity;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NSReader;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NeuroshareFile;
+import jp.atr.dni.bmi.desktop.timeline.model.ViewerChannel;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
@@ -56,17 +57,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
    private boolean SNAP_TO_GRID = false;
 	
    private boolean SHOW_GRID;
-	
-   /** the amout to translate the canvas */
-	private double TRANSLATE_AMOUNT = 10.0;
-	
-	/** the amout to scale the canvas */
-	private double SCALE_AMOUNT = 1.1;
    
-   private double theta = 0;
-	
-   private double s = 0;
-	
    /** the x translation of the map */
 	private double translationX = 0;
 	
@@ -75,24 +66,6 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 	
 	/** the scale of the map */
 	private double scale = 1.0;
-	
-   /** the previously point clicked by the mouse, in screen coordinates */
-	private Point screenPickedPoint;
-	
-	/** the previously point clicked by the mouse, in virtual coordinates */
-	private Point2D pickedPoint;
-	
-   /** the current mouse location, in screen coordinates */
-	private Point screenCurrentPoint;
-	
-	/** the current mouse location, in virtual coordinates */
-	private Point2D currentPoint;
-	
-	/** the previous mouse location, in screen coordinates */
-	private Point screenPreviousPoint;
-	
-	/** the previous mouse location, in virtual coordinates */
-	private Point2D previousPoint;
 	
    /** the transform for virtual to screen coordinates */
    private AffineTransform transform = new AffineTransform();
@@ -122,6 +95,10 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
    private DoubleBuffer[] colors;
 	
    private Lookup.Result result = null;
+
+   private ModeHandler handler;
+
+   private ArrayList<ViewerChannel> viewerChannels;
 
    public TimelineTopComponent() {
       initGL();
@@ -174,86 +151,93 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       renderer = new TextRenderer(new Font("SansSerif", Font.BOLD, 12));
 		
       glCanvas = new GLCanvas(caps);
+      viewerChannels = new ArrayList<ViewerChannel>();
 		
       glCanvas.addGLEventListener(this);
+
+      handler = new ModeHandler(this);
+      glCanvas.addMouseListener(handler);
+      glCanvas.addMouseMotionListener(handler);
+      glCanvas.addMouseWheelListener(handler);
+      glCanvas.addKeyListener(handler);
 		
-      glCanvas.addMouseListener(new MouseListener() {
-			
-         @Override
-         public void mouseClicked(MouseEvent me) {
-         }
-			
-         @Override
-         public void mousePressed(MouseEvent me) {
-            // update the virtual points
-            screenCurrentPoint = me.getPoint();
-            screenPickedPoint = screenCurrentPoint;
-            currentPoint = getVirtualCoordinates(me.getX(), me.getY());
-            pickedPoint = currentPoint;
-            if (previousPoint == null) {
-               screenPreviousPoint = screenCurrentPoint;
-               previousPoint = currentPoint;
-            }
-         }
-			
-         @Override
-         public void mouseReleased(MouseEvent me) {
-         }
-			
-         @Override
-         public void mouseEntered(MouseEvent me) { 
-         }
-			
-         @Override
-         public void mouseExited(MouseEvent me) {
-         }
-      });
+//      glCanvas.addMouseListener(new MouseListener() {
+//
+//         @Override
+//         public void mouseClicked(MouseEvent me) {
+//         }
+//
+//         @Override
+//         public void mousePressed(MouseEvent me) {
+//            // update the virtual points
+//            screenCurrentPoint = me.getPoint();
+//            screenPickedPoint = screenCurrentPoint;
+//            currentPoint = getVirtualCoordinates(me.getX(), me.getY());
+//            pickedPoint = currentPoint;
+//            if (previousPoint == null) {
+//               screenPreviousPoint = screenCurrentPoint;
+//               previousPoint = currentPoint;
+//            }
+//         }
+//
+//         @Override
+//         public void mouseReleased(MouseEvent me) {
+//         }
+//
+//         @Override
+//         public void mouseEntered(MouseEvent me) {
+//         }
+//
+//         @Override
+//         public void mouseExited(MouseEvent me) {
+//         }
+//      });
 		
-      glCanvas.addMouseMotionListener(new MouseMotionListener() {
-			
-         @Override
-         public void mouseDragged(MouseEvent me) {
-            Point2D currentPoint = me.getPoint();// getVirtualCoordinates(arg0.getX(),
-				// arg0.getY());
-            // getVirtualCoordinates(arg0.getX(), arg0.getY());
-				
-            // left button performs an action or drags the canvas
-            if ((me.getModifiers() & MouseEvent.BUTTON1_MASK) > 0) {
-               double dx = currentPoint.getX() - previousPoint.getX();
-               double dy = previousPoint.getY() - currentPoint.getY();
-					//            System.out.println("dx: " + dx + "\tdy: " + dy);
-               translationX += dx;
-               translationY += dy;
-					
-               previousPoint = me.getPoint();
-					
-               buildTransforms();
-            }
-            
-            else if ((me.getModifiers() & MouseEvent.BUTTON3_MASK) > 0) {
-					
-            }
-         }
-			
-         @Override
-         public void mouseMoved(MouseEvent me) {
-            previousPoint = me.getPoint();// getVirtualCoordinates(arg0.getX(), arg0.getY());
-         }
-      });
+//      glCanvas.addMouseMotionListener(new MouseMotionListener() {
+//
+//         @Override
+//         public void mouseDragged(MouseEvent me) {
+//            Point2D currentPoint = me.getPoint();// getVirtualCoordinates(arg0.getX(),
+//				// arg0.getY());
+//            // getVirtualCoordinates(arg0.getX(), arg0.getY());
+//
+//            // left button performs an action or drags the canvas
+//            if ((me.getModifiers() & MouseEvent.BUTTON1_MASK) > 0) {
+//               double dx = currentPoint.getX() - previousPoint.getX();
+//               double dy = previousPoint.getY() - currentPoint.getY();
+//					//            System.out.println("dx: " + dx + "\tdy: " + dy);
+//               translationX += dx;
+//               translationY += dy;
+//
+//               previousPoint = me.getPoint();
+//
+//               buildTransforms();
+//            }
+//
+//            else if ((me.getModifiers() & MouseEvent.BUTTON3_MASK) > 0) {
+//
+//            }
+//         }
+//
+//         @Override
+//         public void mouseMoved(MouseEvent me) {
+//            previousPoint = me.getPoint();// getVirtualCoordinates(arg0.getX(), arg0.getY());
+//         }
+//      });
 		
-      glCanvas.addMouseWheelListener(new MouseWheelListener() {
-			
-         @Override
-         public void mouseWheelMoved(MouseWheelEvent mwe) {
-            System.out.println("wheel moved");
-            if (mwe.getWheelRotation() < 0) {
-               setScale(getScale()*SCALE_AMOUNT);
-            }
-            else if (mwe.getWheelRotation() > 0) {
-               setScale(getScale()/SCALE_AMOUNT);
-            }
-         }
-      });
+//      glCanvas.addMouseWheelListener(new MouseWheelListener() {
+//
+//         @Override
+//         public void mouseWheelMoved(MouseWheelEvent mwe) {
+//            System.out.println("wheel moved");
+//            if (mwe.getWheelRotation() < 0) {
+//               setScale(getScale()*SCALE_AMOUNT);
+//            }
+//            else if (mwe.getWheelRotation() > 0) {
+//               setScale(getScale()/SCALE_AMOUNT);
+//            }
+//         }
+//      });
 		
       Animator animator = new Animator(glCanvas);
       animator.add(glCanvas);
@@ -372,7 +356,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 	
    @Override
    public void display(GLAutoDrawable drawable) {
-      update();
+//      update();
       render(drawable);
    }
 	
@@ -408,11 +392,6 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 		glu.gluOrtho2D(0.0, width, height, 0);
    }
 	
-   private void update() {
-      theta += 0.05;
-      s = Math.sin(theta);
-   }
-	
    /**
 	 * Converts screen coordinates to virtual coordinates.
 	 *
@@ -423,7 +402,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 	public Point2D getVirtualCoordinates(double x, double y) {
 		return inverseTransform.transform(new Point2D.Double(x, y), null);
 	}
-	
+
 	/**
 	 * Converts virtual coordinates to screen coordinates.
 	 *
@@ -439,14 +418,14 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 	 * Rebuilds the view transform and the inverse view transforms.
 	 */
 	private void buildTransforms() {
-		
+
 		double width = getWidth();
 		double height = getHeight();
 		transform = new AffineTransform(1,0,0,1,0, 0);
 		transform.translate(0.5*width, 0.5*height);
 		transform.scale(scale, scale);
 		transform.translate(translationX - width/2.0, translationY - height/2.0);
-		
+
 		try {
 			inverseTransform = transform.createInverse();
 		}
@@ -470,9 +449,9 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       GL2 gl = drawable.getGL().getGL2();
       gl.glClear(GL2.GL_COLOR_BUFFER_BIT);
 
-      if (SHOW_GRID){
-         gl.glLoadIdentity();
-      }
+//      if (SHOW_GRID){
+//         gl.glLoadIdentity();
+//      }
 //      gl.glClearColor( .9f, .9f, .9f, 1.0f );
 
       gl.glMatrixMode(GL2.GL_PROJECTION);
@@ -524,9 +503,15 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
                for (int i = 0; i < vals.size(); i++) {
                   if (i % 2 == 0) {
+//                     Point2D p = getScreenCoordinates(lastX, lastY);
+                     //                     gl.glVertex2d(p.getX(),p.getY());
                      gl.glVertex2d(lastX, lastY);
+
+           
                   } else {
                      lastY = (vals.get(i) / normalizer)-yOffset*5;
+//                     Point2D p = getScreenCoordinates(i, lastY);
+//                     gl.glVertex2d(p.getX(),p.getY());
                      gl.glVertex2d(i, lastY);
                   }
                   lastX = i;
@@ -606,6 +591,48 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       gl.glEnd();
    }
 
+   /**
+	 * Zooms to the boundries of the current map.
+	 */
+	public void zoomAll() {
+
+		// reset the view transform
+		translationX = 0;
+		translationY = 0;
+		scale = 0.5;
+	
+		// zoom to the current map
+		boolean zoom = false;
+		double minX = Double.MAX_VALUE;
+		double maxX = -Double.MAX_VALUE;
+		double minY = Double.MAX_VALUE;
+		double maxY = -Double.MAX_VALUE;
+
+		for (ViewerChannel object :viewerChannels) {
+//			if (object.getGraphics() != null) {
+//				float[] coords = object.getGraphics().getCoordinates();
+//				for (int i=0; i<coords.length; i+=2) {
+//					if (coords[i] < minX) minX = coords[i];
+//					if (coords[i] > maxX) maxX = coords[i];
+//					if (coords[i + 1] < minY) minY = coords[i + 1];
+//					if (coords[i + 1] > maxY) maxY = coords[i + 1];
+//				}
+//
+//				zoom = true;
+//			}
+		}
+
+		if (zoom) {
+			translationX = -(maxX + minX)/2 + getWidth()/2;
+			translationY = -(maxY + minY)/2 + getHeight()/2;
+
+			double dx = maxX - minX;
+			dx = Math.max(dx, maxY - minY);
+			scale = getHeight()/dx;
+		}
+
+		buildTransforms();
+	}
 	
    /**
 	 * Gets the tranlation in the x direction.
