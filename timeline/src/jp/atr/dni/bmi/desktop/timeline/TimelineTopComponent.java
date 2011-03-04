@@ -782,12 +782,12 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
    @Override
    public void resultChanged(LookupEvent le) {
-     System.out.println("change");
+//     System.out.println("change");
 
             GeneralFileInfo obj = Utilities.actionsGlobalContext().lookup(GeneralFileInfo.class);
 
             if (obj != null && obj.getFileExtention().equals("nsn")) {
-               System.out.println("adding data");
+//               System.out.println("adding data");
                fileInfo = obj;
                NSReader reader = new NSReader();
                NeuroshareFile nsn = reader.readNSFileAllData(fileInfo.getFilePath());
