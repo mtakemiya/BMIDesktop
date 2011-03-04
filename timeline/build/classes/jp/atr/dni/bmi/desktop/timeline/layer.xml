@@ -3,28 +3,48 @@
 <filesystem>
     <folder name="Actions">
         <folder name="Window">
+<<<<<<< HEAD
             <file name="jp-atr-dni-bmi-desktop-timeline-timelineAction.instance">
                 <attr name="component" methodvalue="jp.atr.dni.bmi.desktop.timeline.TimelineTopComponent.findInstance"/>
                 <attr name="displayName" bundlevalue="jp.atr.dni.bmi.desktop.timeline.Bundle#CTL_timelineAction"/>
                 <attr name="iconBase" stringvalue="jp/atr/dni/bmi/desktop/timeline/graphPrev.png"/>
+=======
+            <file name="jp-atr-dni-bmi-desktop-timeline-TimelineAction.instance">
+                <attr name="component" methodvalue="jp.atr.dni.bmi.desktop.timeline.TimelineTopComponent.findInstance"/>
+                <attr name="displayName" bundlevalue="jp.atr.dni.bmi.desktop.timeline.Bundle#CTL_TimelineAction"/>
+                <attr name="iconBase" stringvalue="jp/atr/dni/bmi/desktop/timeline/kview.png"/>
+>>>>>>> 4eab18cc749b297220e35cb2bcc052f4bf510978
                 <attr name="instanceCreate" methodvalue="org.openide.windows.TopComponent.openAction"/>
             </file>
         </folder>
     </folder>
     <folder name="Menu">
         <folder name="Window">
+<<<<<<< HEAD
             <file name="timelineAction.shadow">
                 <attr name="originalFile" stringvalue="Actions/Window/jp-atr-dni-bmi-desktop-timeline-timelineAction.instance"/>
+=======
+            <file name="TimelineAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/Window/jp-atr-dni-bmi-desktop-timeline-TimelineAction.instance"/>
+>>>>>>> 4eab18cc749b297220e35cb2bcc052f4bf510978
             </file>
         </folder>
     </folder>
     <folder name="Windows2">
         <folder name="Components">
+<<<<<<< HEAD
             <file name="timelineTopComponent.settings" url="timelineTopComponentSettings.xml"/>
         </folder>
         <folder name="Modes">
             <folder name="editor">
                 <file name="timelineTopComponent.wstcref" url="timelineTopComponentWstcref.xml"/>
+=======
+            <file name="TimelineTopComponent.settings" url="TimelineTopComponentSettings.xml"/>
+        </folder>
+        <folder name="Modes">
+            <folder name="editor">
+                <file name="TimelineTopComponent.wstcref" url="TimelineTopComponentWstcref.xml"/>
+>>>>>>> 4eab18cc749b297220e35cb2bcc052f4bf510978
             </folder>
         </folder>
     </folder>

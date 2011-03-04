@@ -7,7 +7,7 @@
             <suite-component/>
             <module-dependencies>
                 <dependency>
-                    <code-name-base>jp.atr.dni.bmi.desktop.explorereditor</code-name-base>
+                    <code-name-base>jp.atr.dni.bmi.desktop.jogl.mac</code-name-base>
                     <build-prerequisite/>
                     <compile-dependency/>
                     <run-dependency>
@@ -48,19 +48,11 @@
                     </run-dependency>
                 </dependency>
                 <dependency>
-                    <code-name-base>org.openide.modules</code-name-base>
-                    <build-prerequisite/>
-                    <compile-dependency/>
-                    <run-dependency>
-                        <specification-version>7.17.2</specification-version>
-                    </run-dependency>
-                </dependency>
-                <dependency>
                     <code-name-base>org.openide.util</code-name-base>
                     <build-prerequisite/>
                     <compile-dependency/>
                     <run-dependency>
-                        <specification-version>8.6.1</specification-version>
+                        <specification-version>8.6.2</specification-version>
                     </run-dependency>
                 </dependency>
                 <dependency>
@@ -81,22 +73,6 @@
                 </dependency>
             </module-dependencies>
             <public-packages/>
-            <class-path-extension>
-                <runtime-relative-path>ext/jogl.all.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/jogl.all.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
-                <runtime-relative-path>ext/nativewindow.all.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/nativewindow.all.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
-                <runtime-relative-path>ext/gluegen-rt.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/gluegen-rt.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
-                <runtime-relative-path>ext/newt.all.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/newt.all.jar</binary-origin>
-            </class-path-extension>
         </data>
     </configuration>
 </project>
