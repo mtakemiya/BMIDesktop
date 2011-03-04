@@ -4,44 +4,45 @@
  */
 package jp.atr.dni.bmi.desktop.workspace;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Vector;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import jp.atr.dni.bmi.desktop.model.Channel;
-import jp.atr.dni.bmi.desktop.model.GeneralFileInfo;
 import jp.atr.dni.bmi.desktop.model.Workspace;
-import org.openide.util.LookupEvent;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 import org.openide.util.ImageUtilities;
 import org.netbeans.api.settings.ConvertAsProperties;
-import org.openide.util.Lookup;
-import org.openide.util.LookupListener;
-import org.openide.util.Utilities;
 
 /**
  * Top component which displays something.
  */
 @ConvertAsProperties(dtd = "-//jp.atr.dni.bmi.desktop.workspace//Workspace//EN",
 autostore = false)
-public final class WorkspaceTopComponent extends TopComponent implements LookupListener {
+public final class WorkspaceTopComponent extends TopComponent implements PropertyChangeListener {
 
-    // Define Tables.
+    // Define Table's model.
     DefaultTableModel defaultTableModel1;
+    // Define Wizard.
+    CreateNewFileWizardAction cnwa = new CreateNewFileWizardAction();
     private static WorkspaceTopComponent instance;
     /** path to the icon used by the component and its open action */
     static final String ICON_PATH = "jp/atr/dni/bmi/desktop/workspace/Briefcase.png";
     private static final String PREFERRED_ID = "WorkspaceTopComponent";
 
     public WorkspaceTopComponent() {
+
         beforeInitComponents();
         initComponents();
+        afterInitComponents();
+
         setName(NbBundle.getMessage(WorkspaceTopComponent.class, "CTL_WorkspaceTopComponent"));
         setToolTipText(NbBundle.getMessage(WorkspaceTopComponent.class, "HINT_WorkspaceTopComponent"));
         setIcon(ImageUtilities.loadImage(ICON_PATH, true));
-
     }
 
     /** This method is called from within the constructor to
@@ -55,6 +56,7 @@ public final class WorkspaceTopComponent extends TopComponent implements LookupL
         jPanel1 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -74,10 +76,21 @@ public final class WorkspaceTopComponent extends TopComponent implements LookupL
         });
         jToolBar1.add(jButton1);
 
+        org.openide.awt.Mnemonics.setLocalizedText(jButton2, org.openide.util.NbBundle.getMessage(WorkspaceTopComponent.class, "WorkspaceTopComponent.jButton2.text")); // NOI18N
+        jButton2.setFocusable(false);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton2);
+
         jTabbedPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(WorkspaceTopComponent.class, "WorkspaceTopComponent.jTabbedPane1.border.title"))); // NOI18N
 
-        jTable1.setAutoCreateRowSorter(true);
         jTable1.setModel(defaultTableModel1);
+        jTable1.setAutoCreateRowSorter(true);
         jScrollPane1.setViewportView(jTable1);
 
         jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(WorkspaceTopComponent.class, "WorkspaceTopComponent.jScrollPane1.TabConstraints.tabTitle"), jScrollPane1); // NOI18N
@@ -134,22 +147,20 @@ public final class WorkspaceTopComponent extends TopComponent implements LookupL
                 int[] selectedRows = jTable1.getSelectedRows();
 
                 // Remove from Workspace.
-                for (int ii =0; ii < selectedRows.length; ii++){
+                for (int ii = 0; ii < selectedRows.length; ii++) {
                     Object channelObj = jTable1.getValueAt(selectedRows[ii], 0);
                     Channel channel = (Channel) channelObj;
 
                     Workspace.removeChannel(channel);
                 }
-                
-                // Remove from jTable1.
-                for (int ii = selectedRows.length -1 ; ii >=0; ii--){
-                    defaultTableModel1.removeRow(selectedRows[ii]);
-                }
+
+                // Not call defaultTableModel.removeRow(ii)!
+                // PropertyChangeListener will do it.
 
                 break;
             case 1:
                 // Neural Data Tab
-                JOptionPane.showMessageDialog(null, "Under Construction..");
+                JOptionPane.showMessageDialog(null, "Not implemented yet.");
 
                 break;
             default:
@@ -158,8 +169,15 @@ public final class WorkspaceTopComponent extends TopComponent implements LookupL
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // Open wizard.
+        cnwa.actionPerformed(evt);
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -199,8 +217,6 @@ public final class WorkspaceTopComponent extends TopComponent implements LookupL
                 + "' ID. That is a potential source of errors and unexpected behavior.");
         return getDefault();
     }
-    // It is needed!
-    private Lookup.Result result = null;
 
     @Override
     public int getPersistenceType() {
@@ -209,14 +225,18 @@ public final class WorkspaceTopComponent extends TopComponent implements LookupL
 
     @Override
     public void componentOpened() {
-        result = Utilities.actionsGlobalContext().lookupResult(GeneralFileInfo.class);
-        result.addLookupListener(this);
+        // Add listener to the workspace to call propertyChange.
+        Workspace.addPropertyChangeListener(this);
+
+        // Initialize jTables.
+        afterInitComponents();
+
     }
 
     @Override
     public void componentClosed() {
-        result.removeLookupListener(this);
-        result = null;
+        // Remove listener from the workspace not to call propertyChange.
+        Workspace.removePropertyChangeListener(this);
     }
 
     void writeProperties(java.util.Properties p) {
@@ -244,7 +264,9 @@ public final class WorkspaceTopComponent extends TopComponent implements LookupL
         return PREFERRED_ID;
     }
 
+    // Initialize components.
     private void beforeInitComponents() {
+
         // Set jTable model
         Vector tableColumns = new Vector();
         Channel channel = new Channel();
@@ -263,13 +285,34 @@ public final class WorkspaceTopComponent extends TopComponent implements LookupL
 
     }
 
-    @Override
-    public void resultChanged(LookupEvent le) {
+    // Initialize components.
+    private void afterInitComponents() {
 
-        // Repaint jTables.
-        // 1. Remove all rows from jTables.
-        // 2. Recreate rows to jTables.
-        // 3. Repaint.
+        // Repaint jTable1.
+        this.repaintJTable1();
+
+        // Repaint jTable2.
+        this.repaintJTable2();
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent pce) {
+
+        // Refresh components.
+
+        // jTable1
+        this.repaintJTable1();
+
+        // jTable2
+        this.repaintJTable2();
+    }
+
+    // Repaint jTable1.
+    private void repaintJTable1() {
+
+        // Repaint jTable1.
+        // 1. Remove all rows from jTable1.
+        // 2. Recreate rows to jTable1.
 
         // 1. [for jTable1]
         int size1 = defaultTableModel1.getRowCount();
@@ -277,27 +320,35 @@ public final class WorkspaceTopComponent extends TopComponent implements LookupL
             defaultTableModel1.removeRow(0);
         }
 
-        // 1. [for jTable2]
-        // TODO : implements here.
-
         // 2. [for jTable1]
         int wssize1 = Workspace.getChannels().size();
         for (int ii = 0; ii < wssize1; ii++) {
             this.addNeuralDataRow(Workspace.getChannels().get(ii));
         }
 
-        // 2. [for jTable2]
-        // TODO : implements here.
-
-        // 3. [for jTable1]
-//        jTable1.repaint();
-
-        // 3. [for jTable2]
-//        jTable2.repaint();
-
     }
 
+    // Repaint jTable2.
+    private void repaintJTable2() {
+        // TODO : not implemented yet.
+        // Repaint jTable2.
+        // 1. Remove all rows from jTable2.
+        // 2. Recreate rows to jTable2.
+        // 1. [for jTable2]
+//        int size1 = defaultTableModel2.getRowCount();
+//        for (int ii = 0; ii < size1; ii++) {
+//            defaultTableModel2.removeRow(0);
+//        }
+        // 2. [for jTable2]
+//        int wssize1 = Workspace.getSuppleChannels().size();
+//        for (int ii = 0; ii < wssize1; ii++) {
+//            this.addNeuralDataRow(Workspace.getSuppleChannels().get(ii));
+//        }
+    }
+
+    // Add Channel data to jTable1.
     private void addNeuralDataRow(Channel channel) {
+
         String type = channel.getChannelType();
         String sourceFilePath = channel.getSourceFilePath();
 

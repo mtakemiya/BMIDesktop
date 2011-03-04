@@ -1,0 +1,129 @@
+-------------------------------------------------------------------------------
+>Log Session: Friday, March 4, 2011 2:27:15 PM JST
+>System Info: 
+  Product Version         = BMIDesktop 201011082200
+  Operating System        = Mac OS X version 10.6.6 running on x86_64
+  Java; VM; Vendor        = 1.6.0_22; Java HotSpot(TM) 64-Bit Server VM 17.1-b03-307; Apple Inc.
+  Runtime                 = Java(TM) SE Runtime Environment 1.6.0_22-b04-307-10M3261
+  Java Home               = /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
+  System Locale; Encoding = ja_JP (bmidesktop); SJIS
+  Home Directory          = /Users/kharada
+  Current Directory       = /Users/kharada/00_CSK_harada/55_Git_Source/BMIDesktop
+  User Directory          = /Users/kharada/00_CSK_harada/55_Git_Source/BMIDesktop/build/testuserdir
+  Installation            = /Users/kharada/00_CSK_harada/55_Git_Source/BMIDesktop/build/cluster
+                            /Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform
+                            /Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform
+  Boot & Ext. Classpath   = /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsfd.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar:/System/Library/Frameworks/JavaVM.framework/Frameworks/JavaRuntimeSupport.framework/Resources/Java/JavaRuntimeSupport.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/ui.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/laf.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/sunrsasign.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsse.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jce.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/charsets.jar:/System/Library/Java/Extensions/AppleScriptEngine.jar:/System/Library/Java/Extensions/dns_sd.jar:/System/Library/Java/Extensions/j3daudio.jar:/System/Library/Java/Extensions/j3dcore.jar:/System/Library/Java/Extensions/j3dutils.jar:/System/Library/Java/Extensions/jai_codec.jar:/System/Library/Java/Extensions/jai_core.jar:/System/Library/Java/Extensions/mlibwrapper_jai.jar:/System/Library/Java/Extensions/MRJToolkit.jar:/System/Library/Java/Extensions/QTJava.zip:/System/Library/Java/Extensions/vecmath.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/apple_provider.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/dnsns.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/localedata.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/sunjce_provider.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/sunpkcs11.jar
+  Application Classpath   = /Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/lib/boot.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/lib/org-openide-modules.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/lib/org-openide-util-lookup.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/lib/org-openide-util.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/lib/locale/boot_ja.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/lib/locale/boot_pt_BR.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/lib/locale/boot_zh_CN.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/lib/locale/org-openide-modules_ja.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/lib/locale/org-openide-modules_pt_BR.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/lib/locale/org-openide-modules_zh_CN.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/lib/locale/org-openide-util-lookup_ja.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/lib/locale/org-openide-util-lookup_pt_BR.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/lib/locale/org-openide-util-lookup_zh_CN.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/lib/locale/org-openide-util_ja.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/lib/locale/org-openide-util_pt_BR.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/lib/locale/org-openide-util_zh_CN.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/dt.jar
+  Startup Classpath       = /Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/core/core.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/core/org-openide-filesystems.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/core/locale/core_ja.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/core/locale/core_pt_BR.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/core/locale/core_zh_CN.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/core/locale/org-openide-filesystems_ja.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/core/locale/org-openide-filesystems_pt_BR.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/core/locale/org-openide-filesystems_zh_CN.jar:/Users/kharada/00_CSK_harada/55_Git_Source/BMIDesktop/build/cluster/core/locale/core_bmidesktop.jar
+-------------------------------------------------------------------------------
+WARNING [org.netbeans.core.projects.cache]: Inefficient to include an empty layer in a module: jar:file:/Users/kharada/00_CSK_harada/55_Git_Source/BMIDesktop/build/cluster/modules/jp-atr-dni-bmi-desktop-neuroshareutils.jar!/jp/atr/dni/bmi/desktop/neuroshareutils/layer.xml
+WARNING [org.netbeans.core.projects.cache]: Inefficient to include an empty layer in a module: jar:file:/Users/kharada/00_CSK_harada/55_Git_Source/BMIDesktop/build/cluster/modules/jp-atr-dni-bmi-desktop-dummymodule2.jar!/jp/atr/dni/bmi/desktop/dummymodule2/layer.xml
+INFO [org.netbeans.core.startup.NbEvents]: モジュールを有効化しています:
+	org.openide.util.lookup [8.3.1 201007282301]
+	org.openide.util [8.6.2 201012081820]
+	org.openide.modules [7.17.2 201012081820]
+	jp.atr.dni.bmi.desktop.neuroshareutils [1.0 110304]
+	jp.atr.dni.bmi.desktop.model [1.0 110304]
+	org.openide.awt [7.23.1 201007282301]
+	org.netbeans.api.progress/1 [1.20.2 201007282301]
+	org.openide.dialogs [7.15.1 201007282301]
+	org.openide.nodes [7.16.1 201007282301]
+	org.openide.windows [6.33.1 201007282301]
+	org.netbeans.swing.tabcontrol [1.21.2 201012081820]
+	org.netbeans.swing.outline [1.9.1 201007282301]
+	org.openide.explorer [6.28.2 201007282301]
+	org.openide.filesystems [7.38.2 201007282301]
+	org.netbeans.modules.editor.mimelookup/1 [1.16.1 201007282301]
+	org.openide.text [6.30.1 201007282301]
+	org.openide.actions [6.16.1 201007282301]
+	org.netbeans.bootstrap/1 [2.33.4 201012081820]
+	org.netbeans.core.startup/1 [1.25.4 201011082200]
+	org.netbeans.spi.quicksearch [1.6.1 201007282301]
+	org.netbeans.modules.queries/1 [1.19.1 201007282301]
+	org.openide.loaders [7.16.1 201007282301]
+	org.netbeans.modules.keyring [1.1.2 201007282301]
+	org.openide.io [1.23.1 201007282301]
+	org.netbeans.swing.plaf [1.16.1 201007282301]
+	org.netbeans.core/2 [3.20.3 201012081820]
+	org.netbeans.modules.options.api/1 [1.18.1 201007282301]
+	org.netbeans.modules.settings/1 [1.26.1 201007282301]
+	org.netbeans.core.windows/2 [2.21.1 201007282301]
+	org.netbeans.core.output2/1 [1.18.2 201007282301]
+	jp.atr.dni.bmi.desktop.explorereditor [1.0 110304]
+	jp.atr.dni.bmi.desktop.timeline [1.0 110304]
+	org.netbeans.modules.editor.mimelookup.impl/1 [1.9.1 201007282301]
+	org.netbeans.modules.print [7.5.1 201007282301]
+	jp.atr.dni.bmi.desktop.dummymodule [1.0 110304]
+	org.netbeans.core.ui/1 [1.22.1 201007282301]
+	jp.atr.dni.bmi.desktop.workspace [1.0 110304]
+	org.netbeans.libs.jna/1 [1.7.2 201007282301]
+	org.netbeans.modules.keyring.impl [1.0.1 201007282301]
+	jp.atr.dni.bmi.desktop.dummymodule2 [1.0 110304]
+	org.netbeans.modules.applemenu/1 [1.16.1 201007282301]
+	org.netbeans.libs.osgi [1.1.1 201007282301]
+	org.netbeans.core.netigso [1.4.5 201011082200]
+	jp.atr.dni.bmi.desktop.dummymodule3 [1.0 110304]
+	org.netbeans.libs.felix [1.1.1 201007282301]
+	org.netbeans.core.io.ui/1 [1.8.1 201007282301]
+	org.netbeans.core.nativeaccess/1 [1.7.1 201007282301]
+	org.netbeans.modules.masterfs/2 [2.25.2 201007282301]
+	org.netbeans.modules.progress.ui [1.12.1 201007282301]
+	jp.atr.dni.bmi.desktop.timeseriesdata.provider [1.0 110304]
+	org.netbeans.modules.options.keymap [1.10.1 201007282301]
+INFO [org.netbeans.core.windows.persistence]: [PersistenceManager.getTopComponentForID] Problem when deserializing TopComponent for tcID:'timelineTopComponent'. Reason: jp.atr.dni.bmi.desktop.timeline.timelineTopComponent starting from SystemClassLoader[51 modules] with possible defining loaders [ModuleCL@6e37d490[jp.atr.dni.bmi.desktop.timeline]] and declared parents [ModuleCL@340523df[org.netbeans.libs.felix], ModuleCL@43f4ebd[org.openide.text], ModuleCL@109b2a51[jp.atr.dni.bmi.desktop.dummymodule2], ModuleCL@6760bf50[jp.atr.dni.bmi.desktop.workspace], ModuleCL@fc8fb4b[jp.atr.dni.bmi.desktop.dummymodule3], ModuleCL@23de4dd8[org.netbeans.modules.editor.mimelookup], ModuleCL@464d41e2[org.openide.dialogs], ModuleCL@11d13272[org.netbeans.libs.jna], ModuleCL@54a6af6e[org.netbeans.modules.options.api], ModuleCL@67148603[org.netbeans.core.windows], ModuleCL@18c4bc34[jp.atr.dni.bmi.desktop.model], ModuleCL@365bf624[org.netbeans.modules.editor.mimelookup.impl], ModuleCL@2afb6c5f[org.openide.actions], ModuleCL@6477eb97[org.netbeans.core.output2], ModuleCL@73265109[org.netbeans.modules.progress.ui], ModuleCL@174aa60[org.netbeans.modules.options.keymap], ModuleCL@28f19d6e[org.netbeans.modules.masterfs], ModuleCL@3823bdd1[org.netbeans.core], ModuleCL@309fe84e[jp.atr.dni.bmi.desktop.neuroshareutils], ModuleCL@687ea9[org.netbeans.modules.applemenu], ModuleCL@2658dd2d[org.netbeans.modules.queries], ModuleCL@10cb42cf[jp.atr.dni.bmi.desktop.explorereditor], ModuleCL@26c1186f[org.netbeans.modules.settings], ModuleCL@782cbc86[org.netbeans.core.io.ui], ModuleCL@7a22ce00[org.netbeans.modules.print], ModuleCL@49198ff2[org.openide.awt], ModuleCL@3a0b53e[org.openide.io], ModuleCL@4513e9fd[org.netbeans.swing.outline], ModuleCL@4b2dd538[org.netbeans.core.nativeaccess], ModuleCL@5abd09e8[org.netbeans.api.progress], ModuleCL@472462b3[org.openide.explorer], ModuleCL@3a98350a[org.netbeans.swing.tabcontrol], org.netbeans.MainImpl$BootClassLoader@122e7820, ModuleCL@4ed9f47[org.netbeans.core.netigso], ModuleCL@2180b22e[jp.atr.dni.bmi.desktop.dummymodule], ModuleCL@d6d835f[org.openide.nodes], ModuleCL@160089dd[org.netbeans.core.ui], ModuleCL@4e1263db[org.openide.loaders], ModuleCL@5f0f0625[org.netbeans.swing.plaf], ModuleCL@7219d6af[jp.atr.dni.bmi.desktop.timeseriesdata.provider], ModuleCL@27958cc2[org.netbeans.libs.osgi], ModuleCL@92696c2[org.openide.windows], ModuleCL@1451ef4e[org.netbeans.spi.quicksearch], ModuleCL@45389b3f[org.netbeans.modules.keyring], ModuleCL@52cd19d[org.netbeans.modules.keyring.impl], ModuleCL@6e37d490[jp.atr.dni.bmi.desktop.timeline]]
+java.lang.ClassNotFoundException: jp.atr.dni.bmi.desktop.timeline.timelineTopComponent
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:202)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:190)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:307)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:301)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:248)
+	at org.netbeans.ProxyClassLoader.loadClass(ProxyClassLoader.java:262)
+Caused: java.lang.ClassNotFoundException: jp.atr.dni.bmi.desktop.timeline.timelineTopComponent starting from SystemClassLoader[51 modules] with possible defining loaders [ModuleCL@6e37d490[jp.atr.dni.bmi.desktop.timeline]] and declared parents [ModuleCL@340523df[org.netbeans.libs.felix], ModuleCL@43f4ebd[org.openide.text], ModuleCL@109b2a51[jp.atr.dni.bmi.desktop.dummymodule2], ModuleCL@6760bf50[jp.atr.dni.bmi.desktop.workspace], ModuleCL@fc8fb4b[jp.atr.dni.bmi.desktop.dummymodule3], ModuleCL@23de4dd8[org.netbeans.modules.editor.mimelookup], ModuleCL@464d41e2[org.openide.dialogs], ModuleCL@11d13272[org.netbeans.libs.jna], ModuleCL@54a6af6e[org.netbeans.modules.options.api], ModuleCL@67148603[org.netbeans.core.windows], ModuleCL@18c4bc34[jp.atr.dni.bmi.desktop.model], ModuleCL@365bf624[org.netbeans.modules.editor.mimelookup.impl], ModuleCL@2afb6c5f[org.openide.actions], ModuleCL@6477eb97[org.netbeans.core.output2], ModuleCL@73265109[org.netbeans.modules.progress.ui], ModuleCL@174aa60[org.netbeans.modules.options.keymap], ModuleCL@28f19d6e[org.netbeans.modules.masterfs], ModuleCL@3823bdd1[org.netbeans.core], ModuleCL@309fe84e[jp.atr.dni.bmi.desktop.neuroshareutils], ModuleCL@687ea9[org.netbeans.modules.applemenu], ModuleCL@2658dd2d[org.netbeans.modules.queries], ModuleCL@10cb42cf[jp.atr.dni.bmi.desktop.explorereditor], ModuleCL@26c1186f[org.netbeans.modules.settings], ModuleCL@782cbc86[org.netbeans.core.io.ui], ModuleCL@7a22ce00[org.netbeans.modules.print], ModuleCL@49198ff2[org.openide.awt], ModuleCL@3a0b53e[org.openide.io], ModuleCL@4513e9fd[org.netbeans.swing.outline], ModuleCL@4b2dd538[org.netbeans.core.nativeaccess], ModuleCL@5abd09e8[org.netbeans.api.progress], ModuleCL@472462b3[org.openide.explorer], ModuleCL@3a98350a[org.netbeans.swing.tabcontrol], org.netbeans.MainImpl$BootClassLoader@122e7820, ModuleCL@4ed9f47[org.netbeans.core.netigso], ModuleCL@2180b22e[jp.atr.dni.bmi.desktop.dummymodule], ModuleCL@d6d835f[org.openide.nodes], ModuleCL@160089dd[org.netbeans.core.ui], ModuleCL@4e1263db[org.openide.loaders], ModuleCL@5f0f0625[org.netbeans.swing.plaf], ModuleCL@7219d6af[jp.atr.dni.bmi.desktop.timeseriesdata.provider], ModuleCL@27958cc2[org.netbeans.libs.osgi], ModuleCL@92696c2[org.openide.windows], ModuleCL@1451ef4e[org.netbeans.spi.quicksearch], ModuleCL@45389b3f[org.netbeans.modules.keyring], ModuleCL@52cd19d[org.netbeans.modules.keyring.impl], ModuleCL@6e37d490[jp.atr.dni.bmi.desktop.timeline]]
+	at org.netbeans.ProxyClassLoader.loadClass(ProxyClassLoader.java:264)
+	at org.netbeans.ModuleManager$SystemClassLoader.loadClass(ModuleManager.java:530)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:248)
+	at org.netbeans.modules.settings.convertors.XMLSettingsSupport$SettingsRecognizer.loadClass(XMLSettingsSupport.java:712)
+	at org.netbeans.modules.settings.convertors.XMLSettingsSupport$SettingsRecognizer.createFromMethod(XMLSettingsSupport.java:662)
+	at org.netbeans.modules.settings.convertors.XMLSettingsSupport$SettingsRecognizer.instanceCreate(XMLSettingsSupport.java:584)
+	at org.netbeans.modules.settings.convertors.SerialDataConvertor$SettingsInstance.instanceCreate(SerialDataConvertor.java:423)
+	at org.netbeans.core.windows.persistence.PersistenceManager.getTopComponentPersistentForID(PersistenceManager.java:533)
+	at org.netbeans.core.windows.persistence.PersistenceManager.getTopComponentForID(PersistenceManager.java:643)
+	at org.netbeans.core.windows.PersistenceHandler.getTopComponentForID(PersistenceHandler.java:460)
+	at org.netbeans.core.windows.PersistenceHandler.load(PersistenceHandler.java:163)
+	at org.netbeans.core.windows.WindowSystemImpl.load(WindowSystemImpl.java:73)
+	at org.netbeans.core.GuiRunLevel$2.run(GuiRunLevel.java:181)
+	at java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:209)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:633)
+	at org.netbeans.core.TimableEventQueue.dispatchEvent(TimableEventQueue.java:137)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:296)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:211)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:201)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:196)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:188)
+[catch] at java.awt.EventDispatchThread.run(EventDispatchThread.java:122)
+Diagnostic information
+Input arguments:
+	-Djdk.home=/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
+	-Dnetbeans.system_http_proxy=133.186.96.3:80
+	-Dnetbeans.system_http_non_proxy_hosts=
+	-Dnetbeans.dirs=/Users/kharada/00_CSK_harada/55_Git_Source/BMIDesktop/build/cluster:/Applications/NetBeans/NetBeans
+	6.9.1.app/Contents/Resources/NetBeans/platform
+	-Dnetbeans.home=/Applications/NetBeans/NetBeans
+	6.9.1.app/Contents/Resources/NetBeans/platform
+	-Dnetbeans.logger.console=true
+	-ea
+	-XX:+HeapDumpOnOutOfMemoryError
+	-XX:HeapDumpPath=build/testuserdir/var/log/heapdump.hprof
+Compiler: HotSpot 64-Bit Server Compiler
+Heap memory usage: initial 0b maximum 123.9MB
+Non heap memory usage: initial 23.2MB maximum 132.0MB
+Garbage collector: ParNew (Collections=4 Total time spent=0s)
+Garbage collector: ConcurrentMarkSweep (Collections=1 Total time spent=0s)
+Classes: loaded=3755 total loaded=3755 unloaded 0
+INFO [org.netbeans.core.ui.warmup.DiagnosticTask]: Total memory 4,294,967,296
+INFO [null]: 合計物理メモリー 4,294,967,296
+WARNING [org.openide.filesystems.Ordering]: Not all children in Menu/Window/ marked with the position attribute: [DummyModule2Action.shadow, DummyModule3Action.shadow, DummyModuleAction.shadow, ExplorerEditorAction.shadow, WorkspaceAction.shadow, timelineAction.shadow], but some are: [org-netbeans-core-windows-actions-GlobalPropertiesAction.shadow, Output, SwitchToRecentDocumentAction.shadow, ProgressListAction.shadow, Separator3.instance, CloseWindowAction.shadow, MaximizeWindowAction.shadow, org-netbeans-core-windows-actions-UndockAction.shadow, Separator4.instance, CloneDocumentAction.shadow, CloseAllDocumentsAction.shadow, CloseAllButThisAction.shadow, DocumentsAction.shadow, Separator5.instance, org-netbeans-core-windows-actions-ResetWindowsAction.shadow]
+WARNING [null]: Note - jp.atr.dni.bmi.desktop.explorereditor.ExplorerEditor ought to override getPersistenceType() rather than using the client property or accepting the default.
+WARNING [null]: jp.atr.dni.bmi.desktop.explorereditor.ExplorerEditor should override preferredID()
