@@ -17,9 +17,12 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.nio.DoubleBuffer;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.TreeSet;
 import java.util.logging.Logger;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
@@ -99,6 +102,8 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
    private ModeHandler handler;
 
    private ArrayList<ViewerChannel> viewerChannels;
+
+   public static final float SCROLLBAR_HEIGHT = -.85f;
 
    public TimelineTopComponent() {
       initGL();
@@ -442,7 +447,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
     * @param drawable
     */
    private void render(GLAutoDrawable drawable) {
-      System.out.println("render");
+//      System.out.println("render");
       int width = getWidth();
       int height = getHeight();
 
@@ -581,13 +586,13 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       gl.glColor3f(1, 0, 0);
       gl.glBegin(GL2.GL_QUADS);
 //      gl.glTexCoord2f(0, 0);
-      gl.glVertex3f(-width / 2, (float) -.85, 0);
+      gl.glVertex3f(-width / 2, SCROLLBAR_HEIGHT, 0);
 //      gl.glTexCoord2f(0, 1);
       gl.glVertex3f(-width / 2, -1, 0);
 //      gl.glTexCoord2f(1, 1);
       gl.glVertex3f(width / 2, -1, 0);
 //      gl.glTexCoord2f(1, 0);
-      gl.glVertex3f(width / 2, (float) -.85, 0);
+      gl.glVertex3f(width / 2, SCROLLBAR_HEIGHT, 0);
       gl.glEnd();
    }
 
@@ -632,6 +637,98 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 		}
 
 		buildTransforms();
+	}
+
+   /**
+	 * Returns the object at the specified virtual coordiantes or null if no
+	 * object is located at the specified coordinates. If two objects are
+	 * located at the specified point, then the first object is always
+	 * returned.
+	 *
+	 * The method first checks for objects using the shape interface. However,
+	 * the interface does not allow for the selection of lines. If no object
+	 * is found, then the closest object within a small radius is returned.
+	 *
+	 * @param x - the x value in virutal coordinates
+	 * @param y - the y value in virtual coordinates
+	 * @return - the object or null if no object is picked
+	 */
+	public ViewerChannel getPickedObject(double x, double y, boolean toggleSelected) {
+
+		// sort the visible objects from highest depth to lowest depth
+		TreeSet<ViewerChannel> objects = new TreeSet<ViewerChannel>(new Comparator<ViewerChannel>() {
+			public int compare(ViewerChannel arg0, ViewerChannel arg1) {
+				int depth1 = arg0.getDepth();
+				int depth2 = arg1.getDepth();
+
+				if (depth2 != depth1) {
+					return depth2 - depth1;
+				}
+				else {
+					return arg1.hashCode() - arg0.hashCode();
+				}
+			}
+		});
+
+		for (ViewerChannel object : viewerChannels) {
+			         objects.add(object);
+		}
+
+		// check for selection using shapes
+		ViewerChannel selected = null;
+		for (ViewerChannel object : objects) {
+//			if (object.getGraphics().getBounds2D().contains(x, y)) {
+//				if (object.getGraphics().getFillColor() != null && object.getGraphics().contains(x, y)) {
+//					if (object.equals(modeHandler.getSelectedObject())) {
+//						selected = object;
+//						if (toggleSelected == false) {
+//							return selected;
+//						}
+//					}
+//					else {
+//						return object;
+//					}
+//				}
+//			}
+		}
+
+		if (selected != null) {
+			return selected;
+		}
+
+		// find the closest line
+		double pickTolerance = 10.0 / scale;
+		double closest = pickTolerance;
+		selected = null;
+
+//		for (ViewerChannel object : viewerChannels) {
+//			Rectangle2D bounds = object.getGraphics().getBounds2D();
+//			if (x > (bounds.getMinX() - pickTolerance)
+//					&& x < (bounds.getMaxX() + pickTolerance)
+//					&& y > (bounds.getMinY() - pickTolerance)
+//					&& y < (bounds.getMaxY() + pickTolerance)) {
+//
+//				float[] coords = object.getGraphics().getCoordinates();
+//				float px = coords[0];
+//				float py = coords[1];
+//					for (int index=2; index<coords.length; index += 2) {
+//					float nx = coords[index%coords.length];
+//					float ny = coords[(index + 1)%coords.length];
+//
+//					Line2D line = new Line2D.Float(px, py, nx, ny);
+//					double dist = line.ptSegDist(new Point2D.Double(x, y));
+//					if (dist < closest) {
+//						closest = dist;
+//						selected = object;
+//					}
+//
+//					px = nx;
+//					py = ny;
+//				}
+//			}
+//		}
+
+		return selected;
 	}
 	
    /**
