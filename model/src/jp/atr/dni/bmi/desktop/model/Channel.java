@@ -20,22 +20,20 @@ public class Channel {
 
     private List listeners = Collections.synchronizedList(new LinkedList());
 
-    public void addPropertyChangeListener(PropertyChangeListener pcl){
+    public void addPropertyChangeListener(PropertyChangeListener pcl) {
         listeners.add(pcl);
     }
 
-    public void removePropertyChangeListener(PropertyChangeListener pcl){
+    public void removePropertyChangeListener(PropertyChangeListener pcl) {
         listeners.remove(pcl);
     }
 
-    private void fire(String propertyName, Object old, Object neu){
-        PropertyChangeListener[] pcls = (PropertyChangeListener[])listeners.toArray(new PropertyChangeListener[0]);
-        for (int i=0; i<pcls.length; i++){
+    private void fire(String propertyName, Object old, Object neu) {
+        PropertyChangeListener[] pcls = (PropertyChangeListener[]) listeners.toArray(new PropertyChangeListener[0]);
+        for (int i = 0; i < pcls.length; i++) {
             pcls[i].propertyChange(new PropertyChangeEvent(this, propertyName, old, neu));
         }
     }
-
-
     // Channel ID. system orders channels as this value.
     private int channelID;
     // Display Name. system displays this value.
@@ -44,18 +42,20 @@ public class Channel {
     private String channelType;
     // Source File Path.
     private String sourceFilePath;
+    // Edit flag.[ true : is editted. false : is not editted. default : false.]
+    private boolean editFlag;
     // Case : Neuroshare
     private Entity entity;
 
     // Case : ???
     // Add here.
-
     // Constructor.
     public Channel() {
         this.channelID = -1;
         this.displayName = "";
         this.channelType = "";
         this.sourceFilePath = "";
+        this.editFlag = false;
     }
 
     // Constructor. Case : Neuroshare
@@ -64,12 +64,13 @@ public class Channel {
         this.displayName = entity.getEntityInfo().getEntityLabel();
         this.channelType = "Neuroshare/" + entity.getEntityInfo().getEntityTypeLabel();
         this.sourceFilePath = entity.getEntityInfo().getFilePath();
+        this.editFlag = false;
         this.entity = entity;
+
     }
 
     // Constructor. Case : ???
     // Add here.
-    
     /**
      * @return the channelID
      */
@@ -148,6 +149,20 @@ public class Channel {
         String old = this.sourceFilePath;
         this.sourceFilePath = sourceFilePath;
         this.fire("sourceFilePath", old, this.sourceFilePath);
+    }
+
+    /**
+     * @return the editFlag
+     */
+    public boolean isEditFlag() {
+        return editFlag;
+    }
+
+    /**
+     * @param editFlag the editFlag to set
+     */
+    public void setEditFlag(boolean editFlag) {
+        this.editFlag = editFlag;
     }
 
     /**

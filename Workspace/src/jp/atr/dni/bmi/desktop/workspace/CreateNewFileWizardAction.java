@@ -12,8 +12,8 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import javax.swing.JComponent;
 import jp.atr.dni.bmi.desktop.model.Channel;
+import jp.atr.dni.bmi.desktop.neuroshareutils.Nsa_FileInfo;
 import org.openide.DialogDisplayer;
-import org.openide.NotifyDescriptor;
 import org.openide.WizardDescriptor;
 import org.openide.util.HelpCtx;
 
@@ -56,11 +56,14 @@ public final class CreateNewFileWizardAction implements ActionListener {
                     String comments = (String) wizardDescriptor.getProperty("comments");
                     ArrayList<Channel> channels = (ArrayList<Channel>) wizardDescriptor.getProperty("selectedChannels");
 
-                    DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(fileFormat + " " + filePath + " " + fileType + " " + entityCount
-                            + " " + timeStampResolution + " " + timeSpan + " " + applicationName + " " + year + " " + month + " " + day + " " + hour + " " + min + " " + sec + " " + milliSec + " " + comments + " chlength : " + channels.size()));
+//                    DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(fileFormat + " " + filePath + " " + fileType + " " + entityCount
+//                            + " " + timeStampResolution + " " + timeSpan + " " + applicationName + " " + year + " " + month + " " + day + " " + hour + " " + min + " " + sec + " " + milliSec + " " + comments + " chlength : " + channels.size()));
 
-                    // TODO : Not implemented yet.
                     // NeuroShareConverter ( with using Parameters and Channels).
+                    Nsa_FileInfo nsaFileInfo = new Nsa_FileInfo(fileType, timeStampResolution, timeSpan, applicationName, year, month, 0, day, hour, min, sec, milliSec, comments);
+                    CreateNewNeuroshareFile cnnf = new CreateNewNeuroshareFile();
+                    cnnf.createFile(filePath, nsaFileInfo, channels);
+
 
                     break;
 
