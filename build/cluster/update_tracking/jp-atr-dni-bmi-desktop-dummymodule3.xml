@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module codename="jp.atr.dni.bmi.desktop.dummymodule3">
-    <module_version install_time="1299216432110" last="true" origin="installer" specification_version="1.0">
-        <file crc="3565535705" name="config/Modules/jp-atr-dni-bmi-desktop-dummymodule3.xml"/>
-        <file crc="2607307989" name="modules/jp-atr-dni-bmi-desktop-dummymodule3.jar"/>
-    </module_version>
-</module>

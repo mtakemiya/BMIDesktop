@@ -9,8 +9,7 @@
     <path orientation="horizontal" number="20" weight="0.3"/>
     <path orientation="vertical" number="20" weight="0.5"/>
   </constraints>
-  <bounds x="144" y="192" width="460" height="437" />
+  <bounds x="192" y="231" width="614" height="527" />
   <frame state="0"/>
-    <active-tc  id="WorkspaceTopComponent" />
     <empty-behavior permanent="true"/>
 </mode>

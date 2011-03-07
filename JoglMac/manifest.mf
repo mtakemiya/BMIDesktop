@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+OpenIDE-Module: jp.atr.dni.bmi.desktop.jogl.mac
+OpenIDE-Module-Localizing-Bundle: jp/atr/dni/bmi/desktop/jogl/mac/Bundle.properties
+OpenIDE-Module-Specification-Version: 1.0
+

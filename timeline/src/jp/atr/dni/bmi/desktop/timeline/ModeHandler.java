@@ -14,6 +14,8 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.Point2D;
+import javax.media.opengl.GL2;
+import javax.media.opengl.glu.GLU;
 
 import jp.atr.dni.bmi.desktop.timeline.model.ViewerChannel;
 
@@ -215,17 +217,17 @@ public class ModeHandler implements KeyListener, MouseListener,
 	 * Updates the current and previous points
 	 */
 	public void mouseMoved(MouseEvent me) {
-       previousPoint = me.getPoint();
+      screenCurrentPoint = me.getPoint();
+		currentPoint = canvas.getVirtualCoordinates(me.getX(), me.getY());
+		if (previousPoint == null) {
+			screenPreviousPoint = screenCurrentPoint;
+			previousPoint = currentPoint;
+		}
 
-//		screenCurrentPoint = arg0.getPoint();
-//		currentPoint = canvas.getVirtualCoordinates(arg0.getX(), arg0.getY());
-//		if (previousPoint == null) {
-//			screenPreviousPoint = screenCurrentPoint;
-//			previousPoint = currentPoint;
-//		}
-//
-//		screenPreviousPoint = arg0.getPoint();
-//		previousPoint = canvas.getVirtualCoordinates(arg0.getX(), arg0.getY());
+
+
+		screenPreviousPoint = me.getPoint();
+		previousPoint = canvas.getVirtualCoordinates(me.getX(), me.getY());
 	}
 
 	/**
@@ -236,36 +238,17 @@ public class ModeHandler implements KeyListener, MouseListener,
 	 */
 	public void mouseDragged(MouseEvent me) {
 
-      Point2D currentPoint = me.getPoint();// getVirtualCoordinates(arg0.getX(),
-				// arg0.getY());
-            // getVirtualCoordinates(arg0.getX(), arg0.getY());
+      screenCurrentPoint = me.getPoint();
+		currentPoint = canvas.getVirtualCoordinates(me.getX(), me.getY());
 
-            // left button performs an action or drags the canvas
-      if ((me.getModifiers() & MouseEvent.BUTTON1_MASK) > 0) {
-         double dx = currentPoint.getX() - previousPoint.getX();
-         double dy = previousPoint.getY() - currentPoint.getY();
-					//            System.out.println("dx: " + dx + "\tdy: " + dy);
 
-//         System.out.println(currentPoint.getY());
-         canvas.setTranslationX(canvas.getTranslationX()+dx);
-         canvas.setTranslationY(canvas.getTranslationY()+dy);
+			double dx = currentPoint.getX() - previousPoint.getX();
+			double dy = currentPoint.getY() - previousPoint.getY();
+			canvas.setTranslationX(canvas.getTranslationX() + dx);
+			canvas.setTranslationY(canvas.getTranslationY() + dy);
 
-         previousPoint = me.getPoint();
-      }
-
-      //maybe the following is better:
-
-//		screenCurrentPoint = arg0.getPoint();
-//		currentPoint = canvas.getVirtualCoordinates(arg0.getX(), arg0.getY());
-//
-//			double dx = currentPoint.getX() - previousPoint.getX();
-//			double dy = currentPoint.getY() - previousPoint.getY();
-//			canvas.setTranslationX(canvas.getTranslationX() + dx);
-//			canvas.setTranslationY(canvas.getTranslationY() + dy);
-//
-//
-//		screenPreviousPoint = arg0.getPoint();
-//		previousPoint = canvas.getVirtualCoordinates(arg0.getX(), arg0.getY());
+		screenPreviousPoint = me.getPoint();
+		previousPoint = canvas.getVirtualCoordinates(me.getX(), me.getY());
 	}
 
 	/**
@@ -286,7 +269,40 @@ public class ModeHandler implements KeyListener, MouseListener,
 	 */
 	public void mouseClicked(MouseEvent me) {
 //      System.out.println(me.getYOnScreen() + "\t" + me.getY() + "\t"+canvas.getScale()*(-canvas.getScale() / (canvas.getHeight()*.5)));
-	}
+
+      
+      GLU glu = new GLU();
+
+      int viewport[] = new int[4];
+      float mvmatrix[] = new float[16];
+      float projmatrix[] = new float[16];
+
+      canvas.getGlCanvas().getGL().glGetIntegerv(GL2.GL_VIEWPORT, viewport, 0);
+      canvas.getGlCanvas().getGL().glGetFloatv(GL2.GL_MODELVIEW_MATRIX, mvmatrix, 0);
+      canvas.getGlCanvas().getGL().glGetFloatv(GL2.GL_PROJECTION_MATRIX, projmatrix, 0);
+
+      int realy = 0;// GL y coord pos
+      realy = viewport[3] - (int) me.getY() - 1;
+
+      float wcoord[] = new float[4];// wx, wy, wz;// returned xyz coords
+
+      glu.gluUnProject((float) me.getX(), (float) realy, 0.0f, //
+              mvmatrix, 0,
+              projmatrix, 0,
+              viewport, 0,
+              wcoord, 0);
+          System.out.println("World coords at z=0.0 are ( " //
+                             + wcoord[0] + ", " + wcoord[1] + ", " + wcoord[2]
+                             + ")");
+          glu.gluUnProject((float) me.getX(), (float) realy, 1.0f, //
+              mvmatrix, 0,
+              projmatrix, 0,
+              viewport, 0,
+              wcoord, 0);
+          System.out.println("World coords at z=1.0 are (" //
+                             + wcoord[0] + ", " + wcoord[1] + ", " + wcoord[2]
+                             + ")");
+   }
 
 	/**
 	 * Not implemented.

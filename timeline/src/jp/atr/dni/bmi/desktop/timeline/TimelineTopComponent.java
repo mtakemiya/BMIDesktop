@@ -155,16 +155,16 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 		
       renderer = new TextRenderer(new Font("SansSerif", Font.BOLD, 12));
 		
-      glCanvas = new GLCanvas(caps);
+      setGlCanvas(new GLCanvas(caps));
       viewerChannels = new ArrayList<ViewerChannel>();
 		
-      glCanvas.addGLEventListener(this);
+      getGlCanvas().addGLEventListener(this);
 
       handler = new ModeHandler(this);
-      glCanvas.addMouseListener(handler);
-      glCanvas.addMouseMotionListener(handler);
-      glCanvas.addMouseWheelListener(handler);
-      glCanvas.addKeyListener(handler);
+      getGlCanvas().addMouseListener(handler);
+      getGlCanvas().addMouseMotionListener(handler);
+      getGlCanvas().addMouseWheelListener(handler);
+      getGlCanvas().addKeyListener(handler);
 		
 //      glCanvas.addMouseListener(new MouseListener() {
 //
@@ -244,8 +244,8 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 //         }
 //      });
 		
-      Animator animator = new Animator(glCanvas);
-      animator.add(glCanvas);
+      Animator animator = new Animator(getGlCanvas());
+      animator.add(getGlCanvas());
       animator.start();
 		
       javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -253,12 +253,12 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       layout.setHorizontalGroup(
 										  layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 										  .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-														.addComponent(glCanvas, javax.swing.GroupLayout.DEFAULT_SIZE, 1377, Short.MAX_VALUE)
+														.addComponent(getGlCanvas(), javax.swing.GroupLayout.DEFAULT_SIZE, 1377, Short.MAX_VALUE)
 														.addContainerGap())
 										  );
       layout.setVerticalGroup(
 										layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-										.addComponent(glCanvas, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+										.addComponent(getGlCanvas(), javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
 										);
 		
       //TODO:add a resize listener
@@ -793,5 +793,19 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
                NeuroshareFile nsn = reader.readNSFileAllData(fileInfo.getFilePath());
                fileInfo.setNsObj(nsn);
             }
+   }
+
+   /**
+    * @return the glCanvas
+    */
+   public GLCanvas getGlCanvas() {
+      return glCanvas;
+   }
+
+   /**
+    * @param glCanvas the glCanvas to set
+    */
+   public void setGlCanvas(GLCanvas glCanvas) {
+      this.glCanvas = glCanvas;
    }
 }

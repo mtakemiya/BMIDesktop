@@ -3,10 +3,10 @@
 <windowmanager version="2.1">
     <main-window>
   <joined-properties
-   x="72"
-   y="57"
-   width="1296"
-   height="786"
+   x="96"
+   y="66"
+   width="1728"
+   height="948"
    relative-x="0.0"
    relative-y="0.0"
    relative-width="0.0"
@@ -18,10 +18,10 @@
    frame-state="0"
 />
   <separated-properties
-   x="144"
-   y="87"
-   width="1152"
-   height="69"
+   x="192"
+   y="105"
+   width="1536"
+   height="84"
    relative-x="0.0"
    relative-y="0.0"
    relative-width="0.0"
@@ -37,16 +37,13 @@
   <path orientation="vertical" number="40" weight="0.7" />
   <path orientation="horizontal" number="40" weight="0.7" />
   </constraints>
-  <bounds x="475" y="209" width="604" height="384" />
+  <bounds x="633" y="252" width="806" height="463" />
     </editor-area>
-    <screen width="1440" height="900"/>
-    <active-mode name="editor"/>
+    <screen width="1920" height="1080"/>
+    <active-mode name="anonymousMode_1"/>
     <toolbar configuration="Standard" preferred-icon-size="24"/>
     <tc-list>
+  <tc-id id="TimelineTopComponent"/>
   <tc-id id="ExplorerEditor"/>
-  <tc-id id="WorkspaceTopComponent"/>
-  <tc-id id="DummyModuleTopComponent"/>
-  <tc-id id="DummyModule2TopComponent"/>
-  <tc-id id="DummyModule3TopComponent"/>
     </tc-list>
 </windowmanager>
