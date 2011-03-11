@@ -10,6 +10,7 @@ import com.jogamp.opengl.util.gl2.GLUT;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
+import java.awt.event.ComponentAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -103,7 +104,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
    private ArrayList<ViewerChannel> viewerChannels;
 
-   public static final float SCROLLBAR_HEIGHT = -.85f;
+   public static final float SCROLLBAR_HEIGHT = 50f;
 
    public TimelineTopComponent() {
       initGL();
@@ -261,22 +262,22 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 										.addComponent(getGlCanvas(), javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
 										);
 		
-      //TODO:add a resize listener
-		//      this.addComponentListener(new ComponentAdapter() {
-		//			public void componentResized(ComponentEvent arg0) {
-		//
-		//				// resize about the center of the scene
-		//				if (size != null) {
-		//					Dimension newSize = Canvas.this.getSize();
-		//					translationX += (newSize.width - size.width)/2.0;
-		//					translationY += (newSize.height - size.height)/2.0;
-		//				}
-		//
-		//				// update the view transforms when the canvas is resized
-		//				buildTransforms();
-		//				size = Canvas.this.getSize();
-		//			}
-		//		});
+      //add a resize listener
+//		      this.addComponentListener(new ComponentAdapter() {
+//					public void componentResized(ComponentEvent arg0) {
+//
+//						// resize about the center of the scene
+//						if (size != null) {
+//							Dimension newSize = Canvas.this.getSize();
+//							translationX += (newSize.width - size.width)/2.0;
+//							translationY += (newSize.height - size.height)/2.0;
+//						}
+//
+//						// update the view transforms when the canvas is resized
+//						buildTransforms();
+//						size = Canvas.this.getSize();
+//					}
+//				});
 		
       
    }
@@ -373,12 +374,13 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 	
    @Override
    public void init(GLAutoDrawable drawable) {
+      System.out.println("init function");
       GL2 gl = (GL2) drawable.getGL();
 		glu = new GLU();
 		glut = new GLUT();
 		
       // set the drawing parameters
-		gl.glClearColor( .9f, .9f, .9f, 1.0f );
+		gl.glClearColor(.9f, .9f, .9f, 1.0f );
 		gl.glPointSize(3.0f);
       gl.glEnable(GL2.GL_LINE_SMOOTH);
  	   gl.glEnable(GL2.GL_BLEND);
@@ -386,6 +388,10 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 	   gl.glHint(GL2.GL_LINE_SMOOTH_HINT, GL2.GL_DONT_CARE);
 	   gl.glLineWidth(1.5f);
       drawable.getGL().setSwapInterval(1);
+
+      gl.glMatrixMode(GL2.GL_PROJECTION);
+      gl.glLoadIdentity();
+      buildTransforms();
    }
 	
    @Override
@@ -416,7 +422,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 	 * @return - the point in screen coordinates.
 	 */
 	public Point2D getScreenCoordinates(double x, double y) {
-		return transform.transform(new Point2D.Double(x, y), null);
+		return transform.transform(new Point2D.Double(x, -y), null);
 	}
 	
    /**
@@ -454,19 +460,26 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       GL2 gl = drawable.getGL().getGL2();
       gl.glClear(GL2.GL_COLOR_BUFFER_BIT);
 
+      gl.glMatrixMode(GL2.GL_PROJECTION);
+//        gl.glLoadIdentity();
+//        gl.glOrtho(0, 640, 480, 0, -1, 1);
+//        gl.glMatrixMode(GL2.GL_MODELVIEW);
+
 //      if (SHOW_GRID){
 //         gl.glLoadIdentity();
 //      }
 //      gl.glClearColor( .9f, .9f, .9f, 1.0f );
 
-      gl.glMatrixMode(GL2.GL_PROJECTION);
-      gl.glLoadIdentity();
+//      gl.glLoadIdentity();
+//      gl.glTranslated(translationX / (width*.5), translationY / (height*.5), 0);
+//      gl.glScaled(scale, scale, 0);
+//      gl.glLoadIdentity();
 //glu.gluOrtho2D (0,
 //                 getWidth(),
 //                0,
 //                getHeight());
 
-      gl.glViewport(0, 0, width, height);//TODO: look into this some more
+//      gl.glViewport(0, 0, width, height);//TODO: look into this some more
 
       if (fileInfo == null) {
          return;
@@ -481,9 +494,9 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       //Draw data
       gl.glLineWidth(1);
 
-      gl.glLoadIdentity();
-      gl.glTranslated(translationX / (width*.5), translationY / (height*.5), 0);
-      gl.glScaled(scale, scale, 0);
+//      gl.glLoadIdentity();
+//      gl.glTranslated(translationX / (width*.5), translationY / (height*.5), 0);
+//      gl.glScaled(scale, scale, 0);
 
       gl.glBegin(GL.GL_LINES);
 
@@ -508,16 +521,16 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
                for (int i = 0; i < vals.size(); i++) {
                   if (i % 2 == 0) {
-//                     Point2D p = getScreenCoordinates(lastX, lastY);
-                     //                     gl.glVertex2d(p.getX(),p.getY());
-                     gl.glVertex2d(lastX, lastY);
+                     Point2D p = getScreenCoordinates(lastX, lastY);
+                                          gl.glVertex2d(p.getX(),p.getY());
+//                     gl.glVertex2d(lastX, lastY);
 
            
                   } else {
                      lastY = (vals.get(i) / normalizer)-yOffset*5;
-//                     Point2D p = getScreenCoordinates(i, lastY);
-//                     gl.glVertex2d(p.getX(),p.getY());
-                     gl.glVertex2d(i, lastY);
+                     Point2D p = getScreenCoordinates(i, lastY);
+                     gl.glVertex2d(p.getX(),p.getY());
+//                     gl.glVertex2d(i, lastY);
                   }
                   lastX = i;
                }
@@ -528,26 +541,29 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       gl.glEnd();
 
       //Draw labels
-      gl.glLoadIdentity();
-      gl.glTranslated((-scale / (width*.5))-.99, translationY / (height*.5), 0);
-      gl.glScaled(scale, scale, 0);
+//      gl.glLoadIdentity();
+//      gl.glTranslated((-scale / (width*.5))-.99, translationY / (height*.5), 0);
+//      gl.glScaled(scale, scale, 0);
+      
 
       for (int i = 0; i < max; i++) {
          //Draw label
-         drawText(gl, fileInfo.getNsObj().getEntities().get(i).getEntityInfo().getEntityLabel(), 0,-5*i, 0.0125f, 2.0f);
+         Point2D p = getScreenCoordinates(0, -5*i);
+         drawText(gl, fileInfo.getNsObj().getEntities().get(i).getEntityInfo().getEntityLabel(), 0,p.getY(), 0.0125f, 2.0f);
       }
-
-      //Draw bottom time lables
-      gl.glLoadIdentity();
-      gl.glTranslated((translationX / (width*.5)), -scale / (height*.5) -.83, 0);
-      gl.glScaled(scale, scale, 0);
-
-      for (int i = 0; i < 1000; i+=35) {
-         drawText(gl, new Date(i).toString(), i,0, 0.0125f, 2.0f);
+//
+//      //Draw bottom time lables
+////      gl.glLoadIdentity();
+////      gl.glTranslated((translationX / (width*.5)), -scale / (height*.5) -.83, 0);
+////      gl.glScaled(scale, scale, 0);
+//
+      for (int i = 0; i < 1000; i+= 35) {
+         Point2D p = getScreenCoordinates(i, 0);
+         drawText(gl, new Date(i).toString(), p.getX(),height-SCROLLBAR_HEIGHT, 0.0125f, 2f);
       }
 
       //Draw bottom time scroller
-      drawTimelineScroller(gl,width);
+      drawTimelineScroller(gl,0,height-SCROLLBAR_HEIGHT);
    }
 
    /**
@@ -560,7 +576,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 	 * @param size - the size of the text
 	 * @param width - the width of the letters
 	 */
-	public void drawText(GL2 gl, String text, int x, int y, float size, float width) {
+	public void drawText(GL2 gl, String text, double x, double y, float size, float width) {
 //      gl.glPushMatrix();
 //gl.glTranslated(x, y, 0);
 //        gl.glScalef(size, size, 0.0f);
@@ -574,26 +590,34 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
       gl.glPushMatrix();
       gl.glTranslated(x, y, 0);
+      size = (float) (2f * (scale * size));
 //      gl.glRotatef(angle, 0, 0, 1);
-      gl.glScalef(size, size, 0.0f);
-      gl.glLineWidth(width);
+      gl.glScalef(size, -size, 0.0f);
+      gl.glLineWidth((float) (width));
       glut.glutStrokeString(GLUT.STROKE_ROMAN, text);
       gl.glPopMatrix();
 	}
 
-   public void drawTimelineScroller(GL2 gl, float width) {
-      gl.glLoadIdentity();
+   public void drawTimelineScroller(GL2 gl, double x, double y) {
+//      gl.glLoadIdentity();
+
+
+      float width = getWidth();
+
+      gl.glPushMatrix();
+      gl.glTranslated(x, y, 0);
       gl.glColor3f(1, 0, 0);
       gl.glBegin(GL2.GL_QUADS);
 //      gl.glTexCoord2f(0, 0);
-      gl.glVertex3f(-width / 2, SCROLLBAR_HEIGHT, 0);
+      gl.glVertex3f(0, SCROLLBAR_HEIGHT, 0);
 //      gl.glTexCoord2f(0, 1);
-      gl.glVertex3f(-width / 2, -1, 0);
+      gl.glVertex3f(0, -1, 0);
 //      gl.glTexCoord2f(1, 1);
-      gl.glVertex3f(width / 2, -1, 0);
+      gl.glVertex3f(width, -1, 0);
 //      gl.glTexCoord2f(1, 0);
-      gl.glVertex3f(width / 2, SCROLLBAR_HEIGHT, 0);
+      gl.glVertex3f(width, SCROLLBAR_HEIGHT, 0);
       gl.glEnd();
+      gl.glPopMatrix();
    }
 
    /**
@@ -772,9 +796,9 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 	 * Sets the scale and rebuilds the affine transforms.
 	 */
 	public void setScale(double scale) {
-		if (scale < 0.008 || scale > .2) {
-			return;
-		}
+//		if (scale < 0.008 || scale > .2) {
+//			return;
+//		}
 		
 		this.scale = scale;
 		buildTransforms();

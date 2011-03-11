@@ -184,25 +184,15 @@ public class ModeHandler implements KeyListener, MouseListener,
    @Override
 	public void mousePressed(MouseEvent me) {
 
-      // update the virtual points
-            screenCurrentPoint = me.getPoint();
-            screenPickedPoint = screenCurrentPoint;
-            currentPoint = canvas.getVirtualCoordinates(me.getX(), me.getY());
-            pickedPoint = currentPoint;
-            if (previousPoint == null) {
-               screenPreviousPoint = screenCurrentPoint;
-               previousPoint = currentPoint;
-            }
-
-		// update the virtual points
-//		screenCurrentPoint = arg0.getPoint();
-//		screenPickedPoint = screenCurrentPoint;
-//		currentPoint = canvas.getVirtualCoordinates(arg0.getX(), arg0.getY());
-//		pickedPoint = currentPoint;
-//		if (previousPoint == null) {
-//			screenPreviousPoint = screenCurrentPoint;
-//			previousPoint = currentPoint;
-//		}
+     // update the virtual points
+		screenCurrentPoint = me.getPoint();
+		screenPickedPoint = screenCurrentPoint;
+		currentPoint = canvas.getVirtualCoordinates(me.getX(), me.getY());
+		pickedPoint = currentPoint;
+		if (previousPoint == null) {
+			screenPreviousPoint = screenCurrentPoint;
+			previousPoint = currentPoint;
+		}
    }
 
 	/**
@@ -224,8 +214,6 @@ public class ModeHandler implements KeyListener, MouseListener,
 			previousPoint = currentPoint;
 		}
 
-
-
 		screenPreviousPoint = me.getPoint();
 		previousPoint = canvas.getVirtualCoordinates(me.getX(), me.getY());
 	}
@@ -242,10 +230,10 @@ public class ModeHandler implements KeyListener, MouseListener,
 		currentPoint = canvas.getVirtualCoordinates(me.getX(), me.getY());
 
 
-			double dx = currentPoint.getX() - previousPoint.getX();
-			double dy = currentPoint.getY() - previousPoint.getY();
-			canvas.setTranslationX(canvas.getTranslationX() + dx);
-			canvas.setTranslationY(canvas.getTranslationY() + dy);
+		double dx = currentPoint.getX() - previousPoint.getX();
+		double dy = currentPoint.getY() - previousPoint.getY();
+		canvas.setTranslationX(canvas.getTranslationX() + dx);
+		canvas.setTranslationY(canvas.getTranslationY() + dy);
 
 		screenPreviousPoint = me.getPoint();
 		previousPoint = canvas.getVirtualCoordinates(me.getX(), me.getY());
