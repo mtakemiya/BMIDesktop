@@ -8,12 +8,12 @@
  *
  * Created on 2011/02/23, 11:17:50
  */
-
 package jp.atr.dni.bmi.desktop.explorereditor;
 
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -22,15 +22,17 @@ import jp.atr.dni.bmi.desktop.model.GeneralFileInfo;
 import jp.atr.dni.bmi.desktop.model.Workspace;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NSReader;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NeuroshareFile;
+import jp.atr.dni.bmi.desktop.workingfileutils.WorkingFileUtils;
 import org.openide.DialogDescriptor;
 import org.openide.DialogDisplayer;
+import org.openide.util.Exceptions;
 
 /**
  *
  * @author kharada
  * @version 2010/02/23
  */
-public class ChannelSelecter extends javax.swing.JPanel implements ActionListener{
+public class ChannelSelecter extends javax.swing.JPanel implements ActionListener {
 
     // Define Lists.
     DefaultListModel unSelectedChannelList;
@@ -41,7 +43,7 @@ public class ChannelSelecter extends javax.swing.JPanel implements ActionListene
 
     /** Creates new form ChannelSelecter */
     public ChannelSelecter(GeneralFileInfo gfi) {
-        
+
         beforeInitComponents(gfi);
         initComponents();
         afterInitComponents();
@@ -240,16 +242,16 @@ public class ChannelSelecter extends javax.swing.JPanel implements ActionListene
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // Set all channels as Selected.
-        if (this.unSelectedChannelList.isEmpty()){
+        if (this.unSelectedChannelList.isEmpty()) {
             return;
         }
 
         ArrayList<Channel> tmpChannelList = new ArrayList<Channel>();
-        for (int ii = 0; ii < this.unSelectedChannelList.getSize(); ii++){
+        for (int ii = 0; ii < this.unSelectedChannelList.getSize(); ii++) {
             tmpChannelList.add((Channel) this.unSelectedChannelList.getElementAt(ii));
         }
 
-        for (int jj =0; jj < tmpChannelList.size(); jj ++){
+        for (int jj = 0; jj < tmpChannelList.size(); jj++) {
             this.moveChannelToSelected(tmpChannelList.get(jj));
         }
 
@@ -260,12 +262,12 @@ public class ChannelSelecter extends javax.swing.JPanel implements ActionListene
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // Set chosen channel as Selected.
         Object[] chosen = jList1.getSelectedValues();
-        if (chosen ==null){
+        if (chosen == null) {
             // Any channel is not chosen.
             return;
         }
 
-        for (int ii = 0; ii < chosen.length; ii++){
+        for (int ii = 0; ii < chosen.length; ii++) {
             Channel ch = (Channel) chosen[ii];
             this.moveChannelToSelected(ch);
         }
@@ -277,12 +279,12 @@ public class ChannelSelecter extends javax.swing.JPanel implements ActionListene
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // Set chosen channel as Unselected.
         Object[] chosen = jList2.getSelectedValues();
-        if (chosen ==null){
+        if (chosen == null) {
             // Any channel is not chosen.
             return;
         }
 
-        for (int ii = 0; ii < chosen.length; ii++){
+        for (int ii = 0; ii < chosen.length; ii++) {
             Channel ch = (Channel) chosen[ii];
             this.moveChannelToUnSelected(ch);
         }
@@ -293,24 +295,22 @@ public class ChannelSelecter extends javax.swing.JPanel implements ActionListene
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // Set all channels as Unselected.
-        if (this.selectedChannelList.isEmpty()){
+        if (this.selectedChannelList.isEmpty()) {
             return;
         }
 
         ArrayList<Channel> tmpChannelList = new ArrayList<Channel>();
-        for (int ii = 0; ii < this.selectedChannelList.getSize(); ii++){
+        for (int ii = 0; ii < this.selectedChannelList.getSize(); ii++) {
             tmpChannelList.add((Channel) this.selectedChannelList.getElementAt(ii));
         }
 
-        for (int jj =0; jj < tmpChannelList.size(); jj ++){
+        for (int jj = 0; jj < tmpChannelList.size(); jj++) {
             this.moveChannelToUnSelected(tmpChannelList.get(jj));
         }
 
         jList1.repaint();
         jList2.repaint();
     }//GEN-LAST:event_jButton4ActionPerformed
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -332,11 +332,21 @@ public class ChannelSelecter extends javax.swing.JPanel implements ActionListene
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getSource() == DialogDescriptor.OK_OPTION){
+        if (e.getSource() == DialogDescriptor.OK_OPTION) {
             // Add Channels to the workspace.
-            for (int ii =0; ii < this.selectedChannelList.size(); ii++){
+            for (int ii = 0; ii < this.selectedChannelList.size(); ii++) {
                 Object obj = this.selectedChannelList.get(ii);
-                Channel ch = (Channel)obj;
+                Channel ch = (Channel) obj;
+
+                // Create working file.
+                WorkingFileUtils wfu = new WorkingFileUtils();
+                try {
+                    wfu.createWorkingFile(ch.getSourceFilePath(), ch.getEntity());
+                } catch (IOException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+                ch.setWorkingFilePath(wfu.getWorkingFilePath());
+
                 Workspace.addChannel(ch);
             }
         }
@@ -355,11 +365,11 @@ public class ChannelSelecter extends javax.swing.JPanel implements ActionListene
         this.dialogDescriptor = new DialogDescriptor(this, "Channel Selecter", true, this);
 
         // Case : Neuroshare.
-        if (this.generalFileInfo.getFileType().equals("File/nsn")){
+        if (this.generalFileInfo.getFileType().equals("File/nsn")) {
 
             // Get nsObj to set channel list.
             NeuroshareFile nsf = this.generalFileInfo.getNsObj();
-            if (nsf == null){
+            if (nsf == null) {
                 // Get nsObj if unload.
                 NSReader nsr = new NSReader();
                 nsf = nsr.readNSFileOnlyInfo(this.generalFileInfo.getFilePath());
@@ -371,12 +381,12 @@ public class ChannelSelecter extends javax.swing.JPanel implements ActionListene
             this.selectedChannelList.removeAllElements();
 
             // Add channels to unSelectedChannelList.
-            for (int ii =0; ii < nsf.getEntities().size(); ii++){
+            for (int ii = 0; ii < nsf.getEntities().size(); ii++) {
                 Channel ch = new Channel(ii, nsf.getEntities().get(ii));
                 this.unSelectedChannelList.add(ii, ch);
             }
 
-        } else{
+        } else {
             JOptionPane.showMessageDialog(null, "It is not data file.");
         }
     }
@@ -389,21 +399,21 @@ public class ChannelSelecter extends javax.swing.JPanel implements ActionListene
     }
 
     private void moveChannelToSelected(Channel ch) {
-        if (this.selectedChannelList.isEmpty()){
+        if (this.selectedChannelList.isEmpty()) {
             // Add to First.
             this.selectedChannelList.addElement(ch);
         } else {
             int selectedChannelListSize = this.selectedChannelList.getSize();
-            for (int ii = 0; ii < selectedChannelListSize; ii++){
+            for (int ii = 0; ii < selectedChannelListSize; ii++) {
                 Channel search = (Channel) this.selectedChannelList.getElementAt(ii);
                 int diff = ch.getChannelID() - search.getChannelID();
 
-                if (diff < 0){
+                if (diff < 0) {
                     // Insert at ii.
                     this.selectedChannelList.insertElementAt(ch, ii);
                     break;
                 }
-                if (selectedChannelListSize <= ii +1){
+                if (selectedChannelListSize <= ii + 1) {
                     // Add to Last.
                     this.selectedChannelList.addElement(ch);
                     break;
@@ -414,21 +424,21 @@ public class ChannelSelecter extends javax.swing.JPanel implements ActionListene
     }
 
     private void moveChannelToUnSelected(Channel ch) {
-        if (this.unSelectedChannelList.isEmpty()){
+        if (this.unSelectedChannelList.isEmpty()) {
             // Add to First.
             this.unSelectedChannelList.addElement(ch);
         } else {
             int unSelectedChannelListSize = this.unSelectedChannelList.getSize();
-            for (int ii = 0; ii < unSelectedChannelListSize; ii++){
+            for (int ii = 0; ii < unSelectedChannelListSize; ii++) {
                 Channel search = (Channel) this.unSelectedChannelList.getElementAt(ii);
                 int diff = ch.getChannelID() - search.getChannelID();
 
-                if (diff < 0){
+                if (diff < 0) {
                     // Insert at ii.
                     this.unSelectedChannelList.insertElementAt(ch, ii);
                     break;
                 }
-                if (unSelectedChannelListSize <= ii +1){
+                if (unSelectedChannelListSize <= ii + 1) {
                     // Add to Last.
                     this.unSelectedChannelList.addElement(ch);
                     break;
@@ -437,5 +447,4 @@ public class ChannelSelecter extends javax.swing.JPanel implements ActionListene
         }
         this.selectedChannelList.removeElement(ch);
     }
-
 }

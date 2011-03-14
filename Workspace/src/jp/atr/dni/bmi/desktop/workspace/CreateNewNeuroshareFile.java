@@ -14,7 +14,7 @@ import jp.atr.dni.bmi.desktop.neuroshareutils.DWordEventData;
 import jp.atr.dni.bmi.desktop.neuroshareutils.Entity;
 import jp.atr.dni.bmi.desktop.neuroshareutils.EntityInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.EventInfo;
-import jp.atr.dni.bmi.desktop.neuroshareutils.FileInfo;
+import jp.atr.dni.bmi.desktop.workingfileutils.NSCSVReader;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NSReader;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NeuralInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.Ns_AnalogData;
@@ -54,6 +54,7 @@ public class CreateNewNeuroshareFile {
         try {
             // Reader
             NSReader nsReader = new NSReader();
+            NSCSVReader nsCsvReader = new NSCSVReader();
 
             // Create the Neuroshare file.
             Ns_CreateFile nsFile = new Ns_CreateFile(dstFileFullPath);
@@ -127,7 +128,14 @@ public class CreateNewNeuroshareFile {
                             switch ((int) ei.getEntityType()) {
                                 case 0:
                                     // Get Event Data
-                                    TextEventData ted = (TextEventData) (nsReader.getEventData(srcFileFullPath, ei, eventInfo)).get(j);
+                                    TextEventData ted = null;
+                                    if (!ch.isEditFlag()) {
+                                        ted = (TextEventData) (nsReader.getEventData(srcFileFullPath, ei, eventInfo)).get(j);
+                                    } else {
+                                        // TODO : implement this.
+//                                        ted = (TextEventData) (nsCsvReader.getEventData(srcFileFullPath));
+                                    }
+
                                     // ns_EVENT_TEXT
                                     rtnval2 = nsEd.addEventData(ted.getTimestamp(), ted.getData());
                                     if (rtnval2 != 0) {
@@ -140,7 +148,13 @@ public class CreateNewNeuroshareFile {
                                     break;
                                 case 2:
                                     // Get Event Data
-                                    ByteEventData bed = (ByteEventData) (nsReader.getEventData(srcFileFullPath, ei, eventInfo)).get(j);
+                                    ByteEventData bed = null;
+                                    if (!ch.isEditFlag()) {
+                                        bed = (ByteEventData) (nsReader.getEventData(srcFileFullPath, ei, eventInfo)).get(j);
+                                    } else {
+                                        // TODO : implement this.
+//                                        bed = (ByteEventData) (nsCsvReader.getEventData(srcFileFullPath));
+                                    }
                                     // ns_EVENT_BYTE
                                     rtnval2 = nsEd.addEventData(bed.getTimestamp(), bed.getData());
                                     if (rtnval2 != 0) {
@@ -149,7 +163,13 @@ public class CreateNewNeuroshareFile {
                                     break;
                                 case 3:
                                     // Get Event Data
-                                    WordEventData wed = (WordEventData) (nsReader.getEventData(srcFileFullPath, ei, eventInfo)).get(j);
+                                    WordEventData wed = null;
+                                    if (!ch.isEditFlag()) {
+                                        wed = (WordEventData) (nsReader.getEventData(srcFileFullPath, ei, eventInfo)).get(j);
+                                    } else {
+                                        // TODO : implement this.
+//                                        wed = (WordEventData) (nsCsvReader.getEventData(srcFileFullPath));
+                                    }
                                     // ns_EVENT_WORD
                                     rtnval2 = nsEd.addEventData(wed.getTimestamp(), ((Integer) wed.getData()).shortValue());
                                     if (rtnval2 != 0) {
@@ -158,7 +178,13 @@ public class CreateNewNeuroshareFile {
                                     break;
                                 case 4:
                                     // Get Event Data
-                                    DWordEventData dwed = (DWordEventData) (nsReader.getEventData(srcFileFullPath, ei, eventInfo)).get(j);
+                                    DWordEventData dwed = null;
+                                    if (!ch.isEditFlag()) {
+                                        dwed = (DWordEventData) (nsReader.getEventData(srcFileFullPath, ei, eventInfo)).get(j);
+                                    } else {
+                                        // TODO : implement this.
+//                                        dwed = (DWordEventData) (nsCsvReader.getEventData(srcFileFullPath));
+                                    }
                                     // ns_EVENT_DWORD
                                     rtnval2 = nsEd.addEventData(dwed.getTimestamp(), dwed.getData().intValue());
                                     if (rtnval2 != 0) {
@@ -222,7 +248,12 @@ public class CreateNewNeuroshareFile {
                         }
 
                         // Get Analog Data
-                        ArrayList<AnalogData> ad = nsReader.getAnalogData(srcFileFullPath, ei);
+                        ArrayList<AnalogData> ad = null;
+                        if (!ch.isEditFlag()) {
+                            ad = nsReader.getAnalogData(srcFileFullPath, ei);
+                        } else {
+                            ad = nsCsvReader.getAnalogData(srcFileFullPath);
+                        }
 
                         // Add Analog Data
                         for (int ianalog = 0; ianalog < ad.size(); ianalog++) {
@@ -374,7 +405,13 @@ public class CreateNewNeuroshareFile {
                         }
 
                         // Get Neural Event Data
-                        ArrayList<Double> d = nsReader.getNeuralData(srcFileFullPath, ei);
+                        ArrayList<Double> d = null;
+                        if (!ch.isEditFlag()) {
+
+                            d = nsReader.getNeuralData(srcFileFullPath, ei);
+                        } else {
+                            d = nsCsvReader.getNeuralData(srcFileFullPath);
+                        }
 
                         for (int jj = 0; jj < d.size(); jj++) {
                             int rtnval9 = nsNED.addNeuralEventData(d.get(jj));
@@ -390,6 +427,8 @@ public class CreateNewNeuroshareFile {
                         break;
 
                 }
+
+
             }
 
             // Close and create.

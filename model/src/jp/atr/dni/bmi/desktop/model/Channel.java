@@ -42,6 +42,8 @@ public class Channel {
     private String channelType;
     // Source File Path.
     private String sourceFilePath;
+    // Working File Path.
+    private String workingFilePath;
     // Edit flag.[ true : is editted. false : is not editted. default : false.]
     private boolean editFlag;
     // Case : Neuroshare
@@ -55,6 +57,7 @@ public class Channel {
         this.displayName = "";
         this.channelType = "";
         this.sourceFilePath = "";
+        this.workingFilePath = "";
         this.editFlag = false;
     }
 
@@ -64,6 +67,7 @@ public class Channel {
         this.displayName = entity.getEntityInfo().getEntityLabel();
         this.channelType = "Neuroshare/" + entity.getEntityInfo().getEntityTypeLabel();
         this.sourceFilePath = entity.getEntityInfo().getFilePath();
+        this.workingFilePath = "";
         this.editFlag = false;
         this.entity = entity;
 
@@ -149,6 +153,20 @@ public class Channel {
         String old = this.sourceFilePath;
         this.sourceFilePath = sourceFilePath;
         this.fire("sourceFilePath", old, this.sourceFilePath);
+    }
+
+    /**
+     * @return the workingFilePath
+     */
+    public String getWorkingFilePath() {
+        return workingFilePath;
+    }
+
+    /**
+     * @param workingFilePath the workingFilePath to set
+     */
+    public void setWorkingFilePath(String workingFilePath) {
+        this.workingFilePath = workingFilePath;
     }
 
     /**

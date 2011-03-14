@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import jp.atr.dni.bmi.desktop.workingfileutils.WorkingFileUtils;
 
 /**
  *
@@ -40,13 +41,11 @@ public class Workspace {
             pcls[i].propertyChange(new PropertyChangeEvent("Workspace.firePropertyChange", propertyName, old, neu));
         }
     }
-
     // Channels.
     private static ArrayList<Channel> channels = new ArrayList<Channel>();
 
     // Supplymentary Channels.
     // TODO : implement it here.
-    
     // Get Channels.
     public static ArrayList<Channel> getChannels() {
         return channels;
@@ -73,6 +72,9 @@ public class Workspace {
                     if (ch.getChannelType().equals(channel.getChannelType())) {
                         if (ch.getSourceFilePath().equals(channel.getSourceFilePath())) {
                             channels.remove(ch);
+                            // remove workingfile.
+                            WorkingFileUtils wfu = new WorkingFileUtils(channel.getWorkingFilePath());
+                            wfu.removeWorkingFile();
                             fire("RemoveChannel", old, channels);
                             return;
                         }

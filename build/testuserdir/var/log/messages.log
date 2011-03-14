@@ -1,10 +1,10 @@
 -------------------------------------------------------------------------------
->Log Session: Monday, March 7, 2011 4:40:17 PM JST
+>Log Session: Monday, March 14, 2011 11:02:30 AM JST
 >System Info: 
   Product Version         = BMIDesktop 201011082200
   Operating System        = Mac OS X version 10.6.6 running on x86_64
-  Java; VM; Vendor        = 1.6.0_22; Java HotSpot(TM) 64-Bit Server VM 17.1-b03-307; Apple Inc.
-  Runtime                 = Java(TM) SE Runtime Environment 1.6.0_22-b04-307-10M3261
+  Java; VM; Vendor        = 1.6.0_24; Java HotSpot(TM) 64-Bit Server VM 19.1-b02-334; Apple Inc.
+  Runtime                 = Java(TM) SE Runtime Environment 1.6.0_24-b07-334-10M3326
   Java Home               = /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
   System Locale; Encoding = ja_JP (bmidesktop); SJIS
   Home Directory          = /Users/kharada
@@ -18,10 +18,14 @@
   Startup Classpath       = /Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/core/core.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/core/org-openide-filesystems.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/core/locale/core_ja.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/core/locale/core_pt_BR.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/core/locale/core_zh_CN.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/core/locale/org-openide-filesystems_ja.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/core/locale/org-openide-filesystems_pt_BR.jar:/Applications/NetBeans/NetBeans 6.9.1.app/Contents/Resources/NetBeans/platform/core/locale/org-openide-filesystems_zh_CN.jar:/Users/kharada/00_CSK_harada/55_Git_Source/BMIDesktop/build/cluster/core/locale/core_bmidesktop.jar
 -------------------------------------------------------------------------------
 WARNING [org.netbeans.core.projects.cache]: Inefficient to include an empty layer in a module: jar:file:/Users/kharada/00_CSK_harada/55_Git_Source/BMIDesktop/build/cluster/modules/jp-atr-dni-bmi-desktop-neuroshareutils.jar!/jp/atr/dni/bmi/desktop/neuroshareutils/layer.xml
+WARNING [org.netbeans.core.projects.cache]: Inefficient to include an empty layer in a module: jar:file:/Users/kharada/00_CSK_harada/55_Git_Source/BMIDesktop/build/cluster/modules/jp-atr-dni-bmi-desktop-workingfileutils.jar!/jp/atr/dni/bmi/desktop/workingfileutils/layer.xml
 INFO [org.netbeans.core.startup.NbEvents]: モジュールを有効化しています:
 	org.openide.util.lookup [8.3.1 201007282301]
 	org.openide.util [8.6.2 201012081820]
 	org.openide.modules [7.17.2 201012081820]
+	org.netbeans.libs.jna/1 [1.7.2 201007282301]
+	jp.atr.dni.bmi.desktop.neuroshareutils [1.0 110314]
+	jp.atr.dni.bmi.desktop.workingfileutils [1.0 110314]
 	org.openide.filesystems [7.38.2 201007282301]
 	org.netbeans.modules.queries/1 [1.19.1 201007282301]
 	org.openide.awt [7.23.1 201007282301]
@@ -29,16 +33,15 @@ INFO [org.netbeans.core.startup.NbEvents]: モジュールを有効化しています:
 	org.openide.dialogs [7.15.1 201007282301]
 	org.openide.nodes [7.16.1 201007282301]
 	org.openide.windows [6.33.1 201007282301]
+	org.openide.io [1.23.1 201007282301]
+	org.netbeans.core.io.ui/1 [1.8.1 201007282301]
+	jp.atr.dni.bmi.desktop.model [1.0 110314]
 	org.netbeans.swing.tabcontrol [1.21.2 201012081820]
 	org.netbeans.swing.outline [1.9.1 201007282301]
 	org.openide.explorer [6.28.2 201007282301]
 	org.netbeans.modules.editor.mimelookup/1 [1.16.1 201007282301]
 	org.openide.text [6.30.1 201007282301]
 	org.openide.actions [6.16.1 201007282301]
-	org.openide.io [1.23.1 201007282301]
-	org.netbeans.core.output2/1 [1.18.2 201007282301]
-	org.netbeans.modules.masterfs/2 [2.25.2 201007282301]
-	jp.atr.dni.bmi.desktop.jogl.mac [1.0 110307]
 	org.netbeans.bootstrap/1 [2.33.4 201012081820]
 	org.netbeans.core.startup/1 [1.25.4 201011082200]
 	org.netbeans.spi.quicksearch [1.6.1 201007282301]
@@ -47,27 +50,26 @@ INFO [org.netbeans.core.startup.NbEvents]: モジュールを有効化しています:
 	org.netbeans.swing.plaf [1.16.1 201007282301]
 	org.netbeans.core/2 [3.20.3 201012081820]
 	org.netbeans.modules.options.api/1 [1.18.1 201007282301]
-	org.netbeans.modules.print [7.5.1 201007282301]
-	jp.atr.dni.bmi.desktop.neuroshareutils [1.0 110307]
-	jp.atr.dni.bmi.desktop.model [1.0 110307]
 	org.netbeans.modules.settings/1 [1.26.1 201007282301]
 	org.netbeans.core.windows/2 [2.21.1 201007282301]
-	jp.atr.dni.bmi.desktop.timeline [1.0 110307]
-	jp.atr.dni.bmi.desktop.workspace [1.0 110307]
+	jp.atr.dni.bmi.desktop.workspace [1.0 110314]
+	org.netbeans.core.output2/1 [1.18.2 201007282301]
+	org.netbeans.modules.options.keymap [1.10.1 201007282301]
 	org.netbeans.libs.osgi [1.1.1 201007282301]
 	org.netbeans.libs.felix [1.1.1 201007282301]
-	org.netbeans.modules.applemenu/1 [1.16.1 201007282301]
-	org.netbeans.libs.jna/1 [1.7.2 201007282301]
-	org.netbeans.core.io.ui/1 [1.8.1 201007282301]
-	jp.atr.dni.bmi.desktop.explorereditor [1.0 110307]
-	jp.atr.dni.bmi.desktop.timeseriesdata.provider [1.0 110307]
+	jp.atr.dni.bmi.desktop.explorereditor [1.0 110314]
+	org.netbeans.modules.editor.mimelookup.impl/1 [1.9.1 201007282301]
+	jp.atr.dni.bmi.desktop.jogl.mac [1.0 110314]
+	org.netbeans.core.ui/1 [1.22.1 201007282301]
+	jp.atr.dni.bmi.desktop.timeline [1.0 110314]
+	jp.atr.dni.bmi.desktop.timeseriesdata.provider [1.0 110314]
+	org.netbeans.core.netigso [1.4.5 201011082200]
 	org.netbeans.modules.keyring.impl [1.0.1 201007282301]
+	org.netbeans.modules.print [7.5.1 201007282301]
 	org.netbeans.core.nativeaccess/1 [1.7.1 201007282301]
 	org.netbeans.modules.progress.ui [1.12.1 201007282301]
-	org.netbeans.modules.options.keymap [1.10.1 201007282301]
-	org.netbeans.core.ui/1 [1.22.1 201007282301]
-	org.netbeans.core.netigso [1.4.5 201011082200]
-	org.netbeans.modules.editor.mimelookup.impl/1 [1.9.1 201007282301]
+	org.netbeans.modules.masterfs/2 [2.25.2 201007282301]
+	org.netbeans.modules.applemenu/1 [1.16.1 201007282301]
 Diagnostic information
 Input arguments:
 	-Djdk.home=/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
@@ -83,12 +85,57 @@ Input arguments:
 	-XX:HeapDumpPath=build/testuserdir/var/log/heapdump.hprof
 Compiler: HotSpot 64-Bit Server Compiler
 Heap memory usage: initial 0b maximum 123.9MB
-Non heap memory usage: initial 23.2MB maximum 132.0MB
-Garbage collector: ParNew (Collections=5 Total time spent=0s)
-Garbage collector: ConcurrentMarkSweep (Collections=1 Total time spent=0s)
-Classes: loaded=4033 total loaded=4033 unloaded 0
+Non heap memory usage: initial 23.2MB maximum 130.0MB
+Garbage collector: ParNew (Collections=4 Total time spent=0s)
+Garbage collector: ConcurrentMarkSweep (Collections=2 Total time spent=0s)
+Classes: loaded=4057 total loaded=4057 unloaded 0
 INFO [org.netbeans.core.ui.warmup.DiagnosticTask]: Total memory 4,294,967,296
 INFO [null]: 合計物理メモリー 4,294,967,296
 WARNING [org.openide.filesystems.Ordering]: Not all children in Menu/Window/ marked with the position attribute: [ExplorerEditorAction.shadow, TimelineAction.shadow, WorkspaceAction.shadow], but some are: [org-netbeans-core-windows-actions-GlobalPropertiesAction.shadow, Output, SwitchToRecentDocumentAction.shadow, ProgressListAction.shadow, Separator3.instance, CloseWindowAction.shadow, MaximizeWindowAction.shadow, org-netbeans-core-windows-actions-UndockAction.shadow, Separator4.instance, CloneDocumentAction.shadow, CloseAllDocumentsAction.shadow, CloseAllButThisAction.shadow, DocumentsAction.shadow, Separator5.instance, org-netbeans-core-windows-actions-ResetWindowsAction.shadow]
 WARNING [null]: Note - jp.atr.dni.bmi.desktop.explorereditor.ExplorerEditor ought to override getPersistenceType() rather than using the client property or accepting the default.
 WARNING [null]: jp.atr.dni.bmi.desktop.explorereditor.ExplorerEditor should override preferredID()
+SEVERE [global]
+java.lang.IndexOutOfBoundsException: Invalid index
+	at javax.swing.DefaultRowSorter.convertRowIndexToModel(DefaultRowSorter.java:497)
+	at javax.swing.JTable.convertRowIndexToModel(JTable.java:2611)
+	at javax.swing.JTable.getValueAt(JTable.java:2686)
+	at jp.atr.dni.bmi.desktop.workspace.WorkspaceTopComponent.jButton1ActionPerformed(WorkspaceTopComponent.java:151)
+	at jp.atr.dni.bmi.desktop.workspace.WorkspaceTopComponent.access$000(WorkspaceTopComponent.java:26)
+	at jp.atr.dni.bmi.desktop.workspace.WorkspaceTopComponent$1.actionPerformed(WorkspaceTopComponent.java:74)
+	at javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2028)
+	at javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2351)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:387)
+	at javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:242)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:236)
+	at java.awt.Component.processMouseEvent(Component.java:6374)
+	at javax.swing.JComponent.processMouseEvent(JComponent.java:3267)
+	at java.awt.Component.processEvent(Component.java:6139)
+	at java.awt.Container.processEvent(Container.java:2085)
+	at java.awt.Component.dispatchEventImpl(Component.java:4736)
+	at java.awt.Container.dispatchEventImpl(Container.java:2143)
+	at java.awt.Component.dispatchEvent(Component.java:4566)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4621)
+	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:4282)
+	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4212)
+	at java.awt.Container.dispatchEventImpl(Container.java:2129)
+	at java.awt.Window.dispatchEventImpl(Window.java:2478)
+	at java.awt.Component.dispatchEvent(Component.java:4566)
+	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:680)
+	at java.awt.EventQueue.access$000(EventQueue.java:86)
+	at java.awt.EventQueue$1.run(EventQueue.java:639)
+	at java.awt.EventQueue$1.run(EventQueue.java:637)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.AccessControlContext$1.doIntersectionPrivilege(AccessControlContext.java:87)
+	at java.security.AccessControlContext$1.doIntersectionPrivilege(AccessControlContext.java:98)
+	at java.awt.EventQueue$2.run(EventQueue.java:653)
+	at java.awt.EventQueue$2.run(EventQueue.java:651)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.AccessControlContext$1.doIntersectionPrivilege(AccessControlContext.java:87)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:650)
+	at org.netbeans.core.TimableEventQueue.dispatchEvent(TimableEventQueue.java:137)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:296)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:211)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:201)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:196)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:188)
+[catch] at java.awt.EventDispatchThread.run(EventDispatchThread.java:122)
