@@ -6,10 +6,20 @@ package jp.atr.dni.bmi.desktop.model;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogData;
 import jp.atr.dni.bmi.desktop.neuroshareutils.Entity;
+import jp.atr.dni.bmi.desktop.neuroshareutils.EventData;
+import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentData;
+import jp.atr.dni.bmi.desktop.neuroshareutils.TextEventData;
+import jp.atr.dni.bmi.desktop.workingfileutils.NSCSVReader;
+import jp.atr.dni.bmi.desktop.workingfileutils.NSCSVWriter;
 
 /**
  *
@@ -166,7 +176,9 @@ public class Channel {
      * @param workingFilePath the workingFilePath to set
      */
     public void setWorkingFilePath(String workingFilePath) {
+        String old = this.workingFilePath;
         this.workingFilePath = workingFilePath;
+        this.fire("workingFilePath", old, this.workingFilePath);
     }
 
     /**
@@ -190,5 +202,85 @@ public class Channel {
     @Override
     public String toString() {
         return this.displayName;
+    }
+
+    // Get Data methods.
+    public ArrayList<AnalogData> getNeuroshareAnalogData() {
+        try {
+            NSCSVReader nsCsvReader = new NSCSVReader();
+            return nsCsvReader.getAnalogData(this.workingFilePath);
+        } catch (IOException ex) {
+            Logger.getLogger(Channel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    public ArrayList<Double> getNeuroshareNeuralData() {
+        try {
+            NSCSVReader nsCsvReader = new NSCSVReader();
+            return nsCsvReader.getNeuralData(this.workingFilePath);
+        } catch (IOException ex) {
+            Logger.getLogger(Channel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    public ArrayList<TextEventData> getNeuroshareTextEventData() {
+        try {
+            NSCSVReader nsCsvReader = new NSCSVReader();
+            return nsCsvReader.getTextEventData(this.workingFilePath);
+        } catch (IOException ex) {
+            Logger.getLogger(Channel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    public SegmentData getNeuroshareSegmentData() {
+        try {
+            NSCSVReader nsCsvReader = new NSCSVReader();
+            return nsCsvReader.getSegmentData(this.workingFilePath);
+        } catch (IOException ex) {
+            Logger.getLogger(Channel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    // Set Data methods.
+    public boolean setNeuroshareAnalogData(ArrayList<AnalogData> analogData) {
+        NSCSVWriter nsCsvWriter = new NSCSVWriter();
+        if (nsCsvWriter.overwriteTSFile(this.workingFilePath, analogData, this.entity)) {
+            this.setEditFlag(true);
+            return true;
+        }
+        return false;
+
+    }
+
+    public boolean setNeuroshareEventData(ArrayList<EventData> eventData) {
+        NSCSVWriter nsCsvWriter = new NSCSVWriter();
+        Object eventObject = eventData.clone();
+        if (nsCsvWriter.overwriteTLFile(this.workingFilePath, eventObject, this.entity)) {
+            this.setEditFlag(true);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean setNeuroshareSegmentData(SegmentData segmentData) {
+        NSCSVWriter nsCsvWriter = new NSCSVWriter();
+        if (nsCsvWriter.overwriteTIFile(this.workingFilePath, segmentData, this.entity)) {
+            this.setEditFlag(true);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean setNeuroshareNeuralData(ArrayList<Double> neuralData) {
+        NSCSVWriter nsCsvWriter = new NSCSVWriter();
+        if (nsCsvWriter.overwriteTOFile(this.workingFilePath, neuralData, this.entity)) {
+            this.setEditFlag(true);
+            return true;
+        }
+        return false;
     }
 }

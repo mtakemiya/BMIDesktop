@@ -40,10 +40,10 @@
   <bounds x="475" y="209" width="604" height="384" />
     </editor-area>
     <screen width="1440" height="900"/>
-    <active-mode name="explorer"/>
+    <active-mode name="editor"/>
     <toolbar configuration="Standard" preferred-icon-size="24"/>
     <tc-list>
-  <tc-id id="WorkspaceTopComponent"/>
   <tc-id id="ExplorerEditor"/>
+  <tc-id id="WorkspaceTopComponent"/>
     </tc-list>
 </windowmanager>

@@ -341,7 +341,7 @@ public class ChannelSelecter extends javax.swing.JPanel implements ActionListene
                 // Create working file.
                 WorkingFileUtils wfu = new WorkingFileUtils();
                 try {
-                    wfu.createWorkingFile(ch.getSourceFilePath(), ch.getEntity());
+                    wfu.createWorkingFileFromNeuroshare(ch.getSourceFilePath(), ch.getEntity());
                 } catch (IOException ex) {
                     Exceptions.printStackTrace(ex);
                 }
