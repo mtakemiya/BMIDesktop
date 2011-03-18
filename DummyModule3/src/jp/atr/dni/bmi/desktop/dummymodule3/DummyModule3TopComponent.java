@@ -4,24 +4,28 @@
  */
 package jp.atr.dni.bmi.desktop.dummymodule3;
 
-import java.util.EventListener;
+import java.util.ArrayList;
 import java.util.logging.Logger;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import jp.atr.dni.bmi.desktop.model.Channel;
+import jp.atr.dni.bmi.desktop.model.Workspace;
+import jp.atr.dni.bmi.desktop.workingfileutils.TSData;
+import jp.atr.dni.bmi.desktop.workingfileutils.TSHeader;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 //import org.openide.util.ImageUtilities;
 import org.netbeans.api.settings.ConvertAsProperties;
-import org.openide.util.Utilities;
 
 /**
  * Top component which displays something.
  */
 @ConvertAsProperties(dtd = "-//jp.atr.dni.bmi.desktop.dummymodule3//DummyModule3//EN",
 autostore = false)
-public final class DummyModule3TopComponent extends TopComponent{
+public final class DummyModule3TopComponent extends TopComponent {
 
+    private TSHeader tsHeader = new TSHeader();
+    private TSData tsData = new TSData();
+    private Channel chn = new Channel();
     private static DummyModule3TopComponent instance;
     /** path to the icon used by the component and its open action */
 //    static final String ICON_PATH = "SET/PATH/TO/ICON/HERE";
@@ -47,10 +51,26 @@ public final class DummyModule3TopComponent extends TopComponent{
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jButton1, org.openide.util.NbBundle.getMessage(DummyModule3TopComponent.class, "DummyModule3TopComponent.jButton1.text")); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        org.openide.awt.Mnemonics.setLocalizedText(jButton2, org.openide.util.NbBundle.getMessage(DummyModule3TopComponent.class, "DummyModule3TopComponent.jButton2.text")); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -58,7 +78,12 @@ public final class DummyModule3TopComponent extends TopComponent{
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton2)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -66,14 +91,47 @@ public final class DummyModule3TopComponent extends TopComponent{
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(196, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addContainerGap(149, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Channel ch = Workspace.getChannels().get(0);
+        if (ch != null) {
+            chn = ch;
+            tsHeader = ch.getTSHeader();
+            tsData = ch.getTSdata();
+
+            // Get ch's header and ch's data.
+            jTextArea1.setText("[ Header : probeInfo : " + tsHeader.getCommentOfThisProbe() + "] [ DATA : " + "samplingRate :" + tsData.getSamplingRate() + ",timestampsize : " + tsData.getTimeStamps().size() + ",timestamp[0] : " + tsData.getTimeStamp(0) + ",dataValues[0][0] : " + tsData.getValue(0, 0) + "]");
+
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        ArrayList<Channel> chs = new ArrayList<Channel>();
+
+        tsData.setValue(0, 0, 200);
+
+        chn.setTSData(tsData);
+        chs.add(chn);
+        Workspace.setChannels(chs);
+
+    }//GEN-LAST:event_jButton2ActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
+
     /**
      * Gets default instance. Do not use directly: reserved for *.settings files only,
      * i.e. deserialization routines; otherwise you could get a non-deserialized instance.
@@ -144,5 +202,4 @@ public final class DummyModule3TopComponent extends TopComponent{
     protected String preferredID() {
         return PREFERRED_ID;
     }
-
 }

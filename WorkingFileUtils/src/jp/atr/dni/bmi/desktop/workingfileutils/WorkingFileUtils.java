@@ -33,7 +33,7 @@ public class WorkingFileUtils {
             return false;
         }
 
-        NSCSVWriter nsCsvWriter = new NSCSVWriter();
+        CSVWriter nsCsvWriter = new CSVWriter();
         nsCsvWriter.createCSVFileFromNeuroshare(file.getAbsolutePath(), sourceFilePath, entity);
 
         this.workingFilePath = file.getAbsolutePath();

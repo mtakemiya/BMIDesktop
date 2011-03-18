@@ -14,12 +14,22 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogData;
+import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.Entity;
 import jp.atr.dni.bmi.desktop.neuroshareutils.EventData;
+import jp.atr.dni.bmi.desktop.neuroshareutils.EventInfo;
+import jp.atr.dni.bmi.desktop.neuroshareutils.NeuralInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentData;
+import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentInfo;
+import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentSourceInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.TextEventData;
-import jp.atr.dni.bmi.desktop.workingfileutils.NSCSVReader;
-import jp.atr.dni.bmi.desktop.workingfileutils.NSCSVWriter;
+import jp.atr.dni.bmi.desktop.workingfileutils.CSVReader;
+import jp.atr.dni.bmi.desktop.workingfileutils.CSVWriter;
+import jp.atr.dni.bmi.desktop.workingfileutils.TIHeader;
+import jp.atr.dni.bmi.desktop.workingfileutils.TLHeader;
+import jp.atr.dni.bmi.desktop.workingfileutils.TOHeader;
+import jp.atr.dni.bmi.desktop.workingfileutils.TSData;
+import jp.atr.dni.bmi.desktop.workingfileutils.TSHeader;
 
 /**
  *
@@ -59,8 +69,6 @@ public class Channel {
     // Case : Neuroshare
     private Entity entity;
 
-    // Case : ???
-    // Add here.
     // Constructor.
     public Channel() {
         this.channelID = -1;
@@ -80,11 +88,8 @@ public class Channel {
         this.workingFilePath = "";
         this.editFlag = false;
         this.entity = entity;
-
     }
 
-    // Constructor. Case : ???
-    // Add here.
     /**
      * @return the channelID
      */
@@ -95,12 +100,11 @@ public class Channel {
     /**
      * @param channelID the channelID to set
      */
-    public void setChannelID(int channelID) {
-        int old = this.channelID;
-        this.channelID = channelID;
-        this.fire("channelID", old, this.channelID);
-    }
-
+//    public void setChannelID(int channelID) {
+    //      int old = this.channelID;
+    //    this.channelID = channelID;
+    //    this.fire("channelID", old, this.channelID);
+    // }
     /**
      * @return the displayName
      */
@@ -127,12 +131,11 @@ public class Channel {
     /**
      * @param channelType the channelType to set
      */
-    public void setChannelType(String channelType) {
-        String old = this.channelType;
-        this.channelType = channelType;
-        this.fire("channelType", old, this.channelType);
-    }
-
+//    public void setChannelType(String channelType) {
+    //       String old = this.channelType;
+    //      this.channelType = channelType;
+    //     this.fire("channelType", old, this.channelType);
+    // }
     /**
      * @return the entity
      */
@@ -207,7 +210,7 @@ public class Channel {
     // Get Data methods.
     public ArrayList<AnalogData> getNeuroshareAnalogData() {
         try {
-            NSCSVReader nsCsvReader = new NSCSVReader();
+            CSVReader nsCsvReader = new CSVReader();
             return nsCsvReader.getAnalogData(this.workingFilePath);
         } catch (IOException ex) {
             Logger.getLogger(Channel.class.getName()).log(Level.SEVERE, null, ex);
@@ -217,7 +220,7 @@ public class Channel {
 
     public ArrayList<Double> getNeuroshareNeuralData() {
         try {
-            NSCSVReader nsCsvReader = new NSCSVReader();
+            CSVReader nsCsvReader = new CSVReader();
             return nsCsvReader.getNeuralData(this.workingFilePath);
         } catch (IOException ex) {
             Logger.getLogger(Channel.class.getName()).log(Level.SEVERE, null, ex);
@@ -227,7 +230,7 @@ public class Channel {
 
     public ArrayList<TextEventData> getNeuroshareTextEventData() {
         try {
-            NSCSVReader nsCsvReader = new NSCSVReader();
+            CSVReader nsCsvReader = new CSVReader();
             return nsCsvReader.getTextEventData(this.workingFilePath);
         } catch (IOException ex) {
             Logger.getLogger(Channel.class.getName()).log(Level.SEVERE, null, ex);
@@ -237,7 +240,7 @@ public class Channel {
 
     public SegmentData getNeuroshareSegmentData() {
         try {
-            NSCSVReader nsCsvReader = new NSCSVReader();
+            CSVReader nsCsvReader = new CSVReader();
             return nsCsvReader.getSegmentData(this.workingFilePath);
         } catch (IOException ex) {
             Logger.getLogger(Channel.class.getName()).log(Level.SEVERE, null, ex);
@@ -247,7 +250,7 @@ public class Channel {
 
     // Set Data methods.
     public boolean setNeuroshareAnalogData(ArrayList<AnalogData> analogData) {
-        NSCSVWriter nsCsvWriter = new NSCSVWriter();
+        CSVWriter nsCsvWriter = new CSVWriter();
         if (nsCsvWriter.overwriteTSFile(this.workingFilePath, analogData, this.entity)) {
             this.setEditFlag(true);
             return true;
@@ -257,7 +260,7 @@ public class Channel {
     }
 
     public boolean setNeuroshareEventData(ArrayList<EventData> eventData) {
-        NSCSVWriter nsCsvWriter = new NSCSVWriter();
+        CSVWriter nsCsvWriter = new CSVWriter();
         Object eventObject = eventData.clone();
         if (nsCsvWriter.overwriteTLFile(this.workingFilePath, eventObject, this.entity)) {
             this.setEditFlag(true);
@@ -267,7 +270,7 @@ public class Channel {
     }
 
     public boolean setNeuroshareSegmentData(SegmentData segmentData) {
-        NSCSVWriter nsCsvWriter = new NSCSVWriter();
+        CSVWriter nsCsvWriter = new CSVWriter();
         if (nsCsvWriter.overwriteTIFile(this.workingFilePath, segmentData, this.entity)) {
             this.setEditFlag(true);
             return true;
@@ -276,11 +279,145 @@ public class Channel {
     }
 
     public boolean setNeuroshareNeuralData(ArrayList<Double> neuralData) {
-        NSCSVWriter nsCsvWriter = new NSCSVWriter();
+        CSVWriter nsCsvWriter = new CSVWriter();
         if (nsCsvWriter.overwriteTOFile(this.workingFilePath, neuralData, this.entity)) {
             this.setEditFlag(true);
             return true;
         }
         return false;
+    }
+
+    public TSHeader getTSHeader() {
+        return convertEntityToTSHeader();
+    }
+
+    public TOHeader getTOHeader() {
+        return convertEntityToTOHeader();
+    }
+
+    public TIHeader getTIHeader() {
+        return convertEntityToTIHeader();
+    }
+
+    public TLHeader getTLHeader() {
+        return convertEntityToTLHeader();
+    }
+
+    public TSData getTSdata() {
+        CSVReader csvReader = new CSVReader();
+        return csvReader.getTSData(this.workingFilePath);
+    }
+
+    public void setTSData(TSData data){
+        CSVWriter csvWriter = new CSVWriter();
+        double newSamplingRate = csvWriter.overwriteTSFile(this.workingFilePath, data, this.entity);
+        AnalogInfo ai = (AnalogInfo)entity;
+        ai.setSampleRate(newSamplingRate);
+        this.entity = (Entity)ai;
+        this.editFlag = true;
+    }
+
+    // Channnel's header can not modify.
+//    public void setTSHeader(TSHeader tsHeader) {
+//        this.setEntity(convertTSHeaderToEntity(tsHeader));
+//        this.editFlag = true;
+//    }
+    // Channnel's header can not modify.
+//    public void setTOHeader(TOHeader toHeader) {
+//        this.setEntity(convertTOHeaderToEntity(toHeader));
+//        this.editFlag = true;
+//    }
+    // Channnel's header can not modify.
+//    public void setTIHeader(TIHeader tiHeader) {
+//        this.setEntity(convertTIHeaderToEntity(tiHeader));
+//        this.editFlag = true;
+//    }
+    // Channnel's header can not modify.
+//    public void setTLHeader(TSLeader tlHeader) {
+//        this.setEntity(convertTLHeaderToEntity(tlHeader));
+//        this.editFlag = true;
+//    }
+    private TSHeader convertEntityToTSHeader() {
+        AnalogInfo ai = (AnalogInfo) entity;
+        return new TSHeader(ai.getSampleRate(), ai.getMinVal(), ai.getMaxVal(), ai.getUnits(), ai.getResolution(), ai.getLocationX(), ai.getLocationY(), ai.getLocationZ(), ai.getLocationUser(), ai.getHighFreqCorner(), ((Long) ai.getHighFreqOrder()).intValue(), ai.getHighFilterType(), ai.getLowFreqCorner(), ((Long) ai.getLowFreqOrder()).intValue(), ai.getLowFilterType(), ai.getProbeInfo());
+    }
+
+    private TOHeader convertEntityToTOHeader() {
+        NeuralInfo ni = (NeuralInfo) entity;
+        return new TOHeader(((Long) ni.getSourceEntityID()).intValue(), ((Long) ni.getSourceUnitID()).intValue(), ni.getProbeInfo());
+    }
+
+    private TIHeader convertEntityToTIHeader() {
+        SegmentInfo si = (SegmentInfo) entity;
+        SegmentSourceInfo ssi = si.getSegSourceInfos().get(0);
+        return new TIHeader(((Long) si.getSourceCount()).intValue(), ((Long) si.getMinSampleCount()).intValue(), ((Long) si.getMaxSampleCount()).intValue(), si.getSampleRate(), si.getUnits(), ssi.getMinVal(), ssi.getMaxVal(), ssi.getResolution(), ssi.getSubSampleShift(), ssi.getLocationX(), ssi.getLocationY(), ssi.getLocationZ(), ssi.getLocationUser(), ssi.getHighFreqCorner(), ((Long) ssi.getHighFreqOrder()).intValue(), ssi.getHighFilterType(), ssi.getLowFreqCorner(), ((Long) ssi.getLowFreqOrder()).intValue(), ssi.getLowFilterType(), ssi.getProbeInfo());
+    }
+
+    private TLHeader convertEntityToTLHeader() {
+        EventInfo ei = (EventInfo) entity;
+        return new TLHeader(((Long) ei.getEventType()).intValue(), ((Long) ei.getMinDataLength()).intValue(), ((Long) ei.getMaxDataLength()).intValue(), ei.getCsvDesc());
+    }
+
+    private Entity convertTSHeaderToEntity(TSHeader tsHeader) {
+        AnalogInfo ai = (AnalogInfo) entity;
+        ai.setSampleRate(tsHeader.getSamplingRate_Hz());
+        ai.setMinVal(tsHeader.getMinValue());
+        ai.setMaxVal(tsHeader.getMaxValue());
+        ai.setUnits(tsHeader.getUnitOfValue());
+        ai.setResolution(tsHeader.getResolution());
+        ai.setLocationX(tsHeader.getLocationX_m());
+        ai.setLocationY(tsHeader.getLocationY_m());
+        ai.setLocationZ(tsHeader.getLocationZ_m());
+        ai.setLocationUser(tsHeader.getProbeNumber());
+        ai.setHighFreqCorner(tsHeader.getHighFreqCutoff_Hz());
+        ai.setHighFreqOrder(tsHeader.getOrderOfHighFreqCutoff());
+        ai.setHighFilterType(tsHeader.getCommentOfHighFreqCutoff());
+        ai.setLowFreqCorner(tsHeader.getLowFreqCutoff_Hz());
+        ai.setLowFreqOrder(tsHeader.getOrderOfLowFreqCutoff());
+        ai.setLowFilterType(tsHeader.getCommentOfLowFreqCutoff());
+        ai.setProbeInfo(tsHeader.getCommentOfThisProbe());
+        return (Entity) ai;
+    }
+
+    private Entity convertTOHeaderToEntity(TOHeader toHeader) {
+        NeuralInfo ni = (NeuralInfo) entity;
+        ni.setSourceEntityID(toHeader.getSourceEntityID());
+        ni.setSourceUnitID(toHeader.getSourceUnitID());
+        ni.setProbeInfo(toHeader.getCommentAboutThisProbe());
+        return (Entity) ni;
+    }
+
+    private Entity convertTIHeaderToEntity(TIHeader tiHeader) {
+        SegmentInfo si = (SegmentInfo) entity;
+        SegmentSourceInfo ssi = si.getSegSourceInfos().get(0);
+        si.setSourceCount(tiHeader.getSourceCount());
+        si.setMinSampleCount(tiHeader.getMinSampleCount());
+        si.setMaxSampleCount(tiHeader.getMaxSampleCount());
+        si.setSampleRate(tiHeader.getSamplingRate_Hz());
+        si.setUnits(tiHeader.getUnitOfValue());
+        ssi.setMinVal(tiHeader.getMinValue());
+        ssi.setMaxVal(tiHeader.getMaxValue());
+        ssi.setResolution(tiHeader.getResolution());
+        ssi.setLocationX(tiHeader.getLocationX_m());
+        ssi.setLocationY(tiHeader.getLocationY_m());
+        ssi.setLocationZ(tiHeader.getLocationZ_m());
+        ssi.setLocationUser(tiHeader.getProbeNumber());
+        ssi.setHighFreqCorner(tiHeader.getHighFreqCutoff_Hz());
+        ssi.setHighFreqOrder(tiHeader.getOrderOfHighFreqCutoff());
+        ssi.setHighFilterType(tiHeader.getCommentOfHighFreqCutoff());
+        ssi.setLowFreqCorner(tiHeader.getLowFreqCutoff_Hz());
+        ssi.setLowFreqOrder(tiHeader.getOrderOfLowFreqCutoff());
+        ssi.setLowFilterType(tiHeader.getCommentOfLowFreqCutoff());
+        ssi.setProbeInfo(tiHeader.getCommentOfThisProbe());
+        return (Entity) si;
+    }
+
+    private Entity convertTLHeaderToEntity(TLHeader tlHeader) {
+        EventInfo ei = (EventInfo) entity;
+        ei.setEventType(tlHeader.getEventType());
+        ei.setMinDataLength(tlHeader.getMinDataLength());
+        ei.setMaxDataLength(tlHeader.getMaxDataLength());
+        ei.setCsvDesc(tlHeader.getCommentAboutThisProbe());
+        return (Entity) ei;
     }
 }

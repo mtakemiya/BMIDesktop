@@ -14,7 +14,7 @@ import jp.atr.dni.bmi.desktop.neuroshareutils.DWordEventData;
 import jp.atr.dni.bmi.desktop.neuroshareutils.Entity;
 import jp.atr.dni.bmi.desktop.neuroshareutils.EntityInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.EventInfo;
-import jp.atr.dni.bmi.desktop.workingfileutils.NSCSVReader;
+import jp.atr.dni.bmi.desktop.workingfileutils.CSVReader;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NSReader;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NeuralInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.Ns_AnalogData;
@@ -54,7 +54,7 @@ public class CreateNewNeuroshareFile {
         try {
             // Reader
             NSReader nsReader = new NSReader();
-            NSCSVReader nsCsvReader = new NSCSVReader();
+            CSVReader nsCsvReader = new CSVReader();
 
             // Create the Neuroshare file.
             Ns_CreateFile nsFile = new Ns_CreateFile(dstFileFullPath);
