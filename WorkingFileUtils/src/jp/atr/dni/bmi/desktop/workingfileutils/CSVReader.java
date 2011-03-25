@@ -311,4 +311,158 @@ public class CSVReader {
 
         return data;
     }
+
+    public TOData getTOData(String workingFilePath) {
+
+        // if working file didn't exists, then null.
+        File file = new File(workingFilePath);
+        if (!file.exists()) {
+            return null;
+        }
+
+        TOData data = new TOData();
+        ArrayList<String> lines = readCSVFile(workingFilePath);
+
+        for (int ii = 0; ii < lines.size(); ii++) {
+
+            String[] parts = lines.get(ii).split(",");
+
+            if (ii == 0) {
+                // Skip header.
+                continue;
+            }
+
+            boolean addFlag = true;
+
+            try {
+                Double d = Double.parseDouble(parts[0]);
+                data.addTimeStamp(d);
+            } catch (NumberFormatException ex) {
+                if (!(parts[0].equals("NaN"))) {
+                    throw ex;
+                }
+            }
+        }
+        return data;
+    }
+
+    public TIData getTIData(String workingFilePath) {
+
+        // if working file didn't exists, then null.
+        File file = new File(workingFilePath);
+        if (!file.exists()) {
+            return null;
+        }
+
+        TIData data = new TIData();
+        ArrayList<String> lines = readCSVFile(workingFilePath);
+
+        double samplingRate = 0;
+
+        for (int ii = 0; ii < lines.size(); ii++) {
+
+            String[] parts = lines.get(ii).split(",");
+
+            if (ii == 0) {
+                // Skip header.
+                samplingRate = Double.parseDouble(parts[1]);
+                data.setSamplingRate(samplingRate);
+                continue;
+            }
+
+            double timeStamp = 0;
+            int unitID = 0;
+
+            ArrayList<Double> values = new ArrayList<Double>();
+
+            boolean addFlag = true;
+
+            for (int valNDX = 0; valNDX < parts.length; valNDX++) {
+                if (valNDX == 0) {
+                    // Skip timeStamp.
+                    timeStamp = Double.parseDouble(parts[0]);
+                    continue;
+                }
+
+                if (valNDX == 1) {
+                    // Skip timeStamp.
+                    unitID = Integer.parseInt(parts[1]);
+                    continue;
+                }
+
+                try {
+                    Double d = Double.parseDouble(parts[valNDX]);
+                    values.add(d);
+                } catch (NumberFormatException ex) {
+
+                    if (!(parts[valNDX].equals("NaN"))) {
+                        throw ex;
+                    }
+
+                    // if data is NaN and values exist, then register data.
+                    if (values.size() != 0) {
+                        data.addTimeStamp(timeStamp);
+                        data.addUnitID(unitID);
+                        data.addValues(values);
+                    }
+
+                    timeStamp = timeStamp + (values.size() + 1) / samplingRate;
+                    values.clear();
+
+                    if (valNDX == parts.length - 1) {
+                        // last col is NaN.
+                        addFlag = false;
+                    }
+                }
+            }
+
+            if (addFlag) {
+                data.addTimeStamp(timeStamp);
+                data.addUnitID(unitID);
+                data.addValues(values);
+            } else {
+                addFlag = true;
+            }
+
+        }
+
+        return data;
+    }
+
+    public TLData getTLData(String workingFilePath) {
+
+        // if working file didn't exists, then null.
+        File file = new File(workingFilePath);
+        if (!file.exists()) {
+            return null;
+        }
+
+        TLData data = new TLData();
+        ArrayList<String> lines = readCSVFile(workingFilePath);
+
+        for (int ii = 0; ii < lines.size(); ii++) {
+
+            String[] parts = lines.get(ii).split(",");
+
+            if (ii == 0) {
+                // Skip header.
+                continue;
+            }
+
+
+            try {
+                Double d = Double.parseDouble(parts[0]);
+                data.addTimeStamp(d);
+            } catch (NumberFormatException ex) {
+                if (!(parts[0].equals("NaN"))) {
+                    throw ex;
+                }
+            }
+            
+            Object d = parts[1];
+            data.addValue(d);
+        }
+
+        return data;
+    }
 }

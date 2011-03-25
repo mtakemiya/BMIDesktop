@@ -25,8 +25,11 @@ import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentSourceInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.TextEventData;
 import jp.atr.dni.bmi.desktop.workingfileutils.CSVReader;
 import jp.atr.dni.bmi.desktop.workingfileutils.CSVWriter;
+import jp.atr.dni.bmi.desktop.workingfileutils.TIData;
 import jp.atr.dni.bmi.desktop.workingfileutils.TIHeader;
+import jp.atr.dni.bmi.desktop.workingfileutils.TLData;
 import jp.atr.dni.bmi.desktop.workingfileutils.TLHeader;
+import jp.atr.dni.bmi.desktop.workingfileutils.TOData;
 import jp.atr.dni.bmi.desktop.workingfileutils.TOHeader;
 import jp.atr.dni.bmi.desktop.workingfileutils.TSData;
 import jp.atr.dni.bmi.desktop.workingfileutils.TSHeader;
@@ -83,7 +86,8 @@ public class Channel {
     public Channel(int channelID, Entity entity) {
         this.channelID = channelID;
         this.displayName = entity.getEntityInfo().getEntityLabel();
-        this.channelType = "Neuroshare/" + entity.getEntityInfo().getEntityTypeLabel();
+//        this.channelType = "Neuroshare/" + entity.getEntityInfo().getEntityTypeLabel();
+        this.channelType = entity.getEntityInfo().getEntityTypeLabelT_();
         this.sourceFilePath = entity.getEntityInfo().getFilePath();
         this.workingFilePath = "";
         this.editFlag = false;
@@ -303,18 +307,80 @@ public class Channel {
         return convertEntityToTLHeader();
     }
 
-    public TSData getTSdata() {
+    public TSData getTSData() {
         CSVReader csvReader = new CSVReader();
         return csvReader.getTSData(this.workingFilePath);
     }
 
-    public void setTSData(TSData data){
+    public TOData getTOData() {
+        CSVReader csvReader = new CSVReader();
+        return csvReader.getTOData(this.workingFilePath);
+    }
+
+    public TIData getTIData() {
+        CSVReader csvReader = new CSVReader();
+        return csvReader.getTIData(this.workingFilePath);
+    }
+
+    public TLData getTLData() {
+        CSVReader csvReader = new CSVReader();
+        return csvReader.getTLData(this.workingFilePath);
+    }
+
+    public boolean setTSData(TSData data) {
         CSVWriter csvWriter = new CSVWriter();
-        double newSamplingRate = csvWriter.overwriteTSFile(this.workingFilePath, data, this.entity);
-        AnalogInfo ai = (AnalogInfo)entity;
-        ai.setSampleRate(newSamplingRate);
-        this.entity = (Entity)ai;
+        Entity e = csvWriter.overwriteTSFile(this.workingFilePath, data, this.entity);
+        if (e == null) {
+            // Case : The workingFile does not exist(delete manually).
+            // Case : It can not delete the workingFile(other module is editing it).
+            // Case : IOException occur(format error).
+            return false;
+        }
+        this.setEntity(e);
         this.editFlag = true;
+        return true;
+    }
+
+    public boolean setTOData(TOData data) {
+        CSVWriter csvWriter = new CSVWriter();
+        Entity e = csvWriter.overwriteTOFile(this.workingFilePath, data, this.entity);
+        if (e == null) {
+            // Case : The workingFile does not exist(delete manually).
+            // Case : It can not delete the workingFile(other module is editing it).
+            // Case : IOException occur(format error).
+            return false;
+        }
+        this.setEntity(e);
+        this.editFlag = true;
+        return true;
+    }
+
+    public boolean setTIData(TIData data) {
+        CSVWriter csvWriter = new CSVWriter();
+        Entity e = csvWriter.overwriteTIFile(this.workingFilePath, data, this.entity);
+        if (e == null) {
+            // Case : The workingFile does not exist(delete manually).
+            // Case : It can not delete the workingFile(other module is editing it).
+            // Case : IOException occur(format error).
+            return false;
+        }
+        this.setEntity(e);
+        this.editFlag = true;
+        return true;
+    }
+
+    public boolean setTLData(TLData data) {
+        CSVWriter csvWriter = new CSVWriter();
+        Entity e = csvWriter.overwriteTLFile(this.workingFilePath, data, this.entity);
+        if (e == null) {
+            // Case : The workingFile does not exist(delete manually).
+            // Case : It can not delete the workingFile(other module is editing it).
+            // Case : IOException occur(format error).
+            return false;
+        }
+        this.setEntity(e);
+        this.editFlag = true;
+        return true;
     }
 
     // Channnel's header can not modify.
@@ -389,7 +455,8 @@ public class Channel {
 
     private Entity convertTIHeaderToEntity(TIHeader tiHeader) {
         SegmentInfo si = (SegmentInfo) entity;
-        SegmentSourceInfo ssi = si.getSegSourceInfos().get(0);
+        ArrayList<SegmentSourceInfo> segSourceInfos = si.getSegSourceInfos();
+        SegmentSourceInfo ssi = segSourceInfos.get(0);
         si.setSourceCount(tiHeader.getSourceCount());
         si.setMinSampleCount(tiHeader.getMinSampleCount());
         si.setMaxSampleCount(tiHeader.getMaxSampleCount());
@@ -409,6 +476,8 @@ public class Channel {
         ssi.setLowFreqOrder(tiHeader.getOrderOfLowFreqCutoff());
         ssi.setLowFilterType(tiHeader.getCommentOfLowFreqCutoff());
         ssi.setProbeInfo(tiHeader.getCommentOfThisProbe());
+        segSourceInfos.set(0, ssi);
+        si.setSegSourceInfos(segSourceInfos);
         return (Entity) si;
     }
 

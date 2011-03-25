@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package jp.atr.dni.bmi.desktop.workingfileutils;
 
 /**
@@ -16,7 +15,7 @@ public class TLHeader {
     private int maxDataLength;
     private String commentAboutThisProbe;
 
-    public TLHeader(){
+    public TLHeader() {
         this.eventType = 0;
         this.minDataLength = 0;
         this.maxDataLength = 0;
@@ -85,6 +84,4 @@ public class TLHeader {
     public void setCommentAboutThisProbe(String commentAboutThisProbe) {
         this.commentAboutThisProbe = commentAboutThisProbe;
     }
-
-    
 }

@@ -63,6 +63,7 @@ public final class WorkspaceTopComponent extends TopComponent implements Propert
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
 
+        jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
         org.openide.awt.Mnemonics.setLocalizedText(jButton1, org.openide.util.NbBundle.getMessage(WorkspaceTopComponent.class, "WorkspaceTopComponent.jButton1.text")); // NOI18N
@@ -145,10 +146,11 @@ public final class WorkspaceTopComponent extends TopComponent implements Propert
                 // Neural Data Tab
                 // Remove selected channels.
                 int[] selectedRows = jTable1.getSelectedRows();
+                int size = selectedRows.length;
 
                 // Remove from Workspace.
-                for (int ii = 0; ii < selectedRows.length; ii++) {
-                    Object channelObj = jTable1.getValueAt(selectedRows[ii], 0);
+                for (int ii = 0; ii < size; ii++) {
+                    Object channelObj = jTable1.getValueAt(selectedRows[size - ii - 1], 0);
                     Channel channel = (Channel) channelObj;
 
                     Workspace.removeChannel(channel);
@@ -159,7 +161,7 @@ public final class WorkspaceTopComponent extends TopComponent implements Propert
 
                 break;
             case 1:
-                // Neural Data Tab
+                // Supplemental Data Tab
                 JOptionPane.showMessageDialog(null, "Not implemented yet.");
 
                 break;
@@ -173,7 +175,7 @@ public final class WorkspaceTopComponent extends TopComponent implements Propert
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // Open wizard.
         cnwa.actionPerformed(evt);
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

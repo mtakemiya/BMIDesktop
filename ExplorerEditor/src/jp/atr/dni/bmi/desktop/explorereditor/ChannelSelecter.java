@@ -20,8 +20,11 @@ import javax.swing.JOptionPane;
 import jp.atr.dni.bmi.desktop.model.Channel;
 import jp.atr.dni.bmi.desktop.model.GeneralFileInfo;
 import jp.atr.dni.bmi.desktop.model.Workspace;
+import jp.atr.dni.bmi.desktop.neuroshareutils.Entity;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NSReader;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NeuroshareFile;
+import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentInfo;
+import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentSourceInfo;
 import jp.atr.dni.bmi.desktop.workingfileutils.WorkingFileUtils;
 import org.openide.DialogDescriptor;
 import org.openide.DialogDisplayer;
@@ -337,6 +340,21 @@ public class ChannelSelecter extends javax.swing.JPanel implements ActionListene
             for (int ii = 0; ii < this.selectedChannelList.size(); ii++) {
                 Object obj = this.selectedChannelList.get(ii);
                 Channel ch = (Channel) obj;
+
+                // Delete multiple SegSourceInfos.(i.e. Application remains only first SegSourceInfo.)
+                if (ch.getChannelType().equals("TI")) {
+                    // Segment Entity.
+                    SegmentInfo si = (SegmentInfo) (ch.getEntity());
+                    ArrayList<SegmentSourceInfo> segSourceInfos = si.getSegSourceInfos();
+                    int size = segSourceInfos.size();
+                    if (size >= 2) {
+                        for (int jj = 1; jj < size; jj++) {
+                            segSourceInfos.remove(segSourceInfos.size() - 1);
+                        }
+                        si.setSegSourceInfos(segSourceInfos);
+                        ch.setEntity((Entity) si);
+                    }
+                }
 
                 // Create working file.
                 WorkingFileUtils wfu = new WorkingFileUtils();

@@ -193,6 +193,130 @@ public class Ns_SegmentData {
         return segSourceID;
     }
 
+    public int addSegmentDataWithoutAddingExtraSegSourceInfo(double dTimestamp, int dwUnitID, double[] dValue) {
+
+        int rtnVal = Const_values.NS_OK;
+        int segSourceID = -1;
+        File tempFile = null;
+        FileOutputStream fos = null;
+        DataOutputStream dos = null;
+
+        try {
+            // Collect values to rewrite object.
+            double[] dCopyValue = dValue.clone();
+            Arrays.sort(dCopyValue);
+            int dwSampleCount = dCopyValue.length;
+            double dMaxInTheArray = dCopyValue[dCopyValue.length - 1];
+            double dMinInTheArray = dCopyValue[0];
+
+            // Open the intermediatefile. (use FileOutputStream, DataOutputStream.)
+            tempFile = new File(this.intermediateFileNameForData);
+            fos = new FileOutputStream(tempFile, true);
+            dos = new DataOutputStream(fos);
+
+            // Add dwSampleCount, dTimestamp, dwUnitID, dValue[0] - dAnalogValue[dwSampleCount - 1]
+            // Write in BIG Endian (JAVA Default)
+         /*
+             * dos.writeInt(dwSampleCount); dos.writeDouble(dTimestamp); dos.writeInt(dwUnitID); for
+             * (int jj = 0; jj < dValue.length; jj++) { dos.writeDouble(dValue[jj]); }
+             */
+
+            // Write in LITTLE Endian (MATLAB Default)
+            dos.writeInt(Integer.reverseBytes(dwSampleCount));
+            dos.writeLong(Long.reverseBytes(Double.doubleToLongBits(dTimestamp)));
+            dos.writeInt(Integer.reverseBytes(dwUnitID));
+            for (int jj = 0; jj < dValue.length; jj++) {
+                dos.writeLong(Long.reverseBytes(Double.doubleToLongBits(dValue[jj])));
+            }
+
+            // Close the intermediatefile. (use FileOutputStream, DataOutputStream.)
+            dos.close();
+            fos.close();
+
+            // Add this.tagElement.addDwElemLength(some value).
+            this.tagElement.addDwElemLength(4 + 8 + 4 + 8 * dwSampleCount);
+
+            // Add this.entityInfo.addDwItemCount(some value).
+            this.entityInfo.addDwItemCount(1);
+
+            // Set this.segmentInfo.dwMaxSampleCount as dwSamplecount (if dwSamplecount is bigger).
+            // Set this.segmentInfo.dwMinSampleCount as dwSampleCount (if dwSamplecount is smaller).
+            if (this.segmentInfo.getDwMaxSampleCount() < dwSampleCount) {
+                this.segmentInfo.setDwMaxSampleCount(dwSampleCount);
+            }
+            if (this.segmentInfo.getDwMinSampleCount() > dwSampleCount) {
+                this.segmentInfo.setDwMinSampleCount(dwSampleCount);
+            }
+            // Create ns_SEGSOURCEINFO if first call.
+            if (this.segSourceInfo == null) {
+                this.segSourceInfo = new ArrayList<Ns_SegSourceInfo>();
+                this.intermediateFileNameForSourceInfo = new ArrayList<String>();
+            }
+
+            // Add ns_SegSourceInfo (ONLY FIRST CALL!!!)
+            if (this.segSourceInfo.isEmpty()) {
+
+                this.segSourceInfo.add(new Ns_SegSourceInfo());
+
+                // segSourceID : identification num of ns_SEGSOURCEINFO. [ 0,1,2... ]
+                segSourceID = this.segSourceInfo.size() - 1;
+
+                // Define intermediate FILE name for ns_SEGSOURCEINFO.
+                this.intermediateFileNameForSourceInfo.add(Const_values.FN_HEADER
+                        + Const_values.SEGMENT + "_" + this.segmentID + "_" + segSourceID
+                        + ".segSourceInfo");
+                this.tagElement.addDwElemLength(248); // Byte Num of ns_SEGSOURCEINFO
+                this.segmentInfo.addDwSourceCount(1); // Byte Num of ns_SEGSOURCEINFO
+
+                // Set this.segSourceInfo.dMaxVal as dMaxInTheArray (if dMaxInTheArray is bigger).
+                // Set this.segSourceInfo.dMinVal as dMinInTheArray (if dMinInTheArray is smaller).
+                if (this.segSourceInfo.get(segSourceID).getDMaxVal() < dMaxInTheArray) {
+                    this.segSourceInfo.get(segSourceID).setDMaxVal(dMaxInTheArray);
+                }
+                if (this.segSourceInfo.get(segSourceID).getDMinVal() > dMinInTheArray) {
+                    this.segSourceInfo.get(segSourceID).setDMinVal(dMinInTheArray);
+                }
+
+            }
+
+                        // Then, NS_OK.
+            rtnVal = Const_values.NS_OK;
+
+
+        } catch (FileNotFoundException e) {
+            // File Not Found.
+            e.printStackTrace();
+
+            // Then, NS_FILEERROR.
+            rtnVal = Const_values.NS_FILEERROR;
+
+        } catch (IOException e) {
+            // File I/O error.
+            e.printStackTrace();
+
+            // Then, NS_FILEERROR.
+            rtnVal = Const_values.NS_FILEERROR;
+
+        } finally {
+            try {
+                if (!dos.equals(null)) {
+                    dos.close();
+                }
+                if (!fos.equals(null)) {
+                    fos.close();
+                }
+
+            } catch (IOException e) {
+                // May be sequence doesn't reach here.
+                e.printStackTrace();
+                rtnVal = Const_values.NS_FILEERROR;
+
+            }
+        }
+        return rtnVal;
+
+    }
+
     public int saveSegmentInfo() {
 
         int rtnVal = Const_values.NS_OK;

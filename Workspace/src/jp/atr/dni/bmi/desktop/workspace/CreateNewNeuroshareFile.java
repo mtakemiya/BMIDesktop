@@ -7,10 +7,7 @@ package jp.atr.dni.bmi.desktop.workspace;
 import java.io.IOException;
 import java.util.ArrayList;
 import jp.atr.dni.bmi.desktop.model.Channel;
-import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogData;
 import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogInfo;
-import jp.atr.dni.bmi.desktop.neuroshareutils.ByteEventData;
-import jp.atr.dni.bmi.desktop.neuroshareutils.DWordEventData;
 import jp.atr.dni.bmi.desktop.neuroshareutils.Entity;
 import jp.atr.dni.bmi.desktop.neuroshareutils.EntityInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.EventInfo;
@@ -30,8 +27,10 @@ import jp.atr.dni.bmi.desktop.neuroshareutils.Nsa_SegSourceInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.Nsa_SegmentInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentData;
 import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentInfo;
-import jp.atr.dni.bmi.desktop.neuroshareutils.TextEventData;
-import jp.atr.dni.bmi.desktop.neuroshareutils.WordEventData;
+import jp.atr.dni.bmi.desktop.workingfileutils.TIData;
+import jp.atr.dni.bmi.desktop.workingfileutils.TLData;
+import jp.atr.dni.bmi.desktop.workingfileutils.TOData;
+import jp.atr.dni.bmi.desktop.workingfileutils.TSData;
 
 /**
  *
@@ -51,9 +50,7 @@ public class CreateNewNeuroshareFile {
      */
     public void createFile(String dstFileFullPath, Nsa_FileInfo metaInfo, ArrayList<Channel> channels) {
 
-        try {
             // Reader
-            NSReader nsReader = new NSReader();
             CSVReader nsCsvReader = new CSVReader();
 
             // Create the Neuroshare file.
@@ -73,7 +70,7 @@ public class CreateNewNeuroshareFile {
 
                 Channel ch = channels.get(i);
 
-                String srcFileFullPath = ch.getSourceFilePath();
+                String srcFileFullPath = ch.getWorkingFilePath();
 
                 Entity e = ch.getEntity();
 
@@ -119,83 +116,66 @@ public class CreateNewNeuroshareFile {
                             continue;
                         }
 
-                        for (int j = 0; j < ei.getItemCount(); j++) {
-                            // Add Event Data
-                            // If you want to add multiple rows data, repeat to call add***Data.
-                            // int rtnval2 = nsEd.addEventData(dTimestamp, dData);
+                        // Add Event Data
+                        // If you want to add multiple rows data, repeat to call add***Data.
+                        // int rtnval2 = nsEd.addEventData(dTimestamp, dData);
 
-                            int rtnval2 = 0;
-                            switch ((int) ei.getEntityType()) {
-                                case 0:
-                                    // Get Event Data
-                                    TextEventData ted = null;
-                                    if (!ch.isEditFlag()) {
-                                        ted = (TextEventData) (nsReader.getEventData(srcFileFullPath, ei, eventInfo)).get(j);
-                                    } else {
-                                        // TODO : implement this.
-//                                        ted = (TextEventData) (nsCsvReader.getEventData(srcFileFullPath));
-                                    }
+                        int rtnval2 = 0;
 
+                        // Get EventData from working file.
+                        TLData tLData = nsCsvReader.getTLData(srcFileFullPath);
+                        int eventDataSize = tLData.getTimeStamps().size();
+
+                        switch ((int) eventInfo.getEventType()) {
+                            case 0:
+                                // Get Event Data
+                                for (int ii = 0; ii < eventDataSize; ii++) {
                                     // ns_EVENT_TEXT
-                                    rtnval2 = nsEd.addEventData(ted.getTimestamp(), ted.getData());
+                                    rtnval2 = nsEd.addEventData(tLData.getTimeStamp(ii), tLData.getValue(ii).toString());
                                     if (rtnval2 != 0) {
                                         // add error. - input arg error - or intermediate file i/o error.
                                     }
-                                    break;
-                                case 1:
-                                    // ns_EVENT_CSV
-                                    // Nothing in Model.
-                                    break;
-                                case 2:
-                                    // Get Event Data
-                                    ByteEventData bed = null;
-                                    if (!ch.isEditFlag()) {
-                                        bed = (ByteEventData) (nsReader.getEventData(srcFileFullPath, ei, eventInfo)).get(j);
-                                    } else {
-                                        // TODO : implement this.
-//                                        bed = (ByteEventData) (nsCsvReader.getEventData(srcFileFullPath));
-                                    }
+                                }
+                                break;
+                            case 1:
+                                // ns_EVENT_CSV
+                                // Nothing in Model.
+                                break;
+                            case 2:
+                                // Get Event Data
+                                for (int ii = 0; ii < eventDataSize; ii++) {
                                     // ns_EVENT_BYTE
-                                    rtnval2 = nsEd.addEventData(bed.getTimestamp(), bed.getData());
+                                    rtnval2 = nsEd.addEventData(tLData.getTimeStamp(ii), (Byte) (tLData.getValue(ii)));
                                     if (rtnval2 != 0) {
                                         // add error. - input arg error - or intermediate file i/o error.
                                     }
-                                    break;
-                                case 3:
-                                    // Get Event Data
-                                    WordEventData wed = null;
-                                    if (!ch.isEditFlag()) {
-                                        wed = (WordEventData) (nsReader.getEventData(srcFileFullPath, ei, eventInfo)).get(j);
-                                    } else {
-                                        // TODO : implement this.
-//                                        wed = (WordEventData) (nsCsvReader.getEventData(srcFileFullPath));
-                                    }
+                                }
+                                break;
+                            case 3:
+                                // Get Event Data
+                                for (int ii = 0; ii < eventDataSize; ii++) {
                                     // ns_EVENT_WORD
-                                    rtnval2 = nsEd.addEventData(wed.getTimestamp(), ((Integer) wed.getData()).shortValue());
+                                    rtnval2 = nsEd.addEventData(tLData.getTimeStamp(ii), (Short) (tLData.getValue(ii)));
                                     if (rtnval2 != 0) {
                                         // add error. - input arg error - or intermediate file i/o error.
                                     }
-                                    break;
-                                case 4:
-                                    // Get Event Data
-                                    DWordEventData dwed = null;
-                                    if (!ch.isEditFlag()) {
-                                        dwed = (DWordEventData) (nsReader.getEventData(srcFileFullPath, ei, eventInfo)).get(j);
-                                    } else {
-                                        // TODO : implement this.
-//                                        dwed = (DWordEventData) (nsCsvReader.getEventData(srcFileFullPath));
-                                    }
+                                }
+                                break;
+                            case 4:
+                                // Get Event Data
+                                for (int ii = 0; ii < eventDataSize; ii++) {
                                     // ns_EVENT_DWORD
-                                    rtnval2 = nsEd.addEventData(dwed.getTimestamp(), dwed.getData().intValue());
+                                    rtnval2 = nsEd.addEventData(tLData.getTimeStamp(ii), (Integer) (tLData.getValue(ii)));
                                     if (rtnval2 != 0) {
                                         // add error. - input arg error - or intermediate file i/o error.
                                     }
-                                    break;
-                                default:
-                                    break;
+                                }
+                                break;
+                            default:
+                                break;
 
-                            }
                         }
+
 
                         break;
                     case 2:
@@ -248,23 +228,21 @@ public class CreateNewNeuroshareFile {
                         }
 
                         // Get Analog Data
-                        ArrayList<AnalogData> ad = null;
-                        if (!ch.isEditFlag()) {
-                            ad = nsReader.getAnalogData(srcFileFullPath, ei);
-                        } else {
-                            ad = nsCsvReader.getAnalogData(srcFileFullPath);
-                        }
+                        // Get AnalogData from working file.
+                        TSData tSData = nsCsvReader.getTSData(srcFileFullPath);
+                        int analogDataSize = tSData.getTimeStamps().size();
 
                         // Add Analog Data
-                        for (int ianalog = 0; ianalog < ad.size(); ianalog++) {
+                        for (int ii = 0; ii < analogDataSize; ii++) {
                             // If you want to add multiple rows data, repeat to call add***Data.
                             // int rtnval6 = nsAd.addAnalogData(dTimestamp_analog, dData_analog);
-                            double[] analogData = new double[(int) ad.get(ianalog).getDataCount()];
-                            for (int j = 0; j < (int) ad.get(ianalog).getDataCount(); j++) {
-                                analogData[j] = ad.get(ianalog).getAnalogValues().get(j);
+                            ArrayList<Double> values = tSData.getValues(ii);
+                            Object[] vals = values.toArray();
+                            double[] dVals = new double[vals.length];
+                            for (int jj = 0; jj < vals.length; jj++) {
+                                dVals[jj] = (Double) vals[jj];
                             }
-
-                            int rtnval6 = nsAd.addAnalogData(ad.get(ianalog).getTimeStamp(), analogData);
+                            int rtnval6 = nsAd.addAnalogData(tSData.getTimeStamp(ii), dVals);
                             if (rtnval6 != 0) {
                                 // add error. - input arg error - or intermediate file i/o error.
                             }
@@ -308,67 +286,59 @@ public class CreateNewNeuroshareFile {
                         }
 
                         // Get Segment Data
-                        SegmentData sd = nsReader.getSegmentData(srcFileFullPath, ei, segmentInfo);
+                        // Get SegmentData from working file.
+                        TIData tIData = nsCsvReader.getTIData(srcFileFullPath);
+                        int segmentDataSize = tIData.getTimeStamps().size();
 
-                        ArrayList<Double> timestampData = sd.getTimeStamp();
-                        ArrayList<Long> unitIDData = sd.getUnitID();
-                        ArrayList<ArrayList<Double>> value = sd.getValues();
-
-                        // Add Segment Data
-                        // If you want to add multiple rows data, repeat to call add***Data.
-                        // Be care! segSourceID is returned!!
-                        // int segSourceID = nsSD.addSegmentData(dTimestamp_segment, dwUnitID_segment,
-                        // dValue_segment);
-                        for (int kk = 0; kk < value.size(); kk++) {
-
-                            double[] segmentValue = new double[(int) value.get(kk).size()];
-                            for (int ll = 0; ll < (int) value.get(kk).size(); ll++) {
-                                segmentValue[ll] = (double) value.get(kk).get(ll);
+                        for (int kk = 0; kk < segmentDataSize; kk++) {
+                            ArrayList<Double> values = tIData.getValues(kk);
+                            Object[] vals = values.toArray();
+                            double[] dVals = new double[vals.length];
+                            for (int jj = 0; jj < vals.length; jj++) {
+                                dVals[jj] = (Double) vals[jj];
                             }
-                            // int segSourceID = nsSD.addSegmentData(dTimestamp_segment, dwUnitID_segment,
-                            // dValue_segment);
-                            int segSourceID = nsSD.addSegmentData((double) timestampData.get(kk),
-                                    (int) ((long) unitIDData.get(kk)), segmentValue);
-                            if (segSourceID < 0) {
+                            int rtnval6 = nsSD.addSegmentDataWithoutAddingExtraSegSourceInfo(tIData.getTimeStamp(kk), tIData.getUnitID(kk), dVals);
+                            if (rtnval6 != 0) {
                                 // add error. - input arg error - or intermediate file i/o error.
                             }
 
-                            // Modify ns_SEGSOURCEINFO.
-                            // Get it.
-                            // Be care! segSourceID is needed!!!
-                            Nsa_SegSourceInfo nsaSegSourceInfo = nsSD.getSegSourceInfo(segSourceID);
-                            if (nsaSegSourceInfo == null) {
-                                // Get SegmentInfo error - input args error.
-                            }
-
-                            // Modify members.
-                            nsaSegSourceInfo.setDResolution(segmentInfo.getSegSourceInfos().get(kk).getResolution());
-                            // nsaSegSourceInfo.setDMinVal(3.0); // [Can Edit, ***But not recommend to modify
-                            // this.***]
-                            // but it WAS updated by addSegmentData
-                            // nsaSegSourceInfo.setDMaxVal(5); // [Can Edit, ***But not recommend to modify
-                            // this.***]
-                            // but it WAS updated by addSegmentData
-                            nsaSegSourceInfo.setDSubSampleShift(segmentInfo.getSegSourceInfos().get(kk).getSubSampleShift());
-                            nsaSegSourceInfo.setDLocationX(segmentInfo.getSegSourceInfos().get(kk).getLocationX());
-                            nsaSegSourceInfo.setDLocationY(segmentInfo.getSegSourceInfos().get(kk).getLocationY());
-                            nsaSegSourceInfo.setDLocationZ(segmentInfo.getSegSourceInfos().get(kk).getLocationZ());
-                            nsaSegSourceInfo.setDLocationUser(segmentInfo.getSegSourceInfos().get(kk).getLocationUser());
-                            nsaSegSourceInfo.setDHighFreqCorner(segmentInfo.getSegSourceInfos().get(kk).getHighFreqCorner());
-                            nsaSegSourceInfo.setDwHighFreqOrder((int) segmentInfo.getSegSourceInfos().get(kk).getHighFreqOrder());
-                            nsaSegSourceInfo.setSzHighFilterType(segmentInfo.getSegSourceInfos().get(kk).getHighFilterType());
-                            nsaSegSourceInfo.setDLowFreqCorner(segmentInfo.getSegSourceInfos().get(kk).getLowFreqCorner());
-                            nsaSegSourceInfo.setDwLowFreqOrder((int) segmentInfo.getSegSourceInfos().get(kk).getLowFreqOrder());
-                            nsaSegSourceInfo.setSzLowFilterType(segmentInfo.getSegSourceInfos().get(kk).getLowFilterType());
-                            nsaSegSourceInfo.setSzProbeInfo(segmentInfo.getSegSourceInfos().get(kk).getProbeInfo());
-
-                            // Set it.
-                            // Be care! segSourceID is needed!!!
-                            int rtnval11 = nsSD.setSegSourceInfo(segSourceID, nsaSegSourceInfo);
-                            if (rtnval11 != 0) {
-                                // set Error. - nsaSegmentInfo includes error
-                            }
                         }
+                        // Modify ns_SEGSOURCEINFO.
+                        // Get it.
+                        // Be care! segSourceID is needed!!!
+                        Nsa_SegSourceInfo nsaSegSourceInfo = nsSD.getSegSourceInfo(0);
+                        if (nsaSegSourceInfo == null) {
+                            // Get SegmentInfo error - input args error.
+                        }
+
+                        // Modify members.
+                        nsaSegSourceInfo.setDResolution(segmentInfo.getSegSourceInfos().get(0).getResolution());
+                        // nsaSegSourceInfo.setDMinVal(3.0); // [Can Edit, ***But not recommend to modify
+                        // this.***]
+                        // but it WAS updated by addSegmentData
+                        // nsaSegSourceInfo.setDMaxVal(5); // [Can Edit, ***But not recommend to modify
+                        // this.***]
+                        // but it WAS updated by addSegmentData
+                        nsaSegSourceInfo.setDSubSampleShift(segmentInfo.getSegSourceInfos().get(0).getSubSampleShift());
+                        nsaSegSourceInfo.setDLocationX(segmentInfo.getSegSourceInfos().get(0).getLocationX());
+                        nsaSegSourceInfo.setDLocationY(segmentInfo.getSegSourceInfos().get(0).getLocationY());
+                        nsaSegSourceInfo.setDLocationZ(segmentInfo.getSegSourceInfos().get(0).getLocationZ());
+                        nsaSegSourceInfo.setDLocationUser(segmentInfo.getSegSourceInfos().get(0).getLocationUser());
+                        nsaSegSourceInfo.setDHighFreqCorner(segmentInfo.getSegSourceInfos().get(0).getHighFreqCorner());
+                        nsaSegSourceInfo.setDwHighFreqOrder((int) segmentInfo.getSegSourceInfos().get(0).getHighFreqOrder());
+                        nsaSegSourceInfo.setSzHighFilterType(segmentInfo.getSegSourceInfos().get(0).getHighFilterType());
+                        nsaSegSourceInfo.setDLowFreqCorner(segmentInfo.getSegSourceInfos().get(0).getLowFreqCorner());
+                        nsaSegSourceInfo.setDwLowFreqOrder((int) segmentInfo.getSegSourceInfos().get(0).getLowFreqOrder());
+                        nsaSegSourceInfo.setSzLowFilterType(segmentInfo.getSegSourceInfos().get(0).getLowFilterType());
+                        nsaSegSourceInfo.setSzProbeInfo(segmentInfo.getSegSourceInfos().get(0).getProbeInfo());
+
+                        // Set it.
+                        // Be care! segSourceID is needed!!!
+                        int rtnval11 = nsSD.setSegSourceInfo(0, nsaSegSourceInfo);
+                        if (rtnval11 != 0) {
+                            // set Error. - nsaSegmentInfo includes error
+                        }
+
                         break;
                     case 4:
                         // Neural
@@ -405,16 +375,12 @@ public class CreateNewNeuroshareFile {
                         }
 
                         // Get Neural Event Data
-                        ArrayList<Double> d = null;
-                        if (!ch.isEditFlag()) {
+                        // Get NeuralData from working file.
+                        TOData tOData = nsCsvReader.getTOData(srcFileFullPath);
+                        int neuralDataSize = tOData.getTimeStamps().size();
 
-                            d = nsReader.getNeuralData(srcFileFullPath, ei);
-                        } else {
-                            d = nsCsvReader.getNeuralData(srcFileFullPath);
-                        }
-
-                        for (int jj = 0; jj < d.size(); jj++) {
-                            int rtnval9 = nsNED.addNeuralEventData(d.get(jj));
+                        for (int jj = 0; jj < neuralDataSize; jj++) {
+                            int rtnval9 = nsNED.addNeuralEventData(tOData.getTimeStamp(jj));
                             if (rtnval9 != 0) {
                                 // add error. - input arg error - or intermediate file i/o error.
                             }
@@ -436,9 +402,6 @@ public class CreateNewNeuroshareFile {
             if (rtnval7 != 0) {
                 // close error.
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
 
     }
 }
