@@ -42,7 +42,7 @@ public final class CreateNewFileWizardAction implements ActionListener {
                     // Save as Neuroshare.
                     String filePath = (String) wizardDescriptor.getProperty("filePath");
                     String fileType = (String) wizardDescriptor.getProperty("fileType");
-                    String entityCount = (String) wizardDescriptor.getProperty("entityCount");
+                    //String entityCount = (String) wizardDescriptor.getProperty("entityCount");
                     Double timeStampResolution = (Double) wizardDescriptor.getProperty("timeStampResolution");
                     Double timeSpan = (Double) wizardDescriptor.getProperty("timeSpan");
                     String applicationName = (String) wizardDescriptor.getProperty("applicationName");
