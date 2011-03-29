@@ -29,10 +29,18 @@ public class WorkingFileUtils {
         String tmpFilePath = WS_HOME + System.currentTimeMillis() + "_" + hashCode() + ".csv";
         File file = new File(tmpFilePath);
 
+        // Create workingfiles dir if it  does not exist.
+        File dir = file.getParentFile();
+        if(!dir.exists()){
+            dir.mkdirs();
+        }
+
+        // Create the file.
         if (!file.createNewFile()) {
             return false;
         }
 
+        // Write Neuroshare Data to the working file.
         CSVWriter nsCsvWriter = new CSVWriter();
         nsCsvWriter.createCSVFileFromNeuroshare(file.getAbsolutePath(), sourceFilePath, entity);
 
