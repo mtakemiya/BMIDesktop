@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module codename="jp.atr.dni.bmi.desktop.workspace">
-    <module_version install_time="1301034982836" last="true" origin="installer" specification_version="1.0">
+    <module_version install_time="1301036146477" last="true" origin="installer" specification_version="1.0">
         <file crc="2824598782" name="config/Modules/jp-atr-dni-bmi-desktop-workspace.xml"/>
         <file crc="662295050" name="modules/jp-atr-dni-bmi-desktop-workspace.jar"/>
     </module_version>

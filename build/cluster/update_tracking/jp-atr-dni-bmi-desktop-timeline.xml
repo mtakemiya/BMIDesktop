@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module codename="jp.atr.dni.bmi.desktop.timeline">
-    <module_version install_time="1301034981894" last="true" origin="installer" specification_version="1.0">
+    <module_version install_time="1301036145602" last="true" origin="installer" specification_version="1.0">
         <file crc="2020134677" name="config/Modules/jp-atr-dni-bmi-desktop-timeline.xml"/>
         <file crc="70726920" name="modules/ext/gluegen-gl.jar"/>
         <file crc="3834491196" name="modules/ext/gluegen-rt-natives-macosx-universal.jar"/>

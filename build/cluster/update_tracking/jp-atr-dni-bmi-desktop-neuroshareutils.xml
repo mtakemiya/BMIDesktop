@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module codename="jp.atr.dni.bmi.desktop.neuroshareutils">
-    <module_version install_time="1301034980766" last="true" origin="installer" specification_version="1.0">
+    <module_version install_time="1301036144014" last="true" origin="installer" specification_version="1.0">
         <file crc="3458739560" name="config/Modules/jp-atr-dni-bmi-desktop-neuroshareutils.xml"/>
         <file crc="1667750038" name="modules/ext/cglib-nodep-2.2.jar"/>
         <file crc="2050839146" name="modules/ext/dom4j-1.6.1.jar"/>
