@@ -10,5 +10,5 @@ package jp.atr.dni.bmi.desktop.model;
  */
 public class Constants {
 
-    public static final String DATA_HOME = "data";
+    public static final String DATA_HOME = "/";
 }

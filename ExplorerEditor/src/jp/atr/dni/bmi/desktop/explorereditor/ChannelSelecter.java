@@ -354,7 +354,7 @@ public class ChannelSelecter extends javax.swing.JPanel implements ActionListene
                         si.setSegSourceInfos(segSourceInfos);
                         ch.setEntity((Entity) si);
 
-                        JOptionPane.showMessageDialog(null, "Channel : "+ch.getDisplayName() + " - Extra ns_SegSourceInfos were skipped!");
+                        JOptionPane.showMessageDialog(null, "Channel : " + ch.getDisplayName() + " - Extra ns_SegSourceInfos were skipped!");
                     }
                 }
 
@@ -383,9 +383,9 @@ public class ChannelSelecter extends javax.swing.JPanel implements ActionListene
     private void afterInitComponents() {
         // Set values about components.
         this.dialogDescriptor = new DialogDescriptor(this, "Channel Selecter", true, this);
-
-        // Case : Neuroshare.
-        if (this.generalFileInfo.getFileType().equals("File/nsn")) {
+        // Case : Neuroshare(nsn), Plexon(plx), BlackRockMicroSystems(nev,ns1-9)
+        String fileType = this.generalFileInfo.getFileType();
+        if (fileType.equals("File/nsn") || fileType.equals("File/plx") || fileType.equals("File/nev") || fileType.equals("File/ns1") || fileType.equals("File/ns2") || fileType.equals("File/ns3") || fileType.equals("File/ns4") || fileType.equals("File/ns5") || fileType.equals("File/ns6") || fileType.equals("File/ns7") || fileType.equals("File/ns8") || fileType.equals("File/ns9")) {
 
             // Get nsObj to set channel list.
             NeuroshareFile nsf = this.generalFileInfo.getNsObj();
