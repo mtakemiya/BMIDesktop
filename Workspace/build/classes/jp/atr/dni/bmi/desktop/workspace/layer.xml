@@ -23,7 +23,7 @@
             <file name="WorkspaceTopComponent.settings" url="WorkspaceTopComponentSettings.xml"/>
         </folder>
         <folder name="Modes">
-            <folder name="rightSlidingSide">
+            <folder name="properties">
                 <file name="WorkspaceTopComponent.wstcref" url="WorkspaceTopComponentWstcref.xml"/>
             </folder>
         </folder>

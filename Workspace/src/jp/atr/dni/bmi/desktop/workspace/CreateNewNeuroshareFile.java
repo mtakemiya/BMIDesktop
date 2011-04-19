@@ -145,7 +145,8 @@ public class CreateNewNeuroshareFile {
                                 // Get Event Data
                                 for (int ii = 0; ii < eventDataSize; ii++) {
                                     // ns_EVENT_BYTE
-                                    rtnval2 = nsEd.addEventData(tLData.getTimeStamp(ii), (Byte) (tLData.getValue(ii)));
+//                                    rtnval2 = nsEd.addEventData(tLData.getTimeStamp(ii), (Byte) (tLData.getValue(ii)));
+                                    rtnval2 = nsEd.addEventData(tLData.getTimeStamp(ii), Byte.parseByte((String)tLData.getValue(ii)));
                                     if (rtnval2 != 0) {
                                         // add error. - input arg error - or intermediate file i/o error.
                                     }
@@ -155,7 +156,8 @@ public class CreateNewNeuroshareFile {
                                 // Get Event Data
                                 for (int ii = 0; ii < eventDataSize; ii++) {
                                     // ns_EVENT_WORD
-                                    rtnval2 = nsEd.addEventData(tLData.getTimeStamp(ii), (Short) (tLData.getValue(ii)));
+//                                    rtnval2 = nsEd.addEventData(tLData.getTimeStamp(ii), (Short) (tLData.getValue(ii)));
+                                    rtnval2 = nsEd.addEventData(tLData.getTimeStamp(ii), Short.parseShort((String)tLData.getValue(ii)));
                                     if (rtnval2 != 0) {
                                         // add error. - input arg error - or intermediate file i/o error.
                                     }
@@ -165,7 +167,8 @@ public class CreateNewNeuroshareFile {
                                 // Get Event Data
                                 for (int ii = 0; ii < eventDataSize; ii++) {
                                     // ns_EVENT_DWORD
-                                    rtnval2 = nsEd.addEventData(tLData.getTimeStamp(ii), (Integer) (tLData.getValue(ii)));
+//                                    rtnval2 = nsEd.addEventData(tLData.getTimeStamp(ii), (Integer) (tLData.getValue(ii)));
+                                    rtnval2 = nsEd.addEventData(tLData.getTimeStamp(ii), Integer.parseInt((String)tLData.getValue(ii)));
                                     if (rtnval2 != 0) {
                                         // add error. - input arg error - or intermediate file i/o error.
                                     }

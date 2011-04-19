@@ -24,10 +24,7 @@ import jp.atr.dni.bmi.desktop.neuroshareutils.FileInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NSReader;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NeuralInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NeuroshareFile;
-import jp.atr.dni.bmi.desktop.neuroshareutils.NevReader;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NsnFileModelConverter;
-import jp.atr.dni.bmi.desktop.neuroshareutils.NsxReader;
-import jp.atr.dni.bmi.desktop.neuroshareutils.PlxReader;
 import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentSourceInfo;
 import org.apache.commons.io.FileUtils;
@@ -81,7 +78,7 @@ public class ExplorerNode extends AbstractNode {
     @Override
     public Action[] getActions(boolean popup) {
         return new Action[]{
-                    new SaveAction(), // Save -> Over Write
+                    new SaveAction(), // Save as -> Neuroshare
                     null, //Line.
                     new ReloadAction(), // Reload
                     null, //Line.
@@ -125,7 +122,7 @@ public class ExplorerNode extends AbstractNode {
                 sheet.put(propertyGrp);
             }
 
-            if (fileType.equals("File/nsn") || fileType.equals("File/plx") || fileType.equals("File/nev") || fileType.equals("File/ns1") || fileType.equals("File/ns2") || fileType.equals("File/ns3") || fileType.equals("File/ns4") || fileType.equals("File/ns5") || fileType.equals("File/ns6") || fileType.equals("File/ns7") || fileType.equals("File/ns8") || fileType.equals("File/ns9")) {
+            if (fileType.equals("File/nsn")) {
                 ArrayList<Sheet.Set> neurosharePropertyGrp = setNeuroshareProperties(obj);
                 if (neurosharePropertyGrp != null) {
                     for (int ii = 0; ii < neurosharePropertyGrp.size(); ii++) {
@@ -515,25 +512,8 @@ public class ExplorerNode extends AbstractNode {
 
             NeuroshareFile nsn = null;
             // Read data.
-            String fileType = obj.getFileType();
-
-            if (fileType.equals("File/nsn")) {
-                // Get Neuroshare Data using NSReader.
-                NSReader reader = new NSReader();
-                nsn = reader.readNSFileOnlyInfo(obj.getFilePath());
-            } else if (fileType.equals("File/plx")) {
-                // Get Neuroshare Data using PlxReader.
-                PlxReader reader = new PlxReader();
-                nsn = reader.readPlxFileAllData(obj.getFilePath());
-            } else if (fileType.equals("File/nev")) {
-                // Get Neuroshare Data using NevReader.
-                NevReader reader = new NevReader();
-                nsn = reader.readNevFileAllData(obj.getFilePath());
-            } else if (fileType.equals("File/ns1") || fileType.equals("File/ns2") || fileType.equals("File/ns3") || fileType.equals("File/ns4") || fileType.equals("File/ns5") || fileType.equals("File/ns6") || fileType.equals("File/ns7") || fileType.equals("File/ns8") || fileType.equals("File/ns9")) {
-                // Get Neuroshare Data using NsxReader.
-                NsxReader reader = new NsxReader();
-                nsn = reader.readNsxFileAllData(obj.getFilePath());
-            }
+            NSReader reader = new NSReader();
+            nsn = reader.readNSFileOnlyInfo(obj.getFilePath());
 
             obj.setNsObj(nsn);
 
@@ -1038,7 +1018,7 @@ public class ExplorerNode extends AbstractNode {
             GeneralFileInfo obj = getLookup().lookup(GeneralFileInfo.class);
 
             if (obj == null || !obj.getFileType().startsWith("File/")) {
-                JOptionPane.showMessageDialog(null, "Select a file.");
+                JOptionPane.showMessageDialog(null, "Select a data file.");
                 return;
             }
 

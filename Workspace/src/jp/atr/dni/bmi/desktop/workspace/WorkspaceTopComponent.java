@@ -6,11 +6,15 @@ package jp.atr.dni.bmi.desktop.workspace;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.util.Vector;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import jp.atr.dni.bmi.desktop.explorereditor.ChannelSelecter;
 import jp.atr.dni.bmi.desktop.model.Channel;
+import jp.atr.dni.bmi.desktop.model.GeneralFileInfo;
 import jp.atr.dni.bmi.desktop.model.Workspace;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
@@ -57,6 +61,7 @@ public final class WorkspaceTopComponent extends TopComponent implements Propert
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -87,6 +92,17 @@ public final class WorkspaceTopComponent extends TopComponent implements Propert
             }
         });
         jToolBar1.add(jButton2);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jButton3, org.openide.util.NbBundle.getMessage(WorkspaceTopComponent.class, "WorkspaceTopComponent.jButton3.text")); // NOI18N
+        jButton3.setFocusable(false);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton3);
 
         jTabbedPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(WorkspaceTopComponent.class, "WorkspaceTopComponent.jTabbedPane1.border.title"))); // NOI18N
 
@@ -177,9 +193,34 @@ public final class WorkspaceTopComponent extends TopComponent implements Propert
         cnwa.actionPerformed(evt);
 
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // Select the file.
+        // Using filechooser.
+        GeneralFileInfo gfi = null;
+        JFileChooser fc = new JFileChooser();
+        fc.setMultiSelectionEnabled(false);
+        int selected = fc.showOpenDialog(null);
+        if (selected == JFileChooser.APPROVE_OPTION) {
+            File srcFile = fc.getSelectedFile();
+            gfi = new GeneralFileInfo(srcFile.getAbsolutePath());
+        } else {
+            return;
+        }
+
+        // Choose channels from the file.
+        // Open ChannelSelecter Dialog.
+        ChannelSelecter cs = new ChannelSelecter(gfi);
+        cs.showDialog();
+
+        // Add channels to the workspace.
+        // Channel Selecter will do.
+
+    }//GEN-LAST:event_jButton3ActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

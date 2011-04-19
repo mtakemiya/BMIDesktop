@@ -18,6 +18,8 @@ import jp.atr.dni.bmi.desktop.neuroshareutils.Entity;
 import jp.atr.dni.bmi.desktop.neuroshareutils.EntityInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.EventInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NSReader;
+import jp.atr.dni.bmi.desktop.neuroshareutils.NevReader;
+import jp.atr.dni.bmi.desktop.neuroshareutils.PlxReader;
 import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentData;
 import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentSourceInfo;
@@ -38,19 +40,19 @@ public class CSVWriter {
                 break;
             case 1:
                 // Event
-                createTLFile(workingFilePath, sourceFilePath, entity);
+                createTLFileFromNeuroshare(workingFilePath, sourceFilePath, entity);
                 break;
             case 2:
                 // Analog
-                createTSFile(workingFilePath, sourceFilePath, entity);
+                createTSFileFromNeuroshare(workingFilePath, sourceFilePath, entity);
                 break;
             case 3:
                 // Segment
-                createTIFile(workingFilePath, sourceFilePath, entity);
+                createTIFileFromNeuroshare(workingFilePath, sourceFilePath, entity);
                 break;
             case 4:
                 // Neural
-                createTOFile(workingFilePath, sourceFilePath, entity);
+                createTOFileFromNeuroshare(workingFilePath, sourceFilePath, entity);
                 break;
             case 5:
                 break;
@@ -59,7 +61,93 @@ public class CSVWriter {
         }
     }
 
-    private void createTSFile(String workingFilePath, String sourceFilePath, Entity entity) {
+    void createCSVFileFromPlexon(String workingFilePath, String sourceFilePath, Entity entity) {
+        int entityType = (int) entity.getEntityInfo().getEntityType();
+        switch (entityType) {
+            case 0:
+                break;
+            case 1:
+                // Event
+                // No case
+                //createTLFileFromPlexon(workingFilePath, sourceFilePath, entity);
+                break;
+            case 2:
+                // Analog
+                // No case
+                //createTSFileFromPlexon(workingFilePath, sourceFilePath, entity);
+                break;
+            case 3:
+                // Segment
+                createTIFileFromPlexon(workingFilePath, sourceFilePath, entity);
+                break;
+            case 4:
+                // Neural
+                createTOFileFromPlexon(workingFilePath, sourceFilePath, entity);
+                break;
+            case 5:
+                break;
+            default:
+                break;
+        }
+    }
+
+    void createCSVFileFromBlackRockNev(String workingFilePath, String sourceFilePath, Entity entity) {
+        int entityType = (int) entity.getEntityInfo().getEntityType();
+        switch (entityType) {
+            case 0:
+                break;
+            case 1:
+                // Event
+                createTLFileFromBlackRockNev(workingFilePath, sourceFilePath, entity);
+                break;
+            case 2:
+                // Analog
+//                createTSFileFromBlackRockNev(workingFilePath, sourceFilePath, entity);
+                break;
+            case 3:
+                // Segment
+                createTIFileFromBlackRockNev(workingFilePath, sourceFilePath, entity);
+                break;
+            case 4:
+                // Neural
+                createTOFileFromBlackRockNev(workingFilePath, sourceFilePath, entity);
+                break;
+            case 5:
+                break;
+            default:
+                break;
+        }
+    }
+
+    void createCSVFileFromBlackRockNsx(String workingFilePath, String sourceFilePath, Entity entity) {
+        int entityType = (int) entity.getEntityInfo().getEntityType();
+        switch (entityType) {
+            case 0:
+                break;
+            case 1:
+                // Event
+//                createTLFileFromBlackRockNsx(workingFilePath, sourceFilePath, entity);
+                break;
+            case 2:
+                // Analog
+//                createTSFileFromBlackRockNsx(workingFilePath, sourceFilePath, entity);
+                break;
+            case 3:
+                // Segment
+//                createTIFileFromBlackRockNsx(workingFilePath, sourceFilePath, entity);
+                break;
+            case 4:
+                // Neural
+//                createTOFileFromBlackRockNsx(workingFilePath, sourceFilePath, entity);
+                break;
+            case 5:
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void createTSFileFromNeuroshare(String workingFilePath, String sourceFilePath, Entity entity) {
 
         String co = ",";
         String formatCode = "TS";
@@ -102,7 +190,7 @@ public class CSVWriter {
         }
     }
 
-    private void createTIFile(String workingFilePath, String sourceFilePath, Entity entity) {
+    private void createTIFileFromNeuroshare(String workingFilePath, String sourceFilePath, Entity entity) {
 
         String co = ",";
         String formatCode = "TI";
@@ -147,7 +235,7 @@ public class CSVWriter {
         }
     }
 
-    private void createTLFile(String workingFilePath, String sourceFilePath, Entity entity) {
+    private void createTLFileFromNeuroshare(String workingFilePath, String sourceFilePath, Entity entity) {
 
         String co = ",";
         String formatCode = "TL";
@@ -190,7 +278,7 @@ public class CSVWriter {
                 case 2:
                     byteEventData = nsReader.getByteEventData(sourceFilePath, entity.getEntityInfo(), (EventInfo) entity);
                     for (int ii = 0; ii < byteEventData.size(); ii++) {
-                        bw.write(((Double) textEventData.get(ii).getTimestamp()).toString() + co);
+                        bw.write(((Double) byteEventData.get(ii).getTimestamp()).toString() + co);
                         bw.write(((Byte) (byteEventData.get(ii).getData())).toString());
                         bw.newLine();
                     }
@@ -198,7 +286,7 @@ public class CSVWriter {
                 case 3:
                     wordEventData = nsReader.getWordEventData(sourceFilePath, entity.getEntityInfo(), (EventInfo) entity);
                     for (int ii = 0; ii < wordEventData.size(); ii++) {
-                        bw.write(((Double) textEventData.get(ii).getTimestamp()).toString() + co);
+                        bw.write(((Double) wordEventData.get(ii).getTimestamp()).toString() + co);
                         bw.write(((Integer) (wordEventData.get(ii).getData())).toString());
                         bw.newLine();
                     }
@@ -206,7 +294,7 @@ public class CSVWriter {
                 case 4:
                     dwordEventData = nsReader.getDWordEventData(sourceFilePath, entity.getEntityInfo(), (EventInfo) entity);
                     for (int ii = 0; ii < dwordEventData.size(); ii++) {
-                        bw.write(((Double) textEventData.get(ii).getTimestamp()).toString() + co);
+                        bw.write(((Double) dwordEventData.get(ii).getTimestamp()).toString() + co);
                         bw.write(((Long) (dwordEventData.get(ii).getData())).toString());
                         bw.newLine();
                     }
@@ -228,7 +316,7 @@ public class CSVWriter {
         }
     }
 
-    private void createTOFile(String workingFilePath, String sourceFilePath, Entity entity) {
+    private void createTOFileFromNeuroshare(String workingFilePath, String sourceFilePath, Entity entity) {
 
         String co = ",";
         String formatCode = "TO";
@@ -245,6 +333,415 @@ public class CSVWriter {
             // Read Neuroshare Data.
             NSReader nsReader = new NSReader();
             ArrayList<Double> neuralData = nsReader.getNeuralData(sourceFilePath, entity.getEntityInfo());
+
+            // Write Data to the workingFile(CSV).
+            for (int ii = 0; ii < neuralData.size(); ii++) {
+
+                // 2nd Line : <timestamp>
+                bw.write(neuralData.get(ii).toString());
+                bw.newLine();
+            }
+            bw.close();
+        } catch (IOException iOException) {
+        } finally {
+            try {
+                if (bw != null) {
+                    bw.close();
+                }
+            } catch (IOException iOException) {
+            }
+        }
+    }
+
+    private void createTSFileFromPlexon(String workingFilePath, String sourceFilePath, Entity entity) {
+        // No case.
+//        String co = ",";
+//        String formatCode = "TS";
+//        double samplingRate = ((AnalogInfo) entity).getSampleRate();
+//        BufferedWriter bw = null;
+//
+//        try {
+//            // BufferedWriter to write.
+//            bw = new BufferedWriter(new FileWriter(workingFilePath));
+//
+//            // First Line : TS, <SamplingRate>
+//            bw.write(formatCode + co + samplingRate);
+//            bw.newLine();
+//
+//            // Read Neuroshare Data.
+//            NSReader nsReader = new NSReader();
+//            ArrayList<AnalogData> analogData = nsReader.getAnalogData(sourceFilePath, entity.getEntityInfo());
+//
+//            // Write Data to the workingFile(CSV).
+//            for (int ii = 0; ii < analogData.size(); ii++) {
+//
+//                // 2nd Line : <timestamp>, <AnalogValue[0]>, <AnalogValue[1]>, ... <AnalogValue[n]>
+//                AnalogData ad = analogData.get(ii);
+//                bw.write(((Double) ad.getTimeStamp()).toString());
+//                ArrayList<Double> analogValues = ad.getAnalogValues();
+//                for (int jj = 0; jj < analogValues.size(); jj++) {
+//                    bw.write(co + analogValues.get(jj));
+//                }
+//                bw.newLine();
+//            }
+//            bw.close();
+//        } catch (IOException iOException) {
+//        } finally {
+//            try {
+//                if (bw != null) {
+//                    bw.close();
+//                }
+//            } catch (IOException iOException) {
+//            }
+//        }
+    }
+
+    private void createTSFileFromBlackRockNev(String workingFilePath, String sourceFilePath, Entity entity) {
+        String co = ",";
+        String formatCode = "TS";
+        double samplingRate = ((AnalogInfo) entity).getSampleRate();
+        BufferedWriter bw = null;
+
+        try {
+            // BufferedWriter to write.
+            bw = new BufferedWriter(new FileWriter(workingFilePath));
+
+            // First Line : TS, <SamplingRate>
+            bw.write(formatCode + co + samplingRate);
+            bw.newLine();
+
+            // Read Neuroshare Data.
+            NevReader nevReader = new NevReader();
+            ArrayList<AnalogData> analogData = nevReader.getAnalogData(sourceFilePath, entity.getEntityInfo());
+
+            // Write Data to the workingFile(CSV).
+            for (int ii = 0; ii < analogData.size(); ii++) {
+
+                // 2nd Line : <timestamp>, <AnalogValue[0]>, <AnalogValue[1]>, ... <AnalogValue[n]>
+                AnalogData ad = analogData.get(ii);
+                bw.write(((Double) ad.getTimeStamp()).toString());
+                ArrayList<Double> analogValues = ad.getAnalogValues();
+                for (int jj = 0; jj < analogValues.size(); jj++) {
+                    bw.write(co + analogValues.get(jj));
+                }
+                bw.newLine();
+            }
+            bw.close();
+        } catch (IOException iOException) {
+        } finally {
+            try {
+                if (bw != null) {
+                    bw.close();
+                }
+            } catch (IOException iOException) {
+            }
+        }
+    }
+
+    private void createTIFileFromPlexon(String workingFilePath, String sourceFilePath, Entity entity) {
+
+        String co = ",";
+        String formatCode = "TI";
+        double samplingRate = ((SegmentInfo) entity).getSampleRate();
+        BufferedWriter bw = null;
+
+        try {
+            // BufferedWriter to write.
+            bw = new BufferedWriter(new FileWriter(workingFilePath));
+
+            // First Line : TI, <SamplingRate>
+            bw.write(formatCode + co + samplingRate);
+            bw.newLine();
+
+            // Read Neuroshare Data.
+            PlxReader plxReader = new PlxReader();
+            SegmentData segmentData = plxReader.getSegmentData(sourceFilePath, entity.getEntityInfo(), (SegmentInfo) entity);
+
+            // Write Data to the workingFile(CSV).
+            for (int ii = 0; ii < segmentData.getTimeStamp().size(); ii++) {
+                // 2nd Line : <timestamp>, <dwUnitID>, <SegmentValue[0]>, <SegmentValue[1]>, ... <SegmentValue[n]>
+                Double timeStamp = segmentData.getTimeStamp().get(ii);
+                bw.write(timeStamp + co);
+                Long unitID = segmentData.getUnitID().get(ii);
+                bw.write(unitID.toString());
+
+                ArrayList<Double> segmentValues = segmentData.getValues().get(ii);
+                for (int jj = 0; jj < segmentValues.size(); jj++) {
+                    bw.write(co + segmentValues.get(jj));
+                }
+                bw.newLine();
+            }
+            bw.close();
+        } catch (IOException iOException) {
+        } finally {
+            try {
+                if (bw != null) {
+                    bw.close();
+                }
+            } catch (IOException iOException) {
+            }
+        }
+    }
+
+    private void createTIFileFromBlackRockNev(String workingFilePath, String sourceFilePath, Entity entity) {
+
+        String co = ",";
+        String formatCode = "TI";
+        double samplingRate = ((SegmentInfo) entity).getSampleRate();
+        BufferedWriter bw = null;
+
+        try {
+            // BufferedWriter to write.
+            bw = new BufferedWriter(new FileWriter(workingFilePath));
+
+            // First Line : TI, <SamplingRate>
+            bw.write(formatCode + co + samplingRate);
+            bw.newLine();
+
+            // Read Neuroshare Data.
+            NevReader nevReader = new NevReader();
+            SegmentData segmentData = nevReader.getSegmentData(sourceFilePath, entity.getEntityInfo(), (SegmentInfo) entity);
+
+            // Write Data to the workingFile(CSV).
+            for (int ii = 0; ii < segmentData.getTimeStamp().size(); ii++) {
+                // 2nd Line : <timestamp>, <dwUnitID>, <SegmentValue[0]>, <SegmentValue[1]>, ... <SegmentValue[n]>
+                Double timeStamp = segmentData.getTimeStamp().get(ii);
+                bw.write(timeStamp + co);
+                Long unitID = segmentData.getUnitID().get(ii);
+                bw.write(unitID.toString());
+
+                ArrayList<Double> segmentValues = segmentData.getValues().get(ii);
+                for (int jj = 0; jj < segmentValues.size(); jj++) {
+                    bw.write(co + segmentValues.get(jj));
+                }
+                bw.newLine();
+            }
+            bw.close();
+        } catch (IOException iOException) {
+        } finally {
+            try {
+                if (bw != null) {
+                    bw.close();
+                }
+            } catch (IOException iOException) {
+            }
+        }
+    }
+
+    private void createTLFileFromPlexon(String workingFilePath, String sourceFilePath, Entity entity) {
+        // No case.
+//        String co = ",";
+//        String formatCode = "TL";
+//        BufferedWriter bw = null;
+//        ArrayList<TextEventData> textEventData = new ArrayList<TextEventData>();
+//        ArrayList<ByteEventData> byteEventData = new ArrayList<ByteEventData>();
+//        ArrayList<WordEventData> wordEventData = new ArrayList<WordEventData>();
+//        ArrayList<DWordEventData> dwordEventData = new ArrayList<DWordEventData>();
+//
+//        try {
+//            // BufferedWriter to write.
+//            bw = new BufferedWriter(new FileWriter(workingFilePath));
+//
+//            // First Line : TL
+//            bw.write(formatCode);
+//            bw.newLine();
+//
+//            EventInfo ei = (EventInfo) entity;
+//            // Read Neuroshare Data.
+//            PlxReader plxReader = new PlxReader();
+//            //ArrayList<EventData> eventData = plxReader.getEventData(sourceFilePath, entity.getEntityInfo(), (EventInfo) entity);
+//
+//            switch ((int) ei.getEventType()) {
+//                case 0:
+//                    textEventData = nsReader.getTextEventData(sourceFilePath, entity.getEntityInfo(), (EventInfo) entity);
+//                    for (int ii = 0; ii < textEventData.size(); ii++) {
+//                        bw.write(((Double) textEventData.get(ii).getTimestamp()).toString() + co);
+//                        bw.write(textEventData.get(ii).getData());
+//                        bw.newLine();
+//                    }
+//                    break;
+//                case 1:
+//                    textEventData = nsReader.getTextEventData(sourceFilePath, entity.getEntityInfo(), (EventInfo) entity);
+//                    for (int ii = 0; ii < textEventData.size(); ii++) {
+//                        bw.write(((Double) textEventData.get(ii).getTimestamp()).toString() + co);
+//                        bw.write(textEventData.get(ii).getData());
+//                        bw.newLine();
+//                    }
+//                    break;
+//                case 2:
+//                    byteEventData = nsReader.getByteEventData(sourceFilePath, entity.getEntityInfo(), (EventInfo) entity);
+//                    for (int ii = 0; ii < byteEventData.size(); ii++) {
+//                        bw.write(((Double) textEventData.get(ii).getTimestamp()).toString() + co);
+//                        bw.write(((Byte) (byteEventData.get(ii).getData())).toString());
+//                        bw.newLine();
+//                    }
+//                    break;
+//                case 3:
+//                    wordEventData = nsReader.getWordEventData(sourceFilePath, entity.getEntityInfo(), (EventInfo) entity);
+//                    for (int ii = 0; ii < wordEventData.size(); ii++) {
+//                        bw.write(((Double) textEventData.get(ii).getTimestamp()).toString() + co);
+//                        bw.write(((Integer) (wordEventData.get(ii).getData())).toString());
+//                        bw.newLine();
+//                    }
+//                    break;
+//                case 4:
+//                    dwordEventData = nsReader.getDWordEventData(sourceFilePath, entity.getEntityInfo(), (EventInfo) entity);
+//                    for (int ii = 0; ii < dwordEventData.size(); ii++) {
+//                        bw.write(((Double) textEventData.get(ii).getTimestamp()).toString() + co);
+//                        bw.write(((Long) (dwordEventData.get(ii).getData())).toString());
+//                        bw.newLine();
+//                    }
+//                    break;
+//                default:
+//
+//                    break;
+//            }
+//
+//            bw.close();
+//        } catch (IOException iOException) {
+//        } finally {
+//            try {
+//                if (bw != null) {
+//                    bw.close();
+//                }
+//            } catch (IOException iOException) {
+//            }
+//        }
+    }
+
+    private void createTLFileFromBlackRockNev(String workingFilePath, String sourceFilePath, Entity entity) {
+        String co = ",";
+        String formatCode = "TL";
+        BufferedWriter bw = null;
+        ArrayList<TextEventData> textEventData = new ArrayList<TextEventData>();
+        ArrayList<ByteEventData> byteEventData = new ArrayList<ByteEventData>();
+        ArrayList<WordEventData> wordEventData = new ArrayList<WordEventData>();
+        ArrayList<DWordEventData> dwordEventData = new ArrayList<DWordEventData>();
+
+        try {
+            // BufferedWriter to write.
+            bw = new BufferedWriter(new FileWriter(workingFilePath));
+
+            // First Line : TL
+            bw.write(formatCode);
+            bw.newLine();
+
+            EventInfo ei = (EventInfo) entity;
+            // Read BlackRock Data.
+            NevReader nevReader = new NevReader();
+
+            switch ((int) ei.getEventType()) {
+                case 0:
+                    textEventData = nevReader.getTextEventData(sourceFilePath, entity.getEntityInfo(), (EventInfo) entity);
+                    for (int ii = 0; ii < textEventData.size(); ii++) {
+                        bw.write(((Double) textEventData.get(ii).getTimestamp()).toString() + co);
+                        bw.write(textEventData.get(ii).getData());
+                        bw.newLine();
+                    }
+                    break;
+                case 1:
+                    textEventData = nevReader.getTextEventData(sourceFilePath, entity.getEntityInfo(), (EventInfo) entity);
+                    for (int ii = 0; ii < textEventData.size(); ii++) {
+                        bw.write(((Double) textEventData.get(ii).getTimestamp()).toString() + co);
+                        bw.write(textEventData.get(ii).getData());
+                        bw.newLine();
+                    }
+                    break;
+                case 2:
+                    byteEventData = nevReader.getByteEventData(sourceFilePath, entity.getEntityInfo(), (EventInfo) entity);
+                    for (int ii = 0; ii < byteEventData.size(); ii++) {
+                        bw.write(((Double) byteEventData.get(ii).getTimestamp()).toString() + co);
+                        bw.write(((Byte) (byteEventData.get(ii).getData())).toString());
+                        bw.newLine();
+                    }
+                    break;
+                case 3:
+                    wordEventData = nevReader.getWordEventData(sourceFilePath, entity.getEntityInfo(), (EventInfo) entity);
+                    for (int ii = 0; ii < wordEventData.size(); ii++) {
+                        bw.write(((Double) wordEventData.get(ii).getTimestamp()).toString() + co);
+                        bw.write(((Integer) (wordEventData.get(ii).getData())).toString());
+                        bw.newLine();
+                    }
+                    break;
+                case 4:
+                    dwordEventData = nevReader.getDWordEventData(sourceFilePath, entity.getEntityInfo(), (EventInfo) entity);
+                    for (int ii = 0; ii < dwordEventData.size(); ii++) {
+                        bw.write(((Double) dwordEventData.get(ii).getTimestamp()).toString() + co);
+                        bw.write(((Long) (dwordEventData.get(ii).getData())).toString());
+                        bw.newLine();
+                    }
+                    break;
+                default:
+
+                    break;
+            }
+
+            bw.close();
+        } catch (IOException iOException) {
+        } finally {
+            try {
+                if (bw != null) {
+                    bw.close();
+                }
+            } catch (IOException iOException) {
+            }
+        }
+    }
+
+    private void createTOFileFromPlexon(String workingFilePath, String sourceFilePath, Entity entity) {
+
+        String co = ",";
+        String formatCode = "TO";
+        BufferedWriter bw = null;
+
+        try {
+            // BufferedWriter to write.
+            bw = new BufferedWriter(new FileWriter(workingFilePath));
+
+            // First Line : TO
+            bw.write(formatCode);
+            bw.newLine();
+
+            // Read Neuroshare Data.
+            PlxReader plxReader = new PlxReader();
+            ArrayList<Double> neuralData = plxReader.getNeuralData(sourceFilePath, entity.getEntityInfo());
+
+            // Write Data to the workingFile(CSV).
+            for (int ii = 0; ii < neuralData.size(); ii++) {
+
+                // 2nd Line : <timestamp>
+                bw.write(neuralData.get(ii).toString());
+                bw.newLine();
+            }
+            bw.close();
+        } catch (IOException iOException) {
+        } finally {
+            try {
+                if (bw != null) {
+                    bw.close();
+                }
+            } catch (IOException iOException) {
+            }
+        }
+    }
+
+    private void createTOFileFromBlackRockNev(String workingFilePath, String sourceFilePath, Entity entity) {
+
+        String co = ",";
+        String formatCode = "TO";
+        BufferedWriter bw = null;
+
+        try {
+            // BufferedWriter to write.
+            bw = new BufferedWriter(new FileWriter(workingFilePath));
+
+            // First Line : TO
+            bw.write(formatCode);
+            bw.newLine();
+
+            // Read Black Data.
+            NevReader nevReader = new NevReader();
+            ArrayList<Double> neuralData = nevReader.getNeuralData(sourceFilePath, entity.getEntityInfo());
 
             // Write Data to the workingFile(CSV).
             for (int ii = 0; ii < neuralData.size(); ii++) {
