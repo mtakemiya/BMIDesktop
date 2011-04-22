@@ -35,6 +35,7 @@ import jp.atr.dni.bmi.desktop.workingfileutils.TSData;
 /**
  *
  * @author kharada
+ * @version 2011/04/21
  */
 public class CreateNewNeuroshareFile {
 

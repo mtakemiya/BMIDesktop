@@ -19,6 +19,7 @@ import jp.atr.dni.bmi.desktop.neuroshareutils.EntityInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.EventInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NSReader;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NevReader;
+import jp.atr.dni.bmi.desktop.neuroshareutils.NsxReader;
 import jp.atr.dni.bmi.desktop.neuroshareutils.PlxReader;
 import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentData;
 import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentInfo;
@@ -33,7 +34,7 @@ import jp.atr.dni.bmi.desktop.neuroshareutils.WordEventData;
  */
 public class CSVWriter {
 
-    public void createCSVFileFromNeuroshare(String workingFilePath, String sourceFilePath, Entity entity) {
+    void createCSVFileFromNeuroshare(String workingFilePath, String sourceFilePath, Entity entity) {
         int entityType = (int) entity.getEntityInfo().getEntityType();
         switch (entityType) {
             case 0:
@@ -102,7 +103,8 @@ public class CSVWriter {
                 break;
             case 2:
                 // Analog
-//                createTSFileFromBlackRockNev(workingFilePath, sourceFilePath, entity);
+                // No case
+                //createTSFileFromBlackRockNev(workingFilePath, sourceFilePath, entity);
                 break;
             case 3:
                 // Segment
@@ -126,19 +128,22 @@ public class CSVWriter {
                 break;
             case 1:
                 // Event
-//                createTLFileFromBlackRockNsx(workingFilePath, sourceFilePath, entity);
+                // No case.
+                //createTLFileFromBlackRockNsx(workingFilePath, sourceFilePath, entity);
                 break;
             case 2:
                 // Analog
-//                createTSFileFromBlackRockNsx(workingFilePath, sourceFilePath, entity);
+                createTSFileFromBlackRockNsx(workingFilePath, sourceFilePath, entity);
                 break;
             case 3:
                 // Segment
-//                createTIFileFromBlackRockNsx(workingFilePath, sourceFilePath, entity);
+                // No case.
+                //createTIFileFromBlackRockNsx(workingFilePath, sourceFilePath, entity);
                 break;
             case 4:
                 // Neural
-//                createTOFileFromBlackRockNsx(workingFilePath, sourceFilePath, entity);
+                // No case.
+                //createTOFileFromBlackRockNsx(workingFilePath, sourceFilePath, entity);
                 break;
             case 5:
                 break;
@@ -397,6 +402,49 @@ public class CSVWriter {
     }
 
     private void createTSFileFromBlackRockNev(String workingFilePath, String sourceFilePath, Entity entity) {
+        // No case.
+//        String co = ",";
+//        String formatCode = "TS";
+//        double samplingRate = ((AnalogInfo) entity).getSampleRate();
+//        BufferedWriter bw = null;
+//
+//        try {
+//            // BufferedWriter to write.
+//            bw = new BufferedWriter(new FileWriter(workingFilePath));
+//
+//            // First Line : TS, <SamplingRate>
+//            bw.write(formatCode + co + samplingRate);
+//            bw.newLine();
+//
+//            // Read Neuroshare Data.
+//            NevReader nevReader = new NevReader();
+//            ArrayList<AnalogData> analogData = nevReader.getAnalogData(sourceFilePath, entity.getEntityInfo());
+//
+//            // Write Data to the workingFile(CSV).
+//            for (int ii = 0; ii < analogData.size(); ii++) {
+//
+//                // 2nd Line : <timestamp>, <AnalogValue[0]>, <AnalogValue[1]>, ... <AnalogValue[n]>
+//                AnalogData ad = analogData.get(ii);
+//                bw.write(((Double) ad.getTimeStamp()).toString());
+//                ArrayList<Double> analogValues = ad.getAnalogValues();
+//                for (int jj = 0; jj < analogValues.size(); jj++) {
+//                    bw.write(co + analogValues.get(jj));
+//                }
+//                bw.newLine();
+//            }
+//            bw.close();
+//        } catch (IOException iOException) {
+//        } finally {
+//            try {
+//                if (bw != null) {
+//                    bw.close();
+//                }
+//            } catch (IOException iOException) {
+//            }
+//        }
+    }
+
+    private void createTSFileFromBlackRockNsx(String workingFilePath, String sourceFilePath, Entity entity) {
         String co = ",";
         String formatCode = "TS";
         double samplingRate = ((AnalogInfo) entity).getSampleRate();
@@ -411,8 +459,8 @@ public class CSVWriter {
             bw.newLine();
 
             // Read Neuroshare Data.
-            NevReader nevReader = new NevReader();
-            ArrayList<AnalogData> analogData = nevReader.getAnalogData(sourceFilePath, entity.getEntityInfo());
+            NsxReader nsxReader = new NsxReader();
+            ArrayList<AnalogData> analogData = nsxReader.getAnalogData(sourceFilePath, entity.getEntityInfo());
 
             // Write Data to the workingFile(CSV).
             for (int ii = 0; ii < analogData.size(); ii++) {
@@ -526,6 +574,51 @@ public class CSVWriter {
             } catch (IOException iOException) {
             }
         }
+    }
+
+    private void createTIFileFromBlackRockNsx(String workingFilePath, String sourceFilePath, Entity entity) {
+        // No Case
+//        String co = ",";
+//        String formatCode = "TI";
+//        double samplingRate = ((SegmentInfo) entity).getSampleRate();
+//        BufferedWriter bw = null;
+//
+//        try {
+//            // BufferedWriter to write.
+//            bw = new BufferedWriter(new FileWriter(workingFilePath));
+//
+//            // First Line : TI, <SamplingRate>
+//            bw.write(formatCode + co + samplingRate);
+//            bw.newLine();
+//
+//            // Read Neuroshare Data.
+//            NsxReader nsxReader = new NsxReader();
+//            SegmentData segmentData = nsxReader.getSegmentData(sourceFilePath, entity.getEntityInfo(), (SegmentInfo) entity);
+//
+//            // Write Data to the workingFile(CSV).
+//            for (int ii = 0; ii < segmentData.getTimeStamp().size(); ii++) {
+//                // 2nd Line : <timestamp>, <dwUnitID>, <SegmentValue[0]>, <SegmentValue[1]>, ... <SegmentValue[n]>
+//                Double timeStamp = segmentData.getTimeStamp().get(ii);
+//                bw.write(timeStamp + co);
+//                Long unitID = segmentData.getUnitID().get(ii);
+//                bw.write(unitID.toString());
+//
+//                ArrayList<Double> segmentValues = segmentData.getValues().get(ii);
+//                for (int jj = 0; jj < segmentValues.size(); jj++) {
+//                    bw.write(co + segmentValues.get(jj));
+//                }
+//                bw.newLine();
+//            }
+//            bw.close();
+//        } catch (IOException iOException) {
+//        } finally {
+//            try {
+//                if (bw != null) {
+//                    bw.close();
+//                }
+//            } catch (IOException iOException) {
+//            }
+//        }
     }
 
     private void createTLFileFromPlexon(String workingFilePath, String sourceFilePath, Entity entity) {
@@ -688,6 +781,86 @@ public class CSVWriter {
         }
     }
 
+    private void createTLFileFromBlackRockNsx(String workingFilePath, String sourceFilePath, Entity entity) {
+        // No case.
+//        String co = ",";
+//        String formatCode = "TL";
+//        BufferedWriter bw = null;
+        ArrayList<TextEventData> textEventData = new ArrayList<TextEventData>();
+        ArrayList<ByteEventData> byteEventData = new ArrayList<ByteEventData>();
+        ArrayList<WordEventData> wordEventData = new ArrayList<WordEventData>();
+        ArrayList<DWordEventData> dwordEventData = new ArrayList<DWordEventData>();
+//
+//        try {
+//            // BufferedWriter to write.
+//            bw = new BufferedWriter(new FileWriter(workingFilePath));
+//
+//            // First Line : TL
+//            bw.write(formatCode);
+//            bw.newLine();
+//
+//            EventInfo ei = (EventInfo) entity;
+//            // Read BlackRock Data.
+        NsxReader nsxReader = new NsxReader();
+//
+//            switch ((int) ei.getEventType()) {
+//                case 0:
+//                    textEventData = nsxReader.getTextEventData(sourceFilePath, entity.getEntityInfo(), (EventInfo) entity);
+//                    for (int ii = 0; ii < textEventData.size(); ii++) {
+//                        bw.write(((Double) textEventData.get(ii).getTimestamp()).toString() + co);
+//                        bw.write(textEventData.get(ii).getData());
+//                        bw.newLine();
+//                    }
+//                    break;
+//                case 1:
+//                    textEventData = nsxReader.getTextEventData(sourceFilePath, entity.getEntityInfo(), (EventInfo) entity);
+//                    for (int ii = 0; ii < textEventData.size(); ii++) {
+//                        bw.write(((Double) textEventData.get(ii).getTimestamp()).toString() + co);
+//                        bw.write(textEventData.get(ii).getData());
+//                        bw.newLine();
+//                    }
+//                    break;
+//                case 2:
+//                    byteEventData = nsxReader.getByteEventData(sourceFilePath, entity.getEntityInfo(), (EventInfo) entity);
+//                    for (int ii = 0; ii < byteEventData.size(); ii++) {
+//                        bw.write(((Double) byteEventData.get(ii).getTimestamp()).toString() + co);
+//                        bw.write(((Byte) (byteEventData.get(ii).getData())).toString());
+//                        bw.newLine();
+//                    }
+//                    break;
+//                case 3:
+//                    wordEventData = nsxReader.getWordEventData(sourceFilePath, entity.getEntityInfo(), (EventInfo) entity);
+//                    for (int ii = 0; ii < wordEventData.size(); ii++) {
+//                        bw.write(((Double) wordEventData.get(ii).getTimestamp()).toString() + co);
+//                        bw.write(((Integer) (wordEventData.get(ii).getData())).toString());
+//                        bw.newLine();
+//                    }
+//                    break;
+//                case 4:
+//                    dwordEventData = nsxReader.getDWordEventData(sourceFilePath, entity.getEntityInfo(), (EventInfo) entity);
+//                    for (int ii = 0; ii < dwordEventData.size(); ii++) {
+//                        bw.write(((Double) dwordEventData.get(ii).getTimestamp()).toString() + co);
+//                        bw.write(((Long) (dwordEventData.get(ii).getData())).toString());
+//                        bw.newLine();
+//                    }
+//                    break;
+//                default:
+//
+//                    break;
+//            }
+//
+//            bw.close();
+//        } catch (IOException iOException) {
+//        } finally {
+//            try {
+//                if (bw != null) {
+//                    bw.close();
+//                }
+//            } catch (IOException iOException) {
+//            }
+//        }
+    }
+
     private void createTOFileFromPlexon(String workingFilePath, String sourceFilePath, Entity entity) {
 
         String co = ",";
@@ -760,6 +933,43 @@ public class CSVWriter {
             } catch (IOException iOException) {
             }
         }
+    }
+
+    private void createTOFileFromBlackRockNsx(String workingFilePath, String sourceFilePath, Entity entity) {
+        // No case.
+//        String co = ",";
+//        String formatCode = "TO";
+//        BufferedWriter bw = null;
+//
+//        try {
+//            // BufferedWriter to write.
+//            bw = new BufferedWriter(new FileWriter(workingFilePath));
+//
+//            // First Line : TO
+//            bw.write(formatCode);
+//            bw.newLine();
+//
+//            // Read Black Data.
+//            NsxReader nsxReader = new NsxReader();
+//            ArrayList<Double> neuralData = nsxReader.getNeuralData(sourceFilePath, entity.getEntityInfo());
+//
+//            // Write Data to the workingFile(CSV).
+//            for (int ii = 0; ii < neuralData.size(); ii++) {
+//
+//                // 2nd Line : <timestamp>
+//                bw.write(neuralData.get(ii).toString());
+//                bw.newLine();
+//            }
+//            bw.close();
+//        } catch (IOException iOException) {
+//        } finally {
+//            try {
+//                if (bw != null) {
+//                    bw.close();
+//                }
+//            } catch (IOException iOException) {
+//            }
+//        }
     }
 
     public boolean overwriteTSFile(String workingFilePath, ArrayList<AnalogData> analogData, Entity entity) {

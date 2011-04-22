@@ -5,8 +5,8 @@ package jp.atr.dni.bmi.desktop.neuroshareutils;
 
 /**
  *
- * @author kharada
- * @version 2011/01/13
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class TextEventData extends EventData {
 
@@ -21,6 +21,8 @@ public class TextEventData extends EventData {
     }
 
     /**
+     * @param dTimestamp
+     * @param dwDataByteSize
      * @param data
      */
     public TextEventData(double dTimestamp, long dwDataByteSize, String data) {

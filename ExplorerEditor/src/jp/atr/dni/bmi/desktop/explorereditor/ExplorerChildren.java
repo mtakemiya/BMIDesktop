@@ -12,12 +12,16 @@ import org.openide.nodes.Children;
 import org.openide.nodes.Node;
 
 /**
- *
- * @author kharada
- * @version 2011/01/24
+ * 
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class ExplorerChildren extends Children.Keys {
 
+    /**
+     *
+     * @param obj
+     */
     public ExplorerChildren(GeneralFileInfo obj) {
 
         String nodeType = obj.getFileType();
@@ -54,6 +58,9 @@ public class ExplorerChildren extends Children.Keys {
 
     }
 
+    /**
+     *
+     */
     public ExplorerChildren() {
         GeneralFileInfo[] objs = new GeneralFileInfo[1];
         objs[0] = new GeneralFileInfo(new File(Constants.DATA_HOME).getAbsolutePath());
@@ -61,12 +68,22 @@ public class ExplorerChildren extends Children.Keys {
         setKeys(objs);
     }
 
+    /**
+     *
+     * @param t
+     * @return
+     */
     @Override
     protected Node[] createNodes(Object t) {
         GeneralFileInfo obj = (GeneralFileInfo) t;
         return new Node[]{new ExplorerNode(obj)};
     }
 
+    /**
+     *
+     * @param t
+     * @return
+     */
     public boolean remove(Object t) {
         GeneralFileInfo obj = (GeneralFileInfo) t;
         Node a = findChild(obj.getFileName());
