@@ -6,7 +6,8 @@ package jp.atr.dni.bmi.desktop.workingfileutils;
 
 /**
  *
- * @author kharada
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class TSHeader {
 
@@ -27,6 +28,9 @@ public class TSHeader {
     private String commentOfLowFreqCutoff;
     private String commentOfThisProbe;
 
+    /**
+     *
+     */
     public TSHeader() {
         this.samplingRate_Hz = 0;
         this.minValue = Double.MAX_VALUE;
@@ -46,6 +50,25 @@ public class TSHeader {
         this.commentOfThisProbe = "";
     }
 
+    /**
+     *
+     * @param samplingRate_Hz
+     * @param minValue
+     * @param maxValue
+     * @param unitOfValue
+     * @param resolution
+     * @param locationX_m
+     * @param locationY_m
+     * @param locationZ_m
+     * @param probeNumber
+     * @param highFreqCutoff_Hz
+     * @param orderOfHighFreqCutoff
+     * @param commentOfHighFreqCutoff
+     * @param lowFreqCutoff_Hz
+     * @param orderOfLowFreqCutoff
+     * @param commentOfLowFreqCutoff
+     * @param commentOfThisProbe
+     */
     public TSHeader(double samplingRate_Hz, double minValue, double maxValue, String unitOfValue, double resolution, double locationX_m, double locationY_m, double locationZ_m, double probeNumber, double highFreqCutoff_Hz, int orderOfHighFreqCutoff, String commentOfHighFreqCutoff, double lowFreqCutoff_Hz, int orderOfLowFreqCutoff, String commentOfLowFreqCutoff, String commentOfThisProbe) {
         this.samplingRate_Hz = samplingRate_Hz;
         this.minValue = minValue;

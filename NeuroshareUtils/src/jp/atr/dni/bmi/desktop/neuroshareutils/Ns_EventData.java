@@ -11,8 +11,8 @@ import java.io.IOException;
 
 /**
  *
- * @author kharada
- * @version 2011/01/13
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class Ns_EventData {
 
@@ -23,6 +23,7 @@ public class Ns_EventData {
     Ns_EventInfo eventInfo;
 
     /**
+     * @param ID
      * @param szEntityLabel
      */
     public Ns_EventData(int ID, String szEntityLabel) {
@@ -53,18 +54,42 @@ public class Ns_EventData {
         return this.eventInfo.setMembers(nsaEventInfo);
     }
 
+    /**
+     *
+     * @param dTimestamp
+     * @param EventData
+     * @return
+     */
     public int addEventData(double dTimestamp, byte EventData) {
         return this.addEventData(dTimestamp, EventData, Const_ns_EVENT.ns_EVENT_BYTE);
     }
 
+    /**
+     *
+     * @param dTimestamp
+     * @param EventData
+     * @return
+     */
     public int addEventData(double dTimestamp, short EventData) {
         return this.addEventData(dTimestamp, EventData, Const_ns_EVENT.ns_EVENT_WORD);
     }
 
+    /**
+     *
+     * @param dTimestamp
+     * @param EventData
+     * @return
+     */
     public int addEventData(double dTimestamp, int EventData) {
         return this.addEventData(dTimestamp, EventData, Const_ns_EVENT.ns_EVENT_DWORD);
     }
 
+    /**
+     *
+     * @param dTimestamp
+     * @param EventData
+     * @return
+     */
     public int addEventData(double dTimestamp, String EventData) {
         return this.addEventData(dTimestamp, EventData, Const_ns_EVENT.ns_EVENT_TEXT);
     }
@@ -193,6 +218,10 @@ public class Ns_EventData {
         return rtnVal;
     }
 
+    /**
+     *
+     * @return
+     */
     public int saveEventInfo() {
 
         int rtnVal = Const_values.NS_OK;

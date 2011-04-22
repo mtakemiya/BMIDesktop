@@ -36,17 +36,25 @@ import jp.atr.dni.bmi.desktop.workingfileutils.TSHeader;
 
 /**
  *
- * @author kharada
- * @version 2011/02/23
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class Channel {
 
     private List listeners = Collections.synchronizedList(new LinkedList());
 
+    /**
+     *
+     * @param pcl
+     */
     public void addPropertyChangeListener(PropertyChangeListener pcl) {
         listeners.add(pcl);
     }
 
+    /**
+     *
+     * @param pcl
+     */
     public void removePropertyChangeListener(PropertyChangeListener pcl) {
         listeners.remove(pcl);
     }
@@ -73,6 +81,9 @@ public class Channel {
     private Entity entity;
 
     // Constructor.
+    /**
+     *
+     */
     public Channel() {
         this.channelID = -1;
         this.displayName = "";
@@ -83,6 +94,11 @@ public class Channel {
     }
 
     // Constructor. Case : Neuroshare
+    /**
+     *
+     * @param channelID
+     * @param entity
+     */
     public Channel(int channelID, Entity entity) {
         this.channelID = channelID;
         this.displayName = entity.getEntityInfo().getEntityLabel();
@@ -212,6 +228,10 @@ public class Channel {
     }
 
     // Get Data methods.
+    /**
+     *
+     * @return
+     */
     public ArrayList<AnalogData> getNeuroshareAnalogData() {
         try {
             CSVReader nsCsvReader = new CSVReader();
@@ -222,6 +242,10 @@ public class Channel {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Double> getNeuroshareNeuralData() {
         try {
             CSVReader nsCsvReader = new CSVReader();
@@ -232,6 +256,10 @@ public class Channel {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<TextEventData> getNeuroshareTextEventData() {
         try {
             CSVReader nsCsvReader = new CSVReader();
@@ -242,6 +270,10 @@ public class Channel {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public SegmentData getNeuroshareSegmentData() {
         try {
             CSVReader nsCsvReader = new CSVReader();
@@ -253,6 +285,11 @@ public class Channel {
     }
 
     // Set Data methods.
+    /**
+     *
+     * @param analogData
+     * @return
+     */
     public boolean setNeuroshareAnalogData(ArrayList<AnalogData> analogData) {
         CSVWriter nsCsvWriter = new CSVWriter();
         if (nsCsvWriter.overwriteTSFile(this.workingFilePath, analogData, this.entity)) {
@@ -263,6 +300,11 @@ public class Channel {
 
     }
 
+    /**
+     *
+     * @param eventData
+     * @return
+     */
     public boolean setNeuroshareEventData(ArrayList<EventData> eventData) {
         CSVWriter nsCsvWriter = new CSVWriter();
         Object eventObject = eventData.clone();
@@ -273,6 +315,11 @@ public class Channel {
         return false;
     }
 
+    /**
+     *
+     * @param segmentData
+     * @return
+     */
     public boolean setNeuroshareSegmentData(SegmentData segmentData) {
         CSVWriter nsCsvWriter = new CSVWriter();
         if (nsCsvWriter.overwriteTIFile(this.workingFilePath, segmentData, this.entity)) {
@@ -282,6 +329,11 @@ public class Channel {
         return false;
     }
 
+    /**
+     *
+     * @param neuralData
+     * @return
+     */
     public boolean setNeuroshareNeuralData(ArrayList<Double> neuralData) {
         CSVWriter nsCsvWriter = new CSVWriter();
         if (nsCsvWriter.overwriteTOFile(this.workingFilePath, neuralData, this.entity)) {
@@ -291,42 +343,79 @@ public class Channel {
         return false;
     }
 
+    /**
+     *
+     * @return
+     */
     public TSHeader getTSHeader() {
         return convertEntityToTSHeader();
     }
 
+    /**
+     *
+     * @return
+     */
     public TOHeader getTOHeader() {
         return convertEntityToTOHeader();
     }
 
+    /**
+     *
+     * @return
+     */
     public TIHeader getTIHeader() {
         return convertEntityToTIHeader();
     }
 
+    /**
+     *
+     * @return
+     */
     public TLHeader getTLHeader() {
         return convertEntityToTLHeader();
     }
 
+    /**
+     *
+     * @return
+     */
     public TSData getTSData() {
         CSVReader csvReader = new CSVReader();
         return csvReader.getTSData(this.workingFilePath);
     }
 
+    /**
+     *
+     * @return
+     */
     public TOData getTOData() {
         CSVReader csvReader = new CSVReader();
         return csvReader.getTOData(this.workingFilePath);
     }
 
+    /**
+     *
+     * @return
+     */
     public TIData getTIData() {
         CSVReader csvReader = new CSVReader();
         return csvReader.getTIData(this.workingFilePath);
     }
 
+    /**
+     *
+     * @return
+     */
     public TLData getTLData() {
         CSVReader csvReader = new CSVReader();
         return csvReader.getTLData(this.workingFilePath);
     }
 
+    /**
+     *
+     * @param data
+     * @return
+     */
     public boolean setTSData(TSData data) {
         CSVWriter csvWriter = new CSVWriter();
         Entity e = csvWriter.overwriteTSFile(this.workingFilePath, data, this.entity);
@@ -341,6 +430,11 @@ public class Channel {
         return true;
     }
 
+    /**
+     *
+     * @param data
+     * @return
+     */
     public boolean setTOData(TOData data) {
         CSVWriter csvWriter = new CSVWriter();
         Entity e = csvWriter.overwriteTOFile(this.workingFilePath, data, this.entity);
@@ -355,6 +449,11 @@ public class Channel {
         return true;
     }
 
+    /**
+     *
+     * @param data
+     * @return
+     */
     public boolean setTIData(TIData data) {
         CSVWriter csvWriter = new CSVWriter();
         Entity e = csvWriter.overwriteTIFile(this.workingFilePath, data, this.entity);
@@ -369,6 +468,11 @@ public class Channel {
         return true;
     }
 
+    /**
+     *
+     * @param data
+     * @return
+     */
     public boolean setTLData(TLData data) {
         CSVWriter csvWriter = new CSVWriter();
         Entity e = csvWriter.overwriteTLFile(this.workingFilePath, data, this.entity);

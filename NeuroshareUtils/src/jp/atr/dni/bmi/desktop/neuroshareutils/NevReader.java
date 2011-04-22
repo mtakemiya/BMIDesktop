@@ -9,14 +9,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * @author Keiji Harada [*1]</br> [*1] ATR Intl. Conputational Neuroscience
- *         Labs, Decoding Group
- * @version 2011/04/18
+ *
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class NevReader {
 
     /**
-     * @param path
+     * @param nevFilePath 
+     * @return
      */
     public NeuroshareFile readNevFileAllData(String nevFilePath) {
         // TODO Auto-generated method stub
@@ -471,8 +472,8 @@ public class NevReader {
                     // 2011/04/19 kharada modify to use DWordEventData instead of WordEventData.
                     // to setable uint16 values.
                     DWordEventData a = new DWordEventData(dTimeStamp, 4);
-                    a.setData(((Integer)digitalInput).longValue());
- 
+                    a.setData(((Integer) digitalInput).longValue());
+
                     tempEventData.add(a);
                     tempEventInfo.setData(tempEventData);
 
@@ -651,7 +652,8 @@ public class NevReader {
     }
 
     /**
-     * @param path
+     * @param nevFilePath
+     * @return
      */
     public NeuroshareFile readNevFileOnlyInfo(String nevFilePath) {
         // TODO Auto-generated method stub
@@ -1107,7 +1109,7 @@ public class NevReader {
                     // 2011/04/19 kharada modify to use DWordEventData instead of WordEventData.
                     // to setable uint16 values.
                     DWordEventData a = new DWordEventData(dTimeStamp, 4);
-                    a.setData(((Integer)digitalInput).longValue());
+                    a.setData(((Integer) digitalInput).longValue());
                     tempEventData.add(a);
                     // skip data.
                     //tempEventInfo.setData(tempEventData);
@@ -1288,6 +1290,14 @@ public class NevReader {
 
     }
 
+    /**
+     *
+     * @param fileFullPath
+     * @param entityNFO
+     * @param segNFO
+     * @return
+     * @throws IOException
+     */
     public SegmentData getSegmentData(String fileFullPath, EntityInfo entityNFO, SegmentInfo segNFO)
             throws IOException {
 
@@ -1313,6 +1323,13 @@ public class NevReader {
         return null;
     }
 
+    /**
+     *
+     * @param fileFullPath
+     * @param entityNFO
+     * @return
+     * @throws IOException
+     */
     public ArrayList<Double> getNeuralData(String fileFullPath, EntityInfo entityNFO) throws IOException {
 
         // Read all nev data to get neural Data. (to Get Neuroshare Format.)
@@ -1337,6 +1354,13 @@ public class NevReader {
         return null;
     }
 
+    /**
+     *
+     * @param fileFullPath
+     * @param entityNFO
+     * @return
+     * @throws IOException
+     */
     public ArrayList<AnalogData> getAnalogData(String fileFullPath, EntityInfo entityNFO) throws IOException {
 
         // Read all nev data to get neural Data. (to Get Neuroshare Format.)
@@ -1361,6 +1385,14 @@ public class NevReader {
         return null;
     }
 
+    /**
+     *
+     * @param fileFullPath
+     * @param entityNFO
+     * @param eventNFO
+     * @return
+     * @throws IOException
+     */
     public ArrayList<ByteEventData> getByteEventData(String fileFullPath, EntityInfo entityNFO, EventInfo eventNFO) throws IOException {
 
         // Read all nev data to get neural Data. (to Get Neuroshare Format.)
@@ -1379,9 +1411,9 @@ public class NevReader {
                 if (ei.getEntityInfo().getEntityLabel().equals(entityNFO.getEntityLabel()) && ei.getEventType() == eventNFO.getEventType()) {
                     ArrayList<EventData> data = ei.getData();
                     ArrayList<ByteEventData> bed = new ArrayList<ByteEventData>();
-                    for (int jj =0; jj < data.size(); jj++){
+                    for (int jj = 0; jj < data.size(); jj++) {
                         EventData oneData = data.get(jj);
-                        bed.add((ByteEventData)oneData);
+                        bed.add((ByteEventData) oneData);
                     }
                     return bed;
                 }
@@ -1390,6 +1422,15 @@ public class NevReader {
 
         return null;
     }
+
+    /**
+     *
+     * @param fileFullPath
+     * @param entityNFO
+     * @param eventNFO
+     * @return
+     * @throws IOException
+     */
     public ArrayList<DWordEventData> getDWordEventData(String fileFullPath, EntityInfo entityNFO, EventInfo eventNFO) throws IOException {
 
         // Read all nev data to get neural Data. (to Get Neuroshare Format.)
@@ -1408,9 +1449,9 @@ public class NevReader {
                 if (ei.getEntityInfo().getEntityLabel().equals(entityNFO.getEntityLabel()) && ei.getEventType() == eventNFO.getEventType()) {
                     ArrayList<EventData> data = ei.getData();
                     ArrayList<DWordEventData> dwed = new ArrayList<DWordEventData>();
-                    for (int jj =0; jj < data.size(); jj++){
+                    for (int jj = 0; jj < data.size(); jj++) {
                         EventData oneData = data.get(jj);
-                        dwed.add((DWordEventData)oneData);
+                        dwed.add((DWordEventData) oneData);
                     }
                     return dwed;
                 }
@@ -1419,6 +1460,15 @@ public class NevReader {
 
         return null;
     }
+
+    /**
+     *
+     * @param fileFullPath
+     * @param entityNFO
+     * @param eventNFO
+     * @return
+     * @throws IOException
+     */
     public ArrayList<WordEventData> getWordEventData(String fileFullPath, EntityInfo entityNFO, EventInfo eventNFO) throws IOException {
 
         // Read all nev data to get neural Data. (to Get Neuroshare Format.)
@@ -1437,9 +1487,9 @@ public class NevReader {
                 if (ei.getEntityInfo().getEntityLabel().equals(entityNFO.getEntityLabel()) && ei.getEventType() == eventNFO.getEventType()) {
                     ArrayList<EventData> data = ei.getData();
                     ArrayList<WordEventData> wed = new ArrayList<WordEventData>();
-                    for (int jj =0; jj < data.size(); jj++){
+                    for (int jj = 0; jj < data.size(); jj++) {
                         EventData oneData = data.get(jj);
-                        wed.add((WordEventData)oneData);
+                        wed.add((WordEventData) oneData);
                     }
                     return wed;
                 }
@@ -1448,6 +1498,15 @@ public class NevReader {
 
         return null;
     }
+
+    /**
+     *
+     * @param fileFullPath
+     * @param entityNFO
+     * @param eventNFO
+     * @return
+     * @throws IOException
+     */
     public ArrayList<TextEventData> getTextEventData(String fileFullPath, EntityInfo entityNFO, EventInfo eventNFO) throws IOException {
 
         // Read all nev data to get neural Data. (to Get Neuroshare Format.)
@@ -1466,9 +1525,9 @@ public class NevReader {
                 if (ei.getEntityInfo().getEntityLabel().equals(entityNFO.getEntityLabel()) && ei.getEventType() == eventNFO.getEventType()) {
                     ArrayList<EventData> data = ei.getData();
                     ArrayList<TextEventData> ted = new ArrayList<TextEventData>();
-                    for (int jj =0; jj < data.size(); jj++){
+                    for (int jj = 0; jj < data.size(); jj++) {
                         EventData oneData = data.get(jj);
-                        ted.add((TextEventData)oneData);
+                        ted.add((TextEventData) oneData);
                     }
                     return ted;
                 }

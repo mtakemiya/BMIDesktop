@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 /**
  *
- * @author kharada
- * @version 2011/01/13
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 @XStreamAlias("analogInfo")
 public class AnalogInfo extends Entity {
@@ -57,7 +57,7 @@ public class AnalogInfo extends Entity {
      * @param highFilterType
      * @param lowFreqCorner
      * @param lowFreqOrder
-     * @param lowFilterType
+     * @param lowFiltertype
      * @param probeInfo
      */
     public AnalogInfo(Tag tag, EntityInfo entityInfo, double sampleRate, double minVal, double maxVal,

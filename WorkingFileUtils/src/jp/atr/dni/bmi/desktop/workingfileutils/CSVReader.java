@@ -14,11 +14,17 @@ import jp.atr.dni.bmi.desktop.neuroshareutils.TextEventData;
 
 /**
  *
- * @author kharada
- * @version 2011/03/11
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class CSVReader {
 
+    /**
+     *
+     * @param fileFullPath
+     * @return
+     * @throws IOException
+     */
     public ArrayList<AnalogData> getAnalogData(String fileFullPath) throws IOException {
 
         ArrayList<String> lines = readCSVFile(fileFullPath);
@@ -83,6 +89,12 @@ public class CSVReader {
         return data;
     }
 
+    /**
+     *
+     * @param fileFullPath
+     * @return
+     * @throws IOException
+     */
     public ArrayList<TextEventData> getTextEventData(String fileFullPath) throws IOException {
 
         ArrayList<String> lines = readCSVFile(fileFullPath);
@@ -108,6 +120,12 @@ public class CSVReader {
         return data;
     }
 
+    /**
+     *
+     * @param fileFullPath
+     * @return
+     * @throws IOException
+     */
     public ArrayList<Double> getNeuralData(String fileFullPath) throws IOException {
 
         ArrayList<String> lines = readCSVFile(fileFullPath);
@@ -129,6 +147,12 @@ public class CSVReader {
         return timeStamps;
     }
 
+    /**
+     *
+     * @param fileFullPath
+     * @return
+     * @throws IOException
+     */
     public SegmentData getSegmentData(String fileFullPath)
             throws IOException {
         ArrayList<String> lines = readCSVFile(fileFullPath);
@@ -238,6 +262,11 @@ public class CSVReader {
 
     }
 
+    /**
+     *
+     * @param workingFilePath
+     * @return
+     */
     public TSData getTSData(String workingFilePath) {
 
         // if working file didn't exists, then null.
@@ -312,6 +341,11 @@ public class CSVReader {
         return data;
     }
 
+    /**
+     *
+     * @param workingFilePath
+     * @return
+     */
     public TOData getTOData(String workingFilePath) {
 
         // if working file didn't exists, then null.
@@ -346,6 +380,11 @@ public class CSVReader {
         return data;
     }
 
+    /**
+     *
+     * @param workingFilePath
+     * @return
+     */
     public TIData getTIData(String workingFilePath) {
 
         // if working file didn't exists, then null.
@@ -429,6 +468,11 @@ public class CSVReader {
         return data;
     }
 
+    /**
+     *
+     * @param workingFilePath
+     * @return
+     */
     public TLData getTLData(String workingFilePath) {
 
         // if working file didn't exists, then null.
@@ -458,7 +502,7 @@ public class CSVReader {
                     throw ex;
                 }
             }
-            
+
             Object d = parts[1];
             data.addValue(d);
         }

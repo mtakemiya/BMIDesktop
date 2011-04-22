@@ -6,7 +6,8 @@ package jp.atr.dni.bmi.desktop.workingfileutils;
 
 /**
  *
- * @author kharada
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class TIHeader {
 
@@ -31,6 +32,9 @@ public class TIHeader {
     private String commentOfLowFreqCutoff;
     private String commentOfThisProbe;
 
+    /**
+     *
+     */
     public TIHeader() {
         this.sourceCount = 1;
         this.minSampleCount = Integer.MAX_VALUE;
@@ -54,6 +58,29 @@ public class TIHeader {
         this.commentOfThisProbe = "";
     }
 
+    /**
+     *
+     * @param sourceCount
+     * @param minSampleCount
+     * @param maxSampleCount
+     * @param samplingRate_Hz
+     * @param unitOfValue
+     * @param minValue
+     * @param maxValue
+     * @param resolution
+     * @param subSampleShift
+     * @param locationX_m
+     * @param locationY_m
+     * @param locationZ_m
+     * @param probeNumber
+     * @param highFreqCutoff_Hz
+     * @param orderOfHighFreqCutoff
+     * @param commentOfHighFreqCutoff
+     * @param lowFreqCutoff_Hz
+     * @param orderOfLowFreqCutoff
+     * @param commentOfLowFreqCutoff
+     * @param commentOfThisProbe
+     */
     public TIHeader(int sourceCount, int minSampleCount, int maxSampleCount, double samplingRate_Hz, String unitOfValue, double minValue, double maxValue, double resolution, double subSampleShift, double locationX_m, double locationY_m, double locationZ_m, double probeNumber, double highFreqCutoff_Hz, int orderOfHighFreqCutoff, String commentOfHighFreqCutoff, double lowFreqCutoff_Hz, int orderOfLowFreqCutoff, String commentOfLowFreqCutoff, String commentOfThisProbe) {
         this.sourceCount = sourceCount;
         this.minSampleCount = minSampleCount;

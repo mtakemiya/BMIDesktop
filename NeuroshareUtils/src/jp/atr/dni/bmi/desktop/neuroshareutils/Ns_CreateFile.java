@@ -13,8 +13,8 @@ import java.util.ArrayList;
 
 /**
  *
- * @author kharada
- * @version 2011/01/13
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class Ns_CreateFile {
 
@@ -29,6 +29,7 @@ public class Ns_CreateFile {
 
     /**
      *
+     * @param outputFileName
      */
     public Ns_CreateFile(String outputFileName) {
         this.intermediateFileNameForInfo = Const_values.FN_HEADER + Const_values.FILE
@@ -38,6 +39,11 @@ public class Ns_CreateFile {
         this.nsFileInfo = new Ns_FileInfo();
     }
 
+    /**
+     *
+     * @param szEntityLabel
+     * @return
+     */
     public Ns_EventData newEventData(String szEntityLabel) {
         // Creation if first call.
         if (this.eventData == null) {
@@ -55,6 +61,11 @@ public class Ns_CreateFile {
         return this.eventData.get(this.eventData.size() - 1);
     }
 
+    /**
+     *
+     * @param szEntityLabel
+     * @return
+     */
     public Ns_AnalogData newAnalogData(String szEntityLabel) {
         // Creation if first call.
         if (this.analogData == null) {
@@ -72,6 +83,11 @@ public class Ns_CreateFile {
         return this.analogData.get(this.analogData.size() - 1);
     }
 
+    /**
+     *
+     * @param szEntityLabel
+     * @return
+     */
     public Ns_SegmentData newSegmentData(String szEntityLabel) {
         // Creation if first call.
         if (this.segmentData == null) {
@@ -89,6 +105,11 @@ public class Ns_CreateFile {
         return this.segmentData.get(this.segmentData.size() - 1);
     }
 
+    /**
+     *
+     * @param szEntityLabel
+     * @return
+     */
     public Ns_NeuralEventData newNeuralEventData(String szEntityLabel) {
         // Creation if first call.
         if (this.neuralEventData == null) {
@@ -106,14 +127,27 @@ public class Ns_CreateFile {
         return this.neuralEventData.get(this.neuralEventData.size() - 1);
     }
 
+    /**
+     *
+     * @return
+     */
     public Nsa_FileInfo getFileInfo() {
         return this.nsFileInfo.getMembers();
     }
 
+    /**
+     *
+     * @param nsaFileInfo
+     * @return
+     */
     public int setFileInfo(Nsa_FileInfo nsaFileInfo) {
         return this.nsFileInfo.setMembers(nsaFileInfo);
     }
 
+    /**
+     *
+     * @return
+     */
     public int closeFile() {
 
         // Check the output FILE name. [.nsn] is OK. if NG, add extension and go on.

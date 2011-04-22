@@ -44,6 +44,10 @@ import org.openide.util.lookup.Lookups;
  */
 public class ExplorerNode extends AbstractNode {
 
+    /**
+     *
+     * @param obj
+     */
     public ExplorerNode(GeneralFileInfo obj) {
         super(new ExplorerChildren(obj), Lookups.singleton(obj));
         setDisplayName(obj.getFileName());
@@ -59,12 +63,19 @@ public class ExplorerNode extends AbstractNode {
 
     }
 
+    /**
+     *
+     */
     public ExplorerNode() {
         super(new ExplorerChildren());
         setDisplayName("Root of Data");
         setIconBaseWithExtension("jp/atr/dni/bmi/desktop/explorereditor/monitor16.png");
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String getHtmlDisplayName() {
         GeneralFileInfo obj = getLookup().lookup(GeneralFileInfo.class);
@@ -75,6 +86,11 @@ public class ExplorerNode extends AbstractNode {
         }
     }
 
+    /**
+     *
+     * @param popup
+     * @return
+     */
     @Override
     public Action[] getActions(boolean popup) {
         return new Action[]{
@@ -90,6 +106,10 @@ public class ExplorerNode extends AbstractNode {
                 };
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     protected Sheet createSheet() {
         Sheet sheet = Sheet.createDefault();

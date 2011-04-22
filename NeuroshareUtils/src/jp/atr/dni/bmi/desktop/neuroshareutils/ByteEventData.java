@@ -6,12 +6,18 @@ package jp.atr.dni.bmi.desktop.neuroshareutils;
 
 /**
  *
- * @author kharada
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class ByteEventData extends EventData {
 
     private byte data;
 
+    /**
+     *
+     * @param dTimestamp
+     * @param dwDataByteSize
+     */
     public ByteEventData(double dTimestamp, long dwDataByteSize) {
         super(dTimestamp, dwDataByteSize);
     }

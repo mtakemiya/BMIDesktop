@@ -10,10 +10,15 @@ import java.awt.event.ActionListener;
 
 /**
  *
- * @author kharada
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class OpenEditorAction implements ActionListener{
 
+    /**
+     *
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         ExplorerEditor editor = new ExplorerEditor();

@@ -9,14 +9,15 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 
 /**
- * @author Keiji Harada [*1]</br> [*1] ATR Intl. Conputational Neuroscience
- *         Labs, Decoding Group
- * @version 2011/04/21
+ *
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class NsxReader {
 
     /**
      * @param nsxFilePath
+     * @return
      */
     public NeuroshareFile readNsxFileAllData(String nsxFilePath) {
         // NSX to Neuroshare object.
@@ -402,6 +403,7 @@ public class NsxReader {
 
     /**
      * @param nsxFilePath
+     * @return
      */
     public NeuroshareFile readNsxFileOnlyInfo(String nsxFilePath) {
         // NSX to Neuroshare object.
@@ -786,6 +788,14 @@ public class NsxReader {
 
     }
 
+    /**
+     *
+     * @param fileFullPath
+     * @param entityNFO
+     * @param segNFO
+     * @return
+     * @throws IOException
+     */
     public SegmentData getSegmentData(String fileFullPath, EntityInfo entityNFO, SegmentInfo segNFO)
             throws IOException {
 
@@ -811,6 +821,13 @@ public class NsxReader {
         return null;
     }
 
+    /**
+     *
+     * @param fileFullPath
+     * @param entityNFO
+     * @return
+     * @throws IOException
+     */
     public ArrayList<Double> getNeuralData(String fileFullPath, EntityInfo entityNFO) throws IOException {
 
         // Read all nsx data to get neural Data. (to Get Neuroshare Format.)
@@ -835,6 +852,13 @@ public class NsxReader {
         return null;
     }
 
+    /**
+     *
+     * @param fileFullPath
+     * @param entityNFO
+     * @return
+     * @throws IOException
+     */
     public ArrayList<AnalogData> getAnalogData(String fileFullPath, EntityInfo entityNFO) throws IOException {
 
         // Read all nsx data to get neural Data. (to Get Neuroshare Format.)
@@ -859,6 +883,14 @@ public class NsxReader {
         return null;
     }
 
+    /**
+     *
+     * @param fileFullPath
+     * @param entityNFO
+     * @param eventNFO
+     * @return
+     * @throws IOException
+     */
     public ArrayList<ByteEventData> getByteEventData(String fileFullPath, EntityInfo entityNFO, EventInfo eventNFO) throws IOException {
 
         // Read all nsx data to get neural Data. (to Get Neuroshare Format.)
@@ -889,6 +921,14 @@ public class NsxReader {
         return null;
     }
 
+    /**
+     *
+     * @param fileFullPath
+     * @param entityNFO
+     * @param eventNFO
+     * @return
+     * @throws IOException
+     */
     public ArrayList<DWordEventData> getDWordEventData(String fileFullPath, EntityInfo entityNFO, EventInfo eventNFO) throws IOException {
 
         // Read all nsx data to get neural Data. (to Get Neuroshare Format.)
@@ -919,6 +959,14 @@ public class NsxReader {
         return null;
     }
 
+    /**
+     *
+     * @param fileFullPath
+     * @param entityNFO
+     * @param eventNFO
+     * @return
+     * @throws IOException
+     */
     public ArrayList<WordEventData> getWordEventData(String fileFullPath, EntityInfo entityNFO, EventInfo eventNFO) throws IOException {
 
         // Read all nsx data to get neural Data. (to Get Neuroshare Format.)
@@ -949,6 +997,14 @@ public class NsxReader {
         return null;
     }
 
+    /**
+     *
+     * @param fileFullPath
+     * @param entityNFO
+     * @param eventNFO
+     * @return
+     * @throws IOException
+     */
     public ArrayList<TextEventData> getTextEventData(String fileFullPath, EntityInfo entityNFO, EventInfo eventNFO) throws IOException {
 
         // Read all nsx data to get neural Data. (to Get Neuroshare Format.)

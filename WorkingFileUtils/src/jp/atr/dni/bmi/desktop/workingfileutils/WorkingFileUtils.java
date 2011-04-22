@@ -10,28 +10,43 @@ import jp.atr.dni.bmi.desktop.neuroshareutils.Entity;
 
 /**
  *
- * @author kharada
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class WorkingFileUtils {
 
     private final String WS_HOME = "." + File.separator + "workingfiles" + File.separator;
     private String workingFilePath;
 
+    /**
+     *
+     */
     public WorkingFileUtils() {
         this.workingFilePath = "";
     }
 
+    /**
+     *
+     * @param workingFilePath
+     */
     public WorkingFileUtils(String workingFilePath) {
         this.workingFilePath = workingFilePath;
     }
 
+    /**
+     *
+     * @param sourceFilePath
+     * @param entity
+     * @return
+     * @throws IOException
+     */
     public boolean createWorkingFileFromNeuroshare(String sourceFilePath, Entity entity) throws IOException {
         String tmpFilePath = WS_HOME + System.currentTimeMillis() + "_" + hashCode() + ".csv";
         File file = new File(tmpFilePath);
 
         // Create workingfiles dir if it  does not exist.
         File dir = file.getParentFile();
-        if(!dir.exists()){
+        if (!dir.exists()) {
             dir.mkdirs();
         }
 
@@ -48,13 +63,20 @@ public class WorkingFileUtils {
         return true;
     }
 
+    /**
+     *
+     * @param sourceFilePath
+     * @param entity
+     * @return
+     * @throws IOException
+     */
     public boolean createWorkingFileFromPlexon(String sourceFilePath, Entity entity) throws IOException {
         String tmpFilePath = WS_HOME + System.currentTimeMillis() + "_" + hashCode() + ".csv";
         File file = new File(tmpFilePath);
 
         // Create workingfiles dir if it  does not exist.
         File dir = file.getParentFile();
-        if(!dir.exists()){
+        if (!dir.exists()) {
             dir.mkdirs();
         }
 
@@ -70,13 +92,21 @@ public class WorkingFileUtils {
         this.workingFilePath = file.getAbsolutePath();
         return true;
     }
+
+    /**
+     *
+     * @param sourceFilePath
+     * @param entity
+     * @return
+     * @throws IOException
+     */
     public boolean createWorkingFileFromBlackRockNev(String sourceFilePath, Entity entity) throws IOException {
         String tmpFilePath = WS_HOME + System.currentTimeMillis() + "_" + hashCode() + ".csv";
         File file = new File(tmpFilePath);
 
         // Create workingfiles dir if it  does not exist.
         File dir = file.getParentFile();
-        if(!dir.exists()){
+        if (!dir.exists()) {
             dir.mkdirs();
         }
 
@@ -92,13 +122,21 @@ public class WorkingFileUtils {
         this.workingFilePath = file.getAbsolutePath();
         return true;
     }
+
+    /**
+     *
+     * @param sourceFilePath
+     * @param entity
+     * @return
+     * @throws IOException
+     */
     public boolean createWorkingFileFromBlackRockNsx(String sourceFilePath, Entity entity) throws IOException {
         String tmpFilePath = WS_HOME + System.currentTimeMillis() + "_" + hashCode() + ".csv";
         File file = new File(tmpFilePath);
 
         // Create workingfiles dir if it  does not exist.
         File dir = file.getParentFile();
-        if(!dir.exists()){
+        if (!dir.exists()) {
             dir.mkdirs();
         }
 
@@ -115,6 +153,10 @@ public class WorkingFileUtils {
         return true;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean removeWorkingFile() {
         return new File(workingFilePath).delete();
     }

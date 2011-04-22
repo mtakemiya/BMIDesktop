@@ -13,8 +13,8 @@ import java.util.Arrays;
 
 /**
  *
- * @author kharada
- * @version 2011/01/13
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class Ns_SegmentData {
 
@@ -28,6 +28,7 @@ public class Ns_SegmentData {
     ArrayList<Ns_SegSourceInfo> segSourceInfo = null;
 
     /**
+     * @param ID
      * @param szEntityLabel
      */
     public Ns_SegmentData(int ID, String szEntityLabel) {
@@ -60,6 +61,7 @@ public class Ns_SegmentData {
     }
 
     /**
+     * @param segSourceID
      * @return
      */
     public Nsa_SegSourceInfo getSegSourceInfo(int segSourceID) {
@@ -67,6 +69,7 @@ public class Ns_SegmentData {
     }
 
     /**
+     * @param segSourceID
      * @param nsaSegSourceInfo
      * @return
      */
@@ -74,6 +77,13 @@ public class Ns_SegmentData {
         return this.segSourceInfo.get(segSourceID).setMembers(nsaSegSourceInfo);
     }
 
+    /**
+     *
+     * @param dTimestamp
+     * @param dwUnitID
+     * @param dValue
+     * @return
+     */
     public int addSegmentData(double dTimestamp, int dwUnitID, double[] dValue) {
 
         int segSourceID = -1;
@@ -193,6 +203,13 @@ public class Ns_SegmentData {
         return segSourceID;
     }
 
+    /**
+     *
+     * @param dTimestamp
+     * @param dwUnitID
+     * @param dValue
+     * @return
+     */
     public int addSegmentDataWithoutAddingExtraSegSourceInfo(double dTimestamp, int dwUnitID, double[] dValue) {
 
         int rtnVal = Const_values.NS_OK;
@@ -279,7 +296,7 @@ public class Ns_SegmentData {
 
             }
 
-                        // Then, NS_OK.
+            // Then, NS_OK.
             rtnVal = Const_values.NS_OK;
 
 
@@ -317,6 +334,10 @@ public class Ns_SegmentData {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public int saveSegmentInfo() {
 
         int rtnVal = Const_values.NS_OK;
@@ -400,6 +421,11 @@ public class Ns_SegmentData {
         return rtnVal;
     }
 
+    /**
+     *
+     * @param segSourceID
+     * @return
+     */
     public int saveSegSourceInfo(int segSourceID) {
         int rtnVal = Const_values.NS_OK;
         File tempFile = null;

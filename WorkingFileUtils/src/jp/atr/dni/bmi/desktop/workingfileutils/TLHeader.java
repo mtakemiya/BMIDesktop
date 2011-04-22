@@ -6,7 +6,8 @@ package jp.atr.dni.bmi.desktop.workingfileutils;
 
 /**
  *
- * @author kharada
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class TLHeader {
 
@@ -15,6 +16,9 @@ public class TLHeader {
     private int maxDataLength;
     private String commentAboutThisProbe;
 
+    /**
+     *
+     */
     public TLHeader() {
         this.eventType = 0;
         this.minDataLength = 0;
@@ -22,6 +26,13 @@ public class TLHeader {
         this.commentAboutThisProbe = "";
     }
 
+    /**
+     *
+     * @param eventType
+     * @param minDataLength
+     * @param maxDataLength
+     * @param commentAboutThisProbe
+     */
     public TLHeader(int eventType, int minDataLength, int maxDataLength, String commentAboutThisProbe) {
         this.eventType = eventType;
         this.minDataLength = minDataLength;

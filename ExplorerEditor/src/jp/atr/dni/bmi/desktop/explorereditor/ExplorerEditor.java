@@ -17,7 +17,8 @@ import org.openide.windows.TopComponent;
 
 /**
  *
- * @author kharada
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class ExplorerEditor extends TopComponent implements ExplorerManager.Provider {
 
@@ -51,6 +52,10 @@ public class ExplorerEditor extends TopComponent implements ExplorerManager.Prov
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     *
+     * @return
+     */
     @Override
     public ExplorerManager getExplorerManager() {
         return mgr;

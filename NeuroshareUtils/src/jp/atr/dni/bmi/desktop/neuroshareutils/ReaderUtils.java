@@ -8,11 +8,17 @@ import java.io.RandomAccessFile;
 
 /**
  *
- * @author kharada
- * @version 2011/01/13
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class ReaderUtils {
 
+    /**
+     *
+     * @param file
+     * @return
+     * @throws IOException
+     */
     public static short readShort(RandomAccessFile file) throws IOException {
         short myInt = 0;
         int tempInt;
@@ -26,6 +32,12 @@ public class ReaderUtils {
         return myInt;
     }
 
+    /**
+     *
+     * @param file
+     * @return
+     * @throws IOException
+     */
     public static long readUnsignedInt(RandomAccessFile file) throws IOException {
         long myLong = 0;
         int myInt;
@@ -40,6 +52,12 @@ public class ReaderUtils {
         return myLong;
     }
 
+    /**
+     *
+     * @param file
+     * @return
+     * @throws IOException
+     */
     public static int readInt(RandomAccessFile file) throws IOException {
         int temp = 0;
         int myInt;
@@ -54,6 +72,12 @@ public class ReaderUtils {
         return temp;
     }
 
+    /**
+     *
+     * @param file
+     * @return
+     * @throws IOException
+     */
     public static double readDouble(RandomAccessFile file) throws IOException {
         long myLong = 0;
         int myInt;
@@ -77,6 +101,11 @@ public class ReaderUtils {
         return d;
     }
 
+    /**
+     *
+     * @param identifier
+     * @return
+     */
     public static ElemType getElemType(long identifier) {
         if (identifier == 1) {
             return ElemType.ENTITY_EVENT;

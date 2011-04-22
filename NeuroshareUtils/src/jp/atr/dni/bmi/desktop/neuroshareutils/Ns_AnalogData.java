@@ -12,8 +12,8 @@ import java.util.Arrays;
 
 /**
  *
- * @author kharada
- * @version 2011/01/13
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class Ns_AnalogData {
 
@@ -24,6 +24,7 @@ public class Ns_AnalogData {
     Ns_AnalogInfo analogInfo;
 
     /**
+     * @param ID
      * @param szEntityLabel
      */
     public Ns_AnalogData(int ID, String szEntityLabel) {
@@ -54,6 +55,12 @@ public class Ns_AnalogData {
         return this.analogInfo.setMembers(nsaAnalogInfo);
     }
 
+    /**
+     *
+     * @param dTimestamp
+     * @param dAnalogValue
+     * @return
+     */
     public int addAnalogData(double dTimestamp, double[] dAnalogValue) {
 
         int rtnVal = Const_values.NS_OK;
@@ -145,6 +152,10 @@ public class Ns_AnalogData {
         return rtnVal;
     }
 
+    /**
+     *
+     * @return
+     */
     public int saveAnalogInfo() {
 
         int rtnVal = Const_values.NS_OK;

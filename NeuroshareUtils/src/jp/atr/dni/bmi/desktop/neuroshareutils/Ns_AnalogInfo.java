@@ -7,8 +7,8 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author kharada
- * @version 2011/01/13
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class Ns_AnalogInfo {
 
@@ -295,6 +295,11 @@ public class Ns_AnalogInfo {
                 this.getSzUnits(), this.getDResolution(), this.getDLocationX(), this.getDLocationY(), this.getDLocationZ(), this.getDLocationUser(), this.getDHighFreqCorner(), this.getDwHighFreqOrder(), this.getSzHighFilterType(), this.getDLowFreqCorner(), this.getDwLowFreqOrder(), this.getSzLowFilterType(), this.getSzProbeInfo());
     }
 
+    /**
+     *
+     * @param nsaAnalogInfo
+     * @return
+     */
     public int setMembers(Nsa_AnalogInfo nsaAnalogInfo) {
         this.setDSampleRate(nsaAnalogInfo.getDSampleRate());
         this.setDMinVal(nsaAnalogInfo.getDMinVal());

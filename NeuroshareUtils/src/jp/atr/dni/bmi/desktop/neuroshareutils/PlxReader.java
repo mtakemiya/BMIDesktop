@@ -9,17 +9,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
-import javax.swing.JOptionPane;
 
 /**
- * @author Keiji Harada [*1]</br> [*1] ATR Intl. Conputational Neuroscience
- *         Labs, Decoding Group
- * @version 2010/10/25
+ *
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class PlxReader {
 
     /**
-     * @param path
+     * @param plxFilePath
+     * @return
      */
     public NeuroshareFile readPlxFileAllData(String plxFilePath) {
 
@@ -741,6 +741,11 @@ public class PlxReader {
 
     }
 
+    /**
+     *
+     * @param path
+     * @return
+     */
     public NeuroshareFile readPlxFileOnlyInfo(String path) {
 
         // PLX to Neuroshare object.
@@ -1461,6 +1466,13 @@ public class PlxReader {
         return nsObj;
     }
 
+    /**
+     *
+     * @param fileFullPath
+     * @param entityNFO
+     * @return
+     * @throws IOException
+     */
     public ArrayList<AnalogData> getAnalogData(String fileFullPath, EntityInfo entityNFO) throws IOException {
         // No case.
         return null;
@@ -1479,6 +1491,14 @@ public class PlxReader {
 //        return null;
     }
 
+    /**
+     *
+     * @param fileFullPath
+     * @param entityNFO
+     * @param eventNFO
+     * @return
+     * @throws IOException
+     */
     public ArrayList<EventData> getEventData(String fileFullPath, EntityInfo entityNFO, EventInfo eventNFO) throws IOException {
         // No case.
         return null;
@@ -1538,6 +1558,14 @@ public class PlxReader {
 //        return data;
     }
 
+    /**
+     *
+     * @param fileFullPath
+     * @param entityNFO
+     * @param eventNFO
+     * @return
+     * @throws IOException
+     */
     public ArrayList<TextEventData> getTextEventData(String fileFullPath, EntityInfo entityNFO, EventInfo eventNFO) throws IOException {
         // No case.
         return null;
@@ -1567,6 +1595,14 @@ public class PlxReader {
 //        return data;
     }
 
+    /**
+     *
+     * @param fileFullPath
+     * @param entityNFO
+     * @param eventNFO
+     * @return
+     * @throws IOException
+     */
     public ArrayList<ByteEventData> getByteEventData(String fileFullPath, EntityInfo entityNFO, EventInfo eventNFO) throws IOException {
         // No case.
         return null;
@@ -1592,6 +1628,14 @@ public class PlxReader {
 //        return data;
     }
 
+    /**
+     *
+     * @param fileFullPath
+     * @param entityNFO
+     * @param eventNFO
+     * @return
+     * @throws IOException
+     */
     public ArrayList<WordEventData> getWordEventData(String fileFullPath, EntityInfo entityNFO, EventInfo eventNFO) throws IOException {
         // No case.
         return null;
@@ -1618,6 +1662,14 @@ public class PlxReader {
 //        return data;
     }
 
+    /**
+     *
+     * @param fileFullPath
+     * @param entityNFO
+     * @param eventNFO
+     * @return
+     * @throws IOException
+     */
     public ArrayList<DWordEventData> getDWordEventData(String fileFullPath, EntityInfo entityNFO, EventInfo eventNFO) throws IOException {
 
         // No case.
@@ -1644,6 +1696,13 @@ public class PlxReader {
 //        return data;
     }
 
+    /**
+     *
+     * @param fileFullPath
+     * @param entityNFO
+     * @return
+     * @throws IOException
+     */
     public ArrayList<Double> getNeuralData(String fileFullPath, EntityInfo entityNFO) throws IOException {
 
         // Read all plx data to get neural Data. (to Get Neuroshare Format.)
@@ -1666,6 +1725,14 @@ public class PlxReader {
         return null;
     }
 
+    /**
+     *
+     * @param fileFullPath
+     * @param entityNFO
+     * @param segNFO
+     * @return
+     * @throws IOException
+     */
     public SegmentData getSegmentData(String fileFullPath, EntityInfo entityNFO, SegmentInfo segNFO)
             throws IOException {
 

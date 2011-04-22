@@ -30,7 +30,8 @@ import jp.atr.dni.bmi.desktop.neuroshareutils.WordEventData;
 
 /**
  *
- * @author kharada
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class CSVWriter {
 
@@ -972,6 +973,13 @@ public class CSVWriter {
 //        }
     }
 
+    /**
+     *
+     * @param workingFilePath
+     * @param analogData
+     * @param entity
+     * @return
+     */
     public boolean overwriteTSFile(String workingFilePath, ArrayList<AnalogData> analogData, Entity entity) {
 
         // if working file didn't exists or cannot be deleted, then false.
@@ -1025,6 +1033,13 @@ public class CSVWriter {
         return result;
     }
 
+    /**
+     *
+     * @param workingFilePath
+     * @param segmentData
+     * @param entity
+     * @return
+     */
     public boolean overwriteTIFile(String workingFilePath, SegmentData segmentData, Entity entity) {
 
         // if working file didn't exists or cannot be deleted, then false.
@@ -1081,6 +1096,13 @@ public class CSVWriter {
         return result;
     }
 
+    /**
+     *
+     * @param workingFilePath
+     * @param eventObject
+     * @param entity
+     * @return
+     */
     public boolean overwriteTLFile(String workingFilePath, Object eventObject, Entity entity) {
 
         // if working file didn't exists or cannot be deleted, then false.
@@ -1196,6 +1218,13 @@ public class CSVWriter {
         return result;
     }
 
+    /**
+     *
+     * @param workingFilePath
+     * @param neuralData
+     * @param entity
+     * @return
+     */
     public boolean overwriteTOFile(String workingFilePath, ArrayList<Double> neuralData, Entity entity) {
 
         // if working file didn't exists or cannot be deleted, then false.
@@ -1243,6 +1272,13 @@ public class CSVWriter {
         return result;
     }
 
+    /**
+     *
+     * @param workingFilePath
+     * @param data
+     * @param entity
+     * @return
+     */
     public Entity overwriteTSFile(String workingFilePath, TSData data, Entity entity) {
 
         Entity retEntity = entity;
@@ -1330,6 +1366,13 @@ public class CSVWriter {
         return retEntity;
     }
 
+    /**
+     *
+     * @param workingFilePath
+     * @param data
+     * @param entity
+     * @return
+     */
     public Entity overwriteTOFile(String workingFilePath, TOData data, Entity entity) {
 
         Entity retEntity = entity;
@@ -1400,6 +1443,13 @@ public class CSVWriter {
         return retEntity;
     }
 
+    /**
+     *
+     * @param workingFilePath
+     * @param data
+     * @param entity
+     * @return
+     */
     public Entity overwriteTIFile(String workingFilePath, TIData data, Entity entity) {
 
         Entity retEntity = entity;
@@ -1502,6 +1552,13 @@ public class CSVWriter {
         return retEntity;
     }
 
+    /**
+     *
+     * @param workingFilePath
+     * @param data
+     * @param entity
+     * @return
+     */
     public Entity overwriteTLFile(String workingFilePath, TLData data, Entity entity) {
 
         Entity retEntity = entity;

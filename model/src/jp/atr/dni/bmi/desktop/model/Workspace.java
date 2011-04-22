@@ -14,8 +14,8 @@ import jp.atr.dni.bmi.desktop.workingfileutils.WorkingFileUtils;
 
 /**
  *
- * @author kharada
- * @version 2011/03/02
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class Workspace {
 
@@ -24,12 +24,20 @@ public class Workspace {
 
     // Add the listener.
     // Call this when you open ***TopComponent. [in your ***TopComponent.componentOpened]
+    /**
+     *
+     * @param pcl
+     */
     public static void addPropertyChangeListener(PropertyChangeListener pcl) {
         listeners.add(pcl);
     }
 
     // Remove the listener.
     // Call this when you close ***TopComponent. [in your ***TopComponent.componentClosed]
+    /**
+     *
+     * @param pcl
+     */
     public static void removePropertyChangeListener(PropertyChangeListener pcl) {
         listeners.remove(pcl);
     }
@@ -47,11 +55,19 @@ public class Workspace {
     // Supplymentary Channels.
     // TODO : implement it here.
     // Get Channels.
+    /**
+     *
+     * @return
+     */
     public static ArrayList<Channel> getChannels() {
         return channels;
     }
 
     // Set Channels. (then fire "SetChannels" event.)
+    /**
+     *
+     * @param chs
+     */
     public static void setChannels(ArrayList<Channel> chs) {
         ArrayList<Channel> old = getChannels();
         channels = chs;
@@ -59,6 +75,10 @@ public class Workspace {
     }
 
     // Remove Channel. (then fire "RemoveChannel" event.)
+    /**
+     *
+     * @param channel
+     */
     public static void removeChannel(Channel channel) {
 
         ArrayList<Channel> old = getChannels();
@@ -85,6 +105,10 @@ public class Workspace {
     }
 
     // Add Channel. (then fire "AddChannel" event.)
+    /**
+     *
+     * @param channel
+     */
     public static void addChannel(Channel channel) {
 
         ArrayList<Channel> old = getChannels();

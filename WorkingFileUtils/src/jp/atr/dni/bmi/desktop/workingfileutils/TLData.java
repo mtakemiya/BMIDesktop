@@ -8,7 +8,8 @@ import java.util.ArrayList;
 
 /**
  *
- * @author kharada
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class TLData {
 
@@ -16,41 +17,84 @@ public class TLData {
     private ArrayList<Double> timeStamps = new ArrayList<Double>();
     private ArrayList<Object> values = new ArrayList<Object>();
 
+    /**
+     *
+     */
     public TLData() {
     }
 
+    /**
+     *
+     * @return
+     */
     public String getFormatCode() {
         return this.formatCode;
     }
 
+    /**
+     *
+     * @param rowIndex
+     * @return
+     */
     public double getTimeStamp(int rowIndex) {
         return this.timeStamps.get(rowIndex);
     }
 
+    /**
+     *
+     * @param rowIndex
+     * @param timestamp
+     */
     public void setTimeStamp(int rowIndex, double timestamp) {
         this.timeStamps.set(rowIndex, timestamp);
     }
 
+    /**
+     *
+     * @param timeStamp
+     */
     public void addTimeStamp(double timeStamp) {
         this.timeStamps.add(timeStamp);
     }
 
+    /**
+     *
+     * @param rowIndex
+     */
     public void removeTimeStamp(int rowIndex) {
         this.timeStamps.remove(rowIndex);
     }
 
+    /**
+     *
+     * @param rowIndex
+     * @return
+     */
     public Object getValue(int rowIndex) {
         return this.values.get(rowIndex);
     }
 
+    /**
+     *
+     * @param rowIndex
+     * @param value
+     */
     public void setValue(int rowIndex, Object value) {
         this.values.set(rowIndex, value);
     }
 
+    /**
+     *
+     * @param value
+     */
     public void addValue(Object value) {
         this.values.add(value);
     }
 
+    /**
+     *
+     * @param rowIndex
+     */
     public void removeValue(int rowIndex) {
         this.values.remove(rowIndex);
     }

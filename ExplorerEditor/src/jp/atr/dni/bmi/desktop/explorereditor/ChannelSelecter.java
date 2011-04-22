@@ -35,8 +35,8 @@ import org.openide.util.Exceptions;
 
 /**
  *
- * @author kharada
- * @version 2010/02/23
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class ChannelSelecter extends javax.swing.JPanel implements ActionListener {
 
@@ -49,7 +49,9 @@ public class ChannelSelecter extends javax.swing.JPanel implements ActionListene
     GeneralFileInfo generalFileInfo;
     boolean dataFileFlag = false;
 
-    /** Creates new form ChannelSelecter */
+    /** Creates new form ChannelSelecter
+     * @param gfi
+     */
     public ChannelSelecter(GeneralFileInfo gfi) {
 
         beforeInitComponents(gfi);
@@ -445,6 +447,10 @@ public class ChannelSelecter extends javax.swing.JPanel implements ActionListene
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     *
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -563,6 +569,9 @@ public class ChannelSelecter extends javax.swing.JPanel implements ActionListene
         }
     }
 
+    /**
+     *
+     */
     public void showDialog() {
         if (this.dataFileFlag) {
             this.dialog = DialogDisplayer.getDefault().createDialog(this.dialogDescriptor);

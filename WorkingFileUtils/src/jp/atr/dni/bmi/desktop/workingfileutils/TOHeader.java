@@ -6,7 +6,8 @@ package jp.atr.dni.bmi.desktop.workingfileutils;
 
 /**
  *
- * @author kharada
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class TOHeader {
 
@@ -14,12 +15,21 @@ public class TOHeader {
     private int sourceUnitID;
     private String commentAboutThisProbe;
 
+    /**
+     *
+     */
     public TOHeader() {
         this.sourceEntityID = 0;
         this.sourceUnitID = 0;
         this.commentAboutThisProbe = "";
     }
 
+    /**
+     *
+     * @param sourceEntityID
+     * @param sourceUnitID
+     * @param commentAboutThisProbe
+     */
     public TOHeader(int sourceEntityID, int sourceUnitID, String commentAboutThisProbe) {
         this.sourceEntityID = sourceEntityID;
         this.sourceUnitID = sourceUnitID;
