@@ -4,33 +4,55 @@
  */
 package jp.atr.dni.bmi.desktop.dummymodule1;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import jp.atr.dni.bmi.desktop.model.Channel;
+import jp.atr.dni.bmi.desktop.workingfileutils.TSData;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 import org.openide.util.ImageUtilities;
 import org.netbeans.api.settings.ConvertAsProperties;
+import jp.atr.dni.bmi.desktop.model.Workspace;
+import jp.atr.dni.bmi.desktop.workingfileutils.CSVReader;
+import jp.atr.dni.bmi.desktop.workingfileutils.TIData;
+import jp.atr.dni.bmi.desktop.workingfileutils.TLData;
+import jp.atr.dni.bmi.desktop.workingfileutils.TOData;
 
 /**
  * Top component which displays something.
  */
 @ConvertAsProperties(dtd = "-//jp.atr.dni.bmi.desktop.dummymodule1//DummyModule1//EN",
 autostore = false)
-public final class DummyModule1TopComponent extends TopComponent {
+public final class DummyModule1TopComponent extends TopComponent implements PropertyChangeListener {
 
-    // kharada 2011/04/22 Add for tutorial.
-    private Greeting g = new Greeting();
-
+    // kharada 2011/05/10 Add for tutorial.
+    // It is needed to create a dynamic list.
+    DefaultListModel defaultListModel;
+    // kharada 2011/05/10 Add for tutorial.
+    // It is needed to display.
+    Channel channel;
     private static DummyModule1TopComponent instance;
     /** path to the icon used by the component and its open action */
     static final String ICON_PATH = "jp/atr/dni/bmi/desktop/dummymodule1/face-monkey.png";
     private static final String PREFERRED_ID = "DummyModule1TopComponent";
 
     public DummyModule1TopComponent() {
+
+        // kharada 2011/05/11 Add for tutorial.
+        beforeInitComponents();
+
         initComponents();
         setName(NbBundle.getMessage(DummyModule1TopComponent.class, "CTL_DummyModule1TopComponent"));
         setToolTipText(NbBundle.getMessage(DummyModule1TopComponent.class, "HINT_DummyModule1TopComponent"));
         setIcon(ImageUtilities.loadImage(ICON_PATH, true));
+
+        // kharada 2011/05/11 Add for tutorial.
+        afterInitComponents();
 
     }
 
@@ -41,104 +63,113 @@ public final class DummyModule1TopComponent extends TopComponent {
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
-        jTextField1.setText(org.openide.util.NbBundle.getMessage(DummyModule1TopComponent.class, "DummyModule1TopComponent.jTextField1.text")); // NOI18N
+        jPanel1.setLayout(new java.awt.GridBagLayout());
 
-        org.openide.awt.Mnemonics.setLocalizedText(jButton1, org.openide.util.NbBundle.getMessage(DummyModule1TopComponent.class, "DummyModule1TopComponent.jButton1.text")); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        jList1.setModel(defaultListModel);
+        jList1.setValueIsAdjusting(true);
+        jScrollPane3.setViewportView(jList1);
 
-        org.openide.awt.Mnemonics.setLocalizedText(jButton2, org.openide.util.NbBundle.getMessage(DummyModule1TopComponent.class, "DummyModule1TopComponent.jButton2.text")); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        jPanel1.add(jScrollPane3, gridBagConstraints);
 
+        jLabel1.setForeground(new java.awt.Color(51, 51, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(DummyModule1TopComponent.class, "DummyModule1TopComponent.jLabel1.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPanel1.add(jLabel1, gridBagConstraints);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2))
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(192, Short.MAX_VALUE))
-        );
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(DummyModule1TopComponent.class, "DummyModule1TopComponent.jLabel2.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPanel1.add(jLabel2, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(DummyModule1TopComponent.class, "DummyModule1TopComponent.jLabel3.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPanel1.add(jLabel3, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel4, org.openide.util.NbBundle.getMessage(DummyModule1TopComponent.class, "DummyModule1TopComponent.jLabel4.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPanel1.add(jLabel4, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel5, org.openide.util.NbBundle.getMessage(DummyModule1TopComponent.class, "DummyModule1TopComponent.jLabel5.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPanel1.add(jLabel5, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel6, org.openide.util.NbBundle.getMessage(DummyModule1TopComponent.class, "DummyModule1TopComponent.jLabel6.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPanel1.add(jLabel6, gridBagConstraints);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        
-        // Get greeting value from dummy class.
-        String greeting = g.getGreeting();
-        
-        // Set to the jTextField.
-        jTextField1.setText(greeting);
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-
-        // Get jTextField value.
-        String greeting = jTextField1.getText();
-
-        // Set jTextField value to the greeting value
-        g.setGreeting(greeting);
-
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JList jList1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JScrollPane jScrollPane3;
     // End of variables declaration//GEN-END:variables
+
     /**
      * Gets default instance. Do not use directly: reserved for *.settings files only,
      * i.e. deserialization routines; otherwise you could get a non-deserialized instance.
@@ -175,16 +206,6 @@ public final class DummyModule1TopComponent extends TopComponent {
         return TopComponent.PERSISTENCE_ALWAYS;
     }
 
-    @Override
-    public void componentOpened() {
-        // TODO add custom code on component opening
-    }
-
-    @Override
-    public void componentClosed() {
-        // TODO add custom code on component closing
-    }
-
     void writeProperties(java.util.Properties p) {
         // better to version settings since initial version as advocated at
         // http://wiki.apidesign.org/wiki/PropertyFiles
@@ -208,5 +229,203 @@ public final class DummyModule1TopComponent extends TopComponent {
     @Override
     protected String preferredID() {
         return PREFERRED_ID;
+    }
+
+    private void afterInitComponents() {
+
+        // Repaint components.
+
+        // Clear All.
+        clearAllComponents();
+
+        // Get New Channel #1.
+        getNewNo1Channel();
+
+        // Set All.
+        setAllComponents();
+
+    }
+
+    private void beforeInitComponents() {
+
+        // Define defaultListModel to manage list.
+        defaultListModel = new DefaultListModel();
+    }
+
+    @Override
+    public void componentOpened() {
+
+        // Register this as propertyChangeListener of Workspace.
+
+        // Add listener to the workspace to call propertyChange.
+        Workspace.addPropertyChangeListener(this);
+
+        // then this module can receive events on Workspace.
+
+    }
+
+    @Override
+    public void componentClosed() {
+
+        // Unregister.
+
+        // Remove listener from the workspace not to call propertyChange.
+        Workspace.removePropertyChangeListener(this);
+
+        // then this module can not receive anymore.
+
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent pce) {
+
+        // Repaint components.
+
+        // Clear All.
+        clearAllComponents();
+
+        // Get New Channel #1.
+        getNewNo1Channel();
+
+        // Set All.
+        setAllComponents();
+
+    }
+
+    private void clearAllComponents() {
+
+        // Clear All Components.
+        jLabel3.setText("");
+        jLabel5.setText("");
+        defaultListModel.removeAllElements();
+    }
+
+    private void setAllComponents() {
+
+        // Set All Components if channel is not null.
+        if (this.channel == null) {
+            // Channel doesn't exist.
+
+            // Show Dialog.
+            JOptionPane.showMessageDialog(null, "There is nothing to display. Add channels to the Workspace.", this.getName(), JOptionPane.INFORMATION_MESSAGE);
+
+            return;
+        }
+
+        jLabel3.setText(this.channel.getDisplayName());
+        jLabel5.setText(this.channel.getChannelType());
+
+        setTextToList();
+
+
+    }
+
+    private void getNewNo1Channel() {
+
+        // Get New #1 channel from Workspace.
+        ArrayList<Channel> channels = Workspace.getChannels();
+
+        if (channels == null || channels.isEmpty()) {
+            this.channel = null;
+        } else {
+            this.channel = channels.get(0);
+        }
+
+    }
+
+    private void setTextToList() {
+
+        // Reader API
+        CSVReader cr = new CSVReader();
+
+        if (this.channel.getChannelType().equals("TS")) {
+
+            // Get TSData from the WorkingFile to display.
+            TSData tSData = cr.getTSData(this.channel.getWorkingFilePath());
+
+            ArrayList<ArrayList<Double>> allValues = tSData.getAllValues();
+            ArrayList<Double> timeStamps = tSData.getTimeStamps();
+
+            defaultListModel.addElement("------- TSData --------");
+
+            for (int ii = 0; ii < allValues.size(); ii++) {
+
+                // Display timestamp.
+                defaultListModel.addElement("------ timestamp ------");
+                defaultListModel.addElement(timeStamps.get(ii));
+
+                // Display values.
+                defaultListModel.addElement("------- values --------");
+                ArrayList<Double> oneRow = allValues.get(ii);
+                for (int jj = 0; jj < oneRow.size(); jj++) {
+                    defaultListModel.addElement(oneRow.get(jj));
+                }
+                defaultListModel.addElement("-----------------------");
+            }
+        } else if (this.channel.getChannelType().equals("TO")) {
+
+            // Get TOData from the WorkingFile to display.
+            TOData tOData = cr.getTOData(this.channel.getWorkingFilePath());
+
+            ArrayList<Double> timeStamps = tOData.getTimeStamps();
+
+            defaultListModel.addElement("------- TOData --------");
+
+            for (int ii = 0; ii < timeStamps.size(); ii++) {
+
+                // Display timestamps.
+                defaultListModel.addElement("------ timestamp ------");
+                defaultListModel.addElement(timeStamps.get(ii));
+                defaultListModel.addElement("-----------------------");
+            }
+        } else if (this.channel.getChannelType().equals("TI")) {
+
+            // Get TIData from the WorkingFile to display.
+            TIData tIData = cr.getTIData(this.channel.getWorkingFilePath());
+
+            ArrayList<ArrayList<Double>> allValues = tIData.getAllValues();
+            ArrayList<Integer> unitIDs = tIData.getUnitIDs();
+            ArrayList<Double> timeStamps = tIData.getTimeStamps();
+
+            defaultListModel.addElement("------- TIData --------");
+
+            for (int ii = 0; ii < timeStamps.size(); ii++) {
+
+                // Display timestamp.
+                defaultListModel.addElement("------ timestamp ------");
+                defaultListModel.addElement(timeStamps.get(ii));
+
+                // Display unitID.
+                defaultListModel.addElement("------ unitID ---------");
+                defaultListModel.addElement(unitIDs.get(ii));
+
+                // Display values.
+                defaultListModel.addElement("------- values --------");
+                ArrayList<Double> oneRow = allValues.get(ii);
+                for (int jj = 0; jj < oneRow.size(); jj++) {
+                    defaultListModel.addElement(oneRow.get(jj));
+                }
+                defaultListModel.addElement("-----------------------");
+            }
+        } else if (this.channel.getChannelType().equals("TL")) {
+
+            // Get TLData from the WorkingFile to display.
+            TLData tLData = cr.getTLData(this.channel.getWorkingFilePath());
+
+            ArrayList<Object> values = tLData.getValues();
+            ArrayList<Double> timeStamps = tLData.getTimeStamps();
+
+            defaultListModel.addElement("------- TLData --------");
+
+            for (int ii = 0; ii < timeStamps.size(); ii++) {
+
+                // Display timestamp.
+                defaultListModel.addElement("------ timestamp ------");
+                defaultListModel.addElement(timeStamps.get(ii));
+                defaultListModel.addElement("------ value ----------");
+                defaultListModel.addElement(values.get(ii));
+                defaultListModel.addElement("-----------------------");
+            }
+        }
     }
 }
