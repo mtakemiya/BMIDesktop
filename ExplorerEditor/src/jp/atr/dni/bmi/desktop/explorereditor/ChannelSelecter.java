@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import jp.atr.dni.bmi.desktop.model.Channel;
 import jp.atr.dni.bmi.desktop.model.GeneralFileInfo;
 import jp.atr.dni.bmi.desktop.model.Workspace;
+import jp.atr.dni.bmi.desktop.neuroshareutils.CsvReader;
 import jp.atr.dni.bmi.desktop.neuroshareutils.Entity;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NSReader;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NeuroshareFile;
@@ -492,6 +493,8 @@ public class ChannelSelecter extends javax.swing.JPanel implements ActionListene
                         wfu.createWorkingFileFromBlackRockNev(ch.getSourceFilePath(), ch.getEntity());
                     } else if (fileExtention.equals("ns1") || fileExtention.equals("ns2") || fileExtention.equals("ns3") || fileExtention.equals("ns4") || fileExtention.equals("ns5") || fileExtention.equals("ns6") || fileExtention.equals("ns7") || fileExtention.equals("ns8") || fileExtention.equals("ns9")) {
                         wfu.createWorkingFileFromBlackRockNsx(ch.getSourceFilePath(), ch.getEntity());
+                    } else if (fileExtention.equals("csv")) {
+                        wfu.createWorkingFileFromATRCsv(ch.getSourceFilePath(), ch.getEntity());
                     }
 
                 } catch (IOException ex) {
@@ -518,7 +521,7 @@ public class ChannelSelecter extends javax.swing.JPanel implements ActionListene
         this.dialogDescriptor = new DialogDescriptor(this, "Channel Selecter", true, this);
         // Case : Neuroshare(nsn), Plexon(plx), BlackRockMicroSystems(nev,ns1-9)
         String fileType = this.generalFileInfo.getFileType();
-        if (fileType.equals("File/nsn") || fileType.equals("File/plx") || fileType.equals("File/nev") || fileType.equals("File/ns1") || fileType.equals("File/ns2") || fileType.equals("File/ns3") || fileType.equals("File/ns4") || fileType.equals("File/ns5") || fileType.equals("File/ns6") || fileType.equals("File/ns7") || fileType.equals("File/ns8") || fileType.equals("File/ns9")) {
+        if (fileType.equals("File/nsn") || fileType.equals("File/plx") || fileType.equals("File/nev") || fileType.equals("File/ns1") || fileType.equals("File/ns2") || fileType.equals("File/ns3") || fileType.equals("File/ns4") || fileType.equals("File/ns5") || fileType.equals("File/ns6") || fileType.equals("File/ns7") || fileType.equals("File/ns8") || fileType.equals("File/ns9") || fileType.equals("File/csv")) {
             this.dataFileFlag = true;
 
             // Get nsObj to set channel list.
@@ -543,6 +546,11 @@ public class ChannelSelecter extends javax.swing.JPanel implements ActionListene
                     // Get nsObj from ns1-ns9 file.
                     NsxReader nsxr = new NsxReader();
                     nsf = nsxr.readNsxFileAllData(this.generalFileInfo.getFilePath());
+                    this.generalFileInfo.setNsObj(nsf);
+                } else if (fileType.equals("File/csv")) {
+                    // Get nsObj from csv file.
+                    CsvReader csvr = new CsvReader();
+                    nsf = csvr.readCsvFileAllData(this.generalFileInfo.getFilePath());
                     this.generalFileInfo.setNsObj(nsf);
                 }
             }

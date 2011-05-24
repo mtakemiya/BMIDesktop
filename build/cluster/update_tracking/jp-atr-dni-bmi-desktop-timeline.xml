@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module codename="jp.atr.dni.bmi.desktop.timeline">
-    <module_version install_time="1305106667199" last="true" origin="installer" specification_version="1.0">
+    <module_version install_time="1306216915182" last="true" origin="installer" specification_version="1.0">
         <file crc="2020134677" name="config/Modules/jp-atr-dni-bmi-desktop-timeline.xml"/>
         <file crc="70726920" name="modules/ext/gluegen-gl.jar"/>
         <file crc="3834491196" name="modules/ext/gluegen-rt-natives-macosx-universal.jar"/>
@@ -54,7 +54,7 @@
         <file crc="3656483942" name="modules/ext/newt.os.osx.jar"/>
         <file crc="1928944710" name="modules/ext/newt.os.win.jar"/>
         <file crc="38705930" name="modules/ext/newt.os.x11.jar"/>
-        <file crc="4053724831" name="modules/jp-atr-dni-bmi-desktop-timeline.jar"/>
+        <file crc="3817413930" name="modules/jp-atr-dni-bmi-desktop-timeline.jar"/>
         <file crc="70726920" name="modules/lib/gluegen-gl.jar"/>
         <file crc="3834491196" name="modules/lib/gluegen-rt-natives-macosx-universal.jar"/>
         <file crc="3663834443" name="modules/lib/gluegen-rt.jar"/>

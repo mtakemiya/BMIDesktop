@@ -92,6 +92,36 @@ public class WorkingFileUtils {
         this.workingFilePath = file.getAbsolutePath();
         return true;
     }
+    
+    /**
+     *
+     * @param sourceFilePath
+     * @param entity
+     * @return
+     * @throws IOException
+     */
+    public boolean createWorkingFileFromATRCsv(String sourceFilePath, Entity entity) throws IOException {
+        String tmpFilePath = WS_HOME + System.currentTimeMillis() + "_" + hashCode() + ".csv";
+        File file = new File(tmpFilePath);
+
+        // Create workingfiles dir if it  does not exist.
+        File dir = file.getParentFile();
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+
+        // Create the file.
+        if (!file.createNewFile()) {
+            return false;
+        }
+
+        // Write Neuroshare Data to the working file.
+        CSVWriter nsCsvWriter = new CSVWriter();
+        nsCsvWriter.createCSVFileFromATRCsv(file.getAbsolutePath(), sourceFilePath, entity);
+
+        this.workingFilePath = file.getAbsolutePath();
+        return true;
+    }
 
     /**
      *

@@ -13,6 +13,7 @@ import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogData;
 import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.ByteEventData;
 import jp.atr.dni.bmi.desktop.neuroshareutils.Const_values;
+import jp.atr.dni.bmi.desktop.neuroshareutils.CsvReader;
 import jp.atr.dni.bmi.desktop.neuroshareutils.DWordEventData;
 import jp.atr.dni.bmi.desktop.neuroshareutils.Entity;
 import jp.atr.dni.bmi.desktop.neuroshareutils.EntityInfo;
@@ -114,6 +115,34 @@ public class CSVWriter {
             case 4:
                 // Neural
                 createTOFileFromBlackRockNev(workingFilePath, sourceFilePath, entity);
+                break;
+            case 5:
+                break;
+            default:
+                break;
+        }
+    }
+
+    void createCSVFileFromATRCsv(String workingFilePath, String sourceFilePath, Entity entity) {
+        int entityType = (int) entity.getEntityInfo().getEntityType();
+        switch (entityType) {
+            case 0:
+                break;
+            case 1:
+                // Event
+                createTLFileFromATRCsv(workingFilePath, sourceFilePath, entity);
+                break;
+            case 2:
+                // Analog
+                createTSFileFromATRCsv(workingFilePath, sourceFilePath, entity);
+                break;
+            case 3:
+                // Segment
+                createTIFileFromATRCsv(workingFilePath, sourceFilePath, entity);
+                break;
+            case 4:
+                // Neural
+                createTOFileFromATRCsv(workingFilePath, sourceFilePath, entity);
                 break;
             case 5:
                 break;
@@ -225,7 +254,13 @@ public class CSVWriter {
 
                 ArrayList<Double> segmentValues = segmentData.getValues().get(ii);
                 for (int jj = 0; jj < segmentValues.size(); jj++) {
-                    bw.write(co + segmentValues.get(jj));
+                    Double d = segmentValues.get(jj);
+                    if (d == null) {
+                        bw.write(co + "NaN");
+
+                    } else {
+                        bw.write(co + d);
+                    }
                 }
                 bw.newLine();
             }
@@ -344,7 +379,12 @@ public class CSVWriter {
             for (int ii = 0; ii < neuralData.size(); ii++) {
 
                 // 2nd Line : <timestamp>
-                bw.write(neuralData.get(ii).toString());
+                Double d = neuralData.get(ii);
+                if (d == null) {
+                    bw.write("NaN");
+                } else {
+                    bw.write(d.toString());
+                }
                 bw.newLine();
             }
             bw.close();
@@ -386,7 +426,13 @@ public class CSVWriter {
 //                bw.write(((Double) ad.getTimeStamp()).toString());
 //                ArrayList<Double> analogValues = ad.getAnalogValues();
 //                for (int jj = 0; jj < analogValues.size(); jj++) {
-//                    bw.write(co + analogValues.get(jj));
+//                                        Double d = analogValues.get(jj);
+//                    if (d == null) {
+//                        bw.write(co + "NaN");
+//                    } else {
+//                        bw.write(co + d);
+//                    }
+//
 //                }
 //                bw.newLine();
 //            }
@@ -429,7 +475,13 @@ public class CSVWriter {
 //                bw.write(((Double) ad.getTimeStamp()).toString());
 //                ArrayList<Double> analogValues = ad.getAnalogValues();
 //                for (int jj = 0; jj < analogValues.size(); jj++) {
-//                    bw.write(co + analogValues.get(jj));
+//                                        Double d = analogValues.get(jj);
+//                    if (d == null) {
+//                        bw.write(co + "NaN");
+//                    } else {
+//                        bw.write(co + d);
+//                    }
+//
 //                }
 //                bw.newLine();
 //            }
@@ -443,6 +495,54 @@ public class CSVWriter {
 //            } catch (IOException iOException) {
 //            }
 //        }
+    }
+
+    private void createTSFileFromATRCsv(String workingFilePath, String sourceFilePath, Entity entity) {
+        String co = ",";
+        String formatCode = "TS";
+        double samplingRate = ((AnalogInfo) entity).getSampleRate();
+        BufferedWriter bw = null;
+
+        try {
+            // BufferedWriter to write.
+            bw = new BufferedWriter(new FileWriter(workingFilePath));
+
+            // First Line : TS, <SamplingRate>
+            bw.write(formatCode + co + samplingRate);
+            bw.newLine();
+
+            // Read Neuroshare Data.
+            CsvReader csvReader = new CsvReader();
+            ArrayList<AnalogData> analogData = csvReader.getAnalogData(sourceFilePath, entity.getEntityInfo());
+
+            // Write Data to the workingFile(CSV).
+            for (int ii = 0; ii < analogData.size(); ii++) {
+
+                // 2nd Line : <timestamp>, <AnalogValue[0]>, <AnalogValue[1]>, ... <AnalogValue[n]>
+                AnalogData ad = analogData.get(ii);
+                bw.write(((Double) ad.getTimeStamp()).toString());
+                ArrayList<Double> analogValues = ad.getAnalogValues();
+                for (int jj = 0; jj < analogValues.size(); jj++) {
+                    Double d = analogValues.get(jj);
+                    if (d == null) {
+                        bw.write(co + "NaN");
+                    } else {
+                        bw.write(co + d);
+                    }
+
+                }
+                bw.newLine();
+            }
+            bw.close();
+        } catch (IOException iOException) {
+        } finally {
+            try {
+                if (bw != null) {
+                    bw.close();
+                }
+            } catch (IOException iOException) {
+            }
+        }
     }
 
     private void createTSFileFromBlackRockNsx(String workingFilePath, String sourceFilePath, Entity entity) {
@@ -471,7 +571,13 @@ public class CSVWriter {
                 bw.write(((Double) ad.getTimeStamp()).toString());
                 ArrayList<Double> analogValues = ad.getAnalogValues();
                 for (int jj = 0; jj < analogValues.size(); jj++) {
-                    bw.write(co + analogValues.get(jj));
+
+                    Double d = analogValues.get(jj);
+                    if (d == null) {
+                        bw.write(co + "NaN");
+                    } else {
+                        bw.write(co + d);
+                    }
                 }
                 bw.newLine();
             }
@@ -516,7 +622,13 @@ public class CSVWriter {
 
                 ArrayList<Double> segmentValues = segmentData.getValues().get(ii);
                 for (int jj = 0; jj < segmentValues.size(); jj++) {
-                    bw.write(co + segmentValues.get(jj));
+                    Double d = segmentValues.get(jj);
+                    if (d == null) {
+                        bw.write(co + "NaN");
+
+                    } else {
+                        bw.write(co + d);
+                    }
                 }
                 bw.newLine();
             }
@@ -561,7 +673,64 @@ public class CSVWriter {
 
                 ArrayList<Double> segmentValues = segmentData.getValues().get(ii);
                 for (int jj = 0; jj < segmentValues.size(); jj++) {
-                    bw.write(co + segmentValues.get(jj));
+                    Double d = segmentValues.get(jj);
+                    if (d == null) {
+                        bw.write(co + "NaN");
+
+                    } else {
+                        bw.write(co + d);
+                    }
+                }
+                bw.newLine();
+            }
+            bw.close();
+        } catch (IOException iOException) {
+        } finally {
+            try {
+                if (bw != null) {
+                    bw.close();
+                }
+            } catch (IOException iOException) {
+            }
+        }
+    }
+
+    private void createTIFileFromATRCsv(String workingFilePath, String sourceFilePath, Entity entity) {
+
+        String co = ",";
+        String formatCode = "TI";
+        double samplingRate = ((SegmentInfo) entity).getSampleRate();
+        BufferedWriter bw = null;
+
+        try {
+            // BufferedWriter to write.
+            bw = new BufferedWriter(new FileWriter(workingFilePath));
+
+            // First Line : TI, <SamplingRate>
+            bw.write(formatCode + co + samplingRate);
+            bw.newLine();
+
+            // Read Neuroshare Data.
+            CsvReader csvReader = new CsvReader();
+            SegmentData segmentData = csvReader.getSegmentData(sourceFilePath, entity.getEntityInfo(), (SegmentInfo) entity);
+
+            // Write Data to the workingFile(CSV).
+            for (int ii = 0; ii < segmentData.getTimeStamp().size(); ii++) {
+                // 2nd Line : <timestamp>, <dwUnitID>, <SegmentValue[0]>, <SegmentValue[1]>, ... <SegmentValue[n]>
+                Double timeStamp = segmentData.getTimeStamp().get(ii);
+                bw.write(timeStamp + co);
+                Long unitID = segmentData.getUnitID().get(ii);
+                bw.write(unitID.toString());
+
+                ArrayList<Double> segmentValues = segmentData.getValues().get(ii);
+                for (int jj = 0; jj < segmentValues.size(); jj++) {
+                    Double d = segmentValues.get(jj);
+                    if (d == null) {
+                        bw.write(co + "NaN");
+
+                    } else {
+                        bw.write(co + d);
+                    }
                 }
                 bw.newLine();
             }
@@ -606,7 +775,13 @@ public class CSVWriter {
 //
 //                ArrayList<Double> segmentValues = segmentData.getValues().get(ii);
 //                for (int jj = 0; jj < segmentValues.size(); jj++) {
-//                    bw.write(co + segmentValues.get(jj));
+//                    Double d = segmentValues.get(jj);
+//                    if (d == null) {
+//                        bw.write(co + "NaN");
+//
+//                    } else {
+//                        bw.write(co + d);
+//                    }
 //                }
 //                bw.newLine();
 //            }
@@ -782,6 +957,85 @@ public class CSVWriter {
         }
     }
 
+    private void createTLFileFromATRCsv(String workingFilePath, String sourceFilePath, Entity entity) {
+        String co = ",";
+        String formatCode = "TL";
+        BufferedWriter bw = null;
+        ArrayList<TextEventData> textEventData = new ArrayList<TextEventData>();
+        ArrayList<ByteEventData> byteEventData = new ArrayList<ByteEventData>();
+        ArrayList<WordEventData> wordEventData = new ArrayList<WordEventData>();
+        ArrayList<DWordEventData> dwordEventData = new ArrayList<DWordEventData>();
+
+        try {
+            // BufferedWriter to write.
+            bw = new BufferedWriter(new FileWriter(workingFilePath));
+
+            // First Line : TL
+            bw.write(formatCode);
+            bw.newLine();
+
+            EventInfo ei = (EventInfo) entity;
+            // Read BlackRock Data.
+            CsvReader csvReader = new CsvReader();
+
+            switch ((int) ei.getEventType()) {
+                case 0:
+                    textEventData = csvReader.getTextEventData(sourceFilePath, entity.getEntityInfo(), (EventInfo) entity);
+                    for (int ii = 0; ii < textEventData.size(); ii++) {
+                        bw.write(((Double) textEventData.get(ii).getTimestamp()).toString() + co);
+                        bw.write(textEventData.get(ii).getData());
+                        bw.newLine();
+                    }
+                    break;
+                case 1:
+                    textEventData = csvReader.getTextEventData(sourceFilePath, entity.getEntityInfo(), (EventInfo) entity);
+                    for (int ii = 0; ii < textEventData.size(); ii++) {
+                        bw.write(((Double) textEventData.get(ii).getTimestamp()).toString() + co);
+                        bw.write(textEventData.get(ii).getData());
+                        bw.newLine();
+                    }
+                    break;
+                case 2:
+                    byteEventData = csvReader.getByteEventData(sourceFilePath, entity.getEntityInfo(), (EventInfo) entity);
+                    for (int ii = 0; ii < byteEventData.size(); ii++) {
+                        bw.write(((Double) byteEventData.get(ii).getTimestamp()).toString() + co);
+                        bw.write(((Byte) (byteEventData.get(ii).getData())).toString());
+                        bw.newLine();
+                    }
+                    break;
+                case 3:
+                    wordEventData = csvReader.getWordEventData(sourceFilePath, entity.getEntityInfo(), (EventInfo) entity);
+                    for (int ii = 0; ii < wordEventData.size(); ii++) {
+                        bw.write(((Double) wordEventData.get(ii).getTimestamp()).toString() + co);
+                        bw.write(((Integer) (wordEventData.get(ii).getData())).toString());
+                        bw.newLine();
+                    }
+                    break;
+                case 4:
+                    dwordEventData = csvReader.getDWordEventData(sourceFilePath, entity.getEntityInfo(), (EventInfo) entity);
+                    for (int ii = 0; ii < dwordEventData.size(); ii++) {
+                        bw.write(((Double) dwordEventData.get(ii).getTimestamp()).toString() + co);
+                        bw.write(((Long) (dwordEventData.get(ii).getData())).toString());
+                        bw.newLine();
+                    }
+                    break;
+                default:
+
+                    break;
+            }
+
+            bw.close();
+        } catch (IOException iOException) {
+        } finally {
+            try {
+                if (bw != null) {
+                    bw.close();
+                }
+            } catch (IOException iOException) {
+            }
+        }
+    }
+
     private void createTLFileFromBlackRockNsx(String workingFilePath, String sourceFilePath, Entity entity) {
         // No case.
 //        String co = ",";
@@ -884,7 +1138,12 @@ public class CSVWriter {
             for (int ii = 0; ii < neuralData.size(); ii++) {
 
                 // 2nd Line : <timestamp>
-                bw.write(neuralData.get(ii).toString());
+                Double d = neuralData.get(ii);
+                if (d == null) {
+                    bw.write("NaN");
+                } else {
+                    bw.write(d.toString());
+                }
                 bw.newLine();
             }
             bw.close();
@@ -921,7 +1180,54 @@ public class CSVWriter {
             for (int ii = 0; ii < neuralData.size(); ii++) {
 
                 // 2nd Line : <timestamp>
-                bw.write(neuralData.get(ii).toString());
+                Double d = neuralData.get(ii);
+                if (d == null) {
+                    bw.write("NaN");
+                } else {
+                    bw.write(d.toString());
+                }
+                bw.newLine();
+            }
+            bw.close();
+        } catch (IOException iOException) {
+        } finally {
+            try {
+                if (bw != null) {
+                    bw.close();
+                }
+            } catch (IOException iOException) {
+            }
+        }
+    }
+
+    private void createTOFileFromATRCsv(String workingFilePath, String sourceFilePath, Entity entity) {
+
+        String co = ",";
+        String formatCode = "TO";
+        BufferedWriter bw = null;
+
+        try {
+            // BufferedWriter to write.
+            bw = new BufferedWriter(new FileWriter(workingFilePath));
+
+            // First Line : TO
+            bw.write(formatCode);
+            bw.newLine();
+
+            // Read Data.
+            CsvReader csvReader = new CsvReader();
+            ArrayList<Double> neuralData = csvReader.getNeuralData(sourceFilePath, entity.getEntityInfo());
+
+            // Write Data to the workingFile(CSV).
+            for (int ii = 0; ii < neuralData.size(); ii++) {
+
+                // 2nd Line : <timestamp>
+                Double d = neuralData.get(ii);
+                if (d == null) {
+                    bw.write("NaN");
+                } else {
+                    bw.write(d.toString());
+                }
                 bw.newLine();
             }
             bw.close();
@@ -958,7 +1264,12 @@ public class CSVWriter {
 //            for (int ii = 0; ii < neuralData.size(); ii++) {
 //
 //                // 2nd Line : <timestamp>
-//                bw.write(neuralData.get(ii).toString());
+//                Double d = neuralData.get(ii);
+//                if (d == null) {
+//                    bw.write("NaN");
+//                } else {
+//                    bw.write(d.toString());
+//                }
 //                bw.newLine();
 //            }
 //            bw.close();
