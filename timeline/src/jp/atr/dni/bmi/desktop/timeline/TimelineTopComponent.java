@@ -8,16 +8,7 @@ import com.jogamp.opengl.util.Animator;
 import com.jogamp.opengl.util.awt.TextRenderer;
 import com.jogamp.opengl.util.gl2.GLUT;
 import java.awt.Font;
-<<<<<<< HEAD
-import java.awt.Point;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
-=======
->>>>>>> 728f37913447df820aed5e251ec2e7919740ded4
+
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.nio.DoubleBuffer;
