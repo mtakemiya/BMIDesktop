@@ -13,34 +13,34 @@ package jp.atr.dni.bmi.desktop.model;
  */
 class TimeVal {
 
-   private long time;
-   private double value;
+    private long time;
+    private double value;
 
-   /**
-    * @return the time
-    */
-   public long getTime() {
-      return time;
-   }
+    /**
+     * @return the time
+     */
+    public long getTime() {
+        return time;
+    }
 
-   /**
-    * @param time the time to set
-    */
-   public void setTime(long time) {
-      this.time = time;
-   }
+    /**
+     * @param time the time to set
+     */
+    public void setTime(long time) {
+        this.time = time;
+    }
 
-   /**
-    * @return the value
-    */
-   public double getValue() {
-      return value;
-   }
+    /**
+     * @return the value
+     */
+    public double getValue() {
+        return value;
+    }
 
-   /**
-    * @param value the value to set
-    */
-   public void setValue(double value) {
-      this.value = value;
-   }
+    /**
+     * @param value the value to set
+     */
+    public void setValue(double value) {
+        this.value = value;
+    }
 }

@@ -7,8 +7,8 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author kharada
- * @version 2011/01/13
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class Ns_SegSourceInfo {
 
@@ -278,6 +278,11 @@ public class Ns_SegSourceInfo {
         return new Nsa_SegSourceInfo(this.getDResolution(), this.getDMinVal(), this.getDMaxVal(), this.getDSubSampleShift(), this.getDLocationX(), this.getDLocationY(), this.getDLocationZ(), this.getDLocationUser(), this.getDHighFreqCorner(), this.getDwHighFreqOrder(), this.getSzHighFilterType(), this.getDLowFreqCorner(), this.getDwLowFreqOrder(), this.getSzLowFilterType(), this.getSzProbeInfo());
     }
 
+    /**
+     *
+     * @param nsaSegSourceInfo
+     * @return
+     */
     public int setMembers(Nsa_SegSourceInfo nsaSegSourceInfo) {
         this.setDResolution(nsaSegSourceInfo.getDResolution());
         this.setDMinVal(nsaSegSourceInfo.getDMinVal());

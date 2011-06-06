@@ -137,4 +137,36 @@ public class EntityInfo {
         }
         return rtnVal;
     }
+
+    /**
+     * @return the T*label of entity type.
+     * TSData : Neuroshare/AnalogEntity
+     * TOData : Neuroshare/NeuralEventEntity
+     * TIData : Neuroshare/SegmentEntity
+     * TLData : Neuroshare/EventEntity
+     */
+    public String getEntityTypeLabelT_() {
+        String rtnVal = "";
+        switch ((int) this.entityType) {
+            case 0:
+                rtnVal = "Unknown";
+                break;
+            case 1:
+                rtnVal = "TL";
+                break;
+            case 2:
+                rtnVal = "TS";
+                break;
+            case 3:
+                rtnVal = "TI";
+                break;
+            case 4:
+                rtnVal = "TO";
+                break;
+            default:
+                rtnVal = "Unknown";
+                break;
+        }
+        return rtnVal;
+    }
 }

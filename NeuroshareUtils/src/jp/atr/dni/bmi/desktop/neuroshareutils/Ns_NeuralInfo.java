@@ -7,8 +7,8 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author kharada
- * @version 2011/01/13
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class Ns_NeuralInfo {
 
@@ -79,10 +79,19 @@ public class Ns_NeuralInfo {
         this.szProbeInfo = szProbeInfo;
     }
 
+    /**
+     *
+     * @return
+     */
     public Nsa_NeuralInfo getMembers() {
         return new Nsa_NeuralInfo(this.getDwSourceEntityID(), this.getDwSourceUnitID(), this.getSzProbeInfo());
     }
 
+    /**
+     *
+     * @param nsaNeuralInfo
+     * @return
+     */
     public int setMembers(Nsa_NeuralInfo nsaNeuralInfo) {
         this.setDwSourceEntityID(nsaNeuralInfo.getDwSourceEntityID());
         this.setDwSourceUnitID(nsaNeuralInfo.getDwSourceUnitID());

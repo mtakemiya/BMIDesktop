@@ -11,8 +11,8 @@ import java.io.IOException;
 
 /**
  *
- * @author kharada
- * @version 2011/01/13
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class Ns_NeuralEventData {
 
@@ -23,6 +23,7 @@ public class Ns_NeuralEventData {
     Ns_NeuralInfo neuralInfo;
 
     /**
+     * @param ID
      * @param szEntityLabel
      */
     public Ns_NeuralEventData(int ID, String szEntityLabel) {
@@ -53,6 +54,11 @@ public class Ns_NeuralEventData {
         return this.neuralInfo.setMembers(nsaNeuralInfo);
     }
 
+    /**
+     *
+     * @param dTimestamp
+     * @return
+     */
     public int addNeuralEventData(double dTimestamp) {
 
         int rtnVal = Const_values.NS_OK;
@@ -124,6 +130,10 @@ public class Ns_NeuralEventData {
         return rtnVal;
     }
 
+    /**
+     *
+     * @return
+     */
     public int saveNeuralInfo() {
 
         int rtnVal = Const_values.NS_OK;

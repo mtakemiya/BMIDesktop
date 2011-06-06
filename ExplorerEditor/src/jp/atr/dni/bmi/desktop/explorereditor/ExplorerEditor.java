@@ -13,33 +13,22 @@ package jp.atr.dni.bmi.desktop.explorereditor;
 import org.openide.explorer.ExplorerManager;
 import org.openide.explorer.ExplorerUtils;
 import org.openide.explorer.view.BeanTreeView;
-import org.openide.util.lookup.InstanceContent;
 import org.openide.windows.TopComponent;
 
 /**
  *
- * @author kharada
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class ExplorerEditor extends TopComponent implements ExplorerManager.Provider {
 
     private final ExplorerManager mgr = new ExplorerManager();
-    private final InstanceContent content = new InstanceContent();
 
     /** Creates new form ExplorerEditor */
     public ExplorerEditor() {
         initComponents();
-//        GeneralFileInfo obj = new GeneralFileInfo("C:\\Users\\kharada\\99_temp\\20110105\\test001.txt", "testtest");
-//        associateLookup(Lookups.singleton(obj));
-//        jTextField1.setText("Comment : " + obj.getComment());
-//        jTextField2.setText("FilePath : " + obj.getFilePath());
-//        setDisplayName("ExplorerEditor : " + obj.getFileName());
-//        associateLookup(new AbstractLookup(content));
-//        mgr.setRootContext(new AbstractNode(new ExplorerChildren()));
-        associateLookup(ExplorerUtils.createLookup(mgr, getActionMap()));
-//        mgr.setRootContext(new AbstractNode(new ExplorerChildren()));
-//        setDisplayName("Explorer Editor");
         mgr.setRootContext(new ExplorerNode());
-//        mgr.setRootContext(new AbstractNode(new ExplorerChildren()));
+        associateLookup(ExplorerUtils.createLookup(mgr, getActionMap()));
         setDisplayName("Files");
     }
 
@@ -52,7 +41,9 @@ public class ExplorerEditor extends TopComponent implements ExplorerManager.Prov
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new BeanTreeView();
+        BeanTreeView btv = new BeanTreeView();
+        btv.setRootVisible(false);
+        jScrollPane1 = btv;
 
         setLayout(new java.awt.BorderLayout());
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -61,6 +52,10 @@ public class ExplorerEditor extends TopComponent implements ExplorerManager.Prov
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     *
+     * @return
+     */
     @Override
     public ExplorerManager getExplorerManager() {
         return mgr;

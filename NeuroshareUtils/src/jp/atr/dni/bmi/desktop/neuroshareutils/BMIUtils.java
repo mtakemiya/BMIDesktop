@@ -6,11 +6,16 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  *
- * @author kharada
- * @version 2011/01/13
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @version 2011/04/22
  */
 public class BMIUtils {
 
+    /**
+     *
+     * @param arr
+     * @return
+     */
     public static double mean(double[] arr) {
         double sum = 0;
         for (int ndx = 0; ndx < arr.length; ndx++) {
@@ -20,6 +25,15 @@ public class BMIUtils {
         return sum / arr.length;
     }
 
+    /**
+     *
+     * @param iterationNb
+     * @param password
+     * @param shio
+     * @return
+     * @throws NoSuchAlgorithmException
+     * @throws UnsupportedEncodingException
+     */
     public static byte[] getHash(int iterationNb, String password, byte[] shio)
             throws NoSuchAlgorithmException, UnsupportedEncodingException {
         MessageDigest digest = MessageDigest.getInstance("SHA-512");
@@ -33,6 +47,12 @@ public class BMIUtils {
         return input;
     }
 
+    /**
+     *
+     * @param b1
+     * @param b2
+     * @return
+     */
     public static boolean areEqual(byte[] b1, byte[] b2) {
         if (b1 == null || b2 == null || b1.length != b2.length) {
             return false;

@@ -44,6 +44,10 @@ import org.openide.util.lookup.Lookups;
  */
 public class ExplorerNode extends AbstractNode {
 
+    /**
+     *
+     * @param obj
+     */
     public ExplorerNode(GeneralFileInfo obj) {
         super(new ExplorerChildren(obj), Lookups.singleton(obj));
         setDisplayName(obj.getFileName());
@@ -59,12 +63,19 @@ public class ExplorerNode extends AbstractNode {
 
     }
 
+    /**
+     *
+     */
     public ExplorerNode() {
         super(new ExplorerChildren());
         setDisplayName("Root of Data");
         setIconBaseWithExtension("jp/atr/dni/bmi/desktop/explorereditor/monitor16.png");
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String getHtmlDisplayName() {
         GeneralFileInfo obj = getLookup().lookup(GeneralFileInfo.class);
@@ -75,10 +86,15 @@ public class ExplorerNode extends AbstractNode {
         }
     }
 
+    /**
+     *
+     * @param popup
+     * @return
+     */
     @Override
     public Action[] getActions(boolean popup) {
         return new Action[]{
-                    new SaveAction(), // Save -> Over Write
+                    new SaveAction(), // Save as -> Neuroshare
                     null, //Line.
                     new ReloadAction(), // Reload
                     null, //Line.
@@ -90,6 +106,10 @@ public class ExplorerNode extends AbstractNode {
                 };
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     protected Sheet createSheet() {
         Sheet sheet = Sheet.createDefault();
@@ -510,9 +530,11 @@ public class ExplorerNode extends AbstractNode {
             neuroshareGrp.setName("neuroshare");
             neuroshareGrp.setValue("tabName", "Neuroshare");
 
-            // Get Neuroshare Data using NSReader.
+            NeuroshareFile nsn = null;
+            // Read data.
             NSReader reader = new NSReader();
-            NeuroshareFile nsn = reader.readNSFileOnlyInfo(obj.getFilePath());
+            nsn = reader.readNSFileOnlyInfo(obj.getFilePath());
+
             obj.setNsObj(nsn);
 
             FileInfo fi = nsn.getFileInfo();
@@ -825,20 +847,20 @@ public class ExplorerNode extends AbstractNode {
     private class SaveAction extends AbstractAction implements Presenter.Popup {
 
         public SaveAction() {
-            putValue(NAME, "Over Write");
+            putValue(NAME, "Neuroshare");
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
             GeneralFileInfo obj = getLookup().lookup(GeneralFileInfo.class);
 
-            //
+            // Select file.
             if (obj == null || obj.getFileType().equals("Directory")) {
                 JOptionPane.showMessageDialog(null, "Select a file.");
                 return;
             }
 
-            // Neuroshare file.
+            // Neuroshare file to Neuroshare file. : Overwrite the Neuroshare File.
             if (obj.getFileType().equals("File/nsn")) {
                 if (obj.getNsObj() != null) {
                     // Re-Create the Neuroshare file.
@@ -849,7 +871,16 @@ public class ExplorerNode extends AbstractNode {
                 }
             }
 
-            // write here if over write other file.
+            // Plexon file to Neuroshare file. : Create the Neuroshare File.
+            if (obj.getFileType().equals("File/plx")) {
+                if (obj.getNsObj() != null) {
+                    // Re-Create the Neuroshare file.
+                    NsnFileModelConverter.ModelConvert(obj.getNsObj(), obj.getFilePath(), obj.getFilePath());
+                } else {
+                    JOptionPane.showMessageDialog(null, "Nothing to change.");
+                    return;
+                }
+            }
 
             // refresh obj's value.
             GeneralFileInfo newFile = new GeneralFileInfo(obj.getFilePath());
@@ -864,9 +895,8 @@ public class ExplorerNode extends AbstractNode {
 
         @Override
         public JMenuItem getPopupPresenter() {
-            JMenu jmConvertto = new JMenu("Save");
+            JMenu jmConvertto = new JMenu("Save as");
             jmConvertto.add(new JMenuItem(this));
-            jmConvertto.add(new JMenuItem("dummy"));
             return jmConvertto;
         }
     }
@@ -996,7 +1026,7 @@ public class ExplorerNode extends AbstractNode {
         }
     }
 
-        // Right-clicked menu. Copy to Workspace
+    // Right-clicked menu. Copy to Workspace
     private class CopyToWorkspaceAction extends AbstractAction implements Presenter.Popup {
 
         public CopyToWorkspaceAction() {
@@ -1008,7 +1038,7 @@ public class ExplorerNode extends AbstractNode {
             GeneralFileInfo obj = getLookup().lookup(GeneralFileInfo.class);
 
             if (obj == null || !obj.getFileType().startsWith("File/")) {
-                JOptionPane.showMessageDialog(null, "Select a file.");
+                JOptionPane.showMessageDialog(null, "Select a data file.");
                 return;
             }
 
@@ -1024,5 +1054,4 @@ public class ExplorerNode extends AbstractNode {
             return jmConvertto;
         }
     }
-
 }

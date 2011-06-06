@@ -110,57 +110,67 @@ public class NsnFileModelConverter {
                             continue;
                         }
 
-                        for (int j = 0; j < ei.getItemCount(); j++) {
-                            // Add Event Data
-                            // If you want to add multiple rows data, repeat to call add***Data.
-                            // int rtnval2 = nsEd.addEventData(dTimestamp, dData);
+                        // Add Event Data
+                        // If you want to add multiple rows data, repeat to call add***Data.
+                        // int rtnval2 = nsEd.addEventData(dTimestamp, dData);
 
-                            int rtnval2 = 0;
-                            switch ((int) ei.getEntityType()) {
-                                case 0:
-                                    // Get Event Data
-                                    TextEventData ted = (TextEventData) (nsReader.getEventData(srcFileFullPath, ei, eventInfo)).get(j);
-                                    // ns_EVENT_TEXT
-                                    rtnval2 = nsEd.addEventData(ted.getTimestamp(), ted.getData());
+                        int rtnval2 = 0;
+                        switch ((int) eventInfo.getEventType()) {
+                            case 0:
+                                // Get Event Data
+                                //                                    TextEventData ted = (TextEventData) (nsReader.getEventData(srcFileFullPath, ei, eventInfo)).get(j);
+                                ArrayList<TextEventData> ted = nsReader.getTextEventData(srcFileFullPath, ei, eventInfo);
+                                // ns_EVENT_TEXT
+                                for (int ii = 0; ii < ted.size(); ii++) {
+                                    rtnval2 = nsEd.addEventData(ted.get(ii).getTimestamp(), ted.get(ii).getData());
                                     if (rtnval2 != 0) {
                                         // add error. - input arg error - or intermediate file i/o error.
                                     }
-                                    break;
-                                case 1:
-                                    // ns_EVENT_CSV
-                                    // Nothing in Model.
-                                    break;
-                                case 2:
-                                    // Get Event Data
-                                    ByteEventData bed = (ByteEventData) (nsReader.getEventData(srcFileFullPath, ei, eventInfo)).get(j);
-                                    // ns_EVENT_BYTE
-                                    rtnval2 = nsEd.addEventData(bed.getTimestamp(), bed.getData());
+                                }
+                                break;
+                            case 1:
+                                // ns_EVENT_CSV
+                                // Nothing in Model.
+                                break;
+                            case 2:
+                                // Get Event Data
+                                //ByteEventData bed = (ByteEventData) (nsReader.getEventData(srcFileFullPath, ei, eventInfo)).get(j);
+                                ArrayList<ByteEventData> bed = nsReader.getByteEventData(srcFileFullPath, ei, eventInfo);
+                                // ns_EVENT_BYTE
+                                for (int ii = 0; ii < bed.size(); ii++) {
+                                    rtnval2 = nsEd.addEventData(bed.get(ii).getTimestamp(), bed.get(ii).getData());
                                     if (rtnval2 != 0) {
                                         // add error. - input arg error - or intermediate file i/o error.
                                     }
-                                    break;
-                                case 3:
-                                    // Get Event Data
-                                    WordEventData wed = (WordEventData) (nsReader.getEventData(srcFileFullPath, ei, eventInfo)).get(j);
-                                    // ns_EVENT_WORD
-                                    rtnval2 = nsEd.addEventData(wed.getTimestamp(), ((Integer) wed.getData()).shortValue());
+                                }
+                                break;
+                            case 3:
+                                // Get Event Data
+                                //                                WordEventData wed = (WordEventData) (nsReader.getEventData(srcFileFullPath, ei, eventInfo)).get(j);
+                                ArrayList<WordEventData> wed = nsReader.getWordEventData(srcFileFullPath, ei, eventInfo);
+                                // ns_EVENT_WORD
+                                for (int ii = 0; ii < wed.size(); ii++) {
+                                    rtnval2 = nsEd.addEventData(wed.get(ii).getTimestamp(), ((Integer) wed.get(ii).getData()).shortValue());
                                     if (rtnval2 != 0) {
                                         // add error. - input arg error - or intermediate file i/o error.
                                     }
-                                    break;
-                                case 4:
-                                    // Get Event Data
-                                    DWordEventData dwed = (DWordEventData) (nsReader.getEventData(srcFileFullPath, ei, eventInfo)).get(j);
+                                }
+                                break;
+                            case 4:
+                                // Get Event Data
+                                //                                DWordEventData dwed = (DWordEventData) (nsReader.getEventData(srcFileFullPath, ei, eventInfo)).get(j);
+                                ArrayList<DWordEventData> dwed = nsReader.getDWordEventData(srcFileFullPath, ei, eventInfo);
+                                for (int ii = 0; ii < dwed.size(); ii++) {
                                     // ns_EVENT_DWORD
-                                    rtnval2 = nsEd.addEventData(dwed.getTimestamp(), dwed.getData().intValue());
+                                    rtnval2 = nsEd.addEventData(dwed.get(ii).getTimestamp(), dwed.get(ii).getData().intValue());
                                     if (rtnval2 != 0) {
                                         // add error. - input arg error - or intermediate file i/o error.
                                     }
-                                    break;
-                                default:
-                                    break;
+                                }
+                                break;
+                            default:
+                                break;
 
-                            }
                         }
 
                         break;

@@ -11,6 +11,8 @@ import java.awt.Font;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.nio.DoubleBuffer;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -26,6 +28,7 @@ import javax.media.opengl.GLProfile;
 import javax.media.opengl.awt.GLCanvas;
 import javax.media.opengl.glu.GLU;
 import jp.atr.dni.bmi.desktop.model.GeneralFileInfo;
+import jp.atr.dni.bmi.desktop.model.Workspace;
 import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogData;
 import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.ElemType;
@@ -50,7 +53,7 @@ import org.openide.util.Utilities;
  */
 @ConvertAsProperties(dtd = "-//jp.atr.dni.bmi.desktop.timeline//timeline//EN",
 autostore = false)
-public final class TimelineTopComponent extends TopComponent implements GLEventListener, LookupListener {
+public final class TimelineTopComponent extends TopComponent  implements PropertyChangeListener, GLEventListener/*implements LookupListener */{
 	
    private boolean SNAP_TO_GRID = false;
 	
@@ -331,15 +334,17 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 	private Lookup.Result fileInfos = null;
    @Override
    public void componentOpened() {
-      fileInfos = Utilities.actionsGlobalContext().lookupResult(GeneralFileInfo.class);
+      /*fileInfos = Utilities.actionsGlobalContext().lookupResult(GeneralFileInfo.class);
 //      fileInfos.allItems();  // This means something. THIS IS IMPORTANT.
-      fileInfos.addLookupListener(this);
+      fileInfos.addLookupListener(this);*/
+      
+      Workspace.addPropertyChangeListener(this);
    }
 	
    @Override
    public void componentClosed() {
-      fileInfos.removeLookupListener(this);
-      fileInfos = null;
+//      fileInfos.removeLookupListener(this);
+//      fileInfos = null;
       //TODO: stop animator
    }
 	
@@ -1045,5 +1050,10 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
     */
    public void setDataUpper(Point2D dataUpper) {
       this.dataUpper = dataUpper;
+   }
+
+   @Override
+   public void propertyChange(PropertyChangeEvent pce) {
+      throw new UnsupportedOperationException("Not supported yet.");
    }
 }

@@ -10,6 +10,14 @@
                 <package>jp.atr.dni.bmi.desktop.neuroshareutils</package>
             </public-packages>
             <class-path-extension>
+                <runtime-relative-path>ext/poi-scratchpad-3.7-20101029.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/poi-scratchpad-3.7-20101029.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/poi-ooxml-3.7-20101029.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/poi-ooxml-3.7-20101029.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
                 <runtime-relative-path>ext/poi-3.7-20101029.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/poi-3.7-20101029.jar</binary-origin>
             </class-path-extension>
@@ -20,6 +28,10 @@
             <class-path-extension>
                 <runtime-relative-path>ext/xml-writer-0.2.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/xml-writer-0.2.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/poi-ooxml-schemas-3.7-20101029.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/poi-ooxml-schemas-3.7-20101029.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
                 <runtime-relative-path>ext/stax-1.2.0.jar</runtime-relative-path>
@@ -40,6 +52,10 @@
             <class-path-extension>
                 <runtime-relative-path>ext/cglib-nodep-2.2.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/cglib-nodep-2.2.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/poi-examples-3.7-20101029.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/poi-examples-3.7-20101029.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
                 <runtime-relative-path>ext/dom4j-1.6.1.jar</runtime-relative-path>
