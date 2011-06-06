@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="Actions">
+        <folder name="Window">
+            <file name="jp-atr-dni-bmi-desktop-dummymodule1-DummyModule1Action.instance">
+                <attr name="component" methodvalue="jp.atr.dni.bmi.desktop.dummymodule1.DummyModule1TopComponent.findInstance"/>
+                <attr name="displayName" bundlevalue="jp.atr.dni.bmi.desktop.dummymodule1.Bundle#CTL_DummyModule1Action"/>
+                <attr name="iconBase" stringvalue="jp/atr/dni/bmi/desktop/dummymodule1/face-monkey.png"/>
+                <attr name="instanceCreate" methodvalue="org.openide.windows.TopComponent.openAction"/>
+            </file>
+        </folder>
+    </folder>
+    <folder name="Menu">
+        <folder name="Window">
+            <file name="DummyModule1Action.shadow">
+                <attr name="originalFile" stringvalue="Actions/Window/jp-atr-dni-bmi-desktop-dummymodule1-DummyModule1Action.instance"/>
+            </file>
+        </folder>
+    </folder>
+    <folder name="Windows2">
+        <folder name="Components">
+            <file name="DummyModule1TopComponent.settings" url="DummyModule1TopComponentSettings.xml"/>
+        </folder>
+        <folder name="Modes">
+            <folder name="editor">
+                <file name="DummyModule1TopComponent.wstcref" url="DummyModule1TopComponentWstcref.xml"/>
+            </folder>
+        </folder>
+    </folder>
+</filesystem>
