@@ -5,6 +5,8 @@
 
 package jp.atr.dni.bmi.desktop.timeline;
 
+import static jp.atr.dni.bmi.desktop.timeline.TimelineTopComponent.SCROLLBAR_HEIGHT;
+
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -68,6 +70,10 @@ public class ModeHandler implements KeyListener, MouseListener,
 
    private ViewerChannel selectedChannel;
 
+   private boolean draggingVerticalScrollbar;
+
+   private boolean draggingHorizontalScrollbar;
+
 	/**
 	 * Constructs the mode handler.
 	 *
@@ -75,6 +81,8 @@ public class ModeHandler implements KeyListener, MouseListener,
 	 */
 	public ModeHandler(TimelineTopComponent canvas) {
 		this.canvas = canvas;
+      draggingVerticalScrollbar = false;
+      draggingHorizontalScrollbar = false;
 	}
 
 	
@@ -193,6 +201,8 @@ public class ModeHandler implements KeyListener, MouseListener,
 			screenPreviousPoint = screenCurrentPoint;
 			previousPoint = currentPoint;
 		}
+      draggingHorizontalScrollbar = isInsideHorizontalScrollbar(screenPickedPoint);
+      draggingVerticalScrollbar = isInsideVerticalScrollbar(screenPickedPoint);
    }
 
 	/**
@@ -200,7 +210,8 @@ public class ModeHandler implements KeyListener, MouseListener,
     * @param arg0
     */
 	public void mouseReleased(MouseEvent arg0) {
-		//TODO:
+		draggingVerticalScrollbar = false;
+      draggingHorizontalScrollbar = false;
 	}
 
 	/**
@@ -226,17 +237,41 @@ public class ModeHandler implements KeyListener, MouseListener,
 	 */
 	public void mouseDragged(MouseEvent me) {
 
+      int meX = me.getX();
+      int meY = me.getY();
+      double halfWidth = canvas.getWidth() / 5d;
+
       screenCurrentPoint = me.getPoint();
-		currentPoint = canvas.getVirtualCoordinates(me.getX(), me.getY());
+      currentPoint = canvas.getVirtualCoordinates(me.getX(), me.getY());
 
+//      if (canvas.getDataUpper().getX() < halfWidth && (meX - previousPoint.getX()) < 0) {
+//         screenCurrentPoint.setLocation(screenCurrentPoint.getX(), meY);
+//         currentPoint = canvas.getVirtualCoordinates(screenCurrentPoint.getX(), me.getY());
+//      } else if (canvas.getDataLower().getX() > canvas.getWidth() - halfWidth) {
+//         screenCurrentPoint.setLocation(screenCurrentPoint.getX()-1, meY);
+//         currentPoint = canvas.getVirtualCoordinates(screenCurrentPoint.getX(), me.getY());
+//      } else {
+//
+//      }
 
-		double dx = currentPoint.getX() - previousPoint.getX();
-		double dy = currentPoint.getY() - previousPoint.getY();
-		canvas.setTranslationX(canvas.getTranslationX() + dx);
-		canvas.setTranslationY(canvas.getTranslationY() + dy);
+      double dx = currentPoint.getX() - previousPoint.getX();
+      double dy = currentPoint.getY() - previousPoint.getY();
 
-		screenPreviousPoint = me.getPoint();
-		previousPoint = canvas.getVirtualCoordinates(me.getX(), me.getY());
+      if (canvas.getDataUpper().getX() < halfWidth && (meX - previousPoint.getX()) < 0) {
+         dx = Math.abs(halfWidth - canvas.getDataUpper().getX());
+      }
+
+      if (draggingHorizontalScrollbar) {
+         canvas.setTranslationX(canvas.getTranslationX() - dx*((canvas.getWidth()-SCROLLBAR_HEIGHT)/(canvas.getDataUpperX() - canvas.getDataLowerX())));
+      } else if (draggingVerticalScrollbar) {
+         canvas.setTranslationY(canvas.getTranslationY() - dy*((canvas.getHeight()-SCROLLBAR_HEIGHT)/(canvas.getDataUpperY())));
+      } else {
+         canvas.setTranslationX(canvas.getTranslationX() + dx);
+         canvas.setTranslationY(canvas.getTranslationY() + dy);
+      }
+
+		screenPreviousPoint.setLocation(screenCurrentPoint.getX(), screenCurrentPoint.getY());
+		previousPoint = canvas.getVirtualCoordinates(screenPreviousPoint.getX(), screenPreviousPoint.getY());
 	}
 
 	/**
@@ -259,37 +294,37 @@ public class ModeHandler implements KeyListener, MouseListener,
 //      System.out.println(me.getYOnScreen() + "\t" + me.getY() + "\t"+canvas.getScale()*(-canvas.getScale() / (canvas.getHeight()*.5)));
 
       
-      GLU glu = new GLU();
+//      GLU glu = new GLU();
+//
+//      int viewport[] = new int[4];
+//      float mvmatrix[] = new float[16];
+//      float projmatrix[] = new float[16];
+//
+//      canvas.getGlCanvas().getGL().glGetIntegerv(GL2.GL_VIEWPORT, viewport, 0);
+//      canvas.getGlCanvas().getGL().glGetFloatv(GL2.GL_MODELVIEW_MATRIX, mvmatrix, 0);
+//      canvas.getGlCanvas().getGL().glGetFloatv(GL2.GL_PROJECTION_MATRIX, projmatrix, 0);
 
-      int viewport[] = new int[4];
-      float mvmatrix[] = new float[16];
-      float projmatrix[] = new float[16];
-
-      canvas.getGlCanvas().getGL().glGetIntegerv(GL2.GL_VIEWPORT, viewport, 0);
-      canvas.getGlCanvas().getGL().glGetFloatv(GL2.GL_MODELVIEW_MATRIX, mvmatrix, 0);
-      canvas.getGlCanvas().getGL().glGetFloatv(GL2.GL_PROJECTION_MATRIX, projmatrix, 0);
-
-      int realy = 0;// GL y coord pos
-      realy = viewport[3] - (int) me.getY() - 1;
-
-      float wcoord[] = new float[4];// wx, wy, wz;// returned xyz coords
-
-      glu.gluUnProject((float) me.getX(), (float) realy, 0.0f, //
-              mvmatrix, 0,
-              projmatrix, 0,
-              viewport, 0,
-              wcoord, 0);
-          System.out.println("World coords at z=0.0 are ( " //
-                             + wcoord[0] + ", " + wcoord[1] + ", " + wcoord[2]
-                             + ")");
-          glu.gluUnProject((float) me.getX(), (float) realy, 1.0f, //
-              mvmatrix, 0,
-              projmatrix, 0,
-              viewport, 0,
-              wcoord, 0);
-          System.out.println("World coords at z=1.0 are (" //
-                             + wcoord[0] + ", " + wcoord[1] + ", " + wcoord[2]
-                             + ")");
+//      int realy = 0;// GL y coord pos
+//      realy = viewport[3] - (int) me.getY() - 1;
+//
+//      float wcoord[] = new float[4];// wx, wy, wz;// returned xyz coords
+//
+//      glu.gluUnProject((float) me.getX(), (float) realy, 0.0f, //
+//              mvmatrix, 0,
+//              projmatrix, 0,
+//              viewport, 0,
+//              wcoord, 0);
+//          System.out.println("World coords at z=0.0 are ( " //
+//                             + wcoord[0] + ", " + wcoord[1] + ", " + wcoord[2]
+//                             + ")");
+//          glu.gluUnProject((float) me.getX(), (float) realy, 1.0f, //
+//              mvmatrix, 0,
+//              projmatrix, 0,
+//              viewport, 0,
+//              wcoord, 0);
+//          System.out.println("World coords at z=1.0 are (" //
+//                             + wcoord[0] + ", " + wcoord[1] + ", " + wcoord[2]
+//                             + ")");
    }
 
 	/**
@@ -310,5 +345,19 @@ public class ModeHandler implements KeyListener, MouseListener,
    @Override
    public void keyReleased(KeyEvent ke) {
       //throw new UnsupportedOperationException("Not supported yet.");
+   }
+
+   private boolean isInsideVerticalScrollbar(Point p){
+      double x = p.getX();
+      double y = p.getY();
+
+      return x > 0 && x < SCROLLBAR_HEIGHT && y > canvas.getDataLowerY() && y < canvas.getDataLowerY() + canvas.getDataUpperY();
+   }
+
+   private boolean isInsideHorizontalScrollbar(Point p){
+      double x = p.getX();
+      double y = p.getY();
+      
+      return x > SCROLLBAR_HEIGHT+canvas.getDataLowerX() && x < SCROLLBAR_HEIGHT+canvas.getDataUpperX() && y > canvas.getHeight() - SCROLLBAR_HEIGHT;
    }
 }

@@ -38,6 +38,8 @@ import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogData;
 import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.ElemType;
 import jp.atr.dni.bmi.desktop.neuroshareutils.Entity;
+import jp.atr.dni.bmi.desktop.neuroshareutils.EntityInfo;
+import jp.atr.dni.bmi.desktop.neuroshareutils.FileInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NSReader;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NeuroshareFile;
 import jp.atr.dni.bmi.desktop.timeline.model.ViewerChannel;
@@ -104,7 +106,21 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
    private ArrayList<ViewerChannel> viewerChannels;
 
-   public static final float SCROLLBAR_HEIGHT = 50f;
+   public static final int SCROLLBAR_HEIGHT = 25;
+
+   public static final double INCREMENT = .25;
+
+   private double dataUpperX;
+   
+   private double dataUpperY;
+
+   private double dataLowerX;
+
+   private double dataLowerY;
+
+   private Point2D dataLower;
+
+   private Point2D dataUpper;
 
    public TimelineTopComponent() {
       initGL();
@@ -380,7 +396,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 		glut = new GLUT();
 		
       // set the drawing parameters
-		gl.glClearColor(.9f, .9f, .9f, 1.0f );
+		gl.glClearColor(0f, 0f, 0f, 1.0f );
 		gl.glPointSize(3.0f);
       gl.glEnable(GL2.GL_LINE_SMOOTH);
  	   gl.glEnable(GL2.GL_BLEND);
@@ -485,22 +501,40 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
          return;
       }
 
-      int max = 500;
+      FileInfo nsfi = fileInfo.getNsObj().getFileInfo();
+
+      Date startTime = new Date(0);
+      startTime.setYear((int) nsfi.getYear());
+      startTime.setMonth((int) (nsfi.getMonth() - 1));
+      startTime.setDate((int) nsfi.getDayOfMonth());
+      startTime.setHours((int) nsfi.getHourOfDay());
+      startTime.setMinutes((int) nsfi.getMinOfDay());
+      startTime.setSeconds((int) nsfi.getSecOfDay());
+      startTime.setTime(startTime.getTime() + nsfi.getMilliSecOfDay());
+
+      Date endTime = new Date();
+      endTime.setTime(startTime.getTime());
+
+      int timeMult = 1000;
+      double timespan;
+      int numEntities = 500;
+      double lastY = 0;
 
       gl.glColor3d(.6, .1, .5);
 
-      max = fileInfo.getNsObj().getEntities().size();
+      numEntities = fileInfo.getNsObj().getEntities().size();
 
       //Draw data
       gl.glLineWidth(1);
 
-//      gl.glLoadIdentity();
-//      gl.glTranslated(translationX / (width*.5), translationY / (height*.5), 0);
-//      gl.glScaled(scale, scale, 0);
-
       gl.glBegin(GL.GL_LINES);
 
       double yOffset = 0;
+
+      double maxX = 0;
+
+      Point2D minPoint = getVirtualCoordinates(0, 0);
+      Point2D maxPoint = getVirtualCoordinates(getWidth(), getHeight());
 
       //draw data
       for (Entity e : fileInfo.getNsObj().getEntities()) {
@@ -511,28 +545,44 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
                continue;
             }
 
-            double normalizer = Math.max(Math.abs(ai.getMaxVal()),Math.abs(ai.getMinVal()));
+            double timeIncrement = (1.0 / (ai.getSampleRate()) * timeMult);
+            double entityTime = ai.getData().size() * timeIncrement;
+
+            double normalizer = Math.max(Math.abs(ai.getMaxVal()), Math.abs(ai.getMinVal()));
+            double subtractor = 0;
+            if (ai.getMinVal() > 0) {
+               subtractor = ai.getMinVal();
+               normalizer -= subtractor;
+            } else if (ai.getMaxVal() < 0) {
+               subtractor = -ai.getMaxVal();
+               normalizer -= subtractor;
+            }
+
+            double xVal = 0;
 
             for (AnalogData ad : ai.getData()) {
 
                ArrayList<Double> vals = ad.getAnalogValues();
                double lastX = 0;
-               double lastY = (vals.get(0) / normalizer)-yOffset*5;
+               lastY = ((vals.get(0) - subtractor) / normalizer) - yOffset*5;
+
+               
 
                for (int i = 0; i < vals.size(); i++) {
                   if (i % 2 == 0) {
                      Point2D p = getScreenCoordinates(lastX, lastY);
                                           gl.glVertex2d(p.getX(),p.getY());
-//                     gl.glVertex2d(lastX, lastY);
-
-           
                   } else {
-                     lastY = (vals.get(i) / normalizer)-yOffset*5;
-                     Point2D p = getScreenCoordinates(i, lastY);
+                     lastY = ((vals.get(i) - subtractor) / normalizer) - yOffset*5;
+                     Point2D p = getScreenCoordinates(xVal, lastY);
                      gl.glVertex2d(p.getX(),p.getY());
-//                     gl.glVertex2d(i, lastY);
                   }
-                  lastX = i;
+                  lastX = xVal;
+                  xVal += timeIncrement;
+               }
+
+               if (xVal > maxX) {
+                  maxX = xVal;
                }
                yOffset++;
             }
@@ -540,31 +590,115 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       }
       gl.glEnd();
 
+      lastY = (yOffset-1)*5-1;
+
+      endTime.setTime(endTime.getTime() + (long)maxX);
+      timespan = endTime.getTime() - startTime.getTime();
+
+      boolean showMin = timespan > 60000, showHour = timespan > 360000;
+
+
       //Draw labels
 //      gl.glLoadIdentity();
 //      gl.glTranslated((-scale / (width*.5))-.99, translationY / (height*.5), 0);
 //      gl.glScaled(scale, scale, 0);
       
+      width -= SCROLLBAR_HEIGHT;
+      height -= SCROLLBAR_HEIGHT;
 
-      for (int i = 0; i < max; i++) {
+//      maxDataCount *= INCREMENT;
+
+      //Draw Y-axis labels
+      for (int i = 0; i < numEntities; i++) {
          //Draw label
          Point2D p = getScreenCoordinates(0, -5*i);
-         drawText(gl, fileInfo.getNsObj().getEntities().get(i).getEntityInfo().getEntityLabel(), 0,p.getY(), 0.0125f, 2.0f);
+         float tSize = (float) (getScale() + (ERROR) * 0.0125f);
+         if (tSize > .15){
+            tSize = .15f;
+         }
+         Entity e = fileInfo.getNsObj().getEntities().get(i);
+         String probeInfo = "";
+         if (e instanceof AnalogInfo) {
+
+            AnalogInfo aE = (AnalogInfo)e;
+            probeInfo = aE.getProbeInfo();
+         }
+         drawTextUnscaled(gl, e.getEntityInfo().getEntityLabel() + "-" + probeInfo, SCROLLBAR_HEIGHT, p.getY(), tSize, 2.0f);
       }
-//
-//      //Draw bottom time lables
-////      gl.glLoadIdentity();
-////      gl.glTranslated((translationX / (width*.5)), -scale / (height*.5) -.83, 0);
-////      gl.glScaled(scale, scale, 0);
-//
-      for (int i = 0; i < 1000; i+= 35) {
+
+      fileInfo.getNsObj().getFileInfo().getTimeStampRes();
+
+      //Calculate screen area for data
+      dataLower = getScreenCoordinates(0, 0);
+      dataUpper = getScreenCoordinates(timespan, - lastY);
+
+      double diffX = dataUpper.getX() - dataLower.getX();
+      double diffY = dataUpper.getY() - dataLower.getY();
+
+      double lowerDiffX = Math.abs(SCROLLBAR_HEIGHT - dataLower.getX());
+      double upperDiffX = Math.abs(dataUpper.getX() - width);
+
+      dataLowerX = dataLower.getX() < 0 ? lowerDiffX * (width / diffX) + 0 : 0;
+      dataUpperX = dataUpper.getX() > width ? width - (upperDiffX * (width / diffX)) : width;
+
+      double lowerDiffY = Math.abs(0 - dataLower.getY());
+      double upperDiffY = Math.abs(dataUpper.getY() - height);
+
+      dataLowerY = dataLower.getY() < 0 ? lowerDiffY * (height/diffY) : 0;
+      dataUpperY = dataUpper.getY() > height ? height - dataLowerY - upperDiffY * (height/diffY) : height-dataLowerY;
+
+      double incr = Math.abs(getScreenCoordinates(200, 0).getX() - dataLower.getX());
+      incr = (200/incr)*200;
+      if (incr < 1){
+         incr = 1;
+      }
+
+     //Draw X-axis labels
+      for (int i = 0; i < timespan; i+= incr) {
          Point2D p = getScreenCoordinates(i, 0);
-         drawText(gl, new Date(i).toString(), p.getX(),height-SCROLLBAR_HEIGHT, 0.0125f, 2f);
+         Date currDate = new Date(startTime.getTime() + i);
+         String ms = currDate.getTime() + "";
+         ms = ms.substring(ms.length() - 3);
+         drawTextUnscaled(gl, (showHour ? currDate.getHours() + ":" : "") + (showMin ?  currDate.getMinutes() + ":" : "") + currDate.getSeconds() + ":" + ms, p.getX(), height, 0.15f, 2f);
+         drawVerticalLine(gl, p.getX());
+
+         if (i + incr >= timespan){
+            i += incr;
+            p = getScreenCoordinates(i, 0);
+            currDate = new Date(startTime.getTime() + i);
+            ms = currDate.getTime() + "";
+            ms = ms.substring(ms.length() - 3);
+            drawTextUnscaled(gl, (showHour ? currDate.getHours() + ":" : "") + (showMin ?  currDate.getMinutes() + ":" : "") + currDate.getSeconds() + ":" + ms, p.getX(), height, 0.15f, 2f);
+            drawVerticalLine(gl, p.getX());
+            break;
+         }
       }
 
       //Draw bottom time scroller
-      drawTimelineScroller(gl,0,height-SCROLLBAR_HEIGHT);
+      drawHorizontalTimelineScroller(gl, dataLowerX + SCROLLBAR_HEIGHT, height, dataUpperX - dataLowerX);
+      drawVerticalTimelineScroller(gl, SCROLLBAR_HEIGHT, dataLowerY, dataUpperY);
    }
+
+   public void drawVerticalLine(GL2 gl, double x) {
+      gl.glPushMatrix();
+      gl.glLineWidth(1);
+      gl.glTranslated(x, 0, 0);
+      gl.glColor4f(1, 0, 0, .6f);
+      gl.glBegin(GL2.GL_LINES);
+      gl.glVertex2d(0, 0);
+      gl.glVertex2d(0, getHeight());
+      gl.glEnd();
+      gl.glPopMatrix();
+   }
+
+   public void drawTextUnscaled(GL2 gl, String text, double x, double y, float size, float width) {
+      gl.glPushMatrix();
+      gl.glTranslated(x, y, 0);
+      gl.glScalef(size, -size, 0.0f);
+      gl.glLineWidth((float) (width));
+      glut.glutStrokeString(GLUT.STROKE_ROMAN, text);
+      gl.glPopMatrix();
+	}
 
    /**
 	 * Utility function for drawing text
@@ -593,29 +727,33 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       size = (float) (2f * (scale * size));
 //      gl.glRotatef(angle, 0, 0, 1);
       gl.glScalef(size, -size, 0.0f);
-      gl.glLineWidth((float) (width));
+      gl.glLineWidth(width);
       glut.glutStrokeString(GLUT.STROKE_ROMAN, text);
       gl.glPopMatrix();
 	}
 
-   public void drawTimelineScroller(GL2 gl, double x, double y) {
-//      gl.glLoadIdentity();
-
-
-      float width = getWidth();
-
+   public void drawHorizontalTimelineScroller(GL2 gl, double x, double y, double x2) {
       gl.glPushMatrix();
       gl.glTranslated(x, y, 0);
-      gl.glColor3f(1, 0, 0);
+      gl.glColor4f(1, 0, 0, .6f);
       gl.glBegin(GL2.GL_QUADS);
-//      gl.glTexCoord2f(0, 0);
-      gl.glVertex3f(0, SCROLLBAR_HEIGHT, 0);
-//      gl.glTexCoord2f(0, 1);
-      gl.glVertex3f(0, -1, 0);
-//      gl.glTexCoord2f(1, 1);
-      gl.glVertex3f(width, -1, 0);
-//      gl.glTexCoord2f(1, 0);
-      gl.glVertex3f(width, SCROLLBAR_HEIGHT, 0);
+      gl.glVertex3d(0, SCROLLBAR_HEIGHT, 0);
+      gl.glVertex3d(0, -1, 0);
+      gl.glVertex3d(x2, -1, 0);
+      gl.glVertex3d(x2, SCROLLBAR_HEIGHT, 0);
+      gl.glEnd();
+      gl.glPopMatrix();
+   }
+
+   public void drawVerticalTimelineScroller(GL2 gl, double x, double y, double y2) {
+      gl.glPushMatrix();
+      gl.glTranslated(x, y, 0);
+      gl.glColor4f(1, 0, 0,.6f);
+      gl.glBegin(GL2.GL_QUADS);
+      gl.glVertex3d(-SCROLLBAR_HEIGHT, 0, 0);
+      gl.glVertex3d(-1, 0, 0);
+      gl.glVertex3d(-1, y2, 0);
+      gl.glVertex3d(-SCROLLBAR_HEIGHT, y2, 0);
       gl.glEnd();
       gl.glPopMatrix();
    }
@@ -831,5 +969,89 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
     */
    public void setGlCanvas(GLCanvas glCanvas) {
       this.glCanvas = glCanvas;
+   }
+
+   /**
+    * @return the dataUpperX
+    */
+   public double getDataUpperX() {
+      return dataUpperX;
+   }
+
+   /**
+    * @param dataUpperX the dataUpperX to set
+    */
+   public void setDataUpperX(double dataUpperX) {
+      this.dataUpperX = dataUpperX;
+   }
+
+   /**
+    * @return the dataUpperY
+    */
+   public double getDataUpperY() {
+      return dataUpperY;
+   }
+
+   /**
+    * @param dataUpperY the dataUpperY to set
+    */
+   public void setDataUpperY(double dataUpperY) {
+      this.dataUpperY = dataUpperY;
+   }
+
+   /**
+    * @return the dataLowerX
+    */
+   public double getDataLowerX() {
+      return dataLowerX;
+   }
+
+   /**
+    * @param dataLowerX the dataLowerX to set
+    */
+   public void setDataLowerX(double dataLowerX) {
+      this.dataLowerX = dataLowerX;
+   }
+
+   /**
+    * @return the dataLowerY
+    */
+   public double getDataLowerY() {
+      return dataLowerY;
+   }
+
+   /**
+    * @param dataLowerY the dataLowerY to set
+    */
+   public void setDataLowerY(double dataLowerY) {
+      this.dataLowerY = dataLowerY;
+   }
+
+   /**
+    * @return the dataLower
+    */
+   public Point2D getDataLower() {
+      return dataLower;
+   }
+
+   /**
+    * @param dataLower the dataLower to set
+    */
+   public void setDataLower(Point2D dataLower) {
+      this.dataLower = dataLower;
+   }
+
+   /**
+    * @return the dataUpper
+    */
+   public Point2D getDataUpper() {
+      return dataUpper;
+   }
+
+   /**
+    * @param dataUpper the dataUpper to set
+    */
+   public void setDataUpper(Point2D dataUpper) {
+      this.dataUpper = dataUpper;
    }
 }
