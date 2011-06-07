@@ -70,6 +70,7 @@ public class Channel {
     // Display Name. system displays this value.
     private String displayName;
     // Data case.
+    /** Using strings for types is bad design. Use the Java Enum type instead. */
     private String channelType;
     // Source File Path.
     private String sourceFilePath;

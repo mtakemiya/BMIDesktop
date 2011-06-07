@@ -939,7 +939,7 @@ public final class TimelineTopComponent extends TopComponent  implements Propert
 		buildTransforms();
 	}
 
-   @Override
+  /* @Override
    public void resultChanged(LookupEvent le) {
 //     System.out.println("change");
 
@@ -952,7 +952,7 @@ public final class TimelineTopComponent extends TopComponent  implements Propert
                NeuroshareFile nsn = reader.readNSFileAllData(fileInfo.getFilePath());
                fileInfo.setNsObj(nsn);
             }
-   }
+   }*/
 
    /**
     * @return the glCanvas
