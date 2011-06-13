@@ -346,6 +346,9 @@ public final class TimelineTopComponent extends TopComponent  implements Propert
 //      fileInfos.removeLookupListener(this);
 //      fileInfos = null;
       //TODO: stop animator
+
+      // Add remove listener
+      Workspace.removePropertyChangeListener(this);
    }
 	
    void writeProperties(java.util.Properties p) {
