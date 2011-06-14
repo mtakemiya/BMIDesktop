@@ -23,15 +23,14 @@ import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentData;
 import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentSourceInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.TextEventData;
-import jp.atr.dni.bmi.desktop.workingfileutils.CSVReader;
-import jp.atr.dni.bmi.desktop.workingfileutils.CSVWriter;
-import jp.atr.dni.bmi.desktop.workingfileutils.TIData;
+
+import jp.atr.dni.bmi.desktop.workingfileutils.*;
 import jp.atr.dni.bmi.desktop.workingfileutils.TIHeader;
 import jp.atr.dni.bmi.desktop.workingfileutils.TLData;
 import jp.atr.dni.bmi.desktop.workingfileutils.TLHeader;
 import jp.atr.dni.bmi.desktop.workingfileutils.TOData;
 import jp.atr.dni.bmi.desktop.workingfileutils.TOHeader;
-import jp.atr.dni.bmi.desktop.workingfileutils.TSData;
+
 import jp.atr.dni.bmi.desktop.workingfileutils.TSHeader;
 
 /**
