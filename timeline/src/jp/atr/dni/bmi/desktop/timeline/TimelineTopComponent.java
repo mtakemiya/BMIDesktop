@@ -86,7 +86,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
    private Point2D dataUpper;
    private Date startTime;
    private Date endTime;
-   private double timespan;
+   private long timespan;
    private int numEntities;
    private double lastY;
 
@@ -439,6 +439,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
       GL2 gl = drawable.getGL().getGL2();
       gl.glClear(GL2.GL_COLOR_BUFFER_BIT);
+      gl.glClearColor( 1, 1, 1, 1 );
 
       if (channels == null || endTime == null) {
          return;
@@ -452,7 +453,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 //      if (SHOW_GRID){
 //         gl.glLoadIdentity();
 //      }
-//      gl.glClearColor( .9f, .9f, .9f, 1.0f );
+//      
 
 //      gl.glLoadIdentity();
 //      gl.glTranslated(translationX / (width*.5), translationY / (height*.5), 0);
@@ -466,7 +467,6 @@ public final class TimelineTopComponent extends TopComponent implements Property
 //      gl.glViewport(0, 0, width, height);//TODO: look into this some more
 
       int timeMult = 1000;
-
 
       gl.glColor3d(.6, .1, .5);
 
@@ -546,7 +546,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
       lastY = (yOffset - 1) * 5 - 1;
 
-      endTime.setTime(endTime.getTime() + (long) maxX);
+//      endTime.setTime(endTime.getTime() + (long) maxX);
 
       boolean showMin = timespan > 60000, showHour = timespan > 360000;
 
@@ -601,7 +601,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
          Point2D p = getScreenCoordinates(i, 0);
          Date currDate = new Date(startTime.getTime() + i);
          String ms = currDate.getTime() + "";
-         ms = ms.substring(ms.length() - 3);
+         ms = ms.length() > 3 ? ms.substring(ms.length() - 3) : ms;
          drawTextUnscaled(gl, (showHour ? currDate.getHours() + ":" : "") + (showMin ? currDate.getMinutes() + ":" : "") + currDate.getSeconds() + ":" + ms, p.getX(), height, 0.15f, 2f);
          drawVerticalLine(gl, p.getX());
 
@@ -610,7 +610,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
             p = getScreenCoordinates(i, 0);
             currDate = new Date(startTime.getTime() + i);
             ms = currDate.getTime() + "";
-            ms = ms.substring(ms.length() - 3);
+            ms = ms.length() > 3 ? ms.substring(ms.length() - 3) : ms;
             drawTextUnscaled(gl, (showHour ? currDate.getHours() + ":" : "") + (showMin ? currDate.getMinutes() + ":" : "") + currDate.getSeconds() + ":" + ms, p.getX(), height, 0.15f, 2f);
             drawVerticalLine(gl, p.getX());
             break;
@@ -1007,7 +1007,10 @@ public final class TimelineTopComponent extends TopComponent implements Property
       //XXX: because the workspace channels are static, we will get a concurrent modification error 
       //here if something changes. The API needs to be changed to prevent this.
       for (Channel c : channels) {
-         Date end = new Date((long) c.getTSHeader().getSamplingRate_Hz() * c.getEntity().getEntityInfo().getItemCount());
+         Date end = new Date((long) (c.getEntity().getEntityInfo().getItemCount() * 1d / c.getTSHeader().getSamplingRate_Hz()));
+         if (end.getTime() == 0) {
+            end.setTime(1);
+         }
          endTimes.add(end);
       }
 
@@ -1020,6 +1023,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
       }
 
       startTime = new Date(0);
+
 //      startTime.setYear((int) nsfi.getYear());
 //      startTime.setMonth((int) (nsfi.getMonth() - 1));
 //      startTime.setDate((int) nsfi.getDayOfMonth());
@@ -1028,8 +1032,9 @@ public final class TimelineTopComponent extends TopComponent implements Property
 //      startTime.setSeconds((int) nsfi.getSecOfDay());
 //      startTime.setTime(startTime.getTime() + nsfi.getMilliSecOfDay());
 
-      endTime.setTime(startTime.getTime());
-      timespan = endTime.getTime() - startTime.getTime();
+//      endTime.setTime(endTime.getTime() + startTime.getTime());
+
+      timespan = endTime.getTime();// - startTime.getTime();
 
       lastY = 0;
    }
