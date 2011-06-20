@@ -439,7 +439,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
       GL2 gl = drawable.getGL().getGL2();
       gl.glClear(GL2.GL_COLOR_BUFFER_BIT);
-      gl.glClearColor( 1, 1, 1, 1 );
+      gl.glClearColor(1, 1, 1, 1);
 
       if (channels == null || endTime == null) {
          return;
@@ -468,7 +468,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
       int timeMult = 1000;
 
-      gl.glColor3d(.6, .1, .5);
+      gl.glColor3i(0, 0, 0);
 
       numEntities = channels.size();
 
