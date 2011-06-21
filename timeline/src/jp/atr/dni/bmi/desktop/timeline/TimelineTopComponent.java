@@ -468,7 +468,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
       
       glCanvas.setSize(width, height);
       
-      System.out.println("width: " + width + "\theight: " + height);
+//      System.out.println("width: " + width + "\theight: " + height);
 
       int timeMult = 1000;
 
