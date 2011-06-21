@@ -254,8 +254,8 @@ public final class TimelineTopComponent extends TopComponent implements Property
 //      BorderLayout layout = new BorderLayout();
 //      layout.add(getGlCanvas(), BorderLayout.CENTER);
 
-      JPanel p = new JPanel();
-      p.add(getGlCanvas());
+//      JPanel p = new JPanel();
+//      p.add(getGlCanvas());
       this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
       this.add(getGlCanvas());
 //      this.add(getGlCanvas(), BorderLayout.CENTER);
