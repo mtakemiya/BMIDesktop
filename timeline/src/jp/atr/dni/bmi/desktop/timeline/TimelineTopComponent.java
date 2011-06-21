@@ -7,6 +7,7 @@ package jp.atr.dni.bmi.desktop.timeline;
 import com.jogamp.opengl.util.Animator;
 import com.jogamp.opengl.util.awt.TextRenderer;
 import com.jogamp.opengl.util.gl2.GLUT;
+import java.awt.BorderLayout;
 import java.awt.Font;
 
 import java.awt.geom.AffineTransform;
@@ -27,6 +28,8 @@ import javax.media.opengl.GLEventListener;
 import javax.media.opengl.GLProfile;
 import javax.media.opengl.awt.GLCanvas;
 import javax.media.opengl.glu.GLU;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
 import jp.atr.dni.bmi.desktop.model.Channel;
 import jp.atr.dni.bmi.desktop.model.Workspace;
 import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogInfo;
@@ -145,6 +148,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
     * code to initialize the openGL timeline
     */
    private void initGL() {
+      setPreferredSize(new java.awt.Dimension(100, 100));
       GLProfile.initSingleton(false);
       GLProfile glp = GLProfile.getDefault();
       GLCapabilities caps = new GLCapabilities(glp);
@@ -246,12 +250,22 @@ public final class TimelineTopComponent extends TopComponent implements Property
       animator.add(getGlCanvas());
       animator.start();
 
-      javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-      this.setLayout(layout);
-      layout.setHorizontalGroup(
-              layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup().addComponent(getGlCanvas(), javax.swing.GroupLayout.DEFAULT_SIZE, 1377, Short.MAX_VALUE).addContainerGap()));
-      layout.setVerticalGroup(
-              layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(getGlCanvas(), javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE));
+//      javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+//      BorderLayout layout = new BorderLayout();
+//      layout.add(getGlCanvas(), BorderLayout.CENTER);
+
+      JPanel p = new JPanel();
+      p.add(getGlCanvas());
+      this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+      this.add(getGlCanvas());
+//      this.add(getGlCanvas(), BorderLayout.CENTER);
+//        this.setVisible(true);
+
+//      this.setLayout(layout);
+//      layout.setHorizontalGroup(
+//              layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup().addComponent(getGlCanvas(), javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)));
+//      layout.setVerticalGroup(
+//              layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(getGlCanvas(), javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE));
 
       //add a resize listener
 //		      this.addComponentListener(new ComponentAdapter() {
@@ -455,7 +469,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
       GL2 gl = drawable.getGL().getGL2();
       gl.glClear(GL2.GL_COLOR_BUFFER_BIT);
       gl.glClearColor(1, 1, 1, 1);
-      
+
       glCanvas.setSize(width, height);
 
       if (channels == null || endTime == null) {
@@ -482,10 +496,10 @@ public final class TimelineTopComponent extends TopComponent implements Property
 //                getHeight());
 
 //      gl.glViewport(0, 0, width, height);//TODO: look into this some more
-      
+
 //      System.out.println("width: " + width + "\theight: " + height);
 
-      int timeMult = 1000;
+      int timeMult = 500;
 
       gl.glColor3i(0, 0, 0);
 
@@ -566,7 +580,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
       lastY = (yOffset - 1) * 5 - 1;
 
 //      endTime.setTime(endTime.getTime() + (long) maxX);
-      
+
 //       timespan = endTime.getTime() - startTime.getTime();
 
       boolean showMin = timespan > 60000, showHour = timespan > 360000;
@@ -656,6 +670,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
    }
 
    public void drawTextUnscaled(GL2 gl, String text, double x, double y, float size, float width) {
+      gl.glColor3i(0, 0, 0);
       gl.glPushMatrix();
       gl.glTranslated(x, y, 0);
       gl.glScalef(size, -size, 0.0f);
@@ -685,7 +700,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 //    // ... more draw commands, color changes, etc.
 //    renderer.endRendering();
 //    gl.glPopMatrix();
-
+      gl.glColor3i(0, 0, 0);
       gl.glPushMatrix();
       gl.glTranslated(x, y, 0);
       size = (float) (2f * (scale * size));
