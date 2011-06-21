@@ -464,7 +464,11 @@ public final class TimelineTopComponent extends TopComponent implements Property
 //                0,
 //                getHeight());
 
-//      gl.glViewport(0, 0, width, height);//TODO: look into this some more
+      gl.glViewport(0, 0, width, height);//TODO: look into this some more
+      
+      glCanvas.setSize(width, height);
+      
+      System.out.println("width: " + width + "\theight: " + height);
 
       int timeMult = 1000;
 
