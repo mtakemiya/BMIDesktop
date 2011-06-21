@@ -247,7 +247,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 //      });
 
       Animator animator = new Animator(getGlCanvas());
-      animator.add(getGlCanvas());
+//      animator.add(getGlCanvas());
       animator.start();
 
 //      javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
