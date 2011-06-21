@@ -355,7 +355,6 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
    @Override
    public void init(GLAutoDrawable drawable) {
-      System.out.println("init function");
       GL2 gl = (GL2) drawable.getGL();
       glu = new GLU();
       glut = new GLUT();
@@ -464,7 +463,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 //                0,
 //                getHeight());
 
-      gl.glViewport(0, 0, width, height);//TODO: look into this some more
+//      gl.glViewport(0, 0, width, height);//TODO: look into this some more
       
       glCanvas.setSize(width, height);
       
