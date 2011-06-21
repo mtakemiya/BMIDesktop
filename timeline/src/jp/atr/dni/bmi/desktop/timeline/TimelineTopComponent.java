@@ -94,6 +94,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
    private double lastY;
 
    public TimelineTopComponent() {
+      setVisible(true);
       initGL();
       SHOW_GRID = true;
       setName(NbBundle.getMessage(TimelineTopComponent.class, "CTL_TimelineTopComponent"));
@@ -245,7 +246,11 @@ public final class TimelineTopComponent extends TopComponent implements Property
 //            }
 //         }
 //      });
-
+      
+      
+      this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+      this.add(getGlCanvas());
+      
       Animator animator = new Animator(getGlCanvas());
 //      animator.add(getGlCanvas());
       animator.start();
@@ -256,8 +261,8 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
 //      JPanel p = new JPanel();
 //      p.add(getGlCanvas());
-      this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-      this.add(getGlCanvas());
+      
+      
 //      this.add(getGlCanvas(), BorderLayout.CENTER);
 //        this.setVisible(true);
 
