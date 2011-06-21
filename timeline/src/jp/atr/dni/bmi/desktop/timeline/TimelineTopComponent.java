@@ -547,6 +547,8 @@ public final class TimelineTopComponent extends TopComponent implements Property
       lastY = (yOffset - 1) * 5 - 1;
 
 //      endTime.setTime(endTime.getTime() + (long) maxX);
+      
+//       timespan = endTime.getTime() - startTime.getTime();
 
       boolean showMin = timespan > 60000, showHour = timespan > 360000;
 
@@ -678,7 +680,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
    public void drawHorizontalTimelineScroller(GL2 gl, double x, double y, double x2) {
       gl.glPushMatrix();
       gl.glTranslated(x, y, 0);
-      gl.glColor4f(1, 0, 0, .6f);
+      gl.glColor4f(1, 0, 0, .7f);
       gl.glBegin(GL2.GL_QUADS);
       gl.glVertex3d(0, SCROLLBAR_HEIGHT, 0);
       gl.glVertex3d(0, -1, 0);
@@ -691,7 +693,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
    public void drawVerticalTimelineScroller(GL2 gl, double x, double y, double y2) {
       gl.glPushMatrix();
       gl.glTranslated(x, y, 0);
-      gl.glColor4f(1, 0, 0, .6f);
+      gl.glColor4f(1, 0, 0, .7f);
       gl.glBegin(GL2.GL_QUADS);
       gl.glVertex3d(-SCROLLBAR_HEIGHT, 0, 0);
       gl.glVertex3d(-1, 0, 0);
