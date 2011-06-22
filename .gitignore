@@ -35,3 +35,7 @@ Thumbs.db
 #####################
 platform-private.properties
 
+# Desktop Files #
+#####################
+.csv
+
