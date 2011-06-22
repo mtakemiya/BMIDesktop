@@ -265,7 +265,7 @@ public final class JoglTestTopComponent extends TopComponent implements GLEventL
 
    @Override
    public void dispose(GLAutoDrawable drawable) {
-      throw new UnsupportedOperationException("Not supported yet.");
+//      throw new UnsupportedOperationException("Not supported yet.");
    }
 
    @Override
