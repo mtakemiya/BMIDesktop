@@ -24,6 +24,7 @@ import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.GLProfile;
 import javax.media.opengl.awt.GLCanvas;
+import javax.media.opengl.awt.GLJPanel;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import org.openide.util.NbBundle;
@@ -66,7 +67,7 @@ public final class JoglTestTopComponent extends TopComponent implements GLEventL
    private Point2D previousPoint;
    /** the current size of the panel */
    private Dimension size;
-   private GLCanvas canvas;
+   private GLJPanel canvas;
 
    public JoglTestTopComponent() {
       initGL();
@@ -76,7 +77,8 @@ public final class JoglTestTopComponent extends TopComponent implements GLEventL
    }
 
    private void initGL() {
-
+setPreferredSize(new java.awt.Dimension(100, 100));
+      setSize(new java.awt.Dimension(100, 100));
       javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
       this.setLayout(layout);
       layout.setHorizontalGroup(
@@ -87,7 +89,7 @@ public final class JoglTestTopComponent extends TopComponent implements GLEventL
       GLProfile.initSingleton(true);
       GLProfile glp = GLProfile.getDefault();
       GLCapabilities caps = new GLCapabilities(glp);
-      canvas = new GLCanvas(caps);
+      canvas = new GLJPanel(caps);
 
 //      frame = new JFrame("Swing Window Test");
 //      canvas.setSize(new Dimension(300, 300));
@@ -220,6 +222,7 @@ public final class JoglTestTopComponent extends TopComponent implements GLEventL
    // End of variables declaration//GEN-END:variables
    @Override
    public void componentOpened() {
+//      System.setProperty("sun.awt.noerasebackground", "true");
       // TODO add custom code on component opening
    }
 

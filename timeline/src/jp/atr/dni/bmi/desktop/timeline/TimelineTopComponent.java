@@ -27,6 +27,7 @@ import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.GLProfile;
 import javax.media.opengl.awt.GLCanvas;
+import javax.media.opengl.awt.GLJPanel;
 import javax.media.opengl.glu.GLU;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -64,7 +65,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
    private AffineTransform transform = new AffineTransform();
    /** the transform for screen to virtual coordinates */
    private AffineTransform inverseTransform = new AffineTransform();
-   private GLCanvas glCanvas;
+   private GLJPanel glCanvas;
    private GLUT glut;
    private GLU glu;
    private TextRenderer renderer;
@@ -150,7 +151,8 @@ public final class TimelineTopComponent extends TopComponent implements Property
     */
    private void initGL() {
       setPreferredSize(new java.awt.Dimension(100, 100));
-      GLProfile.initSingleton(false);
+      setSize(new java.awt.Dimension(100, 100));
+      GLProfile.initSingleton(true);
       GLProfile glp = GLProfile.getDefault();
       GLCapabilities caps = new GLCapabilities(glp);
 
@@ -158,7 +160,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
       renderer = new TextRenderer(new Font("SansSerif", Font.BOLD, 12));
 
-      setGlCanvas(new GLCanvas(caps));
+      setGlCanvas(new GLJPanel(caps));
       viewerChannels = new ArrayList<ViewerChannel>();
 
       getGlCanvas().addGLEventListener(this);
@@ -943,14 +945,14 @@ public final class TimelineTopComponent extends TopComponent implements Property
    /**
     * @return the glCanvas
     */
-   public GLCanvas getGlCanvas() {
+   public GLJPanel getGlCanvas() {
       return glCanvas;
    }
 
    /**
     * @param glCanvas the glCanvas to set
     */
-   public void setGlCanvas(GLCanvas glCanvas) {
+   public void setGlCanvas(GLJPanel glCanvas) {
       this.glCanvas = glCanvas;
    }
 
