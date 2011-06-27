@@ -4,15 +4,12 @@
  */
 package jp.atr.dni.bmi.desktop.workspace;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import jp.atr.dni.bmi.desktop.model.Channel;
 import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.Entity;
 import jp.atr.dni.bmi.desktop.neuroshareutils.EntityInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.EventInfo;
-import jp.atr.dni.bmi.desktop.workingfileutils.CSVReader;
-import jp.atr.dni.bmi.desktop.neuroshareutils.NSReader;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NeuralInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.Ns_AnalogData;
 import jp.atr.dni.bmi.desktop.neuroshareutils.Ns_CreateFile;
@@ -25,12 +22,12 @@ import jp.atr.dni.bmi.desktop.neuroshareutils.Nsa_FileInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.Nsa_NeuralInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.Nsa_SegSourceInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.Nsa_SegmentInfo;
-import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentData;
 import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentInfo;
 import jp.atr.dni.bmi.desktop.workingfileutils.TIData;
 import jp.atr.dni.bmi.desktop.workingfileutils.TLData;
 import jp.atr.dni.bmi.desktop.workingfileutils.TOData;
 import jp.atr.dni.bmi.desktop.workingfileutils.TSData;
+import jp.atr.dni.bmi.desktop.workingfileutils.WorkingFileReader;
 
 /**
  *
@@ -52,7 +49,7 @@ public class CreateNewNeuroshareFile {
     public void createFile(String dstFileFullPath, Nsa_FileInfo metaInfo, ArrayList<Channel> channels) {
 
             // Reader
-            CSVReader nsCsvReader = new CSVReader();
+            WorkingFileReader nsCsvReader = new WorkingFileReader();
 
             // Create the Neuroshare file.
             Ns_CreateFile nsFile = new Ns_CreateFile(dstFileFullPath);

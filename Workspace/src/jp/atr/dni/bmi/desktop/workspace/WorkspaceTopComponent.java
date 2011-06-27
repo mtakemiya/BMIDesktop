@@ -21,7 +21,6 @@ import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 import org.openide.util.ImageUtilities;
 import org.netbeans.api.settings.ConvertAsProperties;
-import org.openide.util.Lookup;
 
 /**
  * Top component which displays something.
@@ -274,7 +273,7 @@ public final class WorkspaceTopComponent extends TopComponent implements Propert
 
         // Initialize jTables.
         afterInitComponents();
-
+        
     }
 
     @Override

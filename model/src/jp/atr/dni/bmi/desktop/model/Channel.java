@@ -234,7 +234,7 @@ public class Channel {
      */
     public ArrayList<AnalogData> getNeuroshareAnalogData() {
         try {
-            CSVReader nsCsvReader = new CSVReader();
+            WorkingFileReader nsCsvReader = new WorkingFileReader();
             return nsCsvReader.getAnalogData(this.workingFilePath);
         } catch (IOException ex) {
             Logger.getLogger(Channel.class.getName()).log(Level.SEVERE, null, ex);
@@ -248,7 +248,7 @@ public class Channel {
      */
     public ArrayList<Double> getNeuroshareNeuralData() {
         try {
-            CSVReader nsCsvReader = new CSVReader();
+            WorkingFileReader nsCsvReader = new WorkingFileReader();
             return nsCsvReader.getNeuralData(this.workingFilePath);
         } catch (IOException ex) {
             Logger.getLogger(Channel.class.getName()).log(Level.SEVERE, null, ex);
@@ -262,7 +262,7 @@ public class Channel {
      */
     public ArrayList<TextEventData> getNeuroshareTextEventData() {
         try {
-            CSVReader nsCsvReader = new CSVReader();
+            WorkingFileReader nsCsvReader = new WorkingFileReader();
             return nsCsvReader.getTextEventData(this.workingFilePath);
         } catch (IOException ex) {
             Logger.getLogger(Channel.class.getName()).log(Level.SEVERE, null, ex);
@@ -276,7 +276,7 @@ public class Channel {
      */
     public SegmentData getNeuroshareSegmentData() {
         try {
-            CSVReader nsCsvReader = new CSVReader();
+            WorkingFileReader nsCsvReader = new WorkingFileReader();
             return nsCsvReader.getSegmentData(this.workingFilePath);
         } catch (IOException ex) {
             Logger.getLogger(Channel.class.getName()).log(Level.SEVERE, null, ex);
@@ -291,7 +291,7 @@ public class Channel {
      * @return
      */
     public boolean setNeuroshareAnalogData(ArrayList<AnalogData> analogData) {
-        CSVWriter nsCsvWriter = new CSVWriter();
+        WorkingFileWriter nsCsvWriter = new WorkingFileWriter();
         if (nsCsvWriter.overwriteTSFile(this.workingFilePath, analogData, this.entity)) {
             this.setEditFlag(true);
             return true;
@@ -306,7 +306,7 @@ public class Channel {
      * @return
      */
     public boolean setNeuroshareEventData(ArrayList<EventData> eventData) {
-        CSVWriter nsCsvWriter = new CSVWriter();
+        WorkingFileWriter nsCsvWriter = new WorkingFileWriter();
         Object eventObject = eventData.clone();
         if (nsCsvWriter.overwriteTLFile(this.workingFilePath, eventObject, this.entity)) {
             this.setEditFlag(true);
@@ -321,7 +321,7 @@ public class Channel {
      * @return
      */
     public boolean setNeuroshareSegmentData(SegmentData segmentData) {
-        CSVWriter nsCsvWriter = new CSVWriter();
+        WorkingFileWriter nsCsvWriter = new WorkingFileWriter();
         if (nsCsvWriter.overwriteTIFile(this.workingFilePath, segmentData, this.entity)) {
             this.setEditFlag(true);
             return true;
@@ -335,7 +335,7 @@ public class Channel {
      * @return
      */
     public boolean setNeuroshareNeuralData(ArrayList<Double> neuralData) {
-        CSVWriter nsCsvWriter = new CSVWriter();
+        WorkingFileWriter nsCsvWriter = new WorkingFileWriter();
         if (nsCsvWriter.overwriteTOFile(this.workingFilePath, neuralData, this.entity)) {
             this.setEditFlag(true);
             return true;
@@ -380,7 +380,7 @@ public class Channel {
      * @return
      */
     public TSData getTSData() {
-        CSVReader csvReader = new CSVReader();
+        WorkingFileReader csvReader = new WorkingFileReader();
         return csvReader.getTSData(this.workingFilePath);
     }
 
@@ -389,7 +389,7 @@ public class Channel {
      * @return
      */
     public TOData getTOData() {
-        CSVReader csvReader = new CSVReader();
+        WorkingFileReader csvReader = new WorkingFileReader();
         return csvReader.getTOData(this.workingFilePath);
     }
 
@@ -398,7 +398,7 @@ public class Channel {
      * @return
      */
     public TIData getTIData() {
-        CSVReader csvReader = new CSVReader();
+        WorkingFileReader csvReader = new WorkingFileReader();
         return csvReader.getTIData(this.workingFilePath);
     }
 
@@ -407,7 +407,7 @@ public class Channel {
      * @return
      */
     public TLData getTLData() {
-        CSVReader csvReader = new CSVReader();
+        WorkingFileReader csvReader = new WorkingFileReader();
         return csvReader.getTLData(this.workingFilePath);
     }
 
@@ -417,7 +417,7 @@ public class Channel {
      * @return
      */
     public boolean setTSData(TSData data) {
-        CSVWriter csvWriter = new CSVWriter();
+        WorkingFileWriter csvWriter = new WorkingFileWriter();
         Entity e = csvWriter.overwriteTSFile(this.workingFilePath, data, this.entity);
         if (e == null) {
             // Case : The workingFile does not exist(delete manually).
@@ -436,7 +436,7 @@ public class Channel {
      * @return
      */
     public boolean setTOData(TOData data) {
-        CSVWriter csvWriter = new CSVWriter();
+        WorkingFileWriter csvWriter = new WorkingFileWriter();
         Entity e = csvWriter.overwriteTOFile(this.workingFilePath, data, this.entity);
         if (e == null) {
             // Case : The workingFile does not exist(delete manually).
@@ -455,7 +455,7 @@ public class Channel {
      * @return
      */
     public boolean setTIData(TIData data) {
-        CSVWriter csvWriter = new CSVWriter();
+        WorkingFileWriter csvWriter = new WorkingFileWriter();
         Entity e = csvWriter.overwriteTIFile(this.workingFilePath, data, this.entity);
         if (e == null) {
             // Case : The workingFile does not exist(delete manually).
@@ -474,7 +474,7 @@ public class Channel {
      * @return
      */
     public boolean setTLData(TLData data) {
-        CSVWriter csvWriter = new CSVWriter();
+        WorkingFileWriter csvWriter = new WorkingFileWriter();
         Entity e = csvWriter.overwriteTLFile(this.workingFilePath, data, this.entity);
         if (e == null) {
             // Case : The workingFile does not exist(delete manually).
