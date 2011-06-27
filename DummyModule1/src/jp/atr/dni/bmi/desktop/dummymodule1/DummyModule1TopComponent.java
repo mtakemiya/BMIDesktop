@@ -18,7 +18,7 @@ import org.openide.windows.WindowManager;
 import org.openide.util.ImageUtilities;
 import org.netbeans.api.settings.ConvertAsProperties;
 import jp.atr.dni.bmi.desktop.model.Workspace;
-import jp.atr.dni.bmi.desktop.workingfileutils.CSVReader;
+import jp.atr.dni.bmi.desktop.workingfileutils.WorkingFileReader;
 import jp.atr.dni.bmi.desktop.workingfileutils.TIData;
 import jp.atr.dni.bmi.desktop.workingfileutils.TLData;
 import jp.atr.dni.bmi.desktop.workingfileutils.TOData;
@@ -336,7 +336,7 @@ public final class DummyModule1TopComponent extends TopComponent implements Prop
     private void setTextToList() {
 
         // Reader API
-        CSVReader cr = new CSVReader();
+        WorkingFileReader cr = new WorkingFileReader();
 
         if (this.channel.getChannelType().equals("TS")) {
 

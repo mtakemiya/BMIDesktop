@@ -7,7 +7,6 @@ package jp.atr.dni.bmi.desktop.timeline;
 import com.jogamp.opengl.util.Animator;
 import com.jogamp.opengl.util.awt.TextRenderer;
 import com.jogamp.opengl.util.gl2.GLUT;
-import java.awt.BorderLayout;
 import java.awt.Font;
 
 import java.awt.geom.AffineTransform;
@@ -26,19 +25,17 @@ import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.GLProfile;
-import javax.media.opengl.awt.GLCanvas;
 import javax.media.opengl.awt.GLJPanel;
 import javax.media.opengl.glu.GLU;
 import javax.swing.BoxLayout;
-import javax.swing.JPanel;
 import jp.atr.dni.bmi.desktop.model.Channel;
 import jp.atr.dni.bmi.desktop.model.Workspace;
 import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.ElemType;
 import jp.atr.dni.bmi.desktop.neuroshareutils.Entity;
 import jp.atr.dni.bmi.desktop.timeline.model.ViewerChannel;
-import jp.atr.dni.bmi.desktop.workingfileutils.CSVReader;
 import jp.atr.dni.bmi.desktop.workingfileutils.TSData;
+import jp.atr.dni.bmi.desktop.workingfileutils.WorkingFileReader;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
@@ -548,7 +545,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
             double xVal = 0;
 
-            CSVReader cr = new CSVReader();
+            WorkingFileReader cr = new WorkingFileReader();
 
             if (c.getChannelType().equals("TS")) {
 

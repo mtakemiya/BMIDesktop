@@ -56,8 +56,8 @@ public class WorkingFileUtils {
         }
 
         // Write Neuroshare Data to the working file.
-        CSVWriter nsCsvWriter = new CSVWriter();
-        nsCsvWriter.createCSVFileFromNeuroshare(file.getAbsolutePath(), sourceFilePath, entity);
+        WorkingFileWriter nsCsvWriter = new WorkingFileWriter();
+        nsCsvWriter.createWorkingFileFromNeuroshare(file.getAbsolutePath(), sourceFilePath, entity);
 
         this.workingFilePath = file.getAbsolutePath();
         return true;
@@ -86,8 +86,8 @@ public class WorkingFileUtils {
         }
 
         // Write Neuroshare Data to the working file.
-        CSVWriter nsCsvWriter = new CSVWriter();
-        nsCsvWriter.createCSVFileFromPlexon(file.getAbsolutePath(), sourceFilePath, entity);
+        WorkingFileWriter nsCsvWriter = new WorkingFileWriter();
+        nsCsvWriter.createWorkingFileFromPlexon(file.getAbsolutePath(), sourceFilePath, entity);
 
         this.workingFilePath = file.getAbsolutePath();
         return true;
@@ -116,8 +116,8 @@ public class WorkingFileUtils {
         }
 
         // Write Neuroshare Data to the working file.
-        CSVWriter nsCsvWriter = new CSVWriter();
-        nsCsvWriter.createCSVFileFromATRCsv(file.getAbsolutePath(), sourceFilePath, entity);
+        WorkingFileWriter nsCsvWriter = new WorkingFileWriter();
+        nsCsvWriter.createWorkingFileFromATRCsv(file.getAbsolutePath(), sourceFilePath, entity);
 
         this.workingFilePath = file.getAbsolutePath();
         return true;
@@ -146,8 +146,8 @@ public class WorkingFileUtils {
         }
 
         // Write Neuroshare Data to the working file.
-        CSVWriter nsCsvWriter = new CSVWriter();
-        nsCsvWriter.createCSVFileFromBlackRockNev(file.getAbsolutePath(), sourceFilePath, entity);
+        WorkingFileWriter nsCsvWriter = new WorkingFileWriter();
+        nsCsvWriter.createWorkingFileFromBlackRockNev(file.getAbsolutePath(), sourceFilePath, entity);
 
         this.workingFilePath = file.getAbsolutePath();
         return true;
@@ -176,8 +176,8 @@ public class WorkingFileUtils {
         }
 
         // Write Neuroshare Data to the working file.
-        CSVWriter nsCsvWriter = new CSVWriter();
-        nsCsvWriter.createCSVFileFromBlackRockNsx(file.getAbsolutePath(), sourceFilePath, entity);
+        WorkingFileWriter nsCsvWriter = new WorkingFileWriter();
+        nsCsvWriter.createWorkingFileFromBlackRockNsx(file.getAbsolutePath(), sourceFilePath, entity);
 
         this.workingFilePath = file.getAbsolutePath();
         return true;
