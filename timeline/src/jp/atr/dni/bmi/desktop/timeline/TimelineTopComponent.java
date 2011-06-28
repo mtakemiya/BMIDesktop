@@ -245,11 +245,11 @@ public final class TimelineTopComponent extends TopComponent implements Property
 //            }
 //         }
 //      });
-      
-      
+
+
       this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
       this.add(getGlCanvas());
-      
+
       Animator animator = new Animator(getGlCanvas());
 //      animator.add(getGlCanvas());
       animator.start();
@@ -260,8 +260,8 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
 //      JPanel p = new JPanel();
 //      p.add(getGlCanvas());
-      
-      
+
+
 //      this.add(getGlCanvas(), BorderLayout.CENTER);
 //        this.setVisible(true);
 
@@ -523,61 +523,41 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
       //draw data
       for (ViewerChannel vc : viewerChannels) {
-//         Entity e = c.getEntity();
-         if (e.getTag().getElemType() == ElemType.ENTITY_ANALOG) {
-            AnalogInfo ai = (AnalogInfo) e;
 
-            if (ai == null) {
-               continue;
-            }
+         double timeIncrement = (1.0 / (vc.getSampleRate()) * timeMult);
 
-            double timeIncrement = (1.0 / (ai.getSampleRate()) * timeMult);
+         double xVal = 0;
 
-            double normalizer = Math.max(Math.abs(ai.getMaxVal()), Math.abs(ai.getMinVal()));
-            double subtractor = 0;
-            if (ai.getMinVal() > 0) {
-               subtractor = ai.getMinVal();
-               normalizer -= subtractor;
-            } else if (ai.getMaxVal() < 0) {
-               subtractor = -ai.getMaxVal();
-               normalizer -= subtractor;
-            }
+         if (vc.getChannelType() == ChannelType.TS_AND_VAL) {
 
-            double xVal = 0;
+            // Get TSData from the WorkingFile to display.
+            TSData tSData = vc.gettSData();
 
-            WorkingFileReader cr = new WorkingFileReader();
+            ArrayList<Double> vals = tSData.getAllValues().get(0);
+            double entityTime = vals.size() / timeIncrement;
 
-            if (chh.getChannelType() == ChannelType.TS_AND_VAL) {
+            double lastX = 0;
+            lastY = ((vals.get(0) - vc.getSubtractor()) / vc.getNormalizer()) - yOffset * 5;
 
-               // Get TSData from the WorkingFile to display.
-               TSData tSData = cr.getTSData(c.getWorkingFilePath());
-
-               ArrayList<Double> vals = tSData.getAllValues().get(0);
-               double entityTime = vals.size() / timeIncrement;
-
-               double lastX = 0;
-               lastY = ((vals.get(0) - subtractor) / normalizer) - yOffset * 5;
-
-               for (int i = 0; i < vals.size(); i++) {
-                  if (i % 2 == 0) {
-                     Point2D p = getScreenCoordinates(lastX, lastY);
-                     gl.glVertex2d(p.getX(), p.getY());
-                  } else {
-                     lastY = ((vals.get(i) - subtractor) / normalizer) - yOffset * 5;
-                     Point2D p = getScreenCoordinates(xVal, lastY);
-                     gl.glVertex2d(p.getX(), p.getY());
-                  }
-                  lastX = xVal;
-                  xVal += timeIncrement;
+            for (int i = 0; i < vals.size(); i++) {
+               if (i % 2 == 0) {
+                  Point2D p = getScreenCoordinates(lastX, lastY);
+                  gl.glVertex2d(p.getX(), p.getY());
+               } else {
+                  lastY = ((vals.get(i) - vc.getSubtractor()) / vc.getNormalizer()) - yOffset * 5;
+                  Point2D p = getScreenCoordinates(xVal, lastY);
+                  gl.glVertex2d(p.getX(), p.getY());
                }
-               if (xVal > maxX) {
-                  maxX = xVal;
-               }
-               yOffset++;
+               lastX = xVal;
+               xVal += timeIncrement;
             }
-
-
+            if (xVal > maxX) {
+               maxX = xVal;
+            }
+            yOffset++;
          }
+
+
       }
       gl.glEnd();
 
@@ -810,7 +790,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 //            if (depth2 != depth1) {
 //               return depth2 - depth1;
 //            } else {
-               return arg1.hashCode() - arg0.hashCode();
+            return arg1.hashCode() - arg0.hashCode();
 //            }
          }
       });
@@ -1053,9 +1033,29 @@ public final class TimelineTopComponent extends TopComponent implements Property
             end.setTime(1);
          }
          endTimes.add(end);
-         
+
          //Create new viewer channel
-         viewerChannels.add(new ViewerChannel());
+         ViewerChannel vc = new ViewerChannel();
+
+         Entity e = c.getEntity();
+         if (e.getTag().getElemType() == ElemType.ENTITY_ANALOG) {
+            AnalogInfo ai = (AnalogInfo) e;
+
+            if (ai == null) {
+               continue;
+            }
+
+            double normalizer = Math.max(Math.abs(ai.getMaxVal()), Math.abs(ai.getMinVal()));
+            double subtractor = 0;
+            if (ai.getMinVal() > 0) {
+               subtractor = ai.getMinVal();
+               normalizer -= subtractor;
+            } else if (ai.getMaxVal() < 0) {
+               subtractor = -ai.getMaxVal();
+               normalizer -= subtractor;
+            }
+         }
+         viewerChannels.add(vc);
       }
 
       for (Date e : endTimes) {
