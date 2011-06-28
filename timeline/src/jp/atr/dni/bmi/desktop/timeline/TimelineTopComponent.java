@@ -77,7 +77,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
    private ModeHandler handler;
    private ArrayList<ViewerChannel> viewerChannels;
    private ArrayList<Date> endTimes;
-   private ArrayList<Channel> channels;
+//   private ArrayList<Channel> channels;
    public static final int SCROLLBAR_HEIGHT = 25;
    public static final double INCREMENT = .25;
    private double dataUpperX;
@@ -476,7 +476,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
       glCanvas.setSize(width, height);
 
-      if (channels == null || endTime == null) {
+      if (viewerChannels == null || endTime == null || numEntities < 1) {
          return;
       }
 
@@ -507,7 +507,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
       gl.glColor3i(0, 0, 0);
 
-      numEntities = channels.size();
+
 
       //Draw data
       gl.glLineWidth(1);
@@ -556,16 +556,12 @@ public final class TimelineTopComponent extends TopComponent implements Property
             }
             yOffset++;
          }
-
-
       }
       gl.glEnd();
 
       lastY = (yOffset - 1) * 5 - 1;
 
 //      endTime.setTime(endTime.getTime() + (long) maxX);
-
-//       timespan = endTime.getTime() - startTime.getTime();
 
       boolean showMin = timespan > 60000, showHour = timespan > 360000;
 
@@ -580,14 +576,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
          if (tSize > .15) {
             tSize = .15f;
          }
-         Entity e = channels.get(i).getEntity();
-         String probeInfo = "";
-         if (e instanceof AnalogInfo) {
-
-            AnalogInfo aE = (AnalogInfo) e;
-            probeInfo = aE.getProbeInfo();
-         }
-         drawTextUnscaled(gl, e.getEntityInfo().getEntityLabel() + "-" + probeInfo, SCROLLBAR_HEIGHT, p.getY(), tSize, 2.0f);
+         drawTextUnscaled(gl, viewerChannels.get(i).getLabel(), SCROLLBAR_HEIGHT, p.getY(), tSize, 2.0f);
       }
 
       //Calculate screen area for data
@@ -1019,11 +1008,10 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
    @Override
    public void propertyChange(PropertyChangeEvent pce) {
-      channels = Workspace.getChannels();
+      ArrayList<Channel> channels = Workspace.getChannels();
       viewerChannels = new ArrayList<ViewerChannel>();
       endTimes = new ArrayList<Date>();
 
-      numEntities = channels.size();
 
       //XXX: because the workspace channels are static, we will get a concurrent modification error 
       //here if something changes. The API needs to be changed to prevent this.
@@ -1054,7 +1042,11 @@ public final class TimelineTopComponent extends TopComponent implements Property
                subtractor = -ai.getMaxVal();
                normalizer -= subtractor;
             }
+            vc.setNormalizer(normalizer);
+            vc.setSubtractor(subtractor);
+            vc.setLabel(e.getEntityInfo().getEntityLabel() + "-" + ai.getProbeInfo());
          }
+
          viewerChannels.add(vc);
       }
 
@@ -1081,5 +1073,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
       timespan = endTime.getTime();// - startTime.getTime();
 
       lastY = 0;
+
+      numEntities = viewerChannels.size();
    }
 }

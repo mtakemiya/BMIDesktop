@@ -14,15 +14,11 @@ import jp.atr.dni.bmi.desktop.workingfileutils.TSData;
 public class ViewerChannel {
 
    private boolean selected;
-   
    private double sampleRate;
-   
    private double normalizer;
-   
    private double subtractor;
-   
+   private String label;
    private ChannelType channelType;
-   
    private TSData tSData;
 
 //   private int depth;
@@ -108,5 +104,19 @@ public class ViewerChannel {
     */
    public void setSubtractor(double subtractor) {
       this.subtractor = subtractor;
+   }
+
+   /**
+    * @return the label
+    */
+   public String getLabel() {
+      return label;
+   }
+
+   /**
+    * @param label the label to set
+    */
+   public void setLabel(String label) {
+      this.label = label;
    }
 }
