@@ -29,6 +29,7 @@ import javax.media.opengl.awt.GLJPanel;
 import javax.media.opengl.glu.GLU;
 import javax.swing.BoxLayout;
 import jp.atr.dni.bmi.desktop.model.Channel;
+import jp.atr.dni.bmi.desktop.model.ChannelType;
 import jp.atr.dni.bmi.desktop.model.Workspace;
 import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.ElemType;
@@ -158,7 +159,6 @@ public final class TimelineTopComponent extends TopComponent implements Property
       renderer = new TextRenderer(new Font("SansSerif", Font.BOLD, 12));
 
       setGlCanvas(new GLJPanel(caps));
-      viewerChannels = new ArrayList<ViewerChannel>();
 
       getGlCanvas().addGLEventListener(this);
 
@@ -522,8 +522,8 @@ public final class TimelineTopComponent extends TopComponent implements Property
       Point2D maxPoint = getVirtualCoordinates(getWidth(), getHeight());
 
       //draw data
-      for (Channel c : channels) {
-         Entity e = c.getEntity();
+      for (ViewerChannel vc : viewerChannels) {
+//         Entity e = c.getEntity();
          if (e.getTag().getElemType() == ElemType.ENTITY_ANALOG) {
             AnalogInfo ai = (AnalogInfo) e;
 
@@ -547,7 +547,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
             WorkingFileReader cr = new WorkingFileReader();
 
-            if (c.getChannelType().equals("TS")) {
+            if (c.getChannelType() == ChannelType.TS_AND_VAL) {
 
                // Get TSData from the WorkingFile to display.
                TSData tSData = cr.getTSData(c.getWorkingFilePath());
@@ -1040,6 +1040,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
    @Override
    public void propertyChange(PropertyChangeEvent pce) {
       channels = Workspace.getChannels();
+      viewerChannels = new ArrayList<ViewerChannel>();
       endTimes = new ArrayList<Date>();
 
       numEntities = channels.size();
@@ -1052,6 +1053,9 @@ public final class TimelineTopComponent extends TopComponent implements Property
             end.setTime(1);
          }
          endTimes.add(end);
+         
+         //Create new viewer channel
+         viewerChannels.add(new ViewerChannel());
       }
 
       for (Date e : endTimes) {
