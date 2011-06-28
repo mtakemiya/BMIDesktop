@@ -547,7 +547,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
             WorkingFileReader cr = new WorkingFileReader();
 
-            if (c.getChannelType() == ChannelType.TS_AND_VAL) {
+            if (channel.getChannelType() == ChannelType.TS_AND_VAL) {
 
                // Get TSData from the WorkingFile to display.
                TSData tSData = cr.getTSData(c.getWorkingFilePath());
