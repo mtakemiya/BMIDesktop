@@ -1,5 +1,6 @@
 Manifest-Version: 1.0
 OpenIDE-Module: jp.atr.dni.bmi.desktop.workspace
+OpenIDE-Module-Install: jp/atr/dni/bmi/desktop/workspace/Installer.class
 OpenIDE-Module-Layer: jp/atr/dni/bmi/desktop/workspace/layer.xml
 OpenIDE-Module-Localizing-Bundle: jp/atr/dni/bmi/desktop/workspace/Bundle.properties
 OpenIDE-Module-Requires: org.openide.windows.WindowManager

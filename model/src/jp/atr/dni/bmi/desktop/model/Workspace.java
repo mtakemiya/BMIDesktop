@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import jp.atr.dni.bmi.desktop.workingfileutils.WorkingFileUtils;
 
 /**
@@ -118,5 +119,27 @@ public class Workspace {
         channels.add(channel);
         fire("AddChannel", old, channels);
 
+    }
+
+    public static void removeAllChannels() {
+
+        ArrayList<Channel> old = getChannels();
+        int size = channels.size();
+
+        // remove all channels.
+        for (int ii = 0; ii < size; ii++) {
+
+            // remove the channel.
+            Channel ch = channels.get(0);
+            channels.remove(ch);
+
+            // remove the workingfile.
+            WorkingFileUtils wfu = new WorkingFileUtils(ch.getWorkingFilePath());
+            wfu.removeWorkingFile();
+
+            // fire event.
+            fire("RemoveChannel", old, channels);
+
+        }
     }
 }
