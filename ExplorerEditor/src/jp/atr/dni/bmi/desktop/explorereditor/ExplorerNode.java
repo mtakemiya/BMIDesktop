@@ -93,6 +93,7 @@ public class ExplorerNode extends AbstractNode {
      */
     @Override
     public Action[] getActions(boolean popup) {
+
         return new Action[]{
                     new SaveAction(), // Save as -> Neuroshare
                     null, //Line.
@@ -871,15 +872,10 @@ public class ExplorerNode extends AbstractNode {
                 }
             }
 
-            // Plexon file to Neuroshare file. : Create the Neuroshare File.
-            if (obj.getFileType().equals("File/plx")) {
-                if (obj.getNsObj() != null) {
-                    // Re-Create the Neuroshare file.
-                    NsnFileModelConverter.ModelConvert(obj.getNsObj(), obj.getFilePath(), obj.getFilePath());
-                } else {
-                    JOptionPane.showMessageDialog(null, "Nothing to change.");
+            // Other file format. : Nothing to do.
+            else {
+                    JOptionPane.showMessageDialog(null, "Nothing to do.");
                     return;
-                }
             }
 
             // refresh obj's value.
@@ -950,6 +946,12 @@ public class ExplorerNode extends AbstractNode {
 
             if (obj == null) {
                 JOptionPane.showMessageDialog(null, "Select a directory or file.");
+                return;
+            }
+            
+            // Confirm to delete or not.
+            int selected = JOptionPane.showConfirmDialog(null,"Delete it (cannot be undone)?", "Confirm", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (selected != JOptionPane.OK_OPTION){
                 return;
             }
 
