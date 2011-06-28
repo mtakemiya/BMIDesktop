@@ -12,8 +12,9 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import jp.atr.dni.bmi.desktop.explorereditor.ChannelSelecter;
+import jp.atr.dni.bmi.desktop.explorereditor.ChannelSelector;
 import jp.atr.dni.bmi.desktop.model.Channel;
+import jp.atr.dni.bmi.desktop.model.ChannelType;
 import jp.atr.dni.bmi.desktop.model.GeneralFileInfo;
 import jp.atr.dni.bmi.desktop.model.Workspace;
 import org.openide.util.NbBundle;
@@ -210,7 +211,7 @@ public final class WorkspaceTopComponent extends TopComponent implements Propert
 
         // Choose channels from the file.
         // Open ChannelSelecter Dialog.
-        ChannelSelecter cs = new ChannelSelecter(gfi);
+        ChannelSelector cs = new ChannelSelector(gfi);
         cs.showDialog();
 
         // Add channels to the workspace.
@@ -392,7 +393,7 @@ public final class WorkspaceTopComponent extends TopComponent implements Propert
     // Add Channel data to jTable1.
     private void addNeuralDataRow(Channel channel) {
 
-        String type = channel.getChannelType();
+        ChannelType type = channel.getChannelType();
         String sourceFilePath = channel.getSourceFilePath();
 
         Vector newRow = new Vector();

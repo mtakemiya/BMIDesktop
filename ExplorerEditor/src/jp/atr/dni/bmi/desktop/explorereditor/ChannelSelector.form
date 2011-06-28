@@ -111,7 +111,7 @@
                       <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="46" max="32767" attributes="0"/>
+                  <EmptySpace pref="47" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -120,7 +120,7 @@
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="jp/atr/dni/bmi/desktop/explorereditor/Bundle.properties" key="ChannelSelecter.jLabel1.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="jp/atr/dni/bmi/desktop/explorereditor/Bundle.properties" key="ChannelSelector.jLabel1.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
           </Properties>
         </Component>
@@ -138,7 +138,7 @@
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
             <TitledBorder justification="2" position="2" title="Selected Channels">
-              <ResourceString PropertyName="titleX" bundle="jp/atr/dni/bmi/desktop/explorereditor/Bundle.properties" key="ChannelSelecter.jPanel4.border.title" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString PropertyName="titleX" bundle="jp/atr/dni/bmi/desktop/explorereditor/Bundle.properties" key="ChannelSelector.jPanel4.border.title" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </TitledBorder>
           </Border>
         </Property>
@@ -214,7 +214,7 @@
             <Component class="javax.swing.JButton" name="jButton4">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="jp/atr/dni/bmi/desktop/explorereditor/Bundle.properties" key="ChannelSelecter.jButton4.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                  <ResourceString bundle="jp/atr/dni/bmi/desktop/explorereditor/Bundle.properties" key="ChannelSelector.jButton4.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -224,7 +224,7 @@
             <Component class="javax.swing.JButton" name="jButton3">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="jp/atr/dni/bmi/desktop/explorereditor/Bundle.properties" key="ChannelSelecter.jButton3.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                  <ResourceString bundle="jp/atr/dni/bmi/desktop/explorereditor/Bundle.properties" key="ChannelSelector.jButton3.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -240,7 +240,7 @@
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
             <TitledBorder justification="2" position="2" title="All Channels">
-              <ResourceString PropertyName="titleX" bundle="jp/atr/dni/bmi/desktop/explorereditor/Bundle.properties" key="ChannelSelecter.jPanel3.border.title" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString PropertyName="titleX" bundle="jp/atr/dni/bmi/desktop/explorereditor/Bundle.properties" key="ChannelSelector.jPanel3.border.title" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </TitledBorder>
           </Border>
         </Property>
@@ -284,7 +284,7 @@
             <Component class="javax.swing.JButton" name="jButton1">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="jp/atr/dni/bmi/desktop/explorereditor/Bundle.properties" key="ChannelSelecter.jButton1.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                  <ResourceString bundle="jp/atr/dni/bmi/desktop/explorereditor/Bundle.properties" key="ChannelSelector.jButton1.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -294,7 +294,7 @@
             <Component class="javax.swing.JButton" name="jButton2">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="jp/atr/dni/bmi/desktop/explorereditor/Bundle.properties" key="ChannelSelecter.jButton2.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                  <ResourceString bundle="jp/atr/dni/bmi/desktop/explorereditor/Bundle.properties" key="ChannelSelector.jButton2.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -329,7 +329,7 @@
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                         <TitledBorder justification="2" position="2" title="Unavailable">
-                          <ResourceString PropertyName="titleX" bundle="jp/atr/dni/bmi/desktop/explorereditor/Bundle.properties" key="ChannelSelecter.jList6.border.title" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                          <ResourceString PropertyName="titleX" bundle="jp/atr/dni/bmi/desktop/explorereditor/Bundle.properties" key="ChannelSelector.jList6.border.title" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                         </TitledBorder>
                       </Border>
                     </Property>
@@ -362,7 +362,7 @@
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                         <TitledBorder justification="2" position="2" title="Available">
-                          <ResourceString PropertyName="titleX" bundle="jp/atr/dni/bmi/desktop/explorereditor/Bundle.properties" key="ChannelSelecter.jList1.border.title" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                          <ResourceString PropertyName="titleX" bundle="jp/atr/dni/bmi/desktop/explorereditor/Bundle.properties" key="ChannelSelector.jList1.border.title" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                         </TitledBorder>
                       </Border>
                     </Property>
@@ -394,7 +394,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jLabel2" alignment="0" pref="42" max="32767" attributes="0"/>
+              <Component id="jLabel2" alignment="0" pref="43" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -406,7 +406,7 @@
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="jp/atr/dni/bmi/desktop/explorereditor/Bundle.properties" key="ChannelSelecter.jLabel2.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="jp/atr/dni/bmi/desktop/explorereditor/Bundle.properties" key="ChannelSelector.jLabel2.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
           </Properties>
         </Component>

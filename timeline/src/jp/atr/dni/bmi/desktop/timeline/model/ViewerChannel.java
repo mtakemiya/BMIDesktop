@@ -16,7 +16,7 @@ public class ViewerChannel {
 
    private boolean selected;
 
-   private int depth;
+//   private int depth;
 
    /**
     * @return the selected
@@ -30,19 +30,5 @@ public class ViewerChannel {
     */
    public void setSelected(boolean selected) {
       this.selected = selected;
-   }
-
-   /**
-    * @return the depth
-    */
-   public int getDepth() {
-      return depth;
-   }
-
-   /**
-    * @param depth the depth to set
-    */
-   public void setDepth(int depth) {
-      this.depth = depth;
    }
 }

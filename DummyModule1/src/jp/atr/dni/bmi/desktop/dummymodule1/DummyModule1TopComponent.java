@@ -313,7 +313,7 @@ public final class DummyModule1TopComponent extends TopComponent implements Prop
         }
 
         jLabel3.setText(this.channel.getDisplayName());
-        jLabel5.setText(this.channel.getChannelType());
+        jLabel5.setText(this.channel.getChannelType().toString());
 
         setTextToList();
 

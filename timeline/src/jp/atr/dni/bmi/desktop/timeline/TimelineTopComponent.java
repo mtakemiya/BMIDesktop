@@ -804,14 +804,14 @@ public final class TimelineTopComponent extends TopComponent implements Property
       TreeSet<ViewerChannel> objects = new TreeSet<ViewerChannel>(new Comparator<ViewerChannel>() {
 
          public int compare(ViewerChannel arg0, ViewerChannel arg1) {
-            int depth1 = arg0.getDepth();
-            int depth2 = arg1.getDepth();
-
-            if (depth2 != depth1) {
-               return depth2 - depth1;
-            } else {
+//            int depth1 = arg0.getDepth();
+//            int depth2 = arg1.getDepth();
+//
+//            if (depth2 != depth1) {
+//               return depth2 - depth1;
+//            } else {
                return arg1.hashCode() - arg0.hashCode();
-            }
+//            }
          }
       });
 

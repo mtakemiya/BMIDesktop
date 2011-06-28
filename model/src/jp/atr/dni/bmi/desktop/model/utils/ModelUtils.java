@@ -4,6 +4,8 @@
  */
 package jp.atr.dni.bmi.desktop.model.utils;
 
+import jp.atr.dni.bmi.desktop.model.ChannelType;
+
 /**
  *
  * @author Makoto Takemiya - [武宮 誠] <br />
@@ -12,5 +14,19 @@ package jp.atr.dni.bmi.desktop.model.utils;
  * @version 2011/06/27
  */
 public class ModelUtils {
-   
+
+   public static ChannelType getChannelTypeFromLong(long type) {
+
+      if (type == 1) {
+         return ChannelType.TS_AND_LABEL;
+      } else if (type == 2) {
+         return ChannelType.TS_AND_VAL;
+      } else if (type == 3) {
+         return ChannelType.TS_AND_VAL_AND_ID;
+      } else if (type == 3) {
+         return ChannelType.TIMESTAMP;
+      }
+
+      return ChannelType.UNKNOWN;
+   }
 }

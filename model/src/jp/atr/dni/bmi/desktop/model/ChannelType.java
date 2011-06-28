@@ -11,6 +11,19 @@ package jp.atr.dni.bmi.desktop.model;
  *
  * @version 2011/06/27
  */
-public class ChannelType {
+public enum ChannelType {
+   /** Times for neural events. */
+   TIMESTAMP, 
    
+   /** Times and associated values for analog data. */
+   TS_AND_VAL, 
+   
+   /** Times and associated values with segment ID. */
+   TS_AND_VAL_AND_ID, 
+   
+   /** Times and event labels. */
+   TS_AND_LABEL, 
+   
+   /** Other/Unknown */
+   UNKNOWN
 }

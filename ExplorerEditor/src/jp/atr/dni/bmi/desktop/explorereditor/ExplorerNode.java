@@ -1043,7 +1043,7 @@ public class ExplorerNode extends AbstractNode {
             }
 
             // Open ChannelSelecter Dialog.
-            ChannelSelecter cs = new ChannelSelecter(obj);
+            ChannelSelector cs = new ChannelSelector(obj);
             cs.showDialog();
 
         }
