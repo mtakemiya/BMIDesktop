@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import jp.atr.dni.bmi.desktop.model.Channel;
+import jp.atr.dni.bmi.desktop.model.ChannelType;
 import jp.atr.dni.bmi.desktop.workingfileutils.TSData;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
@@ -338,7 +339,7 @@ public final class DummyModule1TopComponent extends TopComponent implements Prop
         // Reader API
         WorkingFileReader cr = new WorkingFileReader();
 
-        if (this.channel.getChannelType().equals("TS")) {
+        if (this.channel.getChannelType() == ChannelType.TS_AND_VAL) {
 
             // Get TSData from the WorkingFile to display.
             TSData tSData = cr.getTSData(this.channel.getWorkingFilePath());
@@ -346,7 +347,7 @@ public final class DummyModule1TopComponent extends TopComponent implements Prop
             ArrayList<ArrayList<Double>> allValues = tSData.getAllValues();
             ArrayList<Double> timeStamps = tSData.getTimeStamps();
 
-            defaultListModel.addElement("------- TSData --------");
+            defaultListModel.addElement("------- TS_AND_VAL Data --------");
 
             for (int ii = 0; ii < allValues.size(); ii++) {
 
@@ -362,14 +363,14 @@ public final class DummyModule1TopComponent extends TopComponent implements Prop
                 }
                 defaultListModel.addElement("-----------------------");
             }
-        } else if (this.channel.getChannelType().equals("TO")) {
+        } else if (this.channel.getChannelType() == ChannelType.TIMESTAMP) {
 
             // Get TOData from the WorkingFile to display.
             TOData tOData = cr.getTOData(this.channel.getWorkingFilePath());
 
             ArrayList<Double> timeStamps = tOData.getTimeStamps();
 
-            defaultListModel.addElement("------- TOData --------");
+            defaultListModel.addElement("------- TIMESTAMP Data --------");
 
             for (int ii = 0; ii < timeStamps.size(); ii++) {
 
@@ -378,7 +379,7 @@ public final class DummyModule1TopComponent extends TopComponent implements Prop
                 defaultListModel.addElement(timeStamps.get(ii));
                 defaultListModel.addElement("-----------------------");
             }
-        } else if (this.channel.getChannelType().equals("TI")) {
+        } else if (this.channel.getChannelType() == ChannelType.TS_AND_VAL_AND_ID) {
 
             // Get TIData from the WorkingFile to display.
             TIData tIData = cr.getTIData(this.channel.getWorkingFilePath());
@@ -387,7 +388,7 @@ public final class DummyModule1TopComponent extends TopComponent implements Prop
             ArrayList<Integer> unitIDs = tIData.getUnitIDs();
             ArrayList<Double> timeStamps = tIData.getTimeStamps();
 
-            defaultListModel.addElement("------- TIData --------");
+            defaultListModel.addElement("------- TS_AND_VAL_AND_ID Data --------");
 
             for (int ii = 0; ii < timeStamps.size(); ii++) {
 
@@ -407,7 +408,7 @@ public final class DummyModule1TopComponent extends TopComponent implements Prop
                 }
                 defaultListModel.addElement("-----------------------");
             }
-        } else if (this.channel.getChannelType().equals("TL")) {
+        } else if (this.channel.getChannelType() == ChannelType.TS_AND_LABEL) {
 
             // Get TLData from the WorkingFile to display.
             TLData tLData = cr.getTLData(this.channel.getWorkingFilePath());
@@ -415,7 +416,7 @@ public final class DummyModule1TopComponent extends TopComponent implements Prop
             ArrayList<Object> values = tLData.getValues();
             ArrayList<Double> timeStamps = tLData.getTimeStamps();
 
-            defaultListModel.addElement("------- TLData --------");
+            defaultListModel.addElement("------- TS_AND_LABEL Data --------");
 
             for (int ii = 0; ii < timeStamps.size(); ii++) {
 
