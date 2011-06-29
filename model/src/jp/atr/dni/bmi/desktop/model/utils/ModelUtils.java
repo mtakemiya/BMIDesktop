@@ -23,7 +23,7 @@ public class ModelUtils {
          return ChannelType.TS_AND_VAL;
       } else if (type == 3) {
          return ChannelType.TS_AND_VAL_AND_ID;
-      } else if (type == 3) {
+      } else if (type == 4) {
          return ChannelType.TIMESTAMP;
       }
 
