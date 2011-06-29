@@ -507,8 +507,6 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
       gl.glColor3i(0, 0, 0);
 
-
-
       //Draw data
       gl.glLineWidth(1);
 
@@ -522,41 +520,41 @@ public final class TimelineTopComponent extends TopComponent implements Property
       Point2D maxPoint = getVirtualCoordinates(getWidth(), getHeight());
 
       //draw data
-      for (ViewerChannel vc : viewerChannels) {
-
-         double timeIncrement = (1.0 / (vc.getSampleRate()) * timeMult);
-
-         double xVal = 0;
-
-         if (vc.getChannelType() == ChannelType.TS_AND_VAL) {
-
-            // Get TSData from the WorkingFile to display.
-            TSData tSData = vc.gettSData();
-
-            ArrayList<Double> vals = tSData.getAllValues().get(0);
-            double entityTime = vals.size() / timeIncrement;
-
-            double lastX = 0;
-            lastY = ((vals.get(0) - vc.getSubtractor()) / vc.getNormalizer()) - yOffset * 5;
-
-            for (int i = 0; i < vals.size(); i++) {
-               if (i % 2 == 0) {
-                  Point2D p = getScreenCoordinates(lastX, lastY);
-                  gl.glVertex2d(p.getX(), p.getY());
-               } else {
-                  lastY = ((vals.get(i) - vc.getSubtractor()) / vc.getNormalizer()) - yOffset * 5;
-                  Point2D p = getScreenCoordinates(xVal, lastY);
-                  gl.glVertex2d(p.getX(), p.getY());
-               }
-               lastX = xVal;
-               xVal += timeIncrement;
-            }
-            if (xVal > maxX) {
-               maxX = xVal;
-            }
-            yOffset++;
-         }
-      }
+//      for (ViewerChannel vc : viewerChannels) {
+//
+//         double timeIncrement = (1.0 / (vc.getSampleRate()) * timeMult);
+//
+//         double xVal = 0;
+//
+//         if (vc.getChannelType() == ChannelType.TS_AND_VAL) {
+//
+//            // Get TSData from the WorkingFile to display.
+//            TSData tSData = vc.gettSData();
+//
+//            ArrayList<Double> vals = tSData.getAllValues().get(0);
+//            double entityTime = vals.size() / timeIncrement;
+//
+//            double lastX = 0;
+//            lastY = ((vals.get(0) - vc.getSubtractor()) / vc.getNormalizer()) - yOffset * 5;
+//
+//            for (int i = 0; i < vals.size(); i++) {
+//               if (i % 2 == 0) {
+//                  Point2D p = getScreenCoordinates(lastX, lastY);
+//                  gl.glVertex2d(p.getX(), p.getY());
+//               } else {
+//                  lastY = ((vals.get(i) - vc.getSubtractor()) / vc.getNormalizer()) - yOffset * 5;
+//                  Point2D p = getScreenCoordinates(xVal, lastY);
+//                  gl.glVertex2d(p.getX(), p.getY());
+//               }
+//               lastX = xVal;
+//               xVal += timeIncrement;
+//            }
+//            if (xVal > maxX) {
+//               maxX = xVal;
+//            }
+//            yOffset++;
+//         }
+//      }
       gl.glEnd();
 
       lastY = (yOffset - 1) * 5 - 1;
@@ -1012,7 +1010,6 @@ public final class TimelineTopComponent extends TopComponent implements Property
       viewerChannels = new ArrayList<ViewerChannel>();
       endTimes = new ArrayList<Date>();
 
-
       //XXX: because the workspace channels are static, we will get a concurrent modification error 
       //here if something changes. The API needs to be changed to prevent this.
       for (Channel c : channels) {
@@ -1032,6 +1029,10 @@ public final class TimelineTopComponent extends TopComponent implements Property
             if (ai == null) {
                continue;
             }
+            
+            WorkingFileReader cr = new WorkingFileReader();
+            
+            TSData tSData = cr.getTSData(c.getWorkingFilePath());
 
             double normalizer = Math.max(Math.abs(ai.getMaxVal()), Math.abs(ai.getMinVal()));
             double subtractor = 0;
@@ -1045,6 +1046,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
             vc.setNormalizer(normalizer);
             vc.setSubtractor(subtractor);
             vc.setLabel(e.getEntityInfo().getEntityLabel() + "-" + ai.getProbeInfo());
+            vc.settSData(tSData);
          }
 
          viewerChannels.add(vc);
