@@ -15,6 +15,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.nio.DoubleBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.TreeSet;
@@ -520,41 +521,42 @@ public final class TimelineTopComponent extends TopComponent implements Property
       Point2D maxPoint = getVirtualCoordinates(getWidth(), getHeight());
 
       //draw data
-//      for (ViewerChannel vc : viewerChannels) {
-//
-//         double timeIncrement = (1.0 / (vc.getSampleRate()) * timeMult);
-//
-//         double xVal = 0;
-//
-//         if (vc.getChannelType() == ChannelType.TS_AND_VAL) {
-//
-//            // Get TSData from the WorkingFile to display.
-//            TSData tSData = vc.gettSData();
-//
-//            ArrayList<Double> vals = tSData.getAllValues().get(0);
-//            double entityTime = vals.size() / timeIncrement;
-//
-//            double lastX = 0;
-//            lastY = ((vals.get(0) - vc.getSubtractor()) / vc.getNormalizer()) - yOffset * 5;
-//
-//            for (int i = 0; i < vals.size(); i++) {
-//               if (i % 2 == 0) {
-//                  Point2D p = getScreenCoordinates(lastX, lastY);
-//                  gl.glVertex2d(p.getX(), p.getY());
-//               } else {
-//                  lastY = ((vals.get(i) - vc.getSubtractor()) / vc.getNormalizer()) - yOffset * 5;
-//                  Point2D p = getScreenCoordinates(xVal, lastY);
-//                  gl.glVertex2d(p.getX(), p.getY());
-//               }
-//               lastX = xVal;
-//               xVal += timeIncrement;
-//            }
-//            if (xVal > maxX) {
-//               maxX = xVal;
-//            }
-//            yOffset++;
-//         }
-//      }
+      for (ViewerChannel vc : viewerChannels) {
+
+         double timeIncrement = (1.0 / (vc.getSampleRate()) * timeMult);
+
+         double xVal = 0;
+
+         if (vc.getChannelType() == ChannelType.TS_AND_VAL) {
+
+            // Get TSData from the WorkingFile to display.
+            TSData tSData = vc.gettSData();
+
+            ArrayList<Double> vals = tSData.getAllValues().get(0);
+//            System.out.println(vals);
+            double entityTime = vals.size() / timeIncrement;
+
+            double lastX = 0;
+            lastY = ((vals.get(0) - vc.getSubtractor()) / vc.getNormalizer()) - yOffset * 5;
+
+            for (int i = 0; i < vals.size(); i++) {
+               if (i % 2 == 0) {
+                  Point2D p = getScreenCoordinates(lastX, lastY);
+                  gl.glVertex2d(p.getX(), p.getY());
+               } else {
+                  lastY = ((vals.get(i) - vc.getSubtractor()) / vc.getNormalizer()) - yOffset * 5;
+                  Point2D p = getScreenCoordinates(xVal, lastY);
+                  gl.glVertex2d(p.getX(), p.getY());
+               }
+               lastX = xVal;
+               xVal += timeIncrement;
+            }
+            if (xVal > maxX) {
+               maxX = xVal;
+            }
+            yOffset++;
+         }
+      }
       gl.glEnd();
 
       lastY = (yOffset - 1) * 5 - 1;
@@ -1045,8 +1047,10 @@ public final class TimelineTopComponent extends TopComponent implements Property
             }
             vc.setNormalizer(normalizer);
             vc.setSubtractor(subtractor);
-            vc.setLabel(e.getEntityInfo().getEntityLabel() + "-" + ai.getProbeInfo());
+            vc.setLabel(e.getEntityInfo().getEntityLabel());// + "-" + ai.getProbeInfo());
             vc.settSData(tSData);
+            vc.setSampleRate(ai.getSampleRate());
+            vc.setChannelType(ChannelType.TS_AND_VAL);
          }
 
          viewerChannels.add(vc);
