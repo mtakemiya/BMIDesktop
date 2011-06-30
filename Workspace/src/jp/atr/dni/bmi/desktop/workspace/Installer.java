@@ -18,6 +18,7 @@ public class Installer extends ModuleInstall {
         // Note : This method will be called when User open or re-open the application. 
         // ( Not open or re-open the Workspace window!!! Be Care! )
         // Nothing to do.
+       System.setProperty("sun.awt.noerasebackground", "true");
     }
 
     @Override

@@ -15,7 +15,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.nio.DoubleBuffer;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.TreeSet;
@@ -26,7 +25,6 @@ import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.GLProfile;
-//import javax.media.opengl.awt.GLJPanel;
 import javax.media.opengl.awt.GLCanvas;
 import javax.media.opengl.glu.GLU;
 import javax.swing.BoxLayout;
@@ -93,6 +91,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
    private long timespan;
    private int numEntities;
    private double lastY;
+   private Animator animator;
 
    public TimelineTopComponent() {
       setVisible(true);
@@ -161,6 +160,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
       renderer = new TextRenderer(new Font("SansSerif", Font.BOLD, 12));
 
       setGlCanvas(new GLCanvas(caps));
+//setGlCanvas(GLWindow.create(caps));
 
       getGlCanvas().addGLEventListener(this);
 
@@ -252,7 +252,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
       this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
       this.add(getGlCanvas());
 
-      Animator animator = new Animator(getGlCanvas());
+      animator = new Animator(getGlCanvas());
 //      animator.add(getGlCanvas());
       animator.start();
 
@@ -351,6 +351,8 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
       // Add remove listener
       Workspace.removePropertyChangeListener(this);
+      animator.stop();
+      glCanvas.invalidate();
    }
 
    void writeProperties(java.util.Properties p) {
@@ -1032,9 +1034,9 @@ public final class TimelineTopComponent extends TopComponent implements Property
             if (ai == null) {
                continue;
             }
-            
+
             WorkingFileReader cr = new WorkingFileReader();
-            
+
             TSData tSData = cr.getTSData(c.getWorkingFilePath());
 
             double normalizer = Math.max(Math.abs(ai.getMaxVal()), Math.abs(ai.getMinVal()));
