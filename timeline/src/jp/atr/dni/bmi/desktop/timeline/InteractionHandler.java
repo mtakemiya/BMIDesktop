@@ -22,13 +22,10 @@ import javax.media.opengl.glu.GLU;
 import jp.atr.dni.bmi.desktop.timeline.model.ViewerChannel;
 
 /**
- *
- * @author Makoto Takemiya - [武宮 誠] <br />
- * <i>ATR - [株式会社・國際電氣通信基礎技術研究所]</i>
- *
- * @version 2011/03/03
+ * 
+ * @author makoto
  */
-public class ModeHandler implements KeyListener, MouseListener,
+public class InteractionHandler implements KeyListener, MouseListener,
 	MouseMotionListener, MouseWheelListener {
 
 	/** a mapping of interactor names to interactors */
@@ -79,7 +76,7 @@ public class ModeHandler implements KeyListener, MouseListener,
 	 *
 	 * @param canvas - the canvas
 	 */
-	public ModeHandler(TimelineTopComponent canvas) {
+	public InteractionHandler(TimelineTopComponent canvas) {
 		this.canvas = canvas;
       draggingVerticalScrollbar = false;
       draggingHorizontalScrollbar = false;

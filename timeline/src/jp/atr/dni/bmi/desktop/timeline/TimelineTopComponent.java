@@ -64,7 +64,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
    private AffineTransform transform = new AffineTransform();
    /** the transform for screen to virtual coordinates */
    private AffineTransform inverseTransform = new AffineTransform();
-   private GLJPanel glCanvas;
+   private GLCanvas glCanvas;
    private GLUT glut;
    private GLU glu;
    private TextRenderer renderer;
@@ -75,7 +75,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
    private static final String PREFERRED_ID = "TimelineTopComponent";
    private DoubleBuffer[] colors;
    private Lookup.Result result = null;
-   private ModeHandler handler;
+   private InteractionHandler handler;
    private ArrayList<ViewerChannel> viewerChannels;
    private ArrayList<Date> endTimes;
 //   private ArrayList<Channel> channels;
@@ -91,8 +91,8 @@ public final class TimelineTopComponent extends TopComponent implements Property
    private Date endTime;
    private long timespan;
    private int numEntities;
-   private double lastY;
    private Animator animator;
+   public static final int Y_SPACER = 5;
 
    public TimelineTopComponent() {
       setVisible(true);
@@ -160,12 +160,12 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
       renderer = new TextRenderer(new Font("SansSerif", Font.BOLD, 12));
 
-      setGlCanvas(new GLJPanel(caps));
+      setGlCanvas(new GLCanvas(caps));
 //setGlCanvas(GLWindow.create(caps));
 
       getGlCanvas().addGLEventListener(this);
 
-      handler = new ModeHandler(this);
+      handler = new InteractionHandler(this);
       getGlCanvas().addMouseListener(handler);
       getGlCanvas().addMouseMotionListener(handler);
       getGlCanvas().addMouseWheelListener(handler);
@@ -521,40 +521,66 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
       double maxX = 0;
 
+      //TODO: The following code should be moved out of render to increase performance
       Point2D minPoint = getVirtualCoordinates(0, 0);
       Point2D maxPoint = getVirtualCoordinates(getWidth(), getHeight());
 
+      double prevY;
+
+      int yMin = (int) (minPoint.getY() < 0 ? 0 : Math.abs(minPoint.getY()) / Y_SPACER);
+      int yMax = (int) Math.abs(maxPoint.getY()) / Y_SPACER + 1;
+
+      if (yMax > viewerChannels.size()) {
+         yMax = viewerChannels.size();
+      }
+
       //draw data
-      for (ViewerChannel vc : viewerChannels) {
-
-         double timeIncrement = (1.0 / (vc.getSampleRate()) * timeMult);
-
-         double xVal = 0;
+      yOffset = yMin;
+      for (int c = yMin; c < yMax; c++) {
+//      for (ViewerChannel vc : viewerChannels) {
+         ViewerChannel vc = viewerChannels.get(c);
 
          if (vc.getChannelType() == ChannelType.TS_AND_VAL) {
 
+            double timeIncrement = (1.0 / (vc.getSampleRate()) * timeMult);
+
+            double xVal = 0;
+
             // Get TSData from the WorkingFile to display.
             TSData tSData = vc.gettSData();
-
             ArrayList<Double> vals = tSData.getAllValues().get(0);
-//            System.out.println(vals);
-            double entityTime = vals.size() / timeIncrement;
 
-            double lastX = 0;
-            lastY = ((vals.get(0) - vc.getSubtractor()) / vc.getNormalizer()) - yOffset * 5;
+            double prevX = minPoint.getX() > 2 ? (int) minPoint.getX() - 1 : 0;
+            prevX = prevX % 2 == 0 ? prevX : prevX - 1;
 
-            for (int i = 0; i < vals.size(); i++) {
-               if (i % 2 == 0) {
-                  Point2D p = getScreenCoordinates(lastX, lastY);
+            prevY = ((vals.get(0) - vc.getSubtractor()) / vc.getNormalizer()) - yOffset * Y_SPACER;
+
+            int xLimit = ((Long) Math.round((maxPoint.getX() / timeIncrement))).intValue();
+            xLimit += prevX + 2;
+
+            if (vals.size() < xLimit) {
+               xLimit = vals.size();
+            }
+
+            int ndx = (int) prevX;
+            for (; ndx < xLimit; ndx++) {
+               if (ndx % 2 == 0) {
+                  Point2D p = getScreenCoordinates(prevX, prevY);
                   gl.glVertex2d(p.getX(), p.getY());
                } else {
-                  lastY = ((vals.get(i) - vc.getSubtractor()) / vc.getNormalizer()) - yOffset * 5;
-                  Point2D p = getScreenCoordinates(xVal, lastY);
+                  prevY = ((vals.get(ndx) - vc.getSubtractor()) / vc.getNormalizer()) - yOffset * 5;
+                  Point2D p = getScreenCoordinates(xVal, prevY);
                   gl.glVertex2d(p.getX(), p.getY());
                }
-               lastX = xVal;
+               prevX = xVal;
                xVal += timeIncrement;
             }
+            //close any open lines
+            if (ndx % 2 != 0) {
+               Point2D p = getScreenCoordinates(prevX, prevY);
+               gl.glVertex2d(p.getX(), p.getY());
+            }
+
             if (xVal > maxX) {
                maxX = xVal;
             }
@@ -563,9 +589,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
       }
       gl.glEnd();
 
-      lastY = (yOffset - 1) * 5 - 1;
-
-//      endTime.setTime(endTime.getTime() + (long) maxX);
+      prevY = (yOffset - 1) * Y_SPACER - 1;
 
       boolean showMin = timespan > 60000, showHour = timespan > 360000;
 
@@ -575,7 +599,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
       //Draw Y-axis labels
       for (int i = 0; i < numEntities; i++) {
          //Draw label
-         Point2D p = getScreenCoordinates(0, -5 * i);
+         Point2D p = getScreenCoordinates(0, -Y_SPACER * i);
          float tSize = (float) (getScale() + (ERROR) * 0.0125f);
          if (tSize > .15) {
             tSize = .15f;
@@ -585,7 +609,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
       //Calculate screen area for data
       dataLower = getScreenCoordinates(0, 0);
-      dataUpper = getScreenCoordinates(timespan, -lastY);
+      dataUpper = getScreenCoordinates(timespan, -prevY);
 
       double diffX = dataUpper.getX() - dataLower.getX();
       double diffY = dataUpper.getY() - dataLower.getY();
@@ -915,14 +939,14 @@ public final class TimelineTopComponent extends TopComponent implements Property
    /**
     * @return the glCanvas
     */
-   public GLJPanel getGlCanvas() {
+   public GLCanvas getGlCanvas() {
       return glCanvas;
    }
 
    /**
     * @param glCanvas the glCanvas to set
     */
-   public void setGlCanvas(GLJPanel glCanvas) {
+   public void setGlCanvas(GLCanvas glCanvas) {
       this.glCanvas = glCanvas;
    }
 
@@ -1081,8 +1105,6 @@ public final class TimelineTopComponent extends TopComponent implements Property
 //      endTime.setTime(endTime.getTime() + startTime.getTime());
 
       timespan = endTime.getTime();// - startTime.getTime();
-
-      lastY = 0;
 
       numEntities = viewerChannels.size();
    }
