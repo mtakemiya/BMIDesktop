@@ -44,7 +44,6 @@ public class ExplorerChildren extends Children.Keys {
          for (int ii = 0; ii < length; ii++) {
             File currFile = listFile[ii];
             String childNodePath = currFile.getAbsolutePath();
-            System.out.println("curr type: " + FileType.fromFileName(currFile.getName()));
             if (currFile.isDirectory() && childNodePath.indexOf('.') != -1) {
                // Do not display "hidden" directory.
                continue;
