@@ -7,6 +7,7 @@ package jp.atr.dni.bmi.desktop.explorereditor;
 import java.io.File;
 import java.util.ArrayList;
 import jp.atr.dni.bmi.desktop.model.Constants;
+import jp.atr.dni.bmi.desktop.model.FileType;
 import jp.atr.dni.bmi.desktop.model.GeneralFileInfo;
 import org.openide.nodes.Children;
 import org.openide.nodes.Node;
@@ -24,10 +25,10 @@ public class ExplorerChildren extends Children.Keys {
      */
     public ExplorerChildren(GeneralFileInfo obj) {
 
-        String nodeType = obj.getFileType();
+        FileType nodeType = obj.getFileType();
         String targetPath = obj.getFilePath();
 
-        if (nodeType.equals("Directory")) {
+        if (nodeType == FileType.DIRECTORY) {
 
             // Get Child Nodes.
             File target = new File(targetPath);

@@ -542,7 +542,6 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
             double timeIncrement = 1.0 / (vc.getSampleRate()) * timeMult;
 
-
             // Get TSData from the WorkingFile to display.
             TSData tSData = vc.gettSData();
             ArrayList<Double> vals = tSData.getAllValues().get(0);
@@ -596,7 +595,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
       height -= SCROLLBAR_HEIGHT;
 
       //Draw Y-axis labels
-      for (int i = 0; i < numEntities; i++) {
+      for (int i = yMin; i < yMax; i++) {
          //Draw label
          Point2D p = getScreenCoordinates(0, -Y_SPACER * i);
          float tSize = (float) (getScale() + (ERROR) * 0.0125f);
@@ -608,7 +607,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
       //Calculate screen area for data
       dataLower = getScreenCoordinates(0, 0);
-      dataUpper = getScreenCoordinates(timespan, -prevY);
+      dataUpper = getScreenCoordinates(endTime.getTime(), -prevY);
 
       double diffX = dataUpper.getX() - dataLower.getX();
       double diffY = dataUpper.getY() - dataLower.getY();
