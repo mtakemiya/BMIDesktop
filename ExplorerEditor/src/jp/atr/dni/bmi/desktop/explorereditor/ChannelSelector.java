@@ -522,7 +522,7 @@ public class ChannelSelector extends javax.swing.JPanel implements ActionListene
       this.dialogDescriptor = new DialogDescriptor(this, "Channel Selecter", true, this);
       // Case : Neuroshare(nsn), Plexon(plx), BlackRockMicroSystems(nev,ns1-9)
       FileType fileType = this.generalFileInfo.getFileType();
-      if (fileType == FileType.NSN || fileType.equals("File/plx") || fileType.equals("File/nev") || fileType.equals("File/ns1") || fileType.equals("File/ns2") || fileType.equals("File/ns3") || fileType.equals("File/ns4") || fileType.equals("File/ns5") || fileType.equals("File/ns6") || fileType.equals("File/ns7") || fileType.equals("File/ns8") || fileType.equals("File/ns9") || fileType.equals("File/csv")) {
+      if (FileType.isDataFile(fileType)) {
          this.dataFileFlag = true;
 
          // Get nsObj to set channel list.
