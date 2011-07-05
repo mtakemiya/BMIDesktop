@@ -508,7 +508,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
 //      System.out.println("width: " + width + "\theight: " + height);
 
-      int timeMult = 500;
+//      int timeMult = 500;
 
       gl.glColor3i(0, 0, 0);
 
@@ -535,24 +535,24 @@ public final class TimelineTopComponent extends TopComponent implements Property
       //draw data
       yOffset = yMin;
       for (int c = yMin; c < yMax; c++) {
-//      for (ViewerChannel vc : viewerChannels) {
          ViewerChannel vc = viewerChannels.get(c);
 
          if (vc.getChannelType() == ChannelType.TS_AND_VAL) {
 
-            double timeIncrement = 1.0 / (vc.getSampleRate()) * timeMult;
+            double timeIncrement = 1000.0 / vc.getSampleRate();
+//            timeIncrement *= timeMult;
 
             // Get TSData from the WorkingFile to display.
             TSData tSData = vc.gettSData();
             ArrayList<Double> vals = tSData.getAllValues().get(0);
+//            System.out.println("real ms end: " + vals.size()/vc.getSampleRate());
 
             double prevX = minPoint.getX() > 2 ? (int) minPoint.getX() - 1 : 0;
             prevX = prevX % 2 == 0 ? prevX : prevX - 1;
 
             prevY = ((vals.get(0) - vc.getSubtractor()) / vc.getNormalizer()) - yOffset * Y_SPACER;
 
-            //TODO: change this to not round, but just truncate, to save time
-            int xLimit = ((Long) Math.round((maxPoint.getX() / timeIncrement))).intValue();
+            int xLimit = (int) (maxPoint.getX() / timeIncrement);
             xLimit += prevX + 2;
 
             if (vals.size() < xLimit) {
@@ -629,6 +629,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
       if (incr < 1) {
          incr = 1;
       }
+      
 
       //Draw X-axis labels
       for (int i = 0; i < timespan; i += incr) {
@@ -1041,7 +1042,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
       //XXX: because the workspace channels are static, we will get a concurrent modification error 
       //here if something changes. The API needs to be changed to prevent this.
       for (Channel c : channels) {
-         Date end = new Date((long) (c.getEntity().getEntityInfo().getItemCount() * (1d / c.getTSHeader().getSamplingRate_Hz() * 500)));
+         Date end = new Date((long) (1000d * c.getEntity().getEntityInfo().getItemCount() * (1d / c.getTSHeader().getSamplingRate_Hz())));
          if (end.getTime() == 0) {
             end.setTime(1);
          }
@@ -1103,6 +1104,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 //      endTime.setTime(endTime.getTime() + startTime.getTime());
 
       timespan = endTime.getTime();// - startTime.getTime();
+      System.out.println("timespan: " + timespan);
 
       numEntities = viewerChannels.size();
    }
