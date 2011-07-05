@@ -514,11 +514,9 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
       //Draw data
       gl.glLineWidth(1);
-
       gl.glBegin(GL.GL_LINES);
 
       double yOffset = 0;
-
       double maxX = 0;
 
       //TODO: The following code should be moved out of render to increase performance
@@ -542,8 +540,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
          if (vc.getChannelType() == ChannelType.TS_AND_VAL) {
 
-            double timeIncrement = (1.0 / (vc.getSampleRate()) * timeMult);
-
+            double timeIncrement = 1.0 / (vc.getSampleRate()) * timeMult;
             double xVal = 0;
 
             // Get TSData from the WorkingFile to display.
@@ -555,6 +552,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
             prevY = ((vals.get(0) - vc.getSubtractor()) / vc.getNormalizer()) - yOffset * Y_SPACER;
 
+            //TODO: change this to not round, but just truncate, to save time
             int xLimit = ((Long) Math.round((maxPoint.getX() / timeIncrement))).intValue();
             xLimit += prevX + 2;
 
@@ -1043,7 +1041,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
       //XXX: because the workspace channels are static, we will get a concurrent modification error 
       //here if something changes. The API needs to be changed to prevent this.
       for (Channel c : channels) {
-         Date end = new Date((long) (c.getEntity().getEntityInfo().getItemCount() * 1d / c.getTSHeader().getSamplingRate_Hz()));
+         Date end = new Date((long) (c.getEntity().getEntityInfo().getItemCount() * (1d / c.getTSHeader().getSamplingRate_Hz()*500)));
          if (end.getTime() == 0) {
             end.setTime(1);
          }
