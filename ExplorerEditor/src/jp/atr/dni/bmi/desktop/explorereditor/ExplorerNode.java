@@ -164,7 +164,7 @@ public class ExplorerNode extends AbstractNode {
          PropertySupport.Reflection nameProp = new PropertySupport.Reflection(obj, String.class, "getFileName", null);
          PropertySupport.Reflection pathProp = new PropertySupport.Reflection(obj, String.class, "getFilePath", null);
          PropertySupport.Reflection sizeProp = new PropertySupport.Reflection(obj, Long.class, "getFileSize", null);
-         PropertySupport.Reflection typeProp = new PropertySupport.Reflection(obj, String.class, "getFileType", null);
+         PropertySupport.Reflection typeProp = new PropertySupport.Reflection(obj, FileType.class, "getFileType", null);
          PropertySupport.Reflection timeProp = new PropertySupport.Reflection(obj, String.class, "getModifiedTimeString", null);
 
          // Set display name.
@@ -217,7 +217,7 @@ public class ExplorerNode extends AbstractNode {
          FileInfo fi = nsn.getFileInfo();
 
          // Set property value. with using obj's get*** method.
-         PropertySupport.Reflection fileTypeProp = new PropertySupport.Reflection(fi, String.class, "fileType");
+         PropertySupport.Reflection fileTypeProp = new PropertySupport.Reflection(fi, FileType.class, "fileType");
          PropertySupport.Reflection entityCountProp = new PropertySupport.Reflection(fi, Long.class, "getEntityCount", null);
          PropertySupport.Reflection timeStampResProp = new PropertySupport.Reflection(fi, double.class, "timeStampRes");
          PropertySupport.Reflection timeSpanProp = new PropertySupport.Reflection(fi, double.class, "timeSpan");
