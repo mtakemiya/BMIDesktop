@@ -1113,5 +1113,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
       numEntities = viewerChannels.size();
       zoomAll();
+
+      handler.setTimespan(timespan);
    }
 }

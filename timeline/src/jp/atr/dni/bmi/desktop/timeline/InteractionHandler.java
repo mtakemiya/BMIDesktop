@@ -16,8 +16,6 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.Point2D;
 import javax.media.opengl.GL2;
-import javax.media.opengl.glu.GLU;
-
 import jp.atr.dni.bmi.desktop.timeline.model.ViewerChannel;
 
 /**
@@ -49,12 +47,13 @@ public class InteractionHandler implements KeyListener, MouseListener,
    /** the previous mouse location, in virtual coordinates */
    private Point2D previousPoint;
    /** the amout to translate the canvas */
-   private double TRANSLATE_AMOUNT = 10.0;
+   private double TRANSLATE_AMOUNT = 25.0;
    /** the amout to scale the canvas */
    private double SCALE_AMOUNT = 1.1;
    private ViewerChannel selectedChannel;
    private boolean draggingVerticalScrollbar;
    private boolean draggingHorizontalScrollbar;
+   private long timespan;
 
    /**
     * Constructs the mode handler.
@@ -220,9 +219,10 @@ public class InteractionHandler implements KeyListener, MouseListener,
       int meX = me.getX();
       int meY = me.getY();
       double halfWidth = canvas.getWidth() / 5d;
+      double invHalfWidth = canvas.getWidth() - halfWidth;
 
       screenCurrentPoint = me.getPoint();
-      currentPoint = canvas.getVirtualCoordinates(me.getX(), me.getY());
+      currentPoint = canvas.getVirtualCoordinates(meX, meY);
 
 //      if (canvas.getDataUpper().getX() < halfWidth && (meX - previousPoint.getX()) < 0) {
 //         screenCurrentPoint.setLocation(screenCurrentPoint.getX(), meY);
@@ -237,27 +237,41 @@ public class InteractionHandler implements KeyListener, MouseListener,
       double dx = currentPoint.getX() - previousPoint.getX();
       double dy = currentPoint.getY() - previousPoint.getY();
 
-      if (canvas.getDataUpper().getX() < halfWidth && (meX - previousPoint.getX()) < 0) {
-         dx = Math.abs(halfWidth - canvas.getDataUpper().getX());
-      }
+      Point2D timeStart = canvas.getScreenCoordinates(0, 0);
+      Point2D timeEnd = canvas.getScreenCoordinates(timespan, 0);
+
+//      System.out.println("halfWidth: " + halfWidth + "\tinvHalfWidth: " + invHalfWidth + "\tdx: " + dx + "\tstart: " + timeStart.getX() + "\tend: " + timeEnd.getX());
+
 
       if (draggingHorizontalScrollbar) {
          canvas.setTranslationX(canvas.getTranslationX() - dx * ((canvas.getWidth() - SCROLLBAR_HEIGHT) / (canvas.getDataUpperX() - canvas.getDataLowerX())));
       } else if (draggingVerticalScrollbar) {
          canvas.setTranslationY(canvas.getTranslationY() - dy * ((canvas.getHeight() - SCROLLBAR_HEIGHT) / (canvas.getDataUpperY())));
       } else {
+         if (timeEnd.getX() < halfWidth) {
+            dx = halfWidth - timeEnd.getX();
+         } else if (timeStart.getX() > invHalfWidth) {
+            dx = timeStart.getX() - invHalfWidth;
+            dx *= -1;
+         }
+
          canvas.setTranslationX(canvas.getTranslationX() + dx);
          canvas.setTranslationY(canvas.getTranslationY() + dy);
+
+         screenPreviousPoint.setLocation(screenCurrentPoint.getX(), screenCurrentPoint.getY());
+         previousPoint = canvas.getVirtualCoordinates(screenPreviousPoint.getX(), screenPreviousPoint.getY());
       }
 
-      screenPreviousPoint.setLocation(screenCurrentPoint.getX(), screenCurrentPoint.getY());
-      previousPoint = canvas.getVirtualCoordinates(screenPreviousPoint.getX(), screenPreviousPoint.getY());
-   }
+      /**
+       * The mouse wheel controls the current zoom factor. Iteractors do not
+       * receive mouse wheel events.
+       */
+   
 
-   /**
-    * The mouse wheel controls the current zoom factor. Iteractors do not
-    * receive mouse wheel events.
-    */
+   
+
+   
+
    public void mouseWheelMoved(MouseWheelEvent arg0) {
       if (arg0.getWheelRotation() < 0) {
          canvas.setScale(canvas.getScale() * SCALE_AMOUNT);
@@ -338,5 +352,19 @@ public class InteractionHandler implements KeyListener, MouseListener,
       double y = p.getY();
 
       return x > SCROLLBAR_HEIGHT + canvas.getDataLowerX() && x < SCROLLBAR_HEIGHT + canvas.getDataUpperX() && y > canvas.getHeight() - SCROLLBAR_HEIGHT;
+   }
+
+   /**
+    * @return the timespan
+    */
+   public long getTimespan() {
+      return timespan;
+   }
+
+   /**
+    * @param timespan the timespan to set
+    */
+   public void setTimespan(long timespan) {
+      this.timespan = timespan;
    }
 }
