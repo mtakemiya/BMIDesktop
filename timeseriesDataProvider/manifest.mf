@@ -1,5 +1,0 @@
-Manifest-Version: 1.0
-OpenIDE-Module: jp.atr.dni.bmi.desktop.timeseriesdata.provider
-OpenIDE-Module-Localizing-Bundle: jp/atr/dni/bmi/desktop/timeseriesdata/provider/Bundle.properties
-OpenIDE-Module-Specification-Version: 1.0
-
