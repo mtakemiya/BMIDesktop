@@ -67,8 +67,6 @@ public final class TimelineTopComponent extends TopComponent implements Property
    private GLCanvas glCanvas;
    private GLUT glut;
    private GLU glu;
-   private TextRenderer renderer;
-   private double compression = 1;
    private static TimelineTopComponent instance;
    /** path to the icon used by the component and its open action */
    static final String ICON_PATH = "jp/atr/dni/bmi/desktop/timeline/graphPrev.png";
@@ -159,7 +157,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
 
 
-      renderer = new TextRenderer(new Font("SansSerif", Font.BOLD, 12));
+//      renderer = new TextRenderer(new Font("SansSerif", Font.BOLD, 12));
 
       setGlCanvas(new GLCanvas(caps));
 //setGlCanvas(GLWindow.create(caps));
@@ -1042,7 +1040,6 @@ public final class TimelineTopComponent extends TopComponent implements Property
    @Override
    public void propertyChange(PropertyChangeEvent pce) {
       ArrayList<Channel> channels = Workspace.getChannels();
-      System.out.println("chanSize: " + channels.size());
       viewerChannels = new ArrayList<ViewerChannel>();
       endTimes = new ArrayList<Date>();
 

@@ -246,21 +246,32 @@ public class InteractionHandler implements KeyListener, MouseListener,
 
       if (draggingHorizontalScrollbar) {
          dx *= ((canvas.getWidth() - SCROLLBAR_HEIGHT) / (canvas.getDataUpperX() - canvas.getDataLowerX()));
+
+         if ((timeStart.getX() - dx) > invHalfWidth) {
+            dx = timeStart.getX() - invHalfWidth;
+         } else if ((timeEnd.getX() - dx) < halfWidth) {
+            dx = halfWidth - timeEnd.getX();
+            dx *= -1;
+         }
          canvas.setTranslationX(canvas.getTranslationX() - dx);
       } else if (draggingVerticalScrollbar) {
          dy *= ((canvas.getHeight() - SCROLLBAR_HEIGHT) / (canvas.getDataUpperY()));
          canvas.setTranslationY(canvas.getTranslationY() - dy);
       } else {
-         if (timeEnd.getX() < halfWidth) {
+         if ((timeEnd.getX() + dx) < halfWidth) {
             dx = halfWidth - timeEnd.getX();
-         } else if (timeStart.getX() > invHalfWidth) {
+            dx = 0;
+            if (timeEnd.getX() < halfWidth) {
+               dx = halfWidth - timeEnd.getX();
+            }
+         } else if ((timeStart.getX() + dx) > invHalfWidth) {
             dx = timeStart.getX() - invHalfWidth;
             dx *= -1;
          }
 
-         if (timeEnd.getY() < halfWidth) {
+         if ((timeEnd.getY() + dy) < halfWidth) {
             dy = halfWidth - timeEnd.getY();
-         } else if (timeStart.getY() > invHalfHeight) {
+         } else if ((timeStart.getY() + dy) > invHalfHeight) {
             dy = timeStart.getY() - invHalfHeight;
             dy *= -1;
          }
