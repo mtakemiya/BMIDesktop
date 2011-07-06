@@ -156,7 +156,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
       GLProfile glp = GLProfile.getDefault();
       GLCapabilities caps = new GLCapabilities(glp);
 
-      scale = .05;
+
 
       renderer = new TextRenderer(new Font("SansSerif", Font.BOLD, 12));
 
@@ -290,7 +290,6 @@ public final class TimelineTopComponent extends TopComponent implements Property
 //						size = Canvas.this.getSize();
 //					}
 //				});
-
 
    }
    // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -566,8 +565,6 @@ public final class TimelineTopComponent extends TopComponent implements Property
             }
             ndx = ndx % 2 == 0 ? ndx : ndx - 1;
 
-            System.out.println("ndx: " + ndx + "\txlimit: " + xLimit + "\ttimeIncr: " + timeIncrement);
-
             boolean drawed = false;
             for (; ndx < xLimit; ndx++) {
                drawed = true;
@@ -752,18 +749,18 @@ public final class TimelineTopComponent extends TopComponent implements Property
    public void zoomAll() {
 
       // reset the view transform
-      translationX = 0;
-      translationY = 0;
-      scale = 0.5;
+      translationX = getWidth() / 2;
+      translationY = getHeight() / 2;
+      scale = 3.5;
 
-      // zoom to the current map
+      // zoom to current data
       boolean zoom = false;
       double minX = Double.MAX_VALUE;
       double maxX = -Double.MAX_VALUE;
       double minY = Double.MAX_VALUE;
       double maxY = -Double.MAX_VALUE;
 
-      for (ViewerChannel object : viewerChannels) {
+//      for (ViewerChannel object : viewerChannels) {
 //			if (object.getGraphics() != null) {
 //				float[] coords = object.getGraphics().getCoordinates();
 //				for (int i=0; i<coords.length; i+=2) {
@@ -775,7 +772,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 //
 //				zoom = true;
 //			}
-      }
+//      }
 
       if (zoom) {
          translationX = -(maxX + minX) / 2 + getWidth() / 2;
@@ -1113,8 +1110,8 @@ public final class TimelineTopComponent extends TopComponent implements Property
 //      endTime.setTime(endTime.getTime() + startTime.getTime());
 
       timespan = endTime.getTime();// - startTime.getTime();
-      System.out.println("timespan: " + timespan);
 
       numEntities = viewerChannels.size();
+      zoomAll();
    }
 }
