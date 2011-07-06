@@ -36,7 +36,7 @@ import jp.atr.dni.bmi.desktop.workingfileutils.TSHeader;
 
 /**
  *
- * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Computational Neuroscience Labs, Decoding Group
  * @version 2011/04/22
  */
 public class Channel {

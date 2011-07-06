@@ -15,7 +15,6 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.Point2D;
-import javax.media.opengl.GL2;
 import jp.atr.dni.bmi.desktop.timeline.model.ViewerChannel;
 
 /**
@@ -53,7 +52,8 @@ public class InteractionHandler implements KeyListener, MouseListener,
    private ViewerChannel selectedChannel;
    private boolean draggingVerticalScrollbar;
    private boolean draggingHorizontalScrollbar;
-   private long timespan;
+   private long spanX;
+   private long spanY;
 
    /**
     * Constructs the mode handler.
@@ -238,7 +238,7 @@ public class InteractionHandler implements KeyListener, MouseListener,
       double dy = currentPoint.getY() - previousPoint.getY();
 
       Point2D timeStart = canvas.getScreenCoordinates(0, 0);
-      Point2D timeEnd = canvas.getScreenCoordinates(timespan, 0);
+      Point2D timeEnd = canvas.getScreenCoordinates(spanX, spanY);
 
 //      System.out.println("halfWidth: " + halfWidth + "\tinvHalfWidth: " + invHalfWidth + "\tdx: " + dx + "\tstart: " + timeStart.getX() + "\tend: " + timeEnd.getX());
 
@@ -256,6 +256,8 @@ public class InteractionHandler implements KeyListener, MouseListener,
             dx *= -1;
          }
 
+         if (timeEnd.getY() < 3) {
+         }
          canvas.setTranslationX(canvas.getTranslationX() + dx);
          canvas.setTranslationY(canvas.getTranslationY() + dy);
       }
@@ -350,16 +352,30 @@ public class InteractionHandler implements KeyListener, MouseListener,
    }
 
    /**
-    * @return the timespan
+    * @return the spanX
     */
-   public long getTimespan() {
-      return timespan;
+   public long getSpanX() {
+      return spanX;
    }
 
    /**
-    * @param timespan the timespan to set
+    * @param spanX the spanX to set
     */
-   public void setTimespan(long timespan) {
-      this.timespan = timespan;
+   public void setSpanX(long spanX) {
+      this.spanX = spanX;
+   }
+
+   /**
+    * @return the spanY
+    */
+   public long getSpanY() {
+      return spanY;
+   }
+
+   /**
+    * @param spanY the spanY to set
+    */
+   public void setSpanY(long spanY) {
+      this.spanY = spanY;
    }
 }

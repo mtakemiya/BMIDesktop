@@ -89,7 +89,8 @@ public final class TimelineTopComponent extends TopComponent implements Property
    private Point2D dataUpper;
    private Date startTime;
    private Date endTime;
-   private long timespan;
+   private long spanX;
+   private long spanY;
    private int numEntities;
    private Animator animator;
    public static final int Y_SPACER = 5;
@@ -593,9 +594,8 @@ public final class TimelineTopComponent extends TopComponent implements Property
       }
       gl.glEnd();
 
-      prevY = (viewerChannels.size()) * Y_SPACER - 1;
 
-      boolean showMin = timespan > 60000, showHour = timespan > 360000;
+      boolean showMin = spanX > 60000, showHour = spanX > 360000;
 
       width -= SCROLLBAR_HEIGHT;
       height -= SCROLLBAR_HEIGHT;
@@ -612,8 +612,8 @@ public final class TimelineTopComponent extends TopComponent implements Property
       }
 
       //Calculate screen area for data
-      dataLower = getScreenCoordinates(0, 0);
-      dataUpper = getScreenCoordinates(endTime.getTime(), -prevY);
+      dataLower = getScreenCoordinates(0, Y_SPACER);
+      dataUpper = getScreenCoordinates(spanX, -spanY);
 
       double diffX = dataUpper.getX() - dataLower.getX();
       double diffY = dataUpper.getY() - dataLower.getY();
@@ -638,7 +638,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
 
       //Draw X-axis labels
-      for (int i = 0; i < timespan; i += incr) {
+      for (int i = 0; i < spanX; i += incr) {
          Point2D p = getScreenCoordinates(i, 0);
          Date currDate = new Date(startTime.getTime() + i);
          String ms = currDate.getTime() + "";
@@ -646,7 +646,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
          drawTextUnscaled(gl, (showHour ? currDate.getHours() + ":" : "") + (showMin ? currDate.getMinutes() + ":" : "") + currDate.getSeconds() + ":" + ms, p.getX(), height, 0.15f, 2f);
          drawVerticalLine(gl, p.getX());
 
-         if (i + incr >= timespan) {
+         if (i + incr >= spanX) {
             i += incr;
             p = getScreenCoordinates(i, 0);
             currDate = new Date(startTime.getTime() + i);
@@ -1042,6 +1042,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
    @Override
    public void propertyChange(PropertyChangeEvent pce) {
       ArrayList<Channel> channels = Workspace.getChannels();
+      System.out.println("chanSize: " + channels.size());
       viewerChannels = new ArrayList<ViewerChannel>();
       endTimes = new ArrayList<Date>();
 
@@ -1109,11 +1110,14 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
 //      endTime.setTime(endTime.getTime() + startTime.getTime());
 
-      timespan = endTime.getTime();// - startTime.getTime();
-
       numEntities = viewerChannels.size();
+
+      spanX = endTime.getTime();// - startTime.getTime();
+      spanY = numEntities * Y_SPACER;
+
       zoomAll();
 
-      handler.setTimespan(timespan);
+      handler.setSpanX(spanX);
+      handler.setSpanY(spanY);
    }
 }
