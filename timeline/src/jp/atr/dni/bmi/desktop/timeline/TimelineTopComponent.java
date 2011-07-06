@@ -523,7 +523,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
       Point2D minPoint = getVirtualCoordinates(0, 0);
       Point2D maxPoint = getVirtualCoordinates(getWidth(), getHeight());
 
-      double prevY;
+      double prevY = 0;
 
       int yMin = (int) (minPoint.getY() < 0 ? 0 : Math.abs(minPoint.getY()) / Y_SPACER);
       int yMax = (int) Math.abs(maxPoint.getY()) / Y_SPACER + 1;
@@ -545,12 +545,11 @@ public final class TimelineTopComponent extends TopComponent implements Property
             // Get TSData from the WorkingFile to display.
             TSData tSData = vc.gettSData();
             ArrayList<Double> vals = tSData.getAllValues().get(0);
-//            System.out.println("real ms end: " + vals.size()/vc.getSampleRate());
+//            System.out.println("real ms end: " + 1000d*vals.size()/vc.getSampleRate());
 
             double prevX = minPoint.getX() > 2 ? (int) minPoint.getX() - 1 : 0;
+            prevX /= timeIncrement;
             prevX = prevX % 2 == 0 ? prevX : prevX - 1;
-
-            prevY = ((vals.get(0) - vc.getSubtractor()) / vc.getNormalizer()) - yOffset * Y_SPACER;
 
             int xLimit = (int) (maxPoint.getX() / timeIncrement);
             xLimit += prevX + 2;
@@ -561,7 +560,17 @@ public final class TimelineTopComponent extends TopComponent implements Property
             double xVal = prevX * timeIncrement;
 
             int ndx = (int) prevX;
+
+            if (ndx < vals.size()) {
+               prevY = ((vals.get(ndx) - vc.getSubtractor()) / vc.getNormalizer()) - yOffset * Y_SPACER;
+            }
+            ndx = ndx % 2 == 0 ? ndx : ndx - 1;
+
+            System.out.println("ndx: " + ndx + "\txlimit: " + xLimit + "\ttimeIncr: " + timeIncrement);
+
+            boolean drawed = false;
             for (; ndx < xLimit; ndx++) {
+               drawed = true;
                if (ndx % 2 == 0) {
                   Point2D p = getScreenCoordinates(prevX, prevY);
                   gl.glVertex2d(p.getX(), p.getY());
@@ -574,7 +583,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
                xVal += timeIncrement;
             }
             //close any open lines
-            if (ndx % 2 != 0) {
+            if (drawed && ndx % 2 != 0) {
                Point2D p = getScreenCoordinates(prevX, prevY);
                gl.glVertex2d(p.getX(), p.getY());
             }
@@ -629,7 +638,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
       if (incr < 1) {
          incr = 1;
       }
-      
+
 
       //Draw X-axis labels
       for (int i = 0; i < timespan; i += incr) {
