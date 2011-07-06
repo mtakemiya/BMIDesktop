@@ -266,11 +266,7 @@ public class InteractionHandler implements KeyListener, MouseListener,
        * The mouse wheel controls the current zoom factor. Iteractors do not
        * receive mouse wheel events.
        */
-   
-
-   
-
-   
+   }
 
    public void mouseWheelMoved(MouseWheelEvent arg0) {
       if (arg0.getWheelRotation() < 0) {
