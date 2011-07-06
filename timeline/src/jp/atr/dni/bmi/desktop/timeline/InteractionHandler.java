@@ -242,11 +242,12 @@ public class InteractionHandler implements KeyListener, MouseListener,
 
 //      System.out.println("halfWidth: " + halfWidth + "\tinvHalfWidth: " + invHalfWidth + "\tdx: " + dx + "\tstart: " + timeStart.getX() + "\tend: " + timeEnd.getX());
 
-
       if (draggingHorizontalScrollbar) {
-         canvas.setTranslationX(canvas.getTranslationX() - dx * ((canvas.getWidth() - SCROLLBAR_HEIGHT) / (canvas.getDataUpperX() - canvas.getDataLowerX())));
+         dx *= ((canvas.getWidth() - SCROLLBAR_HEIGHT) / (canvas.getDataUpperX() - canvas.getDataLowerX()));
+         canvas.setTranslationX(canvas.getTranslationX() - dx);
       } else if (draggingVerticalScrollbar) {
-         canvas.setTranslationY(canvas.getTranslationY() - dy * ((canvas.getHeight() - SCROLLBAR_HEIGHT) / (canvas.getDataUpperY())));
+         dy *= ((canvas.getHeight() - SCROLLBAR_HEIGHT) / (canvas.getDataUpperY()));
+         canvas.setTranslationY(canvas.getTranslationY() - dy);
       } else {
          if (timeEnd.getX() < halfWidth) {
             dx = halfWidth - timeEnd.getX();
@@ -257,17 +258,15 @@ public class InteractionHandler implements KeyListener, MouseListener,
 
          canvas.setTranslationX(canvas.getTranslationX() + dx);
          canvas.setTranslationY(canvas.getTranslationY() + dy);
-
-         screenPreviousPoint.setLocation(screenCurrentPoint.getX(), screenCurrentPoint.getY());
-         previousPoint = canvas.getVirtualCoordinates(screenPreviousPoint.getX(), screenPreviousPoint.getY());
       }
-
-      /**
-       * The mouse wheel controls the current zoom factor. Iteractors do not
-       * receive mouse wheel events.
-       */
+      screenPreviousPoint.setLocation(screenCurrentPoint.getX(), screenCurrentPoint.getY());
+      previousPoint = canvas.getVirtualCoordinates(screenPreviousPoint.getX(), screenPreviousPoint.getY());
    }
 
+   /**
+    * The mouse wheel controls the current zoom factor. Iteractors do not
+    * receive mouse wheel events.
+    */
    public void mouseWheelMoved(MouseWheelEvent arg0) {
       if (arg0.getWheelRotation() < 0) {
          canvas.setScale(canvas.getScale() * SCALE_AMOUNT);

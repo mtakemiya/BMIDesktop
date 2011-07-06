@@ -593,7 +593,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
       }
       gl.glEnd();
 
-      prevY = (yOffset - 1) * Y_SPACER - 1;
+      prevY = (viewerChannels.size()) * Y_SPACER - 1;
 
       boolean showMin = timespan > 60000, showHour = timespan > 360000;
 
