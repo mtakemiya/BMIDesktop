@@ -5,6 +5,7 @@
 package jp.atr.dni.bmi.desktop.timeline;
 
 import static jp.atr.dni.bmi.desktop.timeline.TimelineTopComponent.SCROLLBAR_HEIGHT;
+import static jp.atr.dni.bmi.desktop.timeline.TimelineTopComponent.Y_SPACER;
 
 import java.awt.Point;
 import java.awt.event.KeyEvent;
@@ -218,8 +219,9 @@ public class InteractionHandler implements KeyListener, MouseListener,
 
       int meX = me.getX();
       int meY = me.getY();
-      double halfWidth = canvas.getWidth() / 5d;
+      double halfWidth = SCROLLBAR_HEIGHT * 2;
       double invHalfWidth = canvas.getWidth() - halfWidth;
+      double invHalfHeight = canvas.getHeight() - halfWidth;
 
       screenCurrentPoint = me.getPoint();
       currentPoint = canvas.getVirtualCoordinates(meX, meY);
@@ -237,8 +239,8 @@ public class InteractionHandler implements KeyListener, MouseListener,
       double dx = currentPoint.getX() - previousPoint.getX();
       double dy = currentPoint.getY() - previousPoint.getY();
 
-      Point2D timeStart = canvas.getScreenCoordinates(0, 0);
-      Point2D timeEnd = canvas.getScreenCoordinates(spanX, spanY);
+      Point2D timeStart = canvas.getScreenCoordinates(0, Y_SPACER);
+      Point2D timeEnd = canvas.getScreenCoordinates(spanX, -spanY);
 
 //      System.out.println("halfWidth: " + halfWidth + "\tinvHalfWidth: " + invHalfWidth + "\tdx: " + dx + "\tstart: " + timeStart.getX() + "\tend: " + timeEnd.getX());
 
@@ -256,8 +258,13 @@ public class InteractionHandler implements KeyListener, MouseListener,
             dx *= -1;
          }
 
-         if (timeEnd.getY() < 3) {
+         if (timeEnd.getY() < halfWidth) {
+            dy = halfWidth - timeEnd.getY();
+         } else if (timeStart.getY() > invHalfHeight) {
+            dy = timeStart.getY() - invHalfHeight;
+            dy *= -1;
          }
+
          canvas.setTranslationX(canvas.getTranslationX() + dx);
          canvas.setTranslationY(canvas.getTranslationY() + dy);
       }
