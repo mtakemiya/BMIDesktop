@@ -219,7 +219,7 @@ public class InteractionHandler implements KeyListener, MouseListener,
 
       int meX = me.getX();
       int meY = me.getY();
-      double halfWidth = SCROLLBAR_HEIGHT * 2;
+      double halfWidth = SCROLLBAR_HEIGHT * 2d;
       double invHalfWidth = canvas.getWidth() - halfWidth;
       double invHalfHeight = canvas.getHeight() - halfWidth;
 
@@ -243,7 +243,7 @@ public class InteractionHandler implements KeyListener, MouseListener,
       Point2D timeEnd = canvas.getScreenCoordinates(spanX, -spanY);
 
 //      System.out.println("halfWidth: " + halfWidth + "\tinvHalfWidth: " + invHalfWidth + "\tdx: " + dx + "\tstart: " + timeStart.getX() + "\tend: " + timeEnd.getX());
-
+System.out.print("dx: " + dx);
       if (draggingHorizontalScrollbar) {
          dx *= ((canvas.getWidth() - SCROLLBAR_HEIGHT) / (canvas.getDataUpperX() - canvas.getDataLowerX()));
 
@@ -260,13 +260,19 @@ public class InteractionHandler implements KeyListener, MouseListener,
       } else {
          if ((timeEnd.getX() + dx) < halfWidth) {
             dx = halfWidth - timeEnd.getX();
-            dx = 0;
-            if (timeEnd.getX() < halfWidth) {
-               dx = halfWidth - timeEnd.getX();
-            }
+//            dx = .01;
+
+            //            dx = 0;
+//            if (timeEnd.getX() <= halfWidth) {
+//               dx = halfWidth - timeEnd.getX() + .001;
+//            }
          } else if ((timeStart.getX() + dx) > invHalfWidth) {
-            dx = timeStart.getX() - invHalfWidth;
-            dx *= -1;
+            dx = invHalfWidth - timeStart.getX();
+//            dx = -01;
+//            if (timeStart.getX() > invHalfWidth) {
+//               dx = timeStart.getX() - invHalfWidth - .001;
+//               dx *= -1;
+//            }
          }
 
          if ((timeEnd.getY() + dy) < halfWidth) {
@@ -279,8 +285,10 @@ public class InteractionHandler implements KeyListener, MouseListener,
          canvas.setTranslationX(canvas.getTranslationX() + dx);
          canvas.setTranslationY(canvas.getTranslationY() + dy);
       }
+      System.out.println("\tdx after: " + dx);
+      
       screenPreviousPoint.setLocation(screenCurrentPoint.getX(), screenCurrentPoint.getY());
-      previousPoint = canvas.getVirtualCoordinates(screenPreviousPoint.getX(), screenPreviousPoint.getY());
+      previousPoint = canvas.getVirtualCoordinates(screenCurrentPoint.getX(), screenCurrentPoint.getY());
    }
 
    /**

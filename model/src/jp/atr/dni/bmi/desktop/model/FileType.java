@@ -49,9 +49,11 @@ public enum FileType {
       } else if (this == NEV) {
          return "blackrock nev";
       } else if (this == NSX) {
-         return "blackrock nsX";
+         return "blackrock ns data file";
       } else if (this == CSV) {
          return "comma-separated values";
+      } else if (this == DIRECTORY) {
+         return "folder";
       } else {
          return "unknown";
       }
