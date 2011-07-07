@@ -64,7 +64,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
    private AffineTransform transform = new AffineTransform();
    /** the transform for screen to virtual coordinates */
    private AffineTransform inverseTransform = new AffineTransform();
-   private GLCanvas glCanvas;
+   private GLJPanel glCanvas;
    private GLUT glut;
    private GLU glu;
    private static TimelineTopComponent instance;
@@ -159,7 +159,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
 //      renderer = new TextRenderer(new Font("SansSerif", Font.BOLD, 12));
 
-      setGlCanvas(new GLCanvas(caps));
+      setGlCanvas(new GLJPanel(caps));
 //setGlCanvas(GLWindow.create(caps));
 
       getGlCanvas().addGLEventListener(this);
@@ -942,14 +942,14 @@ public final class TimelineTopComponent extends TopComponent implements Property
    /**
     * @return the glCanvas
     */
-   public GLCanvas getGlCanvas() {
+   public GLJPanel getGlCanvas() {
       return glCanvas;
    }
 
    /**
     * @param glCanvas the glCanvas to set
     */
-   public void setGlCanvas(GLCanvas glCanvas) {
+   public void setGlCanvas(GLJPanel glCanvas) {
       this.glCanvas = glCanvas;
    }
 

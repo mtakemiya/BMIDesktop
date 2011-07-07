@@ -238,12 +238,14 @@ public class InteractionHandler implements KeyListener, MouseListener,
 
       double dx = currentPoint.getX() - previousPoint.getX();
       double dy = currentPoint.getY() - previousPoint.getY();
+      
+//      dx = canvas.getScreenCoordinates(dx, 0).getX();
 
       Point2D timeStart = canvas.getScreenCoordinates(0, Y_SPACER);
       Point2D timeEnd = canvas.getScreenCoordinates(spanX, -spanY);
 
 //      System.out.println("halfWidth: " + halfWidth + "\tinvHalfWidth: " + invHalfWidth + "\tdx: " + dx + "\tstart: " + timeStart.getX() + "\tend: " + timeEnd.getX());
-System.out.print("dx: " + dx);
+//System.out.print("dx: " + dx);
       if (draggingHorizontalScrollbar) {
          dx *= ((canvas.getWidth() - SCROLLBAR_HEIGHT) / (canvas.getDataUpperX() - canvas.getDataLowerX()));
 
@@ -281,11 +283,11 @@ System.out.print("dx: " + dx);
             dy = timeStart.getY() - invHalfHeight;
             dy *= -1;
          }
-
+//dx = canvas.getVirtualCoordinates(dx,0).getX();
          canvas.setTranslationX(canvas.getTranslationX() + dx);
          canvas.setTranslationY(canvas.getTranslationY() + dy);
       }
-      System.out.println("\tdx after: " + dx);
+//      System.out.println("\tdx after: " + dx);
       
       screenPreviousPoint.setLocation(screenCurrentPoint.getX(), screenCurrentPoint.getY());
       previousPoint = canvas.getVirtualCoordinates(screenCurrentPoint.getX(), screenCurrentPoint.getY());
