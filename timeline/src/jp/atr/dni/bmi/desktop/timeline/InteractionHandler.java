@@ -236,9 +236,11 @@ public class InteractionHandler implements KeyListener, MouseListener,
 //
 //      }
 
-      double dx = currentPoint.getX() - previousPoint.getX();
-      double dy = currentPoint.getY() - previousPoint.getY();
-      
+      double dx = screenCurrentPoint.getX() - screenPreviousPoint.getX();
+      double dy = screenCurrentPoint.getY() - screenPreviousPoint.getY();
+
+//      System.out.println("dx: " + dx + "\tdy:" + dy);
+
 //      dx = canvas.getScreenCoordinates(dx, 0).getX();
 
       Point2D timeStart = canvas.getScreenCoordinates(0, Y_SPACER);
@@ -288,7 +290,7 @@ public class InteractionHandler implements KeyListener, MouseListener,
          canvas.setTranslationY(canvas.getTranslationY() + dy);
       }
 //      System.out.println("\tdx after: " + dx);
-      
+
       screenPreviousPoint.setLocation(screenCurrentPoint.getX(), screenCurrentPoint.getY());
       previousPoint = canvas.getVirtualCoordinates(screenCurrentPoint.getX(), screenCurrentPoint.getY());
    }

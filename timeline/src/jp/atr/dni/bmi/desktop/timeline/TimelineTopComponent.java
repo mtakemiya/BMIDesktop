@@ -450,9 +450,9 @@ public final class TimelineTopComponent extends TopComponent implements Property
       double width = getWidth();
       double height = getHeight();
       transform = new AffineTransform(1, 0, 0, 1, 0, 0);
-      transform.translate(0.5 * width, 0.5 * height);
+//      transform.translate(0.5 * width, 0.5 * height);
+      transform.translate(translationX, translationY);
       transform.scale(scale, scale);
-      transform.translate(translationX - width / 2.0, translationY - height / 2.0);
 
       try {
          inverseTransform = transform.createInverse();
