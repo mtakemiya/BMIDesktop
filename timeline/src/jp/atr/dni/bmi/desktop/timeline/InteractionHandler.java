@@ -138,35 +138,53 @@ public class InteractionHandler implements KeyListener, MouseListener,
     * new interaction.
     */
    public void keyPressed(KeyEvent arg0) {
-      switch (arg0.getKeyCode()) {
+      int ke = arg0.getKeyCode();
 
+      if (ke == KeyEvent.VK_LEFT) {
          // canvas operations
-         case KeyEvent.VK_LEFT:
+         double halfWidth = SCROLLBAR_HEIGHT * 2d;
+         double invHalfWidth = canvas.getWidth() - halfWidth;
+         Point2D timeStart = canvas.getScreenCoordinates(0, Y_SPACER);
+
+         if (!((timeStart.getX() + TRANSLATE_AMOUNT) > invHalfWidth)) {
             canvas.setTranslationX(canvas.getTranslationX() + TRANSLATE_AMOUNT / canvas.getScale());
-            break;
-         case KeyEvent.VK_RIGHT:
+         }
+      } else if (ke == KeyEvent.VK_RIGHT) {
+         double halfWidth = SCROLLBAR_HEIGHT * 2d;
+         Point2D timeEnd = canvas.getScreenCoordinates(spanX, -spanY);
+
+         if (!((timeEnd.getX() + TRANSLATE_AMOUNT) < halfWidth)) {
             canvas.setTranslationX(canvas.getTranslationX() - TRANSLATE_AMOUNT / canvas.getScale());
-            break;
-         case KeyEvent.VK_UP:
+         }
+      } else if (ke == KeyEvent.VK_UP) {
+         double halfWidth = SCROLLBAR_HEIGHT * 2d;
+         double invHalfHeight = canvas.getHeight() - halfWidth;
+         Point2D timeStart = canvas.getScreenCoordinates(0, Y_SPACER);
+
+         if (!((timeStart.getY() + TRANSLATE_AMOUNT) > invHalfHeight)) {
             canvas.setTranslationY(canvas.getTranslationY() + TRANSLATE_AMOUNT / canvas.getScale());
-            break;
-         case KeyEvent.VK_DOWN:
+         }
+      } else if (ke == KeyEvent.VK_DOWN) {
+         double halfWidth = SCROLLBAR_HEIGHT * 2d;
+         Point2D timeEnd = canvas.getScreenCoordinates(spanX, -spanY);
+
+         if (!((timeEnd.getY() + TRANSLATE_AMOUNT) < halfWidth)) {
             canvas.setTranslationY(canvas.getTranslationY() - TRANSLATE_AMOUNT / canvas.getScale());
-            break;
-         case KeyEvent.VK_PAGE_UP:
-            canvas.setScale(canvas.getScale() * SCALE_AMOUNT);
-            break;
-         case KeyEvent.VK_PAGE_DOWN:
-            canvas.setScale(canvas.getScale() / SCALE_AMOUNT);
-            break;
-         case KeyEvent.VK_V:
-            canvas.zoomAll();
-            break;
+         }
+      } else if (ke
+              == KeyEvent.VK_PAGE_UP) {
+         canvas.setScale(canvas.getScale() * SCALE_AMOUNT);
+      } else if (ke
+              == KeyEvent.VK_PAGE_DOWN) {
+         canvas.setScale(canvas.getScale() / SCALE_AMOUNT);
+      } else if (ke
+              == KeyEvent.VK_V) {
+         canvas.zoomAll();
+      }
 //		case KeyEvent.VK_G:
 //			canvas.getGrid().setVisible(!canvas.getGrid().isVisible());
 //			mainWindow.setGridVisible(canvas.getGrid().isVisible());
 //			break;
-      }
    }
 
    @Override
