@@ -13,5 +13,5 @@ package jp.atr.dni.bmi.desktop.model;
  */
 public interface APIEntity {
 
-   public String getEntityLabel();
+   public String getLabel();
 }

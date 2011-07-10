@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jp.atr.dni.bmi.desktop.model;
 
 import java.beans.PropertyChangeEvent;
@@ -75,8 +71,10 @@ public class Channel {
    private String sourceFilePath;
    // Working File Path.
    private String workingFilePath;
-   // Edit flag.[ true : is editted. false : is not editted. default : false.]
-   private boolean editFlag;
+   
+   // Edited[ true : is editted. false : is not editted. default : false.]
+   private boolean edited;
+   
    // Case : Neuroshare
    private Entity entity;
 
@@ -89,7 +87,7 @@ public class Channel {
       this.displayName = "";
       this.sourceFilePath = "";
       this.workingFilePath = "";
-      this.editFlag = false;
+      this.edited = false;
    }
 
    // Constructor. Case : Neuroshare
@@ -105,7 +103,7 @@ public class Channel {
       this.channelType = ModelUtils.getChannelTypeFromLong(entity.getEntityInfo().getEntityType());
       this.sourceFilePath = entity.getEntityInfo().getFilePath();
       this.workingFilePath = "";
-      this.editFlag = false;
+      this.edited = false;
       this.entity = entity;
    }
 
@@ -203,19 +201,7 @@ public class Channel {
       this.fire("workingFilePath", old, this.workingFilePath);
    }
 
-   /**
-    * @return the editFlag
-    */
-   public boolean isEditFlag() {
-      return editFlag;
-   }
-
-   /**
-    * @param editFlag the editFlag to set
-    */
-   public void setEditFlag(boolean editFlag) {
-      this.editFlag = editFlag;
-   }
+   
 
    /**
     * Override is needed to display displayName on the ChannelList module.
@@ -292,7 +278,7 @@ public class Channel {
    public boolean setNeuroshareAnalogData(ArrayList<AnalogData> analogData) {
       WorkingFileWriter nsCsvWriter = new WorkingFileWriter();
       if (nsCsvWriter.overwriteTSFile(this.workingFilePath, analogData, this.entity)) {
-         this.setEditFlag(true);
+         this.setEdited(true);
          return true;
       }
       return false;
@@ -308,7 +294,7 @@ public class Channel {
       WorkingFileWriter nsCsvWriter = new WorkingFileWriter();
       Object eventObject = eventData.clone();
       if (nsCsvWriter.overwriteTLFile(this.workingFilePath, eventObject, this.entity)) {
-         this.setEditFlag(true);
+         this.setEdited(true);
          return true;
       }
       return false;
@@ -322,7 +308,7 @@ public class Channel {
    public boolean setNeuroshareSegmentData(SegmentData segmentData) {
       WorkingFileWriter nsCsvWriter = new WorkingFileWriter();
       if (nsCsvWriter.overwriteTIFile(this.workingFilePath, segmentData, this.entity)) {
-         this.setEditFlag(true);
+         this.setEdited(true);
          return true;
       }
       return false;
@@ -336,7 +322,7 @@ public class Channel {
    public boolean setNeuroshareNeuralData(ArrayList<Double> neuralData) {
       WorkingFileWriter nsCsvWriter = new WorkingFileWriter();
       if (nsCsvWriter.overwriteTOFile(this.workingFilePath, neuralData, this.entity)) {
-         this.setEditFlag(true);
+         this.setEdited(true);
          return true;
       }
       return false;
@@ -425,7 +411,7 @@ public class Channel {
          return false;
       }
       this.setEntity(e);
-      this.editFlag = true;
+      this.edited = true;
       return true;
    }
 
@@ -444,7 +430,7 @@ public class Channel {
          return false;
       }
       this.setEntity(e);
-      this.editFlag = true;
+      this.edited = true;
       return true;
    }
 
@@ -463,7 +449,7 @@ public class Channel {
          return false;
       }
       this.setEntity(e);
-      this.editFlag = true;
+      this.edited = true;
       return true;
    }
 
@@ -482,7 +468,7 @@ public class Channel {
          return false;
       }
       this.setEntity(e);
-      this.editFlag = true;
+      this.edited = true;
       return true;
    }
 
@@ -592,4 +578,18 @@ public class Channel {
       ei.setCsvDesc(tlHeader.getCommentAboutThisProbe());
       return (Entity) ei;
    }
+
+    /**
+     * @return the edited
+     */
+    public boolean isEdited() {
+        return edited;
+    }
+
+    /**
+     * @param edited the edited to set
+     */
+    public void setEdited(boolean edited) {
+        this.edited = edited;
+    }
 }

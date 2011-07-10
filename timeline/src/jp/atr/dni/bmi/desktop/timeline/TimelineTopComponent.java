@@ -64,7 +64,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
    private AffineTransform transform = new AffineTransform();
    /** the transform for screen to virtual coordinates */
    private AffineTransform inverseTransform = new AffineTransform();
-   private GLJPanel glCanvas;
+   private GLCanvas glCanvas;
    private GLUT glut;
    private GLU glu;
    private static TimelineTopComponent instance;
@@ -157,7 +157,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
 //      renderer = new TextRenderer(new Font("SansSerif", Font.BOLD, 12));
 
-      setGlCanvas(new GLJPanel(caps));
+      setGlCanvas(new GLCanvas(caps));
 //setGlCanvas(GLWindow.create(caps));
 
       getGlCanvas().addGLEventListener(this);
@@ -589,7 +589,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
          }
       }
       gl.glEnd();
-
+      //End drawing the data.
 
       boolean showMin = spanX > 60000, showHour = spanX > 360000;
 
@@ -631,10 +631,14 @@ public final class TimelineTopComponent extends TopComponent implements Property
       if (incr < 1) {
          incr = 1;
       }
-
-
+      
+      double lastScreenData = getVirtualCoordinates(getWidth(),0).getX();
+      if (lastScreenData > spanX){
+          lastScreenData = spanX;
+      }
+      
       //Draw X-axis labels
-      for (int i = 0; i < spanX; i += incr) {
+      for (int i = 0; i < lastScreenData; i += incr) {
          Point2D p = getScreenCoordinates(i, 0);
          Date currDate = new Date(startTime.getTime() + i);
          String ms = currDate.getTime() + "";
@@ -642,7 +646,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
          drawTextUnscaled(gl, (showHour ? currDate.getHours() + ":" : "") + (showMin ? currDate.getMinutes() + ":" : "") + currDate.getSeconds() + ":" + ms, p.getX(), height, 0.15f, 2f);
          drawVerticalLine(gl, p.getX());
 
-         if (i + incr >= spanX) {
+         if (i + incr >= lastScreenData) {
             i += incr;
             p = getScreenCoordinates(i, 0);
             currDate = new Date(startTime.getTime() + i);
@@ -940,14 +944,14 @@ public final class TimelineTopComponent extends TopComponent implements Property
    /**
     * @return the glCanvas
     */
-   public GLJPanel getGlCanvas() {
+   public GLCanvas getGlCanvas() {
       return glCanvas;
    }
 
    /**
     * @param glCanvas the glCanvas to set
     */
-   public void setGlCanvas(GLJPanel glCanvas) {
+   public void setGlCanvas(GLCanvas glCanvas) {
       this.glCanvas = glCanvas;
    }
 

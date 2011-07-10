@@ -5,7 +5,6 @@
 package jp.atr.dni.bmi.desktop.model;
 
 import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogInfo;
-import jp.atr.dni.bmi.desktop.neuroshareutils.Entity;
 
 /**
  *
@@ -19,7 +18,7 @@ public class APIAnalogEntity implements APIEntity {
    private AnalogInfo nsnEntity;
 
    @Override
-   public String getEntityLabel() {
+   public String getLabel() {
       return nsnEntity.getEntityInfo().getEntityLabel();
    }
 }

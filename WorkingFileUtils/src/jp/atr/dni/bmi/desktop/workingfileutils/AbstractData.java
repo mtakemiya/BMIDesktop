@@ -11,10 +11,8 @@ package jp.atr.dni.bmi.desktop.workingfileutils;
  *
  * @version 2011/07/05
  */
-public abstract class AbstractData {
-   private int count;
-//   private ChannelType type;
-   
-   
+public interface AbstractData {
+//   private int count;
+
    
 }
