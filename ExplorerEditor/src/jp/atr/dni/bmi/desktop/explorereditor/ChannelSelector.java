@@ -477,7 +477,7 @@ public class ChannelSelector extends javax.swing.JPanel implements ActionListene
                   si.setSegSourceInfos(segSourceInfos);
                   ch.setEntity((Entity) si);
 
-                  JOptionPane.showMessageDialog(null, "Channel : " + ch.getDisplayName() + " - Extra ns_SegSourceInfos were skipped!");
+                  JOptionPane.showMessageDialog(null, "Channel : " + ch.getLabel() + " - Extra ns_SegSourceInfos were skipped!");
                }
             }
 

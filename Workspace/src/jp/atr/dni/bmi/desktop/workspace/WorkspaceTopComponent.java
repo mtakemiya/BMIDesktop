@@ -314,7 +314,7 @@ public final class WorkspaceTopComponent extends TopComponent implements Propert
         // Set jTable model
         Vector tableColumns = new Vector();
         Channel channel = new Channel();
-        channel.setDisplayName("Name");
+        channel.setLabel("Name");
         tableColumns.add(channel);
         tableColumns.add("Type");
         tableColumns.add("SourceFilePath");
