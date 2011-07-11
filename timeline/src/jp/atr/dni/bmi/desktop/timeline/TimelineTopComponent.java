@@ -64,7 +64,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
    private AffineTransform transform = new AffineTransform();
    /** the transform for screen to virtual coordinates */
    private AffineTransform inverseTransform = new AffineTransform();
-   private GLCanvas glCanvas;
+   private GLJPanel glCanvas;
    private GLUT glut;
    private GLU glu;
    private static TimelineTopComponent instance;
@@ -151,13 +151,14 @@ public final class TimelineTopComponent extends TopComponent implements Property
    private void initGL() {
       setPreferredSize(new java.awt.Dimension(100, 100));
       setSize(new java.awt.Dimension(100, 100));
+
       GLProfile.initSingleton(true);
       GLProfile glp = GLProfile.getDefault();
       GLCapabilities caps = new GLCapabilities(glp);
 
 //      renderer = new TextRenderer(new Font("SansSerif", Font.BOLD, 12));
 
-      setGlCanvas(new GLCanvas(caps));
+      setGlCanvas(new GLJPanel(caps));
 //setGlCanvas(GLWindow.create(caps));
 
       getGlCanvas().addGLEventListener(this);
@@ -631,12 +632,12 @@ public final class TimelineTopComponent extends TopComponent implements Property
       if (incr < 1) {
          incr = 1;
       }
-      
-      double lastScreenData = getVirtualCoordinates(getWidth(),0).getX();
-      if (lastScreenData > spanX){
-          lastScreenData = spanX;
+
+      double lastScreenData = getVirtualCoordinates(getWidth(), 0).getX();
+      if (lastScreenData > spanX) {
+         lastScreenData = spanX;
       }
-      
+
       //Draw X-axis labels
       for (int i = 0; i < lastScreenData; i += incr) {
          Point2D p = getScreenCoordinates(i, 0);
@@ -749,7 +750,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
    public void zoomAll() {
 
       // reset the view transform
-      translationX = getWidth() / 2;
+      translationX = SCROLLBAR_HEIGHT * 4;
       translationY = getHeight() / 2;
       scale = 3.5;
 
@@ -944,14 +945,14 @@ public final class TimelineTopComponent extends TopComponent implements Property
    /**
     * @return the glCanvas
     */
-   public GLCanvas getGlCanvas() {
+   public GLJPanel getGlCanvas() {
       return glCanvas;
    }
 
    /**
     * @param glCanvas the glCanvas to set
     */
-   public void setGlCanvas(GLCanvas glCanvas) {
+   public void setGlCanvas(GLJPanel glCanvas) {
       this.glCanvas = glCanvas;
    }
 

@@ -9,7 +9,7 @@ package jp.atr.dni.bmi.desktop.model;
  */
 public interface APIEntity<T> {
 
-    public APIList<T> getData();
-    
+//   public APIList<T> getData();
+
    public String getLabel();
 }

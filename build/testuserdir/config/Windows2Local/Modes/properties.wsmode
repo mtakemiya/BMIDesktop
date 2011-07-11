@@ -7,10 +7,10 @@
   <constraints>
     <path orientation="horizontal" number="60" weight="0.7"/>
     <path orientation="vertical" number="40" weight="0.7"/>
-    <path orientation="horizontal" number="80" weight="0.2927228127555192"/>
+    <path orientation="horizontal" number="80" weight="0.29849012775842043"/>
     <path orientation="vertical" number="80" weight="0.5"/>
   </constraints>
-  <bounds x="1024" y="415" width="204" height="237" />
+  <bounds x="1440" y="590" width="288" height="337" />
   <frame state="0"/>
     <active-tc  id="WorkspaceTopComponent" />
     <empty-behavior permanent="true"/>
