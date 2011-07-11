@@ -35,41 +35,17 @@ import jp.atr.dni.bmi.desktop.workingfileutils.TSHeader;
  * @author Keiji Harada [*1]</br>[*1] ATR Intl. Computational Neuroscience Labs, Decoding Group
  * @version 2011/04/22
  */
-public class Channel {
+public class Channel<T> {
 
-   private List listeners = Collections.synchronizedList(new LinkedList());
-
-   /**
-    *
-    * @param pcl
-    */
-   public void addPropertyChangeListener(PropertyChangeListener pcl) {
-      listeners.add(pcl);
-   }
-
-   /**
-    *
-    * @param pcl
-    */
-   public void removePropertyChangeListener(PropertyChangeListener pcl) {
-      listeners.remove(pcl);
-   }
-
-   private void fire(String propertyName, Object old, Object neu) {
-      PropertyChangeListener[] pcls = (PropertyChangeListener[]) listeners.toArray(new PropertyChangeListener[0]);
-      for (int i = 0; i < pcls.length; i++) {
-         pcls[i].propertyChange(new PropertyChangeEvent(this, propertyName, old, neu));
-      }
-   }
-   // Channel ID. system orders channels as this value.
+   /** Channel ID. system orders channels as this value.*/
    private int channelID;
-   // Display Name. system displays this value.
-   private String displayName;
-   // Data case.
+   /** Display Name. system displays this value.*/
+   private String label;
+   /** Type of data */
    private ChannelType channelType;
-   // Source File Path.
+   /** Source File Path*/
    private String sourceFilePath;
-   // Working File Path.
+   /** Working File Path*/
    private String workingFilePath;
    
    // Edited[ true : is editted. false : is not editted. default : false.]
@@ -84,7 +60,7 @@ public class Channel {
     */
    public Channel() {
       this.channelID = -1;
-      this.displayName = "";
+      this.label = "";
       this.sourceFilePath = "";
       this.workingFilePath = "";
       this.edited = false;
@@ -98,7 +74,7 @@ public class Channel {
     */
    public Channel(int channelID, Entity entity) {
       this.channelID = channelID;
-      this.displayName = entity.getEntityInfo().getEntityLabel();
+      this.label = entity.getEntityInfo().getEntityLabel();
 //        this.channelType = "Neuroshare/" + entity.getEntityInfo().getEntityTypeLabel();
       this.channelType = ModelUtils.getChannelTypeFromLong(entity.getEntityInfo().getEntityType());
       this.sourceFilePath = entity.getEntityInfo().getFilePath();
@@ -125,17 +101,17 @@ public class Channel {
    /**
     * @return the displayName
     */
-   public String getDisplayName() {
-      return displayName;
+   public String getLabel() {
+      return label;
    }
 
    /**
     * @param displayName the displayName to set
     */
-   public void setDisplayName(String displayName) {
-      String old = this.displayName;
-      this.displayName = displayName;
-      this.fire("displayName", old, this.displayName);
+   public void setLabel(String newLabel) {
+      String old = label;
+      label = newLabel;
+      fire("label", old, label);
    }
 
    /**
@@ -209,7 +185,7 @@ public class Channel {
     */
    @Override
    public String toString() {
-      return this.displayName;
+      return label;
    }
 
    // Get Data methods.
@@ -592,4 +568,31 @@ public class Channel {
     public void setEdited(boolean edited) {
         this.edited = edited;
     }
+    
+    //Handle listeners
+    
+     private List listeners = Collections.synchronizedList(new LinkedList());
+
+   /**
+    *
+    * @param pcl
+    */
+   public void addPropertyChangeListener(PropertyChangeListener pcl) {
+      listeners.add(pcl);
+   }
+
+   /**
+    *
+    * @param pcl
+    */
+   public void removePropertyChangeListener(PropertyChangeListener pcl) {
+      listeners.remove(pcl);
+   }
+
+   private void fire(String propertyName, Object old, Object neu) {
+      PropertyChangeListener[] pcls = (PropertyChangeListener[]) listeners.toArray(new PropertyChangeListener[0]);
+      for (int i = 0; i < pcls.length; i++) {
+         pcls[i].propertyChange(new PropertyChangeEvent(this, propertyName, old, neu));
+      }
+   }
 }

@@ -1,0 +1,18 @@
+package jp.atr.dni.bmi.desktop.model.data;
+
+import java.util.ArrayList;
+
+/**
+ *
+ * @author Makoto Takemiya - [武宮 誠] <br />
+ * <a href="http://www.atr.jp">ATR - [株式会社・国際電氣通信基礎技術研究所]</a>
+ *
+ * @version 2011/07/11
+ */
+public class NSNTimeValData implements APIData {
+    private double samplingRate;
+    
+    private ArrayList<Double> timeStamps = new ArrayList<Double>();
+    
+    private ArrayList<ArrayList<Double>> values = new ArrayList<ArrayList<Double>>();
+}

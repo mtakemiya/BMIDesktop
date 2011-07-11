@@ -1,4 +1,4 @@
-package jp.atr.dni.bmi.desktop.model;
+package jp.atr.dni.bmi.desktop.model.data;
 
 /**
  *
@@ -7,9 +7,6 @@ package jp.atr.dni.bmi.desktop.model;
  *
  * @version 2011/07/11
  */
-public interface APIEntity<T> {
-
-    public APIList<T> getData();
+public interface APIData {
     
-   public String getLabel();
 }

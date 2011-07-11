@@ -10,12 +10,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import javax.swing.JOptionPane;
 import jp.atr.dni.bmi.desktop.workingfileutils.WorkingFileUtils;
 
 /**
  *
- * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Computational Neuroscience Labs, Decoding Group
  * @version 2011/04/22
  */
 public class Workspace {
@@ -77,11 +76,11 @@ public class Workspace {
 
     // Remove Channel. (then fire "RemoveChannel" event.)
     /**
-     *
+     * 
      * @param channel
      */
     public static void removeChannel(Channel channel) {
-
+//TODO: make this code more efficient
         ArrayList<Channel> old = getChannels();
 
         // If ChannelID, DisplayName, ChannelType and SourceFilePath is same, then remove.
@@ -89,7 +88,7 @@ public class Workspace {
         for (int ii = 0; ii < channels.size(); ii++) {
             Channel ch = channels.get(ii);
             if (ch.getChannelID() == channel.getChannelID()) {
-                if (ch.getDisplayName().equals(channel.getDisplayName())) {
+                if (ch.getLabel().equals(channel.getLabel())) {
                     if (ch.getChannelType().equals(channel.getChannelType())) {
                         if (ch.getSourceFilePath().equals(channel.getSourceFilePath())) {
                             channels.remove(ch);

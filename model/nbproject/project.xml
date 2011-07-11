@@ -30,6 +30,10 @@
                 <runtime-relative-path>ext/commons-collections-3.2.1.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/commons-collections-3.2.1.jar</binary-origin>
             </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/guava-r09.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/guava-r09.jar</binary-origin>
+            </class-path-extension>
         </data>
     </configuration>
 </project>
