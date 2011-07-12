@@ -8,8 +8,8 @@ package jp.atr.dni.bmi.desktop.model;
  * @version 2011/07/11
  */
 public interface APIEntity<T> {
-
-//   public APIList<T> getData();
-
-   public String getLabel();
+   
+   public APIList<T> getData();
+   
+   public APIHeader<T> getHeader();
 }
