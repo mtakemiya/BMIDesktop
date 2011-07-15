@@ -21,15 +21,7 @@ public class TLCanvas extends GLCanvas {
       super(cap);
    }
    private static final Dimension MIN_SIZE = new Dimension(0, 0);
-//   @Override
-//   public Dimension getPreferredSize() {
-//      return new Dimension(0, 0);
-//   }
 
-//   @Override
-//   public Dimension getMaximumSize() {
-//      return new Dimension(0, 0);
-//   }
    @Override
    public Dimension getMinimumSize() {
       return MIN_SIZE;

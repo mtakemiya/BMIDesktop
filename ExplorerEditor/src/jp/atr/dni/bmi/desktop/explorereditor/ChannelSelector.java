@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import jp.atr.dni.bmi.desktop.model.Channel;
+import jp.atr.dni.bmi.desktop.model.ChannelType;
 import jp.atr.dni.bmi.desktop.model.FileType;
 import jp.atr.dni.bmi.desktop.model.GeneralFileInfo;
 import jp.atr.dni.bmi.desktop.model.Workspace;
@@ -465,7 +466,7 @@ public class ChannelSelector extends javax.swing.JPanel implements ActionListene
             Channel ch = (Channel) obj;
 
             // Delete multiple SegSourceInfos.(i.e. Application remains only first SegSourceInfo.)
-            if (ch.getChannelType().equals("TI")) {
+            if (ch.getChannelType() == ChannelType.TS_AND_VAL_AND_ID) {//TI
                // Segment Entity.
                SegmentInfo si = (SegmentInfo) (ch.getEntity());
                ArrayList<SegmentSourceInfo> segSourceInfos = si.getSegSourceInfos();
@@ -485,16 +486,15 @@ public class ChannelSelector extends javax.swing.JPanel implements ActionListene
             WorkingFileUtils wfu = new WorkingFileUtils();
             try {
                GeneralFileInfo gfi = new GeneralFileInfo(ch.getEntity().getEntityInfo().getFilePath());
-               String fileExtention = gfi.getFileExtention();
-               if (fileExtention.equals("nsn")) {
+               if (gfi.getFileType() == FileType.NSN) {
                   wfu.createWorkingFileFromNeuroshare(ch.getSourceFilePath(), ch.getEntity());
-               } else if (fileExtention.equals("plx")) {
+               } else if (gfi.getFileType() == FileType.PLX) {
                   wfu.createWorkingFileFromPlexon(ch.getSourceFilePath(), ch.getEntity());
-               } else if (fileExtention.equals("nev")) {
+               } else if (gfi.getFileType() == FileType.NEV) {
                   wfu.createWorkingFileFromBlackRockNev(ch.getSourceFilePath(), ch.getEntity());
-               } else if (fileExtention.equals("ns1") || fileExtention.equals("ns2") || fileExtention.equals("ns3") || fileExtention.equals("ns4") || fileExtention.equals("ns5") || fileExtention.equals("ns6") || fileExtention.equals("ns7") || fileExtention.equals("ns8") || fileExtention.equals("ns9")) {
+               } else if (gfi.getFileType() == FileType.NSX) {
                   wfu.createWorkingFileFromBlackRockNsx(ch.getSourceFilePath(), ch.getEntity());
-               } else if (fileExtention.equals("csv")) {
+               } else if (gfi.getFileType() == FileType.CSV) {
                   wfu.createWorkingFileFromATRCsv(ch.getSourceFilePath(), ch.getEntity());
                }
 
