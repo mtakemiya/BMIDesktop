@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mode version="2.3">
+    <name unique="anonymousMode_2" />
+  <kind type="view" />
+  <state type="joined" />
+  <constraints>
+    <path orientation="horizontal" number="60" weight="0.3388739946380697"/>
+    <path orientation="vertical" number="40" weight="0.7"/>
+    <path orientation="horizontal" number="80" weight="0.3"/>
+    <path orientation="vertical" number="80" weight="0.5"/>
+    <path orientation="horizontal" number="1" weight="0.6031924951244799"/>
+  </constraints>
+  <bounds x="0" y="0" width="0" height="0" />
+  <frame state="0"/>
+    <empty-behavior permanent="false"/>
+</mode>

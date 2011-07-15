@@ -7,7 +7,12 @@ package jp.atr.dni.bmi.desktop.timeline;
 import com.jogamp.opengl.util.Animator;
 import com.jogamp.opengl.util.awt.TextRenderer;
 import com.jogamp.opengl.util.gl2.GLUT;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
@@ -29,6 +34,8 @@ import javax.media.opengl.awt.GLCanvas;
 import javax.media.opengl.awt.GLJPanel;
 import javax.media.opengl.glu.GLU;
 import javax.swing.BoxLayout;
+import javax.swing.GroupLayout;
+import javax.swing.SpringLayout;
 import jp.atr.dni.bmi.desktop.model.Channel;
 import jp.atr.dni.bmi.desktop.model.ChannelType;
 import jp.atr.dni.bmi.desktop.model.Workspace;
@@ -64,7 +71,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
    private AffineTransform transform = new AffineTransform();
    /** the transform for screen to virtual coordinates */
    private AffineTransform inverseTransform = new AffineTransform();
-   private GLJPanel glCanvas;
+   private TLCanvas glCanvas;
    private GLUT glut;
    private GLU glu;
    private static TimelineTopComponent instance;
@@ -149,8 +156,8 @@ public final class TimelineTopComponent extends TopComponent implements Property
     * code to initialize the openGL timeline
     */
    private void initGL() {
-      setPreferredSize(new java.awt.Dimension(100, 100));
-      setSize(new java.awt.Dimension(100, 100));
+      setPreferredSize(new java.awt.Dimension(0, 0));
+      setSize(new java.awt.Dimension(0, 0));
 
       GLProfile.initSingleton(true);
       GLProfile glp = GLProfile.getDefault();
@@ -158,7 +165,8 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
 //      renderer = new TextRenderer(new Font("SansSerif", Font.BOLD, 12));
 
-      setGlCanvas(new GLJPanel(caps));
+      setGlCanvas(new TLCanvas(caps));
+      getGlCanvas().setPreferredSize(new Dimension(0, 0));
 //setGlCanvas(GLWindow.create(caps));
 
       getGlCanvas().addGLEventListener(this);
@@ -248,12 +256,20 @@ public final class TimelineTopComponent extends TopComponent implements Property
 //      });
 
 
-      this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+      this.setLayout(new BoxLayout(this, 1));
       this.add(getGlCanvas());
 
       animator = new Animator(getGlCanvas());
 //      animator.add(getGlCanvas());
       animator.start();
+
+//      while (true) {
+//         try {
+//            Thread.sleep(40); //25 times/second 
+//            getGlCanvas().repaint();
+//         } catch (InterruptedException ex) {
+//         }
+//      }
 
 //      javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 //      BorderLayout layout = new BorderLayout();
@@ -293,6 +309,11 @@ public final class TimelineTopComponent extends TopComponent implements Property
    // Variables declaration - do not modify//GEN-BEGIN:variables
    private javax.swing.JPanel jPanel1;
    // End of variables declaration//GEN-END:variables
+
+   @Override
+   public Dimension getPreferredSize() {
+      return new Dimension(0, 0);
+   }
 
    /**
     * Gets default instance. Do not use directly: reserved for *.settings files only,
@@ -945,14 +966,14 @@ public final class TimelineTopComponent extends TopComponent implements Property
    /**
     * @return the glCanvas
     */
-   public GLJPanel getGlCanvas() {
+   public TLCanvas getGlCanvas() {
       return glCanvas;
    }
 
    /**
     * @param glCanvas the glCanvas to set
     */
-   public void setGlCanvas(GLJPanel glCanvas) {
+   public void setGlCanvas(TLCanvas glCanvas) {
       this.glCanvas = glCanvas;
    }
 
