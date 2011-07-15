@@ -20,21 +20,18 @@ public class TLCanvas extends GLCanvas {
    public TLCanvas(GLCapabilities cap) {
       super(cap);
    }
-
-   @Override
-   public Dimension getPreferredSize() {
-      return new Dimension(0, 0);
-   }
+   private static final Dimension MIN_SIZE = new Dimension(0, 0);
+//   @Override
+//   public Dimension getPreferredSize() {
+//      return new Dimension(0, 0);
+//   }
 
 //   @Override
 //   public Dimension getMaximumSize() {
 //      return new Dimension(0, 0);
 //   }
-
    @Override
    public Dimension getMinimumSize() {
-      return new Dimension(0, 0);
+      return MIN_SIZE;
    }
-   
-   
 }
