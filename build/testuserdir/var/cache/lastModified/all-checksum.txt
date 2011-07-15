@@ -1,5 +1,0 @@
-/Applications/NetBeans/NetBeans 7.0.app/Contents/Resources/NetBeans/platform=1307416038000
-/Users/makoto/Documents/nWorkspace/BMIDesktop/build/cluster=1310699050000
-/Applications/NetBeans/NetBeans 7.0.app/Contents/Resources/NetBeans/platform=1307416038000
-/Users/makoto/Documents/nWorkspace/BMIDesktop/timeline/../build/testuserdir=1310699050000
-crc=7
