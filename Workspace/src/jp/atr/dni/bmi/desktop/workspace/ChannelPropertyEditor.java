@@ -513,7 +513,6 @@ public class ChannelPropertyEditor extends javax.swing.JPanel implements ActionL
 
             // 2. update channel header.
             Workspace.updateChannelHeader(oldChannel, channel);
-
         }
 
     }
