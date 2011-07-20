@@ -4,6 +4,12 @@
  */
 package jp.atr.dni.bmi.desktop.model.utils;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import jp.atr.dni.bmi.desktop.model.ChannelType;
 
 /**
@@ -29,4 +35,16 @@ public class ModelUtils {
 
       return ChannelType.UNKNOWN;
    }
+   
+   public static FileNameExtensionFilter[] getDataFileFileters(){
+       
+       ArrayList<FileNameExtensionFilter> filters = new ArrayList<FileNameExtensionFilter>();
+       filters.add(new FileNameExtensionFilter("ATR CSV (*.csv)", "csv"));
+       filters.add(new FileNameExtensionFilter("BlackRockMicroSystems (*.nev, *.ns1,..., *.ns9)", "ns1", "ns2", "ns3", "ns4", "ns5", "ns6", "ns7", "ns8", "ns9", "nev"));
+       filters.add(new FileNameExtensionFilter("Plexon (*.plx)", "plx"));
+       filters.add(new FileNameExtensionFilter("Neuroshare (*.nsn)", "nsn"));
+       
+       return (FileNameExtensionFilter[])filters.toArray(new FileNameExtensionFilter[0]);
+   }
+   
 }

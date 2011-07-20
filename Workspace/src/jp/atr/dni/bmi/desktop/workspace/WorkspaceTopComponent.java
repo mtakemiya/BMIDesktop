@@ -7,21 +7,27 @@ package jp.atr.dni.bmi.desktop.workspace;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Vector;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import jp.atr.dni.bmi.desktop.explorereditor.ChannelSelector;
 import jp.atr.dni.bmi.desktop.model.Channel;
 import jp.atr.dni.bmi.desktop.model.ChannelType;
 import jp.atr.dni.bmi.desktop.model.GeneralFileInfo;
 import jp.atr.dni.bmi.desktop.model.Workspace;
+import jp.atr.dni.bmi.desktop.model.utils.ModelUtils;
+import org.openide.util.Exceptions;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 import org.openide.util.ImageUtilities;
 import org.netbeans.api.settings.ConvertAsProperties;
+import org.openide.nodes.PropertySupport;
+import org.openide.nodes.Sheet;
 
 /**
  * Top component which displays something.
@@ -38,13 +44,13 @@ public final class WorkspaceTopComponent extends TopComponent implements Propert
     /** path to the icon used by the component and its open action */
     static final String ICON_PATH = "jp/atr/dni/bmi/desktop/workspace/Briefcase.png";
     private static final String PREFERRED_ID = "WorkspaceTopComponent";
-
+    
     public WorkspaceTopComponent() {
-
+        
         beforeInitComponents();
         initComponents();
         afterInitComponents();
-
+        
         setName(NbBundle.getMessage(WorkspaceTopComponent.class, "CTL_WorkspaceTopComponent"));
         setToolTipText(NbBundle.getMessage(WorkspaceTopComponent.class, "HINT_WorkspaceTopComponent"));
         setIcon(ImageUtilities.loadImage(ICON_PATH, true));
@@ -63,6 +69,7 @@ public final class WorkspaceTopComponent extends TopComponent implements Propert
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -104,6 +111,17 @@ public final class WorkspaceTopComponent extends TopComponent implements Propert
             }
         });
         jToolBar1.add(jButton3);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jButton4, org.openide.util.NbBundle.getMessage(WorkspaceTopComponent.class, "WorkspaceTopComponent.jButton4.text")); // NOI18N
+        jButton4.setFocusable(false);
+        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton4);
 
         jTabbedPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(WorkspaceTopComponent.class, "WorkspaceTopComponent.jTabbedPane1.border.title"))); // NOI18N
 
@@ -169,7 +187,7 @@ public final class WorkspaceTopComponent extends TopComponent implements Propert
                 for (int ii = 0; ii < size; ii++) {
                     Object channelObj = jTable1.getValueAt(selectedRows[size - ii - 1], 0);
                     Channel channel = (Channel) channelObj;
-
+                    
                     Workspace.removeChannel(channel);
                 }
 
@@ -180,26 +198,30 @@ public final class WorkspaceTopComponent extends TopComponent implements Propert
             case 1:
                 // Supplemental Data Tab
                 JOptionPane.showMessageDialog(null, "Not implemented yet.");
-
+                
                 break;
             default:
                 break;
-
+            
         }
-
+        
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // Open wizard.
         cnwa.actionPerformed(evt);
-
+        
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // Select the file.
         // Using filechooser.
         GeneralFileInfo gfi = null;
         JFileChooser fc = new JFileChooser();
+        FileNameExtensionFilter[] ff = ModelUtils.getDataFileFileters();
+        for (int ii = 0; ii < ff.length; ii++) {
+            fc.addChoosableFileFilter(ff[ii]);
+        }
         fc.setMultiSelectionEnabled(false);
         int selected = fc.showOpenDialog(null);
         if (selected == JFileChooser.APPROVE_OPTION) {
@@ -218,10 +240,41 @@ public final class WorkspaceTopComponent extends TopComponent implements Propert
         // Channel Selecter will do.
 
     }//GEN-LAST:event_jButton3ActionPerformed
+    
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // Show properties of the first one.
+        int selectedTabIndex = jTabbedPane1.getSelectedIndex();
+        switch (selectedTabIndex) {
+            case 0:
+                // Neural Data Tab
+                // Remove selected channels.
+                int[] selectedRows = jTable1.getSelectedRows();
+                if (selectedRows.length <= 0){
+                    return;
+                }
+                
+                Object channelObj = jTable1.getValueAt(selectedRows[0], 0);
+                Channel channel = (Channel) channelObj;
+                
+                ChannelPropertyEditor cpe = new ChannelPropertyEditor(channel);
+                cpe.showDialog();
+                
+                break;
+            case 1:
+                // Supplemental Data Tab
+                JOptionPane.showMessageDialog(null, "Not implemented yet.");
+                
+                break;
+            default:
+                break;
+            
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -261,12 +314,12 @@ public final class WorkspaceTopComponent extends TopComponent implements Propert
                 + "' ID. That is a potential source of errors and unexpected behavior.");
         return getDefault();
     }
-
+    
     @Override
     public int getPersistenceType() {
         return TopComponent.PERSISTENCE_ALWAYS;
     }
-
+    
     @Override
     public void componentOpened() {
         // Add listener to the workspace to call propertyChange.
@@ -275,21 +328,22 @@ public final class WorkspaceTopComponent extends TopComponent implements Propert
         // Initialize jTables.
         afterInitComponents();
         
+        
     }
-
+    
     @Override
     public void componentClosed() {
         // Remove listener from the workspace not to call propertyChange.
         Workspace.removePropertyChangeListener(this);
     }
-
+    
     void writeProperties(java.util.Properties p) {
         // better to version settings since initial version as advocated at
         // http://wiki.apidesign.org/wiki/PropertyFiles
         p.setProperty("version", "1.0");
         // TODO store your settings
     }
-
+    
     Object readProperties(java.util.Properties p) {
         if (instance == null) {
             instance = this;
@@ -297,12 +351,12 @@ public final class WorkspaceTopComponent extends TopComponent implements Propert
         instance.readPropertiesImpl(p);
         return instance;
     }
-
+    
     private void readPropertiesImpl(java.util.Properties p) {
         String version = p.getProperty("version");
         // TODO read your settings according to their version
     }
-
+    
     @Override
     protected String preferredID() {
         return PREFERRED_ID;
@@ -326,7 +380,7 @@ public final class WorkspaceTopComponent extends TopComponent implements Propert
                 return false;
             }
         };
-
+        
     }
 
     // Initialize components.
@@ -338,7 +392,7 @@ public final class WorkspaceTopComponent extends TopComponent implements Propert
         // Repaint jTable2.
         this.repaintJTable2();
     }
-
+    
     @Override
     public void propertyChange(PropertyChangeEvent pce) {
 
@@ -369,7 +423,7 @@ public final class WorkspaceTopComponent extends TopComponent implements Propert
         for (int ii = 0; ii < wssize1; ii++) {
             this.addNeuralDataRow(Workspace.getChannels().get(ii));
         }
-
+        
     }
 
     // Repaint jTable2.
@@ -392,15 +446,15 @@ public final class WorkspaceTopComponent extends TopComponent implements Propert
 
     // Add Channel data to jTable1.
     private void addNeuralDataRow(Channel channel) {
-
+        
         ChannelType type = channel.getChannelType();
         String sourceFilePath = channel.getSourceFilePath();
-
+        
         Vector newRow = new Vector();
         newRow.add(channel);
         newRow.add(type);
         newRow.add(sourceFilePath);
-
+        
         defaultTableModel1.addRow(newRow);
     }
 }

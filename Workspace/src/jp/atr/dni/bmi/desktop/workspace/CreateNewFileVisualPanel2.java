@@ -5,12 +5,13 @@
 package jp.atr.dni.bmi.desktop.workspace;
 
 import java.util.Calendar;
-import java.util.Date;
 import javax.swing.JPanel;
+import jp.atr.dni.bmi.desktop.model.utils.DoubleInputVerifierForJTextField;
 
 public final class CreateNewFileVisualPanel2 extends JPanel {
 
     Calendar rightNow;
+
     /** Creates new form CreateNewFileVisualPanel2 */
     public CreateNewFileVisualPanel2() {
         beforeInitComponents();
@@ -80,12 +81,11 @@ public final class CreateNewFileVisualPanel2 extends JPanel {
         jTextField7.setText(((Integer)(rightNow.get(Calendar.MONTH) + 1)).toString());
         jTextField7.setInputVerifier(new IntegerInputVerifier());
 
-        jTextField4.setInputVerifier(new DoubleInputVerifier());
+        jTextField4.setInputVerifier(new DoubleInputVerifierForJTextField());
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel4, "Time Span :");
 
         jTextField6.setText(((Integer)rightNow.get(Calendar.YEAR)).toString());
-        jTextField6.setActionCommand("");
         jTextField6.setInputVerifier(new IntegerInputVerifier());
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel5, "Application Name : ");
@@ -94,7 +94,7 @@ public final class CreateNewFileVisualPanel2 extends JPanel {
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel3, "Time Stamp Resolution :");
 
-        jTextField3.setInputVerifier(new DoubleInputVerifier());
+        jTextField3.setInputVerifier(new DoubleInputVerifierForJTextField());
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel13, "Comments :");
 
@@ -122,51 +122,51 @@ public final class CreateNewFileVisualPanel2 extends JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE))
+                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE))
+                        .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE))
+                        .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE))
+                        .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE))
+                        .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE))
+                        .addComponent(jTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField8, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE))
+                        .addComponent(jTextField8, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField9, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE))
+                        .addComponent(jTextField9, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField10, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE))
+                        .addComponent(jTextField10, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField11, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE))
+                        .addComponent(jTextField11, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField12, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE))
+                        .addComponent(jTextField12, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField13, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)))
+                        .addComponent(jTextField13, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -220,7 +220,7 @@ public final class CreateNewFileVisualPanel2 extends JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(179, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(CreateNewFileVisualPanel2.class, "CreateNewFileVisualPanel2.jPanel1.TabConstraints.tabTitle"), jPanel1); // NOI18N
@@ -229,11 +229,11 @@ public final class CreateNewFileVisualPanel2 extends JPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 376, Short.MAX_VALUE)
+            .addGap(0, 392, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 464, Short.MAX_VALUE)
+            .addGap(0, 483, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(CreateNewFileVisualPanel2.class, "CreateNewFileVisualPanel2.jPanel2.TabConstraints.tabTitle"), jPanel2); // NOI18N
@@ -249,7 +249,6 @@ public final class CreateNewFileVisualPanel2 extends JPanel {
             .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -279,7 +278,7 @@ public final class CreateNewFileVisualPanel2 extends JPanel {
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
-    
+
     String getNeuroshareFileType() {
         return jTextField1.getText();
     }
@@ -335,5 +334,4 @@ public final class CreateNewFileVisualPanel2 extends JPanel {
     private void beforeInitComponents() {
         rightNow = Calendar.getInstance();
     }
-    
 }

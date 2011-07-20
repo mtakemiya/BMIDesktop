@@ -141,4 +141,24 @@ public class Workspace {
 
         }
     }
+
+    public static void updateChannelHeader(Channel oldChannel, Channel channel) {
+        ArrayList<Channel> old = getChannels();
+
+        // If ChannelID, DisplayName, ChannelType and SourceFilePath is same, then update.
+        for (int ii = 0; ii < channels.size(); ii++) {
+            Channel ch = channels.get(ii);
+            if (ch.getChannelID() == oldChannel.getChannelID()) {
+                if (ch.getLabel().equals(oldChannel.getLabel())) {
+                    if (ch.getChannelType().equals(oldChannel.getChannelType())) {
+                        if (ch.getSourceFilePath().equals(oldChannel.getSourceFilePath())) {
+                            channels.set(ii, channel);
+                            fire("UpdateChannel", old, channels);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

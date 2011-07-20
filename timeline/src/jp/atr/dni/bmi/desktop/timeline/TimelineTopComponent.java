@@ -4,6 +4,8 @@
  */
 package jp.atr.dni.bmi.desktop.timeline;
 
+import com.jogamp.newt.awt.NewtCanvasAWT;
+import com.jogamp.newt.opengl.GLWindow;
 import com.jogamp.opengl.util.Animator;
 import com.jogamp.opengl.util.awt.TextRenderer;
 import com.jogamp.opengl.util.gl2.GLUT;
@@ -64,7 +66,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
    private AffineTransform transform = new AffineTransform();
    /** the transform for screen to virtual coordinates */
    private AffineTransform inverseTransform = new AffineTransform();
-   private GLJPanel glCanvas;
+   private GLWindow glCanvas;
    private GLUT glut;
    private GLU glu;
    private static TimelineTopComponent instance;
@@ -95,7 +97,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
    public TimelineTopComponent() {
       setVisible(true);
-      initGL();
+//      initGL();
       SHOW_GRID = true;
       setName(NbBundle.getMessage(TimelineTopComponent.class, "CTL_TimelineTopComponent"));
       setToolTipText(NbBundle.getMessage(TimelineTopComponent.class, "HINT_TimelineTopComponent"));
@@ -158,15 +160,15 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
 //      renderer = new TextRenderer(new Font("SansSerif", Font.BOLD, 12));
 
-      setGlCanvas(new GLJPanel(caps));
-//setGlCanvas(GLWindow.create(caps));
+//      setGlCanvas(new GLCanvas(caps));
+setGlCanvas(GLWindow.create(caps));
 
       getGlCanvas().addGLEventListener(this);
 
       handler = new InteractionHandler(this);
       getGlCanvas().addMouseListener(handler);
-      getGlCanvas().addMouseMotionListener(handler);
-      getGlCanvas().addMouseWheelListener(handler);
+//      getGlCanvas().addMouseMotionListener(handler);
+//      getGlCanvas().addMouseWheelListener(handler);
       getGlCanvas().addKeyListener(handler);
 
 //      glCanvas.addMouseListener(new MouseListener() {
@@ -249,7 +251,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
 
       this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-      this.add(getGlCanvas());
+      this.add( new NewtCanvasAWT(getGlCanvas()));
 
       animator = new Animator(getGlCanvas());
 //      animator.add(getGlCanvas());
@@ -338,6 +340,8 @@ public final class TimelineTopComponent extends TopComponent implements Property
       fileInfos.addLookupListener(this);*/
 
       Workspace.addPropertyChangeListener(this);
+      
+      initGL();
    }
 
    @Override
@@ -351,6 +355,10 @@ public final class TimelineTopComponent extends TopComponent implements Property
       Workspace.removePropertyChangeListener(this);
       animator.stop();
       glCanvas.invalidate();
+      glCanvas.destroy();
+     ((NewtCanvasAWT) this.getComponent(0)).destroy();
+     if (this.getComponentCount() > 0){
+     this.remove(this.getComponent(0));}
    }
 
    void writeProperties(java.util.Properties p) {
@@ -476,7 +484,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
       gl.glClear(GL2.GL_COLOR_BUFFER_BIT);
       gl.glClearColor(1, 1, 1, 1);
 
-      glCanvas.setSize(width, height);
+//      glCanvas.setSize(width, height);
 
       if (viewerChannels == null || endTime == null || numEntities < 1) {
          return;
@@ -945,14 +953,14 @@ public final class TimelineTopComponent extends TopComponent implements Property
    /**
     * @return the glCanvas
     */
-   public GLJPanel getGlCanvas() {
+   public GLWindow getGlCanvas() {
       return glCanvas;
    }
 
    /**
     * @param glCanvas the glCanvas to set
     */
-   public void setGlCanvas(GLJPanel glCanvas) {
+   public void setGlCanvas(GLWindow glCanvas) {
       this.glCanvas = glCanvas;
    }
 

@@ -4,17 +4,18 @@
  */
 package jp.atr.dni.bmi.desktop.timeline;
 
+import com.jogamp.newt.event.KeyEvent;
+import com.jogamp.newt.event.KeyListener;
+import com.jogamp.newt.event.MouseEvent;
+import com.jogamp.newt.event.MouseListener;
 import static jp.atr.dni.bmi.desktop.timeline.TimelineTopComponent.SCROLLBAR_HEIGHT;
 import static jp.atr.dni.bmi.desktop.timeline.TimelineTopComponent.Y_SPACER;
 
 import java.awt.Point;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+
 import java.awt.geom.Point2D;
 import jp.atr.dni.bmi.desktop.timeline.model.ViewerChannel;
 
@@ -137,61 +138,61 @@ public class InteractionHandler implements KeyListener, MouseListener,
     * the key pressed is a hotkey that transforms the canvas or selects a
     * new interaction.
     */
-   public void keyPressed(KeyEvent arg0) {
-      int ke = arg0.getKeyCode();
-
-      if (ke == KeyEvent.VK_LEFT) {
-         // canvas operations
-         double halfWidth = SCROLLBAR_HEIGHT * 2d;
-         double invHalfWidth = canvas.getWidth() - halfWidth;
-         Point2D timeStart = canvas.getScreenCoordinates(0, Y_SPACER);
-
-         if (!((timeStart.getX() + TRANSLATE_AMOUNT) > invHalfWidth)) {
-            canvas.setTranslationX(canvas.getTranslationX() + TRANSLATE_AMOUNT / canvas.getScale());
-         }
-      } else if (ke == KeyEvent.VK_RIGHT) {
-         double halfWidth = SCROLLBAR_HEIGHT * 2d;
-         Point2D timeEnd = canvas.getScreenCoordinates(spanX, -spanY);
-
-         if (!((timeEnd.getX() + TRANSLATE_AMOUNT) < halfWidth)) {
-            canvas.setTranslationX(canvas.getTranslationX() - TRANSLATE_AMOUNT / canvas.getScale());
-         }
-      } else if (ke == KeyEvent.VK_UP) {
-         double halfWidth = SCROLLBAR_HEIGHT * 2d;
-         double invHalfHeight = canvas.getHeight() - halfWidth;
-         Point2D timeStart = canvas.getScreenCoordinates(0, Y_SPACER);
-
-         if (!((timeStart.getY() + TRANSLATE_AMOUNT) > invHalfHeight)) {
-            canvas.setTranslationY(canvas.getTranslationY() + TRANSLATE_AMOUNT / canvas.getScale());
-         }
-      } else if (ke == KeyEvent.VK_DOWN) {
-         double halfWidth = SCROLLBAR_HEIGHT * 2d;
-         Point2D timeEnd = canvas.getScreenCoordinates(spanX, -spanY);
-
-         if (!((timeEnd.getY() + TRANSLATE_AMOUNT) < halfWidth)) {
-            canvas.setTranslationY(canvas.getTranslationY() - TRANSLATE_AMOUNT / canvas.getScale());
-         }
-      } else if (ke
-              == KeyEvent.VK_PAGE_UP) {
-         canvas.setScale(canvas.getScale() * SCALE_AMOUNT);
-      } else if (ke
-              == KeyEvent.VK_PAGE_DOWN) {
-         canvas.setScale(canvas.getScale() / SCALE_AMOUNT);
-      } else if (ke
-              == KeyEvent.VK_V) {
-         canvas.zoomAll();
-      }
-//		case KeyEvent.VK_G:
-//			canvas.getGrid().setVisible(!canvas.getGrid().isVisible());
-//			mainWindow.setGridVisible(canvas.getGrid().isVisible());
-//			break;
-   }
+//   public void keyPressed(KeyEvent arg0) {
+//      int ke = arg0.getKeyCode();
+//
+//      if (ke == KeyEvent.VK_LEFT) {
+//         // canvas operations
+//         double halfWidth = SCROLLBAR_HEIGHT * 2d;
+//         double invHalfWidth = canvas.getWidth() - halfWidth;
+//         Point2D timeStart = canvas.getScreenCoordinates(0, Y_SPACER);
+//
+//         if (!((timeStart.getX() + TRANSLATE_AMOUNT) > invHalfWidth)) {
+//            canvas.setTranslationX(canvas.getTranslationX() + TRANSLATE_AMOUNT / canvas.getScale());
+//         }
+//      } else if (ke == KeyEvent.VK_RIGHT) {
+//         double halfWidth = SCROLLBAR_HEIGHT * 2d;
+//         Point2D timeEnd = canvas.getScreenCoordinates(spanX, -spanY);
+//
+//         if (!((timeEnd.getX() + TRANSLATE_AMOUNT) < halfWidth)) {
+//            canvas.setTranslationX(canvas.getTranslationX() - TRANSLATE_AMOUNT / canvas.getScale());
+//         }
+//      } else if (ke == KeyEvent.VK_UP) {
+//         double halfWidth = SCROLLBAR_HEIGHT * 2d;
+//         double invHalfHeight = canvas.getHeight() - halfWidth;
+//         Point2D timeStart = canvas.getScreenCoordinates(0, Y_SPACER);
+//
+//         if (!((timeStart.getY() + TRANSLATE_AMOUNT) > invHalfHeight)) {
+//            canvas.setTranslationY(canvas.getTranslationY() + TRANSLATE_AMOUNT / canvas.getScale());
+//         }
+//      } else if (ke == KeyEvent.VK_DOWN) {
+//         double halfWidth = SCROLLBAR_HEIGHT * 2d;
+//         Point2D timeEnd = canvas.getScreenCoordinates(spanX, -spanY);
+//
+//         if (!((timeEnd.getY() + TRANSLATE_AMOUNT) < halfWidth)) {
+//            canvas.setTranslationY(canvas.getTranslationY() - TRANSLATE_AMOUNT / canvas.getScale());
+//         }
+//      } else if (ke
+//              == KeyEvent.VK_PAGE_UP) {
+//         canvas.setScale(canvas.getScale() * SCALE_AMOUNT);
+//      } else if (ke
+//              == KeyEvent.VK_PAGE_DOWN) {
+//         canvas.setScale(canvas.getScale() / SCALE_AMOUNT);
+//      } else if (ke
+//              == KeyEvent.VK_V) {
+//         canvas.zoomAll();
+//      }
+////		case KeyEvent.VK_G:
+////			canvas.getGrid().setVisible(!canvas.getGrid().isVisible());
+////			mainWindow.setGridVisible(canvas.getGrid().isVisible());
+////			break;
+//   }
 
    @Override
    public void mousePressed(MouseEvent me) {
 
       // update the virtual points
-      screenCurrentPoint = me.getPoint();
+      screenCurrentPoint = new Point(me.getX(), me.getY());
       screenPickedPoint = screenCurrentPoint;
       currentPoint = canvas.getVirtualCoordinates(me.getX(), me.getY());
       pickedPoint = currentPoint;
@@ -216,14 +217,14 @@ public class InteractionHandler implements KeyListener, MouseListener,
     * Updates the current and previous points
     */
    public void mouseMoved(MouseEvent me) {
-      screenCurrentPoint = me.getPoint();
+      screenCurrentPoint = new Point(me.getX(), me.getY());
       currentPoint = canvas.getVirtualCoordinates(me.getX(), me.getY());
       if (previousPoint == null) {
          screenPreviousPoint = screenCurrentPoint;
          previousPoint = currentPoint;
       }
 
-      screenPreviousPoint = me.getPoint();
+      screenPreviousPoint = new Point(me.getX(), me.getY());
       previousPoint = canvas.getVirtualCoordinates(me.getX(), me.getY());
    }
 
@@ -241,7 +242,7 @@ public class InteractionHandler implements KeyListener, MouseListener,
       double invHalfWidth = canvas.getWidth() - halfWidth;
       double invHalfHeight = canvas.getHeight() - halfWidth;
 
-      screenCurrentPoint = me.getPoint();
+      screenCurrentPoint = new Point(me.getX(), me.getY());
       currentPoint = canvas.getVirtualCoordinates(meX, meY);
 
       double dx = screenCurrentPoint.getX() - screenPreviousPoint.getX();
@@ -341,28 +342,12 @@ public class InteractionHandler implements KeyListener, MouseListener,
 //                             + ")");
    }
 
-   /**
-    * Not implemented.
-    */
-   public void keyTyped(KeyEvent arg0) {
-   }
 
-   /**
-    * Not implemented.
-    */
-   public void mouseEntered(MouseEvent arg0) {
-   }
 
-   /**
-    * Not implemented.
-    */
-   public void mouseExited(MouseEvent arg0) {
-   }
-
-   @Override
-   public void keyReleased(KeyEvent ke) {
-      //throw new UnsupportedOperationException("Not supported yet.");
-   }
+//   @Override
+//   public void keyReleased(KeyEvent ke) {
+//      //throw new UnsupportedOperationException("Not supported yet.");
+//   }
 
    private boolean isInsideVerticalScrollbar(Point p) {
       double x = p.getX();
@@ -405,4 +390,95 @@ public class InteractionHandler implements KeyListener, MouseListener,
    public void setSpanY(long spanY) {
       this.spanY = spanY;
    }
+
+    @Override
+    public void keyPressed(com.jogamp.newt.event.KeyEvent key) {
+int ke = key.getKeyCode();
+
+      if (ke == KeyEvent.VK_LEFT) {
+         // canvas operations
+         double halfWidth = SCROLLBAR_HEIGHT * 2d;
+         double invHalfWidth = canvas.getWidth() - halfWidth;
+         Point2D timeStart = canvas.getScreenCoordinates(0, Y_SPACER);
+
+         if (!((timeStart.getX() + TRANSLATE_AMOUNT) > invHalfWidth)) {
+            canvas.setTranslationX(canvas.getTranslationX() + TRANSLATE_AMOUNT / canvas.getScale());
+         }
+      } else if (ke == KeyEvent.VK_RIGHT) {
+         double halfWidth = SCROLLBAR_HEIGHT * 2d;
+         Point2D timeEnd = canvas.getScreenCoordinates(spanX, -spanY);
+
+         if (!((timeEnd.getX() + TRANSLATE_AMOUNT) < halfWidth)) {
+            canvas.setTranslationX(canvas.getTranslationX() - TRANSLATE_AMOUNT / canvas.getScale());
+         }
+      } else if (ke == KeyEvent.VK_UP) {
+         double halfWidth = SCROLLBAR_HEIGHT * 2d;
+         double invHalfHeight = canvas.getHeight() - halfWidth;
+         Point2D timeStart = canvas.getScreenCoordinates(0, Y_SPACER);
+
+         if (!((timeStart.getY() + TRANSLATE_AMOUNT) > invHalfHeight)) {
+            canvas.setTranslationY(canvas.getTranslationY() + TRANSLATE_AMOUNT / canvas.getScale());
+         }
+      } else if (ke == KeyEvent.VK_DOWN) {
+         double halfWidth = SCROLLBAR_HEIGHT * 2d;
+         Point2D timeEnd = canvas.getScreenCoordinates(spanX, -spanY);
+
+         if (!((timeEnd.getY() + TRANSLATE_AMOUNT) < halfWidth)) {
+            canvas.setTranslationY(canvas.getTranslationY() - TRANSLATE_AMOUNT / canvas.getScale());
+         }
+      } else if (ke
+              == KeyEvent
+              .VK_PAGE_UP) {
+         canvas.setScale(canvas.getScale() * SCALE_AMOUNT);
+      } else if (ke
+              == KeyEvent.VK_PAGE_DOWN) {
+         canvas.setScale(canvas.getScale() / SCALE_AMOUNT);
+      } else if (ke
+              == KeyEvent.VK_V) {
+         canvas.zoomAll();
+    }}
+
+    @Override
+    public void keyReleased(com.jogamp.newt.event.KeyEvent ke) {
+//        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+//    @Override
+//    public void keyTyped(com.jogamp.newt.event.KeyEvent ke) {
+////        throw new UnsupportedOperationException("Not supported yet.");
+//    }
+
+    @Override
+    public void keyTyped(KeyEvent ke) {
+//        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent me) {
+//        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void mouseExited(MouseEvent me) {
+//        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void mouseWheelMoved(MouseEvent me) {
+if (me.getWheelRotation() > 0) {
+         canvas.setScale(canvas.getScale() * SCALE_AMOUNT);
+      } else {
+         canvas.setScale(canvas.getScale() / SCALE_AMOUNT);
+      }
+    }
+
+    @Override
+    public void mouseDragged(java.awt.event.MouseEvent e) {
+//        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void mouseMoved(java.awt.event.MouseEvent e) {
+//        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

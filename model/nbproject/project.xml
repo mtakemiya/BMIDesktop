@@ -25,6 +25,7 @@
             </module-dependencies>
             <public-packages>
                 <package>jp.atr.dni.bmi.desktop.model</package>
+                <package>jp.atr.dni.bmi.desktop.model.utils</package>
             </public-packages>
             <class-path-extension>
                 <runtime-relative-path>ext/commons-collections-3.2.1.jar</runtime-relative-path>
