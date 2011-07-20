@@ -5,6 +5,7 @@
 //package jp.atr.dni.bmi.desktop.model.data;
 //
 //import java.util.List;
+//import jp.atr.dni.bmi.desktop.neuroshareutils.NeuroshareFile;
 //
 ///**
 // *
@@ -15,12 +16,13 @@
 // */
 //public class NSNDataProvider implements APIDataProvider {
 //
-//   public NSNDataProvider(String filePath){
+//   public NSNDataProvider(NeuroshareFile nsObj){
 //      
 //   }
 //   
 //   @Override
 //   public int size() {
+//      
 //   }
 //
 //   @Override

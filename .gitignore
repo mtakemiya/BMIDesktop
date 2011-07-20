@@ -26,12 +26,14 @@
 # OS generated files #
 ######################
 .DS_Store?
+.DS_Store
 ehthumbs.db
 Icon?
 Thumbs.db
 
 # Netbeans files #
 #####################
+*build/*
 */build/*
 
 # Desktop Files #

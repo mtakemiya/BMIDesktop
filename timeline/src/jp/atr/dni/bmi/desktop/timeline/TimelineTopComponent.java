@@ -4,12 +4,15 @@
  */
 package jp.atr.dni.bmi.desktop.timeline;
 
-import com.jogamp.newt.awt.NewtCanvasAWT;
-import com.jogamp.newt.opengl.GLWindow;
 import com.jogamp.opengl.util.Animator;
 import com.jogamp.opengl.util.awt.TextRenderer;
 import com.jogamp.opengl.util.gl2.GLUT;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
@@ -31,6 +34,8 @@ import javax.media.opengl.awt.GLCanvas;
 import javax.media.opengl.awt.GLJPanel;
 import javax.media.opengl.glu.GLU;
 import javax.swing.BoxLayout;
+import javax.swing.GroupLayout;
+import javax.swing.SpringLayout;
 import jp.atr.dni.bmi.desktop.model.Channel;
 import jp.atr.dni.bmi.desktop.model.ChannelType;
 import jp.atr.dni.bmi.desktop.model.Workspace;
@@ -66,7 +71,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
    private AffineTransform transform = new AffineTransform();
    /** the transform for screen to virtual coordinates */
    private AffineTransform inverseTransform = new AffineTransform();
-   private GLWindow glCanvas;
+   private TLCanvas glCanvas;
    private GLUT glut;
    private GLU glu;
    private static TimelineTopComponent instance;
@@ -97,7 +102,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
    public TimelineTopComponent() {
       setVisible(true);
-//      initGL();
+      initGL();
       SHOW_GRID = true;
       setName(NbBundle.getMessage(TimelineTopComponent.class, "CTL_TimelineTopComponent"));
       setToolTipText(NbBundle.getMessage(TimelineTopComponent.class, "HINT_TimelineTopComponent"));
@@ -151,8 +156,8 @@ public final class TimelineTopComponent extends TopComponent implements Property
     * code to initialize the openGL timeline
     */
    private void initGL() {
-      setPreferredSize(new java.awt.Dimension(100, 100));
-      setSize(new java.awt.Dimension(100, 100));
+      setPreferredSize(new java.awt.Dimension(0, 0));
+      setSize(new java.awt.Dimension(0, 0));
 
       GLProfile.initSingleton(true);
       GLProfile glp = GLProfile.getDefault();
@@ -160,15 +165,16 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
 //      renderer = new TextRenderer(new Font("SansSerif", Font.BOLD, 12));
 
-//      setGlCanvas(new GLCanvas(caps));
-setGlCanvas(GLWindow.create(caps));
+      setGlCanvas(new TLCanvas(caps));
+      getGlCanvas().setPreferredSize(new Dimension(0, 0));
+//setGlCanvas(GLWindow.create(caps));
 
       getGlCanvas().addGLEventListener(this);
 
       handler = new InteractionHandler(this);
       getGlCanvas().addMouseListener(handler);
-//      getGlCanvas().addMouseMotionListener(handler);
-//      getGlCanvas().addMouseWheelListener(handler);
+      getGlCanvas().addMouseMotionListener(handler);
+      getGlCanvas().addMouseWheelListener(handler);
       getGlCanvas().addKeyListener(handler);
 
 //      glCanvas.addMouseListener(new MouseListener() {
@@ -250,12 +256,20 @@ setGlCanvas(GLWindow.create(caps));
 //      });
 
 
-      this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-      this.add( new NewtCanvasAWT(getGlCanvas()));
+      this.setLayout(new BoxLayout(this, 1));
+      this.add(getGlCanvas());
 
       animator = new Animator(getGlCanvas());
 //      animator.add(getGlCanvas());
       animator.start();
+
+//      while (true) {
+//         try {
+//            Thread.sleep(40); //25 times/second 
+//            getGlCanvas().repaint();
+//         } catch (InterruptedException ex) {
+//         }
+//      }
 
 //      javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 //      BorderLayout layout = new BorderLayout();
@@ -295,6 +309,11 @@ setGlCanvas(GLWindow.create(caps));
    // Variables declaration - do not modify//GEN-BEGIN:variables
    private javax.swing.JPanel jPanel1;
    // End of variables declaration//GEN-END:variables
+
+   @Override
+   public Dimension getPreferredSize() {
+      return new Dimension(0, 0);
+   }
 
    /**
     * Gets default instance. Do not use directly: reserved for *.settings files only,
@@ -340,8 +359,6 @@ setGlCanvas(GLWindow.create(caps));
       fileInfos.addLookupListener(this);*/
 
       Workspace.addPropertyChangeListener(this);
-      
-      initGL();
    }
 
    @Override
@@ -355,10 +372,6 @@ setGlCanvas(GLWindow.create(caps));
       Workspace.removePropertyChangeListener(this);
       animator.stop();
       glCanvas.invalidate();
-      glCanvas.destroy();
-     ((NewtCanvasAWT) this.getComponent(0)).destroy();
-     if (this.getComponentCount() > 0){
-     this.remove(this.getComponent(0));}
    }
 
    void writeProperties(java.util.Properties p) {
@@ -484,7 +497,7 @@ setGlCanvas(GLWindow.create(caps));
       gl.glClear(GL2.GL_COLOR_BUFFER_BIT);
       gl.glClearColor(1, 1, 1, 1);
 
-//      glCanvas.setSize(width, height);
+      glCanvas.setSize(width, height);
 
       if (viewerChannels == null || endTime == null || numEntities < 1) {
          return;
@@ -953,14 +966,14 @@ setGlCanvas(GLWindow.create(caps));
    /**
     * @return the glCanvas
     */
-   public GLWindow getGlCanvas() {
+   public TLCanvas getGlCanvas() {
       return glCanvas;
    }
 
    /**
     * @param glCanvas the glCanvas to set
     */
-   public void setGlCanvas(GLWindow glCanvas) {
+   public void setGlCanvas(TLCanvas glCanvas) {
       this.glCanvas = glCanvas;
    }
 
