@@ -14,6 +14,7 @@ import java.awt.CardLayout;
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import jp.atr.dni.bmi.desktop.model.Channel;
 import jp.atr.dni.bmi.desktop.model.ChannelType;
@@ -27,6 +28,7 @@ import jp.atr.dni.bmi.desktop.neuroshareutils.EntityInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.EventInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NeuralInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentInfo;
+import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentSourceInfo;
 import org.openide.DialogDescriptor;
 import org.openide.DialogDisplayer;
 
@@ -60,16 +62,16 @@ public class ChannelPropertyEditor extends javax.swing.JPanel implements ActionL
         java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
+        eventPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         eventChannelLabel = new javax.swing.JTextField();
         eventChannelType = new javax.swing.JTextField();
-        eventSourceFilePath = new javax.swing.JTextField();
+        eventSourceFile = new javax.swing.JTextField();
         eventCSVDesc = new javax.swing.JTextField();
-        jPanel7 = new javax.swing.JPanel();
+        analogPanel = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -91,7 +93,7 @@ public class ChannelPropertyEditor extends javax.swing.JPanel implements ActionL
         jLabel23 = new javax.swing.JLabel();
         analogChannelLabel = new javax.swing.JTextField();
         analogChannelType = new javax.swing.JTextField();
-        analogSourceFilePath = new javax.swing.JTextField();
+        analogSourceFile = new javax.swing.JTextField();
         analogSamplingRate = new javax.swing.JTextField();
         analogMinVal = new javax.swing.JTextField();
         analogMaxVal = new javax.swing.JTextField();
@@ -108,6 +110,60 @@ public class ChannelPropertyEditor extends javax.swing.JPanel implements ActionL
         analogLowFreqOrder = new javax.swing.JTextField();
         analogLowFilterType = new javax.swing.JTextField();
         analogProbeInfo = new javax.swing.JTextField();
+        segmentPanel = new javax.swing.JPanel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        jLabel38 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        jLabel41 = new javax.swing.JLabel();
+        jLabel42 = new javax.swing.JLabel();
+        jLabel43 = new javax.swing.JLabel();
+        segmentChannelLabel = new javax.swing.JTextField();
+        segmentChannelType = new javax.swing.JTextField();
+        segmentSourceFile = new javax.swing.JTextField();
+        segmentSampleRate = new javax.swing.JTextField();
+        segmentUnit = new javax.swing.JTextField();
+        segmentMinVal = new javax.swing.JTextField();
+        segmentMaxVal = new javax.swing.JTextField();
+        segmentResolution = new javax.swing.JTextField();
+        segmentSubSampleShift = new javax.swing.JTextField();
+        segmentLocationX = new javax.swing.JTextField();
+        segmentLocationY = new javax.swing.JTextField();
+        segmentLocationZ = new javax.swing.JTextField();
+        segmentLocationUser = new javax.swing.JTextField();
+        segmentHighFreqCorner = new javax.swing.JTextField();
+        segmentHighFreqOrder = new javax.swing.JTextField();
+        segmentHighFilterType = new javax.swing.JTextField();
+        segmentLowFreqCorner = new javax.swing.JTextField();
+        segmentLowFreqOrder = new javax.swing.JTextField();
+        segmentLowFilterType = new javax.swing.JTextField();
+        segmentProbeInfo = new javax.swing.JTextField();
+        neuraleventPanel = new javax.swing.JPanel();
+        jLabel44 = new javax.swing.JLabel();
+        jLabel45 = new javax.swing.JLabel();
+        jLabel46 = new javax.swing.JLabel();
+        jLabel47 = new javax.swing.JLabel();
+        jLabel48 = new javax.swing.JLabel();
+        jLabel49 = new javax.swing.JLabel();
+        neuralChannelLabel = new javax.swing.JTextField();
+        neuralChannelType = new javax.swing.JTextField();
+        neuralSourceFile = new javax.swing.JTextField();
+        neuralSourceEntityID = new javax.swing.JTextField();
+        neuralSourceUnitID = new javax.swing.JTextField();
+        neuralProbeInfo = new javax.swing.JTextField();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -123,74 +179,59 @@ public class ChannelPropertyEditor extends javax.swing.JPanel implements ActionL
 
         eventChannelLabel.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.eventChannelLabel.text")); // NOI18N
         eventChannelLabel.setMinimumSize(new java.awt.Dimension(20, 19));
-        eventChannelLabel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                eventChannelLabelActionPerformed(evt);
-            }
-        });
 
         eventChannelType.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.eventChannelType.text")); // NOI18N
         eventChannelType.setEnabled(false);
         eventChannelType.setPreferredSize(new java.awt.Dimension(20, 19));
 
-        eventSourceFilePath.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.eventSourceFilePath.text")); // NOI18N
-        eventSourceFilePath.setEnabled(false);
-        eventSourceFilePath.setMinimumSize(new java.awt.Dimension(20, 19));
-        eventSourceFilePath.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                eventSourceFilePathActionPerformed(evt);
-            }
-        });
+        eventSourceFile.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.eventSourceFile.text")); // NOI18N
+        eventSourceFile.setEnabled(false);
+        eventSourceFile.setMinimumSize(new java.awt.Dimension(20, 19));
 
         eventCSVDesc.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.eventCSVDesc.text")); // NOI18N
-        eventCSVDesc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                eventCSVDescActionPerformed(evt);
-            }
-        });
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+        javax.swing.GroupLayout eventPanelLayout = new javax.swing.GroupLayout(eventPanel);
+        eventPanel.setLayout(eventPanelLayout);
+        eventPanelLayout.setHorizontalGroup(
+            eventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(eventPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(eventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(eventCSVDesc, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
-                    .addComponent(eventChannelLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
-                    .addComponent(eventChannelType, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
-                    .addComponent(eventSourceFilePath, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE))
+                .addGroup(eventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(eventCSVDesc, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
+                    .addComponent(eventChannelLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
+                    .addComponent(eventChannelType, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
+                    .addComponent(eventSourceFile, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+        eventPanelLayout.setVerticalGroup(
+            eventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(eventPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(eventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(eventChannelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(eventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(eventChannelType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(eventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(eventSourceFilePath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(eventSourceFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(eventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(eventCSVDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(385, Short.MAX_VALUE))
+                .addContainerGap(410, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel6, "card2");
+        jPanel1.add(eventPanel, "card2");
 
         jLabel10.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.jLabel10.text")); // NOI18N
 
@@ -235,13 +276,8 @@ public class ChannelPropertyEditor extends javax.swing.JPanel implements ActionL
         analogChannelType.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.analogChannelType.text")); // NOI18N
         analogChannelType.setEnabled(false);
 
-        analogSourceFilePath.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.analogSourceFilePath.text")); // NOI18N
-        analogSourceFilePath.setEnabled(false);
-        analogSourceFilePath.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                analogSourceFilePathActionPerformed(evt);
-            }
-        });
+        analogSourceFile.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.analogSourceFile.text")); // NOI18N
+        analogSourceFile.setEnabled(false);
 
         analogSamplingRate.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.analogSamplingRate.text")); // NOI18N
         analogSamplingRate.setInputVerifier(new DoubleInputVerifierForJTextField());
@@ -287,13 +323,13 @@ public class ChannelPropertyEditor extends javax.swing.JPanel implements ActionL
 
         analogProbeInfo.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.analogProbeInfo.text")); // NOI18N
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
+        javax.swing.GroupLayout analogPanelLayout = new javax.swing.GroupLayout(analogPanel);
+        analogPanel.setLayout(analogPanelLayout);
+        analogPanelLayout.setHorizontalGroup(
+            analogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(analogPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(analogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(jLabel4)
                     .addComponent(jLabel10)
@@ -314,7 +350,7 @@ public class ChannelPropertyEditor extends javax.swing.JPanel implements ActionL
                     .addComponent(jLabel22)
                     .addComponent(jLabel23))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(analogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(analogProbeInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
                     .addComponent(analogLowFilterType, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
                     .addComponent(analogLowFreqOrder, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
@@ -332,93 +368,410 @@ public class ChannelPropertyEditor extends javax.swing.JPanel implements ActionL
                     .addComponent(analogMinVal, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
                     .addComponent(analogChannelLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
                     .addComponent(analogChannelType, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
-                    .addComponent(analogSourceFilePath, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                    .addComponent(analogSourceFile, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
                     .addComponent(analogSamplingRate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
+        analogPanelLayout.setVerticalGroup(
+            analogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(analogPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(analogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(analogChannelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(analogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(analogChannelType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(analogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(analogSourceFilePath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(analogSourceFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(analogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(analogSamplingRate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(analogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(analogMinVal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(analogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(analogMaxVal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(analogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(analogUnits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(analogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(analogResolution, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(analogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(analogLocationX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(analogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
                     .addComponent(analogLocationY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(analogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(analogLocationZ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(analogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16)
                     .addComponent(analogLocationUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(analogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
                     .addComponent(analogHighFreqCorner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(analogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18)
                     .addComponent(analogHighFreqOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(analogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
                     .addComponent(analogHighFilterType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(analogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20)
                     .addComponent(analogLowFreqCorner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(analogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21)
                     .addComponent(analogLowFreqOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(analogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel22)
                     .addComponent(analogLowFilterType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(analogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel23)
                     .addComponent(analogProbeInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(35, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(analogPanel, "card3");
+
+        jLabel24.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.jLabel24.text")); // NOI18N
+
+        jLabel25.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.jLabel25.text")); // NOI18N
+
+        jLabel26.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.jLabel26.text")); // NOI18N
+
+        jLabel27.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.jLabel27.text")); // NOI18N
+
+        jLabel28.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.jLabel28.text")); // NOI18N
+
+        jLabel29.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.jLabel29.text")); // NOI18N
+
+        jLabel30.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.jLabel30.text")); // NOI18N
+
+        jLabel31.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.jLabel31.text")); // NOI18N
+
+        jLabel32.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.jLabel32.text")); // NOI18N
+
+        jLabel33.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.jLabel33.text")); // NOI18N
+
+        jLabel34.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.jLabel34.text")); // NOI18N
+
+        jLabel35.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.jLabel35.text")); // NOI18N
+
+        jLabel36.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.jLabel36.text")); // NOI18N
+
+        jLabel37.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.jLabel37.text")); // NOI18N
+
+        jLabel38.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.jLabel38.text")); // NOI18N
+
+        jLabel39.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.jLabel39.text")); // NOI18N
+
+        jLabel40.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.jLabel40.text")); // NOI18N
+
+        jLabel41.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.jLabel41.text")); // NOI18N
+
+        jLabel42.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.jLabel42.text")); // NOI18N
+
+        jLabel43.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.jLabel43.text")); // NOI18N
+
+        segmentChannelLabel.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.segmentChannelLabel.text")); // NOI18N
+
+        segmentChannelType.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.segmentChannelType.text")); // NOI18N
+        segmentChannelType.setEnabled(false);
+
+        segmentSourceFile.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.segmentSourceFile.text")); // NOI18N
+        segmentSourceFile.setEnabled(false);
+
+        segmentSampleRate.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.segmentSampleRate.text")); // NOI18N
+        segmentSampleRate.setInputVerifier(new DoubleInputVerifierForJTextField());
+
+        segmentUnit.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.segmentUnit.text")); // NOI18N
+
+        segmentMinVal.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.segmentMinVal.text")); // NOI18N
+        segmentMinVal.setInputVerifier(new DoubleInputVerifierForJTextField());
+
+        segmentMaxVal.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.segmentMaxVal.text")); // NOI18N
+        segmentMaxVal.setInputVerifier(new DoubleInputVerifierForJTextField());
+
+        segmentResolution.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.segmentResolution.text")); // NOI18N
+        segmentResolution.setInputVerifier(new DoubleInputVerifierForJTextField());
+
+        segmentSubSampleShift.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.segmentSubSampleShift.text")); // NOI18N
+        segmentSubSampleShift.setInputVerifier(new DoubleInputVerifierForJTextField());
+
+        segmentLocationX.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.segmentLocationX.text")); // NOI18N
+        segmentLocationX.setInputVerifier(new DoubleInputVerifierForJTextField());
+
+        segmentLocationY.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.segmentLocationY.text")); // NOI18N
+        segmentLocationY.setInputVerifier(new DoubleInputVerifierForJTextField());
+
+        segmentLocationZ.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.segmentLocationZ.text")); // NOI18N
+        segmentLocationZ.setInputVerifier(new DoubleInputVerifierForJTextField());
+
+        segmentLocationUser.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.segmentLocationUser.text")); // NOI18N
+        segmentLocationUser.setInputVerifier(new DoubleInputVerifierForJTextField());
+
+        segmentHighFreqCorner.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.segmentHighFreqCorner.text")); // NOI18N
+        segmentHighFreqCorner.setInputVerifier(new DoubleInputVerifierForJTextField());
+
+        segmentHighFreqOrder.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.segmentHighFreqOrder.text")); // NOI18N
+        segmentHighFreqOrder.setInputVerifier(new UnsignedIntegerInputVerifierForJTextField());
+
+        segmentHighFilterType.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.segmentHighFilterType.text")); // NOI18N
+
+        segmentLowFreqCorner.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.segmentLowFreqCorner.text")); // NOI18N
+        segmentLowFreqCorner.setInputVerifier(new DoubleInputVerifierForJTextField());
+
+        segmentLowFreqOrder.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.segmentLowFreqOrder.text")); // NOI18N
+        segmentLowFreqOrder.setInputVerifier(new UnsignedIntegerInputVerifierForJTextField());
+
+        segmentLowFilterType.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.segmentLowFilterType.text")); // NOI18N
+
+        segmentProbeInfo.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.segmentProbeInfo.text")); // NOI18N
+
+        javax.swing.GroupLayout segmentPanelLayout = new javax.swing.GroupLayout(segmentPanel);
+        segmentPanel.setLayout(segmentPanelLayout);
+        segmentPanelLayout.setHorizontalGroup(
+            segmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(segmentPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(segmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel24)
+                    .addComponent(jLabel25)
+                    .addComponent(jLabel26)
+                    .addComponent(jLabel27)
+                    .addComponent(jLabel28)
+                    .addComponent(jLabel29)
+                    .addComponent(jLabel30)
+                    .addComponent(jLabel31)
+                    .addComponent(jLabel32)
+                    .addComponent(jLabel33)
+                    .addComponent(jLabel34)
+                    .addComponent(jLabel35)
+                    .addComponent(jLabel36)
+                    .addComponent(jLabel37)
+                    .addComponent(jLabel38)
+                    .addComponent(jLabel39)
+                    .addComponent(jLabel40)
+                    .addComponent(jLabel41)
+                    .addComponent(jLabel42)
+                    .addComponent(jLabel43))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(segmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(segmentProbeInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                    .addComponent(segmentLowFilterType, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                    .addComponent(segmentLowFreqOrder, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                    .addComponent(segmentLowFreqCorner, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                    .addComponent(segmentHighFilterType, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                    .addComponent(segmentHighFreqOrder, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                    .addComponent(segmentLocationUser, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                    .addComponent(segmentLocationZ, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                    .addComponent(segmentLocationY, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                    .addComponent(segmentLocationX, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                    .addComponent(segmentSubSampleShift, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                    .addComponent(segmentResolution, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                    .addComponent(segmentMaxVal, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                    .addComponent(segmentMinVal, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                    .addComponent(segmentUnit, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                    .addComponent(segmentSampleRate, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                    .addComponent(segmentSourceFile, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                    .addComponent(segmentChannelType, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                    .addComponent(segmentChannelLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                    .addComponent(segmentHighFreqCorner, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        segmentPanelLayout.setVerticalGroup(
+            segmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(segmentPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(segmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24)
+                    .addComponent(segmentChannelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(segmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel25)
+                    .addComponent(segmentChannelType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(segmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel26)
+                    .addComponent(segmentSourceFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(segmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel27)
+                    .addComponent(segmentSampleRate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(segmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel28)
+                    .addComponent(segmentUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(segmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel29)
+                    .addComponent(segmentMinVal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(segmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel30)
+                    .addComponent(segmentMaxVal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(segmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel31)
+                    .addComponent(segmentResolution, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(segmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel32)
+                    .addComponent(segmentSubSampleShift, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(segmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel33)
+                    .addComponent(segmentLocationX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(segmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel34)
+                    .addComponent(segmentLocationY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(segmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel35)
+                    .addComponent(segmentLocationZ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(segmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel36)
+                    .addComponent(segmentLocationUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(segmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel37)
+                    .addComponent(segmentHighFreqCorner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(segmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel38)
+                    .addComponent(segmentHighFreqOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(segmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel39)
+                    .addComponent(segmentHighFilterType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(segmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel40)
+                    .addComponent(segmentLowFreqCorner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(segmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel41)
+                    .addComponent(segmentLowFreqOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(segmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel42)
+                    .addComponent(segmentLowFilterType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(segmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel43)
+                    .addComponent(segmentProbeInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel7, "card3");
+        jPanel1.add(segmentPanel, "card4");
+
+        jLabel44.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.jLabel44.text")); // NOI18N
+
+        jLabel45.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.jLabel45.text")); // NOI18N
+
+        jLabel46.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.jLabel46.text")); // NOI18N
+
+        jLabel47.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.jLabel47.text")); // NOI18N
+
+        jLabel48.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.jLabel48.text")); // NOI18N
+
+        jLabel49.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.jLabel49.text")); // NOI18N
+
+        neuralChannelLabel.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.neuralChannelLabel.text")); // NOI18N
+
+        neuralChannelType.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.neuralChannelType.text")); // NOI18N
+        neuralChannelType.setEnabled(false);
+
+        neuralSourceFile.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.neuralSourceFile.text")); // NOI18N
+        neuralSourceFile.setEnabled(false);
+
+        neuralSourceEntityID.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.neuralSourceEntityID.text")); // NOI18N
+        neuralSourceEntityID.setInputVerifier(new UnsignedIntegerInputVerifierForJTextField());
+
+        neuralSourceUnitID.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.neuralSourceUnitID.text")); // NOI18N
+        neuralSourceUnitID.setInputVerifier(new UnsignedIntegerInputVerifierForJTextField());
+
+        neuralProbeInfo.setText(org.openide.util.NbBundle.getMessage(ChannelPropertyEditor.class, "ChannelPropertyEditor.neuralProbeInfo.text")); // NOI18N
+
+        javax.swing.GroupLayout neuraleventPanelLayout = new javax.swing.GroupLayout(neuraleventPanel);
+        neuraleventPanel.setLayout(neuraleventPanelLayout);
+        neuraleventPanelLayout.setHorizontalGroup(
+            neuraleventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(neuraleventPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(neuraleventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel44)
+                    .addComponent(jLabel45)
+                    .addComponent(jLabel46)
+                    .addComponent(jLabel47)
+                    .addComponent(jLabel48)
+                    .addComponent(jLabel49))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(neuraleventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(neuralProbeInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
+                    .addComponent(neuralSourceUnitID, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
+                    .addComponent(neuralSourceEntityID, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
+                    .addComponent(neuralSourceFile, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
+                    .addComponent(neuralChannelType, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
+                    .addComponent(neuralChannelLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        neuraleventPanelLayout.setVerticalGroup(
+            neuraleventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(neuraleventPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(neuraleventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel44)
+                    .addComponent(neuralChannelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(neuraleventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel45)
+                    .addComponent(neuralChannelType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(neuraleventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel46)
+                    .addComponent(neuralSourceFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(neuraleventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel47)
+                    .addComponent(neuralSourceEntityID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(neuraleventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel48)
+                    .addComponent(neuralSourceUnitID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(neuraleventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel49)
+                    .addComponent(neuralProbeInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(360, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(neuraleventPanel, "card5");
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -429,21 +782,6 @@ public class ChannelPropertyEditor extends javax.swing.JPanel implements ActionL
         add(jPanel1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void eventChannelLabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eventChannelLabelActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_eventChannelLabelActionPerformed
-
-    private void eventCSVDescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eventCSVDescActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_eventCSVDescActionPerformed
-
-    private void eventSourceFilePathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eventSourceFilePathActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_eventSourceFilePathActionPerformed
-
-    private void analogSourceFilePathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_analogSourceFilePathActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_analogSourceFilePathActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField analogChannelLabel;
     private javax.swing.JTextField analogChannelType;
@@ -459,15 +797,17 @@ public class ChannelPropertyEditor extends javax.swing.JPanel implements ActionL
     private javax.swing.JTextField analogLowFreqOrder;
     private javax.swing.JTextField analogMaxVal;
     private javax.swing.JTextField analogMinVal;
+    private javax.swing.JPanel analogPanel;
     private javax.swing.JTextField analogProbeInfo;
     private javax.swing.JTextField analogResolution;
     private javax.swing.JTextField analogSamplingRate;
-    private javax.swing.JTextField analogSourceFilePath;
+    private javax.swing.JTextField analogSourceFile;
     private javax.swing.JTextField analogUnits;
     private javax.swing.JTextField eventCSVDesc;
     private javax.swing.JTextField eventChannelLabel;
     private javax.swing.JTextField eventChannelType;
-    private javax.swing.JTextField eventSourceFilePath;
+    private javax.swing.JPanel eventPanel;
+    private javax.swing.JTextField eventSourceFile;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -484,21 +824,72 @@ public class ChannelPropertyEditor extends javax.swing.JPanel implements ActionL
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
+    private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
+    private javax.swing.JTextField neuralChannelLabel;
+    private javax.swing.JTextField neuralChannelType;
+    private javax.swing.JTextField neuralProbeInfo;
+    private javax.swing.JTextField neuralSourceEntityID;
+    private javax.swing.JTextField neuralSourceFile;
+    private javax.swing.JTextField neuralSourceUnitID;
+    private javax.swing.JPanel neuraleventPanel;
+    private javax.swing.JTextField segmentChannelLabel;
+    private javax.swing.JTextField segmentChannelType;
+    private javax.swing.JTextField segmentHighFilterType;
+    private javax.swing.JTextField segmentHighFreqCorner;
+    private javax.swing.JTextField segmentHighFreqOrder;
+    private javax.swing.JTextField segmentLocationUser;
+    private javax.swing.JTextField segmentLocationX;
+    private javax.swing.JTextField segmentLocationY;
+    private javax.swing.JTextField segmentLocationZ;
+    private javax.swing.JTextField segmentLowFilterType;
+    private javax.swing.JTextField segmentLowFreqCorner;
+    private javax.swing.JTextField segmentLowFreqOrder;
+    private javax.swing.JTextField segmentMaxVal;
+    private javax.swing.JTextField segmentMinVal;
+    private javax.swing.JPanel segmentPanel;
+    private javax.swing.JTextField segmentProbeInfo;
+    private javax.swing.JTextField segmentResolution;
+    private javax.swing.JTextField segmentSampleRate;
+    private javax.swing.JTextField segmentSourceFile;
+    private javax.swing.JTextField segmentSubSampleShift;
+    private javax.swing.JTextField segmentUnit;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // OKボタン、キャンセルボタン処理。
 
         if (dialogDescriptor.getValue() == DialogDescriptor.OK_OPTION) {
             // OK : overwrite the channel.
@@ -537,7 +928,7 @@ public class ChannelPropertyEditor extends javax.swing.JPanel implements ActionL
             layout.show(jPanel1, "card2");
             eventChannelLabel.setText(channel.getLabel());
             eventChannelType.setText(channel.getChannelType().toString());
-            eventSourceFilePath.setText(channel.getSourceFilePath());
+            eventSourceFile.setText(channel.getSourceFilePath());
             eventCSVDesc.setText(ei.getCsvDesc());
 
         }
@@ -545,11 +936,10 @@ public class ChannelPropertyEditor extends javax.swing.JPanel implements ActionL
             // Analog Entity Header.
             AnalogInfo ai = (AnalogInfo) (channel.getEntity());
 
-            // UC.
             layout.show(jPanel1, "card3");
             analogChannelLabel.setText(channel.getLabel());
             analogChannelType.setText(channel.getChannelType().toString());
-            analogSourceFilePath.setText(channel.getSourceFilePath());
+            analogSourceFile.setText(channel.getSourceFilePath());
             analogSamplingRate.setText(((Double) ai.getSampleRate()).toString());
             analogMinVal.setText(((Double) ai.getMinVal()).toString());
             analogMaxVal.setText(((Double) ai.getMaxVal()).toString());
@@ -570,14 +960,44 @@ public class ChannelPropertyEditor extends javax.swing.JPanel implements ActionL
         }
         if (channel.getChannelType().equals(ChannelType.TS_AND_VAL_AND_ID)) {
             // Segment Entity Header.
-            SegmentInfo ai = (SegmentInfo) (channel.getEntity());
+            SegmentInfo si = (SegmentInfo) (channel.getEntity());
+            SegmentSourceInfo ssi = si.getSegSourceInfos().get(0);
 
-            // UC.
+            layout.show(jPanel1, "card4");
+            segmentChannelLabel.setText(channel.getLabel());
+            segmentChannelType.setText(channel.getChannelType().toString());
+            segmentSourceFile.setText(channel.getSourceFilePath());
+            segmentSampleRate.setText(((Double) si.getSampleRate()).toString());
+            segmentUnit.setText(si.getUnits());
+            segmentMinVal.setText(((Double) ssi.getMinVal()).toString());
+            segmentMaxVal.setText(((Double) ssi.getMaxVal()).toString());
+            segmentResolution.setText(((Double) ssi.getResolution()).toString());
+            segmentSubSampleShift.setText(((Double) ssi.getSubSampleShift()).toString());
+            segmentLocationX.setText(((Double) ssi.getLocationX()).toString());
+            segmentLocationY.setText(((Double) ssi.getLocationY()).toString());
+            segmentLocationZ.setText(((Double) ssi.getLocationZ()).toString());
+            segmentLocationUser.setText(((Double) ssi.getLocationUser()).toString());
+            segmentHighFreqCorner.setText(((Double) ssi.getHighFreqCorner()).toString());
+            segmentHighFreqOrder.setText(((Long) ssi.getHighFreqOrder()).toString());
+            segmentHighFilterType.setText(ssi.getHighFilterType());
+            segmentLowFreqCorner.setText(((Double) ssi.getLowFreqCorner()).toString());
+            segmentLowFreqOrder.setText(((Long) ssi.getLowFreqOrder()).toString());
+            segmentLowFilterType.setText(ssi.getLowFilterType());
+            segmentProbeInfo.setText(ssi.getProbeInfo());
+
         }
         if (channel.getChannelType().equals(ChannelType.TIMESTAMP)) {
             // Neural Event Entity Header.
-            NeuralInfo ai = (NeuralInfo) (channel.getEntity());
-            // UC.
+            NeuralInfo ni = (NeuralInfo) (channel.getEntity());
+
+            layout.show(jPanel1, "card5");
+            neuralChannelLabel.setText(channel.getLabel());
+            neuralChannelType.setText(channel.getChannelType().toString());
+            neuralSourceFile.setText(channel.getSourceFilePath());
+            neuralSourceEntityID.setText(((Long) ni.getSourceEntityID()).toString());
+            neuralSourceUnitID.setText(((Long) ni.getSourceUnitID()).toString());
+            neuralProbeInfo.setText(ni.getProbeInfo());
+
         }
 
     }
@@ -610,7 +1030,7 @@ public class ChannelPropertyEditor extends javax.swing.JPanel implements ActionL
             EventInfo evi = (EventInfo) edittedEntity;
             evi.setCsvDesc(eventCSVDesc.getText());
 
-            this.channel.setEntity((Entity)evi);
+            this.channel.setEntity((Entity) evi);
 
         } else if (this.channel.getChannelType() == ChannelType.TS_AND_VAL) {
             // ANALOG Entity.
@@ -658,13 +1078,87 @@ public class ChannelPropertyEditor extends javax.swing.JPanel implements ActionL
             ai.setLowFilterType(analogLowFilterType.getText());
             ai.setProbeInfo(analogProbeInfo.getText());
 
-            this.channel.setEntity((Entity)ai);
-
+            this.channel.setEntity((Entity) ai);
 
         } else if (this.channel.getChannelType() == ChannelType.TS_AND_VAL_AND_ID) {
             // SEGMENT Entity.
+            
+            // Check Values.
+            checker &= isDouble(segmentSampleRate.getText());
+            checker &= isDouble(segmentMinVal.getText());
+            checker &= isDouble(segmentMaxVal.getText());
+            checker &= isDouble(segmentResolution.getText());
+            checker &= isDouble(segmentSubSampleShift.getText());
+            checker &= isDouble(segmentLocationX.getText());
+            checker &= isDouble(segmentLocationY.getText());
+            checker &= isDouble(segmentLocationZ.getText());
+            checker &= isDouble(segmentLocationUser.getText());
+            checker &= isDouble(segmentHighFreqCorner.getText());
+            checker &= isUnsignedInteger(segmentHighFreqOrder.getText());
+            checker &= isDouble(segmentLowFreqCorner.getText());
+            checker &= isUnsignedInteger(segmentLowFreqOrder.getText());
+            if (!checker) {
+                return checker;
+            }
+
+            // Set Values.
+            this.channel.setLabel(segmentChannelLabel.getText());
+
+            Entity edittedEntity = this.channel.getEntity();
+            EntityInfo ei = edittedEntity.getEntityInfo();
+            ei.setEntityLabel(segmentChannelLabel.getText());
+            edittedEntity.setEntityInfo(ei);
+
+            SegmentInfo si = (SegmentInfo) edittedEntity;
+            si.setSampleRate(Double.parseDouble(segmentSampleRate.getText()));
+            si.setUnits(segmentUnit.getText());
+            ArrayList<SegmentSourceInfo> alssi = si.getSegSourceInfos();
+            SegmentSourceInfo ssi = alssi.get(0);
+            ssi.setMinVal(Double.parseDouble(segmentMinVal.getText()));
+            ssi.setMaxVal(Double.parseDouble(segmentMaxVal.getText()));
+            ssi.setResolution(Double.parseDouble(segmentResolution.getText()));
+            ssi.setSubSampleShift(Double.parseDouble(segmentSubSampleShift.getText()));
+            ssi.setLocationX(Double.parseDouble(segmentLocationX.getText()));
+            ssi.setLocationY(Double.parseDouble(segmentLocationY.getText()));
+            ssi.setLocationZ(Double.parseDouble(segmentLocationZ.getText()));
+            ssi.setLocationUser(Double.parseDouble(segmentLocationUser.getText()));
+            ssi.setHighFreqCorner(Double.parseDouble(segmentHighFreqCorner.getText()));
+            ssi.setHighFreqOrder(Long.parseLong(segmentHighFreqOrder.getText()));
+            ssi.setHighFilterType(segmentHighFilterType.getText());
+            ssi.setLowFreqCorner(Double.parseDouble(segmentLowFreqCorner.getText()));
+            ssi.setLowFreqOrder(Long.parseLong(segmentLowFreqOrder.getText()));
+            ssi.setLowFilterType(segmentLowFilterType.getText());
+            ssi.setProbeInfo(segmentProbeInfo.getText());
+            alssi.set(0, ssi);
+            si.setSegSourceInfos(alssi);
+
+            this.channel.setEntity((Entity) si);
+
         } else if (this.channel.getChannelType() == ChannelType.TIMESTAMP) {
             // NEURALEVENT Entity.
+            
+            // Check Values.
+            checker &= isUnsignedInteger(neuralSourceEntityID.getText());
+            checker &= isUnsignedInteger(neuralSourceUnitID.getText());
+            if (!checker) {
+                return checker;
+            }
+
+            // Set Values.
+            this.channel.setLabel(neuralChannelLabel.getText());
+
+            Entity edittedEntity = this.channel.getEntity();
+            EntityInfo ei = edittedEntity.getEntityInfo();
+            ei.setEntityLabel(neuralChannelLabel.getText());
+            edittedEntity.setEntityInfo(ei);
+
+            NeuralInfo ni = (NeuralInfo) edittedEntity;
+            ni.setSourceEntityID(Long.parseLong(neuralSourceEntityID.getText()));
+            ni.setSourceUnitID(Long.parseLong(neuralSourceUnitID.getText()));
+            ni.setProbeInfo(neuralProbeInfo.getText());
+
+            this.channel.setEntity((Entity) ni);
+
         } else {
             // UNKNOWN
             checker = false;

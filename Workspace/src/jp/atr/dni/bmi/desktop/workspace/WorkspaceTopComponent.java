@@ -174,6 +174,7 @@ public final class WorkspaceTopComponent extends TopComponent implements Propert
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // Delete
         // Remove elements.
         int selectedTabIndex = jTabbedPane1.getSelectedIndex();
         switch (selectedTabIndex) {
@@ -208,12 +209,14 @@ public final class WorkspaceTopComponent extends TopComponent implements Propert
     }//GEN-LAST:event_jButton1ActionPerformed
     
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // Export
         // Open wizard.
         cnwa.actionPerformed(evt);
         
     }//GEN-LAST:event_jButton2ActionPerformed
     
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // Import
         // Select the file.
         // Using filechooser.
         GeneralFileInfo gfi = null;
@@ -242,6 +245,7 @@ public final class WorkspaceTopComponent extends TopComponent implements Propert
     }//GEN-LAST:event_jButton3ActionPerformed
     
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // Show Properties
         // Show properties of the first one.
         int selectedTabIndex = jTabbedPane1.getSelectedIndex();
         switch (selectedTabIndex) {
