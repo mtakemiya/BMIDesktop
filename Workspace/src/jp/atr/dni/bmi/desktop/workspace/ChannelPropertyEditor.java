@@ -20,7 +20,6 @@ import jp.atr.dni.bmi.desktop.model.Channel;
 import jp.atr.dni.bmi.desktop.model.ChannelType;
 import jp.atr.dni.bmi.desktop.model.Workspace;
 import jp.atr.dni.bmi.desktop.model.utils.DoubleInputVerifierForJTextField;
-import jp.atr.dni.bmi.desktop.model.utils.IntegerInputVerifierForJTextField;
 import jp.atr.dni.bmi.desktop.model.utils.UnsignedIntegerInputVerifierForJTextField;
 import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.Entity;
@@ -781,7 +780,6 @@ public class ChannelPropertyEditor extends javax.swing.JPanel implements ActionL
         gridBagConstraints.weighty = 1.0;
         add(jPanel1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField analogChannelLabel;
     private javax.swing.JTextField analogChannelType;
@@ -1024,7 +1022,7 @@ public class ChannelPropertyEditor extends javax.swing.JPanel implements ActionL
 
             Entity edittedEntity = this.channel.getEntity();
             EntityInfo ei = edittedEntity.getEntityInfo();
-            ei.setEntityLabel(analogChannelLabel.getText());
+            ei.setEntityLabel(eventChannelLabel.getText());
             edittedEntity.setEntityInfo(ei);
 
             EventInfo evi = (EventInfo) edittedEntity;
@@ -1082,7 +1080,7 @@ public class ChannelPropertyEditor extends javax.swing.JPanel implements ActionL
 
         } else if (this.channel.getChannelType() == ChannelType.TS_AND_VAL_AND_ID) {
             // SEGMENT Entity.
-            
+
             // Check Values.
             checker &= isDouble(segmentSampleRate.getText());
             checker &= isDouble(segmentMinVal.getText());
@@ -1136,7 +1134,7 @@ public class ChannelPropertyEditor extends javax.swing.JPanel implements ActionL
 
         } else if (this.channel.getChannelType() == ChannelType.TIMESTAMP) {
             // NEURALEVENT Entity.
-            
+
             // Check Values.
             checker &= isUnsignedInteger(neuralSourceEntityID.getText());
             checker &= isUnsignedInteger(neuralSourceUnitID.getText());
