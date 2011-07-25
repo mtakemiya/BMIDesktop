@@ -11,8 +11,9 @@ import java.awt.event.ActionListener;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import javax.swing.JComponent;
-import jp.atr.dni.bmi.desktop.model.Channel;
-import jp.atr.dni.bmi.desktop.neuroshareutils.Nsa_FileInfo;
+import jp.atr.dni.bmi.desktop.model.api.Channel;
+
+import jp.atr.dni.bmi.desktop.neuroshareutils.nsa.NSAFileInfo;
 import org.openide.DialogDisplayer;
 import org.openide.WizardDescriptor;
 import org.openide.util.HelpCtx;
@@ -60,7 +61,7 @@ public final class CreateNewFileWizardAction implements ActionListener {
 //                            + " " + timeStampResolution + " " + timeSpan + " " + applicationName + " " + year + " " + month + " " + day + " " + hour + " " + min + " " + sec + " " + milliSec + " " + comments + " chlength : " + channels.size()));
 
                     // NeuroShareConverter ( with using Parameters and Channels).
-                    Nsa_FileInfo nsaFileInfo = new Nsa_FileInfo(fileType, timeStampResolution, timeSpan, applicationName, year, month, 0, day, hour, min, sec, milliSec, comments);
+                    NSAFileInfo nsaFileInfo = new NSAFileInfo(fileType, timeStampResolution, timeSpan, applicationName, year, month, 0, day, hour, min, sec, milliSec, comments);
                     CreateNewNeuroshareFile cnnf = new CreateNewNeuroshareFile();
                     cnnf.createFile(filePath, nsaFileInfo, channels);
 

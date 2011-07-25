@@ -5,21 +5,16 @@
 package jp.atr.dni.bmi.desktop.model;
 
 import java.io.File;
-import java.util.Collections;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NeuroshareFile;
 
 /**
  *
- * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Computational Neuroscience Labs, Decoding Group
  * @version 2011/04/22
  */
 public class GeneralFileInfo {
    
-   private List listeners = Collections.synchronizedList(new LinkedList());
-
    /**
     *
     * @param filePath

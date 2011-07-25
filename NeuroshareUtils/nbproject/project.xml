@@ -8,6 +8,9 @@
             <module-dependencies/>
             <public-packages>
                 <package>jp.atr.dni.bmi.desktop.neuroshareutils</package>
+                <package>jp.atr.dni.bmi.desktop.neuroshareutils.nsa</package>
+                <package>jp.atr.dni.bmi.desktop.neuroshareutils.nsn</package>
+                <package>jp.atr.dni.bmi.desktop.neuroshareutils.readers</package>
             </public-packages>
             <class-path-extension>
                 <runtime-relative-path>ext/poi-scratchpad-3.7-20101029.jar</runtime-relative-path>

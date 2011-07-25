@@ -10,24 +10,24 @@ package jp.atr.dni.bmi.desktop.neuroshareutils;
  */
 public enum EventType {
 
-    /**
-     *
-     */
-    EVENT_TEXT,
-    /**
-     * 
-     */
-    EVENT_CSV,
-    /**
-     *
-     */
-    EVENT_BYTE,
-    /**
-     * 
-     */
-    EVENT_WORD,
-    /**
-     *
-     */
-    EVENT_DWORD;
+   /**
+    *
+    */
+   EVENT_TEXT,
+   /**
+    * 
+    */
+   EVENT_CSV,
+   /**
+    *
+    */
+   EVENT_BYTE,
+   /**
+    * 
+    */
+   EVENT_WORD,
+   /**
+    *
+    */
+   EVENT_DWORD;
 }

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /*
  * ChannelSelector.java
@@ -13,44 +9,53 @@ package jp.atr.dni.bmi.desktop.explorereditor;
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import jp.atr.dni.bmi.desktop.model.Channel;
-import jp.atr.dni.bmi.desktop.model.ChannelType;
+
 import jp.atr.dni.bmi.desktop.model.FileType;
 import jp.atr.dni.bmi.desktop.model.GeneralFileInfo;
-import jp.atr.dni.bmi.desktop.model.Workspace;
-import jp.atr.dni.bmi.desktop.neuroshareutils.CsvReader;
+import jp.atr.dni.bmi.desktop.model.api.data.APIList;
+import jp.atr.dni.bmi.desktop.model.api.AnalogChannel;
+import jp.atr.dni.bmi.desktop.model.api.Channel;
+import jp.atr.dni.bmi.desktop.model.api.ChannelType;
+import jp.atr.dni.bmi.desktop.model.api.EventChannel;
+import jp.atr.dni.bmi.desktop.model.api.NeuralSpikeChannel;
+import jp.atr.dni.bmi.desktop.model.api.SegmentChannel;
+import jp.atr.dni.bmi.desktop.model.api.Workspace;
+import jp.atr.dni.bmi.desktop.model.api.data.NSNSegmentSource;
+import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogInfo;
+
+import jp.atr.dni.bmi.desktop.neuroshareutils.CSVReader;
 import jp.atr.dni.bmi.desktop.neuroshareutils.Entity;
-import jp.atr.dni.bmi.desktop.neuroshareutils.NSReader;
+import jp.atr.dni.bmi.desktop.neuroshareutils.EntityType;
+import jp.atr.dni.bmi.desktop.neuroshareutils.EventInfo;
+import jp.atr.dni.bmi.desktop.neuroshareutils.NeuralInfo;
+import jp.atr.dni.bmi.desktop.neuroshareutils.readers.NSReader;
 import jp.atr.dni.bmi.desktop.neuroshareutils.NeuroshareFile;
-import jp.atr.dni.bmi.desktop.neuroshareutils.NevReader;
-import jp.atr.dni.bmi.desktop.neuroshareutils.NsxReader;
-import jp.atr.dni.bmi.desktop.neuroshareutils.PlxReader;
+import jp.atr.dni.bmi.desktop.neuroshareutils.readers.NevReader;
+import jp.atr.dni.bmi.desktop.neuroshareutils.readers.NSXReader;
+import jp.atr.dni.bmi.desktop.neuroshareutils.readers.PlxReader;
 import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentInfo;
-import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentSourceInfo;
-import jp.atr.dni.bmi.desktop.workingfileutils.WorkingFileUtils;
 import org.openide.DialogDescriptor;
 import org.openide.DialogDisplayer;
-import org.openide.util.Exceptions;
+import org.openide.util.Lookup;
 
 /**
  *
- * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Computational Neuroscience Labs, Decoding Group
  * @version 2011/04/22
  */
 public class ChannelSelector extends javax.swing.JPanel implements ActionListener {
 
    // Define Lists.
-   DefaultListModel unAvailableChannelList;
-   DefaultListModel availableChannelList;
-   DefaultListModel selectedChannelList;
-   DialogDescriptor dialogDescriptor;
-   Dialog dialog;
-   GeneralFileInfo generalFileInfo;
-   boolean dataFileFlag = false;
+   private DefaultListModel unAvailableChannelList;
+   private DefaultListModel availableChannelList;
+   private DefaultListModel selectedChannelList;
+   private DialogDescriptor dialogDescriptor;
+   private Dialog dialog;
+   private GeneralFileInfo generalFileInfo;
+   private boolean dataFileFlag = false;
 
    /** Creates new form ChannelSelector
     * @param gfi
@@ -358,12 +363,12 @@ public class ChannelSelector extends javax.swing.JPanel implements ActionListene
        }
 
        ArrayList<Channel> tmpChannelList = new ArrayList<Channel>();
-       for (int ii = 0; ii < this.availableChannelList.getSize(); ii++) {
-          tmpChannelList.add((Channel) this.availableChannelList.getElementAt(ii));
+       for (int i = 0; i < this.availableChannelList.getSize(); i++) {
+          tmpChannelList.add((Channel) this.availableChannelList.getElementAt(i));
        }
 
-       for (int jj = 0; jj < tmpChannelList.size(); jj++) {
-          this.moveChannelToSelected(tmpChannelList.get(jj));
+       for (int j = 0; j < tmpChannelList.size(); j++) {
+          this.moveChannelToSelected(tmpChannelList.get(j));
        }
 
        jList1.repaint();
@@ -378,8 +383,8 @@ public class ChannelSelector extends javax.swing.JPanel implements ActionListene
           return;
        }
 
-       for (int ii = 0; ii < chosen.length; ii++) {
-          Channel ch = (Channel) chosen[ii];
+       for (int i = 0; i < chosen.length; i++) {
+          Channel ch = (Channel) chosen[i];
           this.moveChannelToSelected(ch);
        }
 
@@ -395,8 +400,8 @@ public class ChannelSelector extends javax.swing.JPanel implements ActionListene
           return;
        }
 
-       for (int ii = 0; ii < chosen.length; ii++) {
-          Channel ch = (Channel) chosen[ii];
+       for (int i = 0; i < chosen.length; i++) {
+          Channel ch = (Channel) chosen[i];
           this.moveChannelToUnSelected(ch);
        }
 
@@ -411,12 +416,12 @@ public class ChannelSelector extends javax.swing.JPanel implements ActionListene
        }
 
        ArrayList<Channel> tmpChannelList = new ArrayList<Channel>();
-       for (int ii = 0; ii < this.selectedChannelList.getSize(); ii++) {
-          tmpChannelList.add((Channel) this.selectedChannelList.getElementAt(ii));
+       for (int i = 0; i < this.selectedChannelList.getSize(); i++) {
+          tmpChannelList.add((Channel) this.selectedChannelList.getElementAt(i));
        }
 
-       for (int jj = 0; jj < tmpChannelList.size(); jj++) {
-          this.moveChannelToUnSelected(tmpChannelList.get(jj));
+       for (int j = 0; j < tmpChannelList.size(); j++) {
+          this.moveChannelToUnSelected(tmpChannelList.get(j));
        }
 
        jList1.repaint();
@@ -461,49 +466,30 @@ public class ChannelSelector extends javax.swing.JPanel implements ActionListene
 
       if (e.getSource() == DialogDescriptor.OK_OPTION) {
          // Add Channels to the workspace.
-         for (int ii = 0; ii < this.selectedChannelList.size(); ii++) {
-            Object obj = this.selectedChannelList.get(ii);
+         for (int i = 0; i < this.selectedChannelList.size(); i++) {
+            Object obj = this.selectedChannelList.get(i);
             Channel ch = (Channel) obj;
 
-            // Delete multiple SegSourceInfos.(i.e. Application remains only first SegSourceInfo.)
-            if (ch.getChannelType() == ChannelType.TS_AND_VAL_AND_ID) {//TI
+            // Delete multiple SegSourceInfos.(i.e. Application retains only first SegSourceInfo.)
+            if (ch.getType() == ChannelType.SEGMENT) {//TI
                // Segment Entity.
-               SegmentInfo si = (SegmentInfo) (ch.getEntity());
-               ArrayList<SegmentSourceInfo> segSourceInfos = si.getSegSourceInfos();
+               SegmentChannel segChannel = (SegmentChannel) ch;
+               APIList<NSNSegmentSource> segSourceInfos = segChannel.getSegmentSources();
                int size = segSourceInfos.size();
                if (size >= 2) {
-                  for (int jj = 1; jj < size; jj++) {
+                  for (int j = 1; j < size; j++) {
                      segSourceInfos.remove(segSourceInfos.size() - 1);
                   }
-                  si.setSegSourceInfos(segSourceInfos);
-                  ch.setEntity((Entity) si);
+//                        segChannel.setSegmentSources(segSourceInfos);//does nothing since the list has already been modified
 
-                  JOptionPane.showMessageDialog(null, "Channel : " + ch.getLabel() + " - Extra ns_SegSourceInfos were skipped!");
+//                  ch.setEntity((Entity) si);
+
+                  JOptionPane.showMessageDialog(null, "Channel: " + ch.getLabel() + " - Extra ns_SegSourceInfos were skipped!");
                }
             }
 
-            // Create working file.
-            WorkingFileUtils wfu = new WorkingFileUtils();
-            try {
-               GeneralFileInfo gfi = new GeneralFileInfo(ch.getEntity().getEntityInfo().getFilePath());
-               if (gfi.getFileType() == FileType.NSN) {
-                  wfu.createWorkingFileFromNeuroshare(ch.getSourceFilePath(), ch.getEntity());
-               } else if (gfi.getFileType() == FileType.PLX) {
-                  wfu.createWorkingFileFromPlexon(ch.getSourceFilePath(), ch.getEntity());
-               } else if (gfi.getFileType() == FileType.NEV) {
-                  wfu.createWorkingFileFromBlackRockNev(ch.getSourceFilePath(), ch.getEntity());
-               } else if (gfi.getFileType() == FileType.NSX) {
-                  wfu.createWorkingFileFromBlackRockNsx(ch.getSourceFilePath(), ch.getEntity());
-               } else if (gfi.getFileType() == FileType.CSV) {
-                  wfu.createWorkingFileFromATRCsv(ch.getSourceFilePath(), ch.getEntity());
-               }
-
-            } catch (IOException ex) {
-               Exceptions.printStackTrace(ex);
-            }
-            ch.setWorkingFilePath(wfu.getWorkingFilePath());
-
-            Workspace.addChannel(ch);
+            Workspace workspace = Lookup.getDefault().lookup(Workspace.class);
+            workspace.addChannel(ch);
          }
       }
 
@@ -545,12 +531,12 @@ public class ChannelSelector extends javax.swing.JPanel implements ActionListene
                this.generalFileInfo.setNsObj(nsf);
             } else if (fileType == FileType.NSX) {
                // Get nsObj from ns1-ns9 file.
-               NsxReader nsxr = new NsxReader();
+               NSXReader nsxr = new NSXReader();
                nsf = nsxr.readNsxFileAllData(this.generalFileInfo.getFilePath());
                this.generalFileInfo.setNsObj(nsf);
             } else if (fileType == FileType.CSV) {
                // Get nsObj from csv file.
-               CsvReader csvr = new CsvReader();
+               CSVReader csvr = new CSVReader();
                nsf = csvr.readCsvFileAllData(this.generalFileInfo.getFilePath());
                this.generalFileInfo.setNsObj(nsf);
             }
@@ -560,23 +546,38 @@ public class ChannelSelector extends javax.swing.JPanel implements ActionListene
          this.availableChannelList.removeAllElements();
          this.selectedChannelList.removeAllElements();
 
-         // Add channels to availableChannelList.
-         for (int ii = 0; ii < nsf.getEntities().size(); ii++) {
+         if (nsf != null) {
+            // Add channels to availableChannelList.
+            for (int i = 0; i < nsf.getEntities().size(); i++) {
 
-            // If record did not exist, then it will not register the entity as channel.
-            Entity e = nsf.getEntities().get(ii);
-            Channel ch = new Channel(ii, e);
-            if (e.getEntityInfo().getItemCount() <= 0) {
-               this.unAvailableChannelList.addElement(ch);
-               continue;
+               // If record did not exist, then it will not register the entity as channel.
+               Entity e = nsf.getEntities().get(i);
+               EntityType eType = e.getTag().getEntityType();
+
+               Channel ch = null;
+               if (eType == EntityType.ENTITY_ANALOG) {
+                  ch = new AnalogChannel(i, (AnalogInfo) e);
+               } else if (eType == EntityType.ENTITY_EVENT) {
+                  ch = new EventChannel(i, (EventInfo) e);
+               } else if (eType == EntityType.ENTITY_NEURAL) {
+                  ch = new NeuralSpikeChannel(i, (NeuralInfo) e);
+               } else if (eType == EntityType.ENTITY_SEGMENT) {
+                  ch = new SegmentChannel(i, (SegmentInfo) e);
+               }
+
+               if (e.getEntityInfo().getItemCount() <= 0) {
+                  this.unAvailableChannelList.addElement(ch);
+                  continue;
+               }
+               if (ch != null) {
+                  this.availableChannelList.addElement(ch);
+               }
             }
-
-            this.availableChannelList.addElement(ch);
          }
 
       } else {
          this.dataFileFlag = false;
-         JOptionPane.showMessageDialog(null, "It is not data file.");
+         JOptionPane.showMessageDialog(null, "It is not a data file.");
       }
    }
 
@@ -600,7 +601,7 @@ public class ChannelSelector extends javax.swing.JPanel implements ActionListene
          int selectedChannelListSize = this.selectedChannelList.getSize();
          for (int ii = 0; ii < selectedChannelListSize; ii++) {
             Channel search = (Channel) this.selectedChannelList.getElementAt(ii);
-            int diff = ch.getChannelID() - search.getChannelID();
+            int diff = ch.getId() - search.getId();
 
             if (diff < 0) {
                // Insert at ii.
@@ -623,16 +624,16 @@ public class ChannelSelector extends javax.swing.JPanel implements ActionListene
          this.availableChannelList.addElement(ch);
       } else {
          int unSelectedChannelListSize = this.availableChannelList.getSize();
-         for (int ii = 0; ii < unSelectedChannelListSize; ii++) {
-            Channel search = (Channel) this.availableChannelList.getElementAt(ii);
-            int diff = ch.getChannelID() - search.getChannelID();
+         for (int i = 0; i < unSelectedChannelListSize; i++) {
+            Channel search = (Channel) this.availableChannelList.getElementAt(i);
+            int diff = ch.getId() - search.getId();
 
             if (diff < 0) {
                // Insert at ii.
-               this.availableChannelList.insertElementAt(ch, ii);
+               this.availableChannelList.insertElementAt(ch, i);
                break;
             }
-            if (unSelectedChannelListSize <= ii + 1) {
+            if (unSelectedChannelListSize <= i + 1) {
                // Add to Last.
                this.availableChannelList.addElement(ch);
                break;

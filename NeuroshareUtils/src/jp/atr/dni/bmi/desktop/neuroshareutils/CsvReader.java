@@ -28,10 +28,10 @@ import org.apache.poi.ss.usermodel.Cell;
 
 /**
  *
- * @author Keiji Harada [*1]</br>[*1] ATR Intl. Conputational Neuroscience Labs, Decoding Group
+ * @author Keiji Harada [*1]</br>[*1] ATR Intl. Computational Neuroscience Labs, Decoding Group
  * @version 2011/05/12 
  */
-public class CsvReader {
+public class CSVReader {
 
     // This Class can read Ver 3.1 CSV file which is defined by ATR.
     /**
@@ -160,12 +160,12 @@ public class CsvReader {
 
                         // Tag
                         // 340 : ns_ENTITYINFO + ns_SEGMENTINFO + ns_SEGSOURCEINFO
-                        Tag tag = new Tag(ElemType.ENTITY_SEGMENT, Const_values.LENGTH_OF_NS_ENTITYINFO + Const_values.LENGTH_OF_NS_SEGMENTINFO + Const_values.LENGTH_OF_NS_SEGSOURCEINFO);
+                        Tag tag = new Tag(EntityType.ENTITY_SEGMENT, ConstantValues.NS_ENTITYINFO_LENGTH + ConstantValues.NS_SEGMENTINFO_LENGTH + ConstantValues.NS_SEGSOURCEINFO_LENGTH);
 
                         // EntityInfo
                         // 3 : SEGMENTENTITY, 0 : ItemCount
                         EntityInfo entityInfo = new EntityInfo(channelName,
-                                ElemType.ENTITY_SEGMENT.ordinal(), 0);
+                                EntityType.ENTITY_SEGMENT.ordinal(), 0);
                         entityInfo.setFilePath(csvFilePath);
 
                         SegmentInfo segmentEntity = new SegmentInfo(tag, entityInfo);
@@ -329,12 +329,12 @@ public class CsvReader {
 
                         // Tag
                         // 304 : ns_ENTITYINFO + ns_ANALOGINFO
-                        Tag tag = new Tag(ElemType.ENTITY_ANALOG, Const_values.LENGTH_OF_NS_ENTITYINFO + Const_values.LENGTH_OF_NS_ANALOGINFO);
+                        Tag tag = new Tag(EntityType.ENTITY_ANALOG, ConstantValues.NS_ENTITYINFO_LENGTH + ConstantValues.NS_ANALOGINFO_LENGTH);
 
                         // EntityInfo
                         // 2 : ANALOGENTITY, 0 : ItemCount
                         EntityInfo entityInfo = new EntityInfo(channelName,
-                                ElemType.ENTITY_ANALOG.ordinal(), 0);
+                                EntityType.ENTITY_ANALOG.ordinal(), 0);
                         entityInfo.setFilePath(csvFilePath);
 
                         AnalogInfo analogEntity = new AnalogInfo(tag, entityInfo);
@@ -448,12 +448,12 @@ public class CsvReader {
 
                     // Tag
                     // 180 : ns_ENTITYINFO + ns_EVENTINFO
-                    Tag tag = new Tag(ElemType.ENTITY_EVENT, Const_values.LENGTH_OF_NS_ENTITYINFO + Const_values.LENGTH_OF_NS_EVENTINFO);
+                    Tag tag = new Tag(EntityType.ENTITY_EVENT, ConstantValues.NS_ENTITYINFO_LENGTH + ConstantValues.NS_EVENTINFO_LENGTH);
 
                     // EntityInfo
                     // 1 : EVENTENTITY, 0 : ItemCount
                     EntityInfo entityInfo = new EntityInfo(channelName,
-                            ElemType.ENTITY_EVENT.ordinal(), 0);
+                            EntityType.ENTITY_EVENT.ordinal(), 0);
                     entityInfo.setFilePath(csvFilePath);
 
                     EventInfo eventEntity = new EventInfo(tag, entityInfo);
@@ -567,12 +567,12 @@ public class CsvReader {
 
                     // Tag
                     // 176 : ns_ENTITYINFO + ns_NEURALINFO
-                    Tag tag = new Tag(ElemType.ENTITY_NEURAL, Const_values.LENGTH_OF_NS_ENTITYINFO + Const_values.LENGTH_OF_NS_NEURALINFO);
+                    Tag tag = new Tag(EntityType.ENTITY_NEURAL, ConstantValues.NS_ENTITYINFO_LENGTH + ConstantValues.NS_NEURALINFO_LENGTH);
 
                     // EntityInfo
                     // 4 : NEURALEVENTENTITY, 0 : ItemCount
                     EntityInfo entityInfo = new EntityInfo(channelName,
-                            ElemType.ENTITY_NEURAL.ordinal(), 0);
+                            EntityType.ENTITY_NEURAL.ordinal(), 0);
                     entityInfo.setFilePath(csvFilePath);
 
                     NeuralInfo neuralEntity = new NeuralInfo(tag, entityInfo);
@@ -788,12 +788,12 @@ public class CsvReader {
 
                         // Tag
                         // 340 : ns_ENTITYINFO + ns_SEGMENTINFO + ns_SEGSOURCEINFO
-                        Tag tag = new Tag(ElemType.ENTITY_SEGMENT, Const_values.LENGTH_OF_NS_ENTITYINFO + Const_values.LENGTH_OF_NS_SEGMENTINFO + Const_values.LENGTH_OF_NS_SEGSOURCEINFO);
+                        Tag tag = new Tag(EntityType.ENTITY_SEGMENT, ConstantValues.NS_ENTITYINFO_LENGTH + ConstantValues.NS_SEGMENTINFO_LENGTH + ConstantValues.NS_SEGSOURCEINFO_LENGTH);
 
                         // EntityInfo
                         // 3 : SEGMENTENTITY, 0 : ItemCount
                         EntityInfo entityInfo = new EntityInfo(channelName,
-                                ElemType.ENTITY_SEGMENT.ordinal(), 0);
+                                EntityType.ENTITY_SEGMENT.ordinal(), 0);
                         entityInfo.setFilePath(csvFilePath);
 
                         SegmentInfo segmentEntity = new SegmentInfo(tag, entityInfo);
@@ -957,12 +957,12 @@ public class CsvReader {
 
                         // Tag
                         // 304 : ns_ENTITYINFO + ns_ANALOGINFO
-                        Tag tag = new Tag(ElemType.ENTITY_ANALOG, Const_values.LENGTH_OF_NS_ENTITYINFO + Const_values.LENGTH_OF_NS_ANALOGINFO);
+                        Tag tag = new Tag(EntityType.ENTITY_ANALOG, ConstantValues.NS_ENTITYINFO_LENGTH + ConstantValues.NS_ANALOGINFO_LENGTH);
 
                         // EntityInfo
                         // 2 : ANALOGENTITY, 0 : ItemCount
                         EntityInfo entityInfo = new EntityInfo(channelName,
-                                ElemType.ENTITY_ANALOG.ordinal(), 0);
+                                EntityType.ENTITY_ANALOG.ordinal(), 0);
                         entityInfo.setFilePath(csvFilePath);
 
                         AnalogInfo analogEntity = new AnalogInfo(tag, entityInfo);
@@ -1076,12 +1076,12 @@ public class CsvReader {
 
                     // Tag
                     // 180 : ns_ENTITYINFO + ns_EVENTINFO
-                    Tag tag = new Tag(ElemType.ENTITY_EVENT, Const_values.LENGTH_OF_NS_ENTITYINFO + Const_values.LENGTH_OF_NS_EVENTINFO);
+                    Tag tag = new Tag(EntityType.ENTITY_EVENT, ConstantValues.NS_ENTITYINFO_LENGTH + ConstantValues.NS_EVENTINFO_LENGTH);
 
                     // EntityInfo
                     // 1 : EVENTENTITY, 0 : ItemCount
                     EntityInfo entityInfo = new EntityInfo(channelName,
-                            ElemType.ENTITY_EVENT.ordinal(), 0);
+                            EntityType.ENTITY_EVENT.ordinal(), 0);
                     entityInfo.setFilePath(csvFilePath);
 
                     EventInfo eventEntity = new EventInfo(tag, entityInfo);
@@ -1195,12 +1195,12 @@ public class CsvReader {
 
                     // Tag
                     // 176 : ns_ENTITYINFO + ns_NEURALINFO
-                    Tag tag = new Tag(ElemType.ENTITY_NEURAL, Const_values.LENGTH_OF_NS_ENTITYINFO + Const_values.LENGTH_OF_NS_NEURALINFO);
+                    Tag tag = new Tag(EntityType.ENTITY_NEURAL, ConstantValues.NS_ENTITYINFO_LENGTH + ConstantValues.NS_NEURALINFO_LENGTH);
 
                     // EntityInfo
                     // 4 : NEURALEVENTENTITY, 0 : ItemCount
                     EntityInfo entityInfo = new EntityInfo(channelName,
-                            ElemType.ENTITY_NEURAL.ordinal(), 0);
+                            EntityType.ENTITY_NEURAL.ordinal(), 0);
                     entityInfo.setFilePath(csvFilePath);
 
                     NeuralInfo neuralEntity = new NeuralInfo(tag, entityInfo);
@@ -1298,7 +1298,7 @@ public class CsvReader {
      * @return
      * @throws IOException
      */
-    public SegmentData getSegmentData(String fileFullPath, EntityInfo entityNFO, SegmentInfo segNFO)
+    public SegmentData getSegmentData(String fileFullPath, long dataPosition, long entityType, String label)
             throws IOException {
 
         // Read all nev data to get segment Data. (to Get Neuroshare Format.)
@@ -1312,9 +1312,9 @@ public class CsvReader {
             // DataPosition
             // EntityType
             // EntityLabel
-            if (e.getEntityInfo().getDataPosition() == entityNFO.getDataPosition() && e.getEntityInfo().getEntityType() == entityNFO.getEntityType()) {
+            if (e.getEntityInfo().getDataPosition() == dataPosition && e.getEntityInfo().getEntityType() == entityType) {
                 SegmentInfo si = (SegmentInfo) e;
-                if (si.getEntityInfo().getEntityLabel().equals(segNFO.getEntityInfo().getEntityLabel())) {
+                if (si.getEntityInfo().getEntityLabel().equals(label)) {
                     return si.getSegData();
                 }
             }
@@ -1330,7 +1330,7 @@ public class CsvReader {
      * @return
      * @throws IOException
      */
-    public ArrayList<Double> getNeuralData(String fileFullPath, EntityInfo entityNFO) throws IOException {
+    public ArrayList<Double> getNeuralData(String fileFullPath, long dataPosition, long entityType, String label) throws IOException {
 
         // Read all csv data to get neural Data. (to Get Neuroshare Format.)
         NeuroshareFile csvFileAllData = readCsvFileAllData(fileFullPath);
@@ -1343,9 +1343,9 @@ public class CsvReader {
             // DataPosition
             // EntityType
             // EntityLabel
-            if (e.getEntityInfo().getDataPosition() == entityNFO.getDataPosition() && e.getEntityInfo().getEntityType() == entityNFO.getEntityType() && e.getEntityInfo().getEntityLabel().equals(entityNFO.getEntityLabel())) {
+            if (e.getEntityInfo().getDataPosition() == dataPosition && e.getEntityInfo().getEntityType() == entityType && e.getEntityInfo().getEntityLabel().equals(label)) {
                 NeuralInfo ni = (NeuralInfo) e;
-                if (ni.getEntityInfo().getEntityLabel().equals(entityNFO.getEntityLabel())) {
+                if (ni.getEntityInfo().getEntityLabel().equals(label)) {
                     return ni.getData();
                 }
             }
@@ -1361,7 +1361,7 @@ public class CsvReader {
      * @return
      * @throws IOException
      */
-    public ArrayList<AnalogData> getAnalogData(String fileFullPath, EntityInfo entityNFO) throws IOException {
+    public ArrayList<AnalogData> getAnalogData(String fileFullPath, long dataPosition, long entityType, String label) throws IOException {
 
         // Read all csv data to get neural Data. (to Get Neuroshare Format.)
         NeuroshareFile csvFileAllData = readCsvFileAllData(fileFullPath);
@@ -1374,9 +1374,9 @@ public class CsvReader {
             // DataPosition
             // EntityType
             // EntityLabel
-            if (e.getEntityInfo().getDataPosition() == entityNFO.getDataPosition() && e.getEntityInfo().getEntityType() == entityNFO.getEntityType() && e.getEntityInfo().getEntityLabel().equals(entityNFO.getEntityLabel())) {
+            if (e.getEntityInfo().getDataPosition() == dataPosition && e.getEntityInfo().getEntityType() == entityType && e.getEntityInfo().getEntityLabel().equals(label)) {
                 AnalogInfo ai = (AnalogInfo) e;
-                if (ai.getEntityInfo().getEntityLabel().equals(entityNFO.getEntityLabel())) {
+                if (ai.getEntityInfo().getEntityLabel().equals(label)) {
                     return ai.getData();
                 }
             }
@@ -1393,7 +1393,7 @@ public class CsvReader {
      * @return
      * @throws IOException
      */
-    public ArrayList<ByteEventData> getByteEventData(String fileFullPath, EntityInfo entityNFO, EventInfo eventNFO) throws IOException {
+    public ArrayList<ByteEventData> getByteEventData(String fileFullPath, long dataPosition, long eventType, long entityType, String label) throws IOException {
 
         // Read all csv data to get neural Data. (to Get Neuroshare Format.)
         NeuroshareFile csvFileAllData = readCsvFileAllData(fileFullPath);
@@ -1406,9 +1406,9 @@ public class CsvReader {
             // DataPosition
             // EntityType
             // EntityLabel
-            if (e.getEntityInfo().getDataPosition() == entityNFO.getDataPosition() && e.getEntityInfo().getEntityType() == entityNFO.getEntityType() && e.getEntityInfo().getEntityLabel().equals(entityNFO.getEntityLabel())) {
+            if (e.getEntityInfo().getDataPosition() == dataPosition && e.getEntityInfo().getEntityType() == entityType && e.getEntityInfo().getEntityLabel().equals(label)) {
                 EventInfo ei = (EventInfo) e;
-                if (ei.getEntityInfo().getEntityLabel().equals(entityNFO.getEntityLabel()) && ei.getEventType() == eventNFO.getEventType()) {
+                if (ei.getEntityInfo().getEntityLabel().equals(label) && ei.getEventType() == eventType) {
                     ArrayList<EventData> data = ei.getData();
                     ArrayList<ByteEventData> bed = new ArrayList<ByteEventData>();
                     for (int jj = 0; jj < data.size(); jj++) {
@@ -1431,7 +1431,7 @@ public class CsvReader {
      * @return
      * @throws IOException
      */
-    public ArrayList<DWordEventData> getDWordEventData(String fileFullPath, EntityInfo entityNFO, EventInfo eventNFO) throws IOException {
+    public ArrayList<DWordEventData> getDWordEventData(String fileFullPath, long dataPosition, long entityType, long eventType, String label) throws IOException {
 
         // Read all csv data to get neural Data. (to Get Neuroshare Format.)
         NeuroshareFile csvFileAllData = readCsvFileAllData(fileFullPath);
@@ -1444,9 +1444,9 @@ public class CsvReader {
             // DataPosition
             // EntityType
             // EntityLabel
-            if (e.getEntityInfo().getDataPosition() == entityNFO.getDataPosition() && e.getEntityInfo().getEntityType() == entityNFO.getEntityType() && e.getEntityInfo().getEntityLabel().equals(entityNFO.getEntityLabel())) {
+            if (e.getEntityInfo().getDataPosition() == dataPosition && e.getEntityInfo().getEntityType() == entityType && e.getEntityInfo().getEntityLabel().equals(label)) {
                 EventInfo ei = (EventInfo) e;
-                if (ei.getEntityInfo().getEntityLabel().equals(entityNFO.getEntityLabel()) && ei.getEventType() == eventNFO.getEventType()) {
+                if (ei.getEntityInfo().getEntityLabel().equals(label) && ei.getEventType() == eventType) {
                     ArrayList<EventData> data = ei.getData();
                     ArrayList<DWordEventData> dwed = new ArrayList<DWordEventData>();
                     for (int jj = 0; jj < data.size(); jj++) {
@@ -1469,7 +1469,7 @@ public class CsvReader {
      * @return
      * @throws IOException
      */
-    public ArrayList<WordEventData> getWordEventData(String fileFullPath, EntityInfo entityNFO, EventInfo eventNFO) throws IOException {
+    public ArrayList<WordEventData> getWordEventData(String fileFullPath, long dataPosition, long entityType, long eventType, String label) throws IOException {
 
         // Read all csv data to get neural Data. (to Get Neuroshare Format.)
         NeuroshareFile csvFileAllData = readCsvFileAllData(fileFullPath);
@@ -1482,9 +1482,9 @@ public class CsvReader {
             // DataPosition
             // EntityType
             // EntityLabel
-            if (e.getEntityInfo().getDataPosition() == entityNFO.getDataPosition() && e.getEntityInfo().getEntityType() == entityNFO.getEntityType() && e.getEntityInfo().getEntityLabel().equals(entityNFO.getEntityLabel())) {
+            if (e.getEntityInfo().getDataPosition() == dataPosition && e.getEntityInfo().getEntityType() == entityType && e.getEntityInfo().getEntityLabel().equals(label)) {
                 EventInfo ei = (EventInfo) e;
-                if (ei.getEntityInfo().getEntityLabel().equals(entityNFO.getEntityLabel()) && ei.getEventType() == eventNFO.getEventType()) {
+                if (ei.getEntityInfo().getEntityLabel().equals(label) && ei.getEventType() == eventType) {
                     ArrayList<EventData> data = ei.getData();
                     ArrayList<WordEventData> wed = new ArrayList<WordEventData>();
                     for (int jj = 0; jj < data.size(); jj++) {
@@ -1507,7 +1507,7 @@ public class CsvReader {
      * @return
      * @throws IOException
      */
-    public ArrayList<TextEventData> getTextEventData(String fileFullPath, EntityInfo entityNFO, EventInfo eventNFO) throws IOException {
+    public ArrayList<TextEventData> getTextEventData(String fileFullPath, long dataPosition, long entityType, long eventType, String label) throws IOException {
 
         // Read all csv data to get neural Data. (to Get Neuroshare Format.)
         NeuroshareFile csvFileAllData = readCsvFileAllData(fileFullPath);
@@ -1520,9 +1520,9 @@ public class CsvReader {
             // DataPosition
             // EntityType
             // EntityLabel
-            if (e.getEntityInfo().getDataPosition() == entityNFO.getDataPosition() && e.getEntityInfo().getEntityType() == entityNFO.getEntityType() && e.getEntityInfo().getEntityLabel().equals(entityNFO.getEntityLabel())) {
+            if (e.getEntityInfo().getDataPosition() == dataPosition && e.getEntityInfo().getEntityType() == entityType && e.getEntityInfo().getEntityLabel().equals(label)) {
                 EventInfo ei = (EventInfo) e;
-                if (ei.getEntityInfo().getEntityLabel().equals(entityNFO.getEntityLabel()) && ei.getEventType() == eventNFO.getEventType()) {
+                if (ei.getEntityInfo().getEntityLabel().equals(label) && ei.getEventType() == eventType) {
                     ArrayList<EventData> data = ei.getData();
                     ArrayList<TextEventData> ted = new ArrayList<TextEventData>();
                     for (int jj = 0; jj < data.size(); jj++) {

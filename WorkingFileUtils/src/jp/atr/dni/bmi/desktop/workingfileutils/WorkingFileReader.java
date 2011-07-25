@@ -1,5 +1,9 @@
 package jp.atr.dni.bmi.desktop.workingfileutils;
 
+import jp.atr.dni.bmi.desktop.workingfileutils.types.TIData;
+import jp.atr.dni.bmi.desktop.workingfileutils.types.TOData;
+import jp.atr.dni.bmi.desktop.workingfileutils.types.TLData;
+import jp.atr.dni.bmi.desktop.workingfileutils.types.TSData;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;

@@ -15,16 +15,19 @@
                     </run-dependency>
                 </dependency>
                 <dependency>
-                    <code-name-base>jp.atr.dni.bmi.desktop.workingfileutils</code-name-base>
+                    <code-name-base>org.openide.util.lookup</code-name-base>
                     <build-prerequisite/>
                     <compile-dependency/>
                     <run-dependency>
-                        <specification-version>1.0</specification-version>
+                        <specification-version>8.6.1</specification-version>
                     </run-dependency>
                 </dependency>
             </module-dependencies>
             <public-packages>
                 <package>jp.atr.dni.bmi.desktop.model</package>
+                <package>jp.atr.dni.bmi.desktop.model.api</package>
+                <package>jp.atr.dni.bmi.desktop.model.api.data</package>
+                <package>jp.atr.dni.bmi.desktop.model.utils</package>
             </public-packages>
             <class-path-extension>
                 <runtime-relative-path>ext/commons-collections-3.2.1.jar</runtime-relative-path>

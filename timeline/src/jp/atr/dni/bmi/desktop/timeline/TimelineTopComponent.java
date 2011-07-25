@@ -5,15 +5,8 @@
 package jp.atr.dni.bmi.desktop.timeline;
 
 import com.jogamp.opengl.util.Animator;
-import com.jogamp.opengl.util.awt.TextRenderer;
 import com.jogamp.opengl.util.gl2.GLUT;
-import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.beans.PropertyChangeEvent;
@@ -30,21 +23,15 @@ import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.GLProfile;
-import javax.media.opengl.awt.GLCanvas;
-import javax.media.opengl.awt.GLJPanel;
 import javax.media.opengl.glu.GLU;
 import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
-import javax.swing.SpringLayout;
-import jp.atr.dni.bmi.desktop.model.Channel;
-import jp.atr.dni.bmi.desktop.model.ChannelType;
-import jp.atr.dni.bmi.desktop.model.Workspace;
-import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogInfo;
-import jp.atr.dni.bmi.desktop.neuroshareutils.ElemType;
-import jp.atr.dni.bmi.desktop.neuroshareutils.Entity;
+import jp.atr.dni.bmi.desktop.model.api.data.APIList;
+import jp.atr.dni.bmi.desktop.model.api.AnalogChannel;
+import jp.atr.dni.bmi.desktop.model.api.Channel;
+import jp.atr.dni.bmi.desktop.model.api.ChannelType;
+import jp.atr.dni.bmi.desktop.model.api.Workspace;
+import jp.atr.dni.bmi.desktop.model.api.data.NSNAnalogData;
 import jp.atr.dni.bmi.desktop.timeline.model.ViewerChannel;
-import jp.atr.dni.bmi.desktop.workingfileutils.TSData;
-import jp.atr.dni.bmi.desktop.workingfileutils.WorkingFileReader;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
@@ -57,7 +44,7 @@ import org.openide.util.Lookup;
  */
 @ConvertAsProperties(dtd = "-//jp.atr.dni.bmi.desktop.timeline//timeline//EN",
 autostore = false)
-public final class TimelineTopComponent extends TopComponent implements PropertyChangeListener, GLEventListener/*implements LookupListener */ {
+public final class TimelineTopComponent extends TopComponent implements GLEventListener, PropertyChangeListener/*implements LookupListener */ {
 
    private boolean SNAP_TO_GRID = false;
    private boolean SHOW_GRID;
@@ -79,11 +66,8 @@ public final class TimelineTopComponent extends TopComponent implements Property
    static final String ICON_PATH = "jp/atr/dni/bmi/desktop/timeline/graphPrev.png";
    private static final String PREFERRED_ID = "TimelineTopComponent";
    private DoubleBuffer[] colors;
-   private Lookup.Result result = null;
    private InteractionHandler handler;
-   private ArrayList<ViewerChannel> viewerChannels;
-   private ArrayList<Date> endTimes;
-//   private ArrayList<Channel> channels;
+   private ArrayList<ViewerChannel> viewerChannels = new ArrayList<ViewerChannel>();
    public static final int SCROLLBAR_HEIGHT = 25;
    public static final double INCREMENT = .25;
    private double dataUpperX;
@@ -99,6 +83,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
    private int numEntities;
    private Animator animator;
    public static final int Y_SPACER = 5;
+   private Workspace workspace;
 
    public TimelineTopComponent() {
       setVisible(true);
@@ -350,7 +335,6 @@ public final class TimelineTopComponent extends TopComponent implements Property
    public int getPersistenceType() {
       return TopComponent.PERSISTENCE_ALWAYS;
    }
-   private Lookup.Result fileInfos = null;
 
    @Override
    public void componentOpened() {
@@ -358,22 +342,106 @@ public final class TimelineTopComponent extends TopComponent implements Property
       //      fileInfos.allItems();  // This means something. THIS IS IMPORTANT.
       fileInfos.addLookupListener(this);*/
 
-      Workspace.addPropertyChangeListener(this);
+      if (workspace == null) {
+         workspace = Lookup.getDefault().lookup(Workspace.class);
+      }
+
+      workspace.addPropertyChangeListener(this);
+
+
    }
 
    @Override
    public void componentClosed() {
-      Workspace.removePropertyChangeListener(this);
-//      fileInfos.removeLookupListener(this);
-//      fileInfos = null;
-      //TODO: stop animator
-
-      // Add remove listener
-      Workspace.removePropertyChangeListener(this);
       animator.stop();
       glCanvas.invalidate();
+
+      workspace.removePropertyChangeListener(this);
    }
 
+//   private class APIEntityListener implements LookupListener {
+//
+//      @Override
+//      public void resultChanged(LookupEvent evt) {
+//         Object o = evt.getSource();
+//         if (o != null) {
+//            Lookup.Result r = (Lookup.Result) o;
+//            Collection infos = r.allInstances();
+//            if (infos.isEmpty()) {
+////                    EventQueue.invokeLater(new SetterRunnable(new DefaultUserInformation()));
+//            } else {
+//               viewerChannels = new ArrayList<ViewerChannel>();
+//               endTimes = new ArrayList<Date>();
+//
+//               //XXX: because the workspace channels are static, we will get a concurrent modification error 
+//               //here if something changes. The API needs to be changed to prevent this.
+//               Iterator<APIEntity> it = infos.iterator();
+//               while (it.hasNext()) {
+//                  APIEntity enity = it.next();
+//                  Date end = new Date((long) (1000d * c.getEntity().getEntityInfo().getItemCount() * (1d / c.getTSHeader().getSamplingRate_Hz())));
+//                  if (end.getTime() == 0) {
+//                     end.setTime(1);
+//                  }
+//                  endTimes.add(end);
+//
+//                  //Create new viewer channel
+//                  ViewerChannel vc = new ViewerChannel();
+//
+//
+//                  if (enity.getType() == EntityType.ENTITY_ANALOG) {
+//                     APIAnalogEntity ai = (APIAnalogEntity) enity;
+//
+//                     if (ai == null) {
+//                        continue;
+//                     }
+//
+//                     double normalizer = Math.max(Math.abs(ai.getMaxVal()), Math.abs(ai.getMinVal()));
+//                     double subtractor = 0;
+//                     if (ai.getMinVal() > 0) {
+//                        subtractor = ai.getMinVal();
+//                        normalizer -= subtractor;
+//                     } else if (ai.getMaxVal() < 0) {
+//                        subtractor = -ai.getMaxVal();
+//                        normalizer -= subtractor;
+//                     }
+//                     vc.setNormalizer(normalizer);
+//                     vc.setSubtractor(subtractor);
+//                     vc.setLabel(e.getEntityInfo().getEntityLabel());// + "-" + ai.getProbeInfo());
+//
+//                     vc.setSampleRate(ai.getSampleRate());
+//                     vc.setChannelType(ChannelType.ANALOG);
+//                  }
+//
+//                  viewerChannels.add(vc);
+//               }
+//
+//               for (Date e : endTimes) {
+//                  if (endTime == null) {
+//                     endTime = e;
+//                  } else if (e.getTime() > endTime.getTime()) {
+//                     endTime = e;
+//                  }
+//               }
+//
+//               startTime = new Date(0);
+//               numEntities = viewerChannels.size();
+//
+//               spanX = endTime.getTime();
+//               spanY = numEntities * Y_SPACER;
+//
+//               zoomAll();
+//
+//               handler.setSpanX(spanX);
+//               handler.setSpanY(spanY);
+//
+//
+//
+////                        EventQueue.invokeLater(new SetterRunnable(info));
+//
+//            }
+//         }
+//      }
+//   }
    void writeProperties(java.util.Properties p) {
       // better to version settings since initial version as advocated at
       // http://wiki.apidesign.org/wiki/PropertyFiles
@@ -490,18 +558,22 @@ public final class TimelineTopComponent extends TopComponent implements Property
     * @param drawable
     */
    private void render(GLAutoDrawable drawable) {
-      int width = getWidth();
-      int height = getHeight();
 
+      //Clear the screen so that random stuff from the buffer is not drawn (as cool as that may be)
       GL2 gl = drawable.getGL().getGL2();
       gl.glClear(GL2.GL_COLOR_BUFFER_BIT);
       gl.glClearColor(1, 1, 1, 1);
 
-      glCanvas.setSize(width, height);
-
-      if (viewerChannels == null || endTime == null || numEntities < 1) {
+      if (workspace.numChannels() < 1) {
          return;
       }
+
+      int width = getWidth();
+      int height = getHeight();
+
+      glCanvas.setSize(width, height);
+
+
 
       gl.glMatrixMode(GL2.GL_PROJECTION);
 //        gl.glLoadIdentity();
@@ -524,9 +596,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
 
 //      gl.glViewport(0, 0, width, height);//TODO: look into this some more
 
-//      System.out.println("width: " + width + "\theight: " + height);
 
-//      int timeMult = 500;
 
       gl.glColor3i(0, 0, 0);
 
@@ -546,24 +616,19 @@ public final class TimelineTopComponent extends TopComponent implements Property
       int yMin = (int) (minPoint.getY() < 0 ? 0 : Math.abs(minPoint.getY()) / Y_SPACER);
       int yMax = (int) Math.abs(maxPoint.getY()) / Y_SPACER + 1;
 
-      if (yMax > viewerChannels.size()) {
-         yMax = viewerChannels.size();
+      if (yMax > workspace.numChannels()) {
+         yMax = workspace.numChannels();
       }
 
       //draw data
       yOffset = yMin;
-      for (int c = yMin; c < yMax; c++) {
-         ViewerChannel vc = viewerChannels.get(c);
+      for (ViewerChannel vc : viewerChannels) {
 
-         if (vc.getChannelType() == ChannelType.TS_AND_VAL) {
-
-            double timeIncrement = 1000.0 / vc.getSampleRate();
-//            timeIncrement *= timeMult;
+         if (vc.getType() == ChannelType.ANALOG) {
+            double timeIncrement = 1000.0 / vc.getSamplingRate();
 
             // Get TSData from the WorkingFile to display.
-            TSData tSData = vc.gettSData();
-            ArrayList<Double> vals = tSData.getAllValues().get(0);
-//            System.out.println("real ms end: " + 1000d*vals.size()/vc.getSampleRate());
+            APIList<Double> vals = ((NSNAnalogData) vc.getData()).getValues().get(0);
 
             double prevX = minPoint.getX() > 2 ? (int) minPoint.getX() - 1 : 0;
             prevX /= timeIncrement;
@@ -626,7 +691,7 @@ public final class TimelineTopComponent extends TopComponent implements Property
          if (tSize > .15) {
             tSize = .15f;
          }
-         drawTextUnscaled(gl, viewerChannels.get(i).getLabel(), SCROLLBAR_HEIGHT, p.getY(), tSize, 2.0f);
+         drawTextUnscaled(gl, workspace.getChannel(i).getLabel(), SCROLLBAR_HEIGHT, p.getY(), tSize, 2.0f);
       }
 
       //Calculate screen area for data
@@ -1061,84 +1126,111 @@ public final class TimelineTopComponent extends TopComponent implements Property
       this.dataUpper = dataUpper;
    }
 
-   @Override
-   public void propertyChange(PropertyChangeEvent pce) {
-      ArrayList<Channel> channels = Workspace.getChannels();
-      viewerChannels = new ArrayList<ViewerChannel>();
-      endTimes = new ArrayList<Date>();
+   public void setupChannels() {
+      int numChannels = workspace.numChannels();
 
-      //XXX: because the workspace channels are static, we will get a concurrent modification error 
-      //here if something changes. The API needs to be changed to prevent this.
-      for (Channel c : channels) {
-         Date end = new Date((long) (1000d * c.getEntity().getEntityInfo().getItemCount() * (1d / c.getTSHeader().getSamplingRate_Hz())));
-         if (end.getTime() == 0) {
-            end.setTime(1);
-         }
-         endTimes.add(end);
+      for (int i = 0; i < numChannels; i++) {
+         Channel c = workspace.getChannel(i);
+         if (c.getType() == ChannelType.ANALOG) {
+            AnalogChannel aChannel = (AnalogChannel) c;
 
-         //Create new viewer channel
-         ViewerChannel vc = new ViewerChannel();
-
-         Entity e = c.getEntity();
-         if (e.getTag().getElemType() == ElemType.ENTITY_ANALOG) {
-            AnalogInfo ai = (AnalogInfo) e;
-
-            if (ai == null) {
-               continue;
+            Date end = new Date((long) (1000d * aChannel.getItemCount() * (1d / aChannel.getSamplingRate())));
+            if (end.getTime() == 0) {
+               end.setTime(1);
             }
 
-            WorkingFileReader cr = new WorkingFileReader();
+            //Create new viewer channel
+            ViewerChannel vc = new ViewerChannel();
 
-            TSData tSData = cr.getTSData(c.getWorkingFilePath());
 
-            double normalizer = Math.max(Math.abs(ai.getMaxVal()), Math.abs(ai.getMinVal()));
+            double normalizer = Math.max(Math.abs(aChannel.getMaxVal()), Math.abs(aChannel.getMinVal()));
             double subtractor = 0;
-            if (ai.getMinVal() > 0) {
-               subtractor = ai.getMinVal();
+            if (aChannel.getMinVal() > 0) {
+               subtractor = aChannel.getMinVal();
                normalizer -= subtractor;
-            } else if (ai.getMaxVal() < 0) {
-               subtractor = -ai.getMaxVal();
+            } else if (aChannel.getMaxVal() < 0) {
+               subtractor = -aChannel.getMaxVal();
                normalizer -= subtractor;
             }
             vc.setNormalizer(normalizer);
             vc.setSubtractor(subtractor);
-            vc.setLabel(e.getEntityInfo().getEntityLabel());// + "-" + ai.getProbeInfo());
-            vc.settSData(tSData);
-            vc.setSampleRate(ai.getSampleRate());
-            vc.setChannelType(ChannelType.TS_AND_VAL);
-         }
+            vc.setLabel(aChannel.getLabel());
+            vc.setData(aChannel.getData());
+            vc.setSamplingRate(aChannel.getSamplingRate());
+            vc.setType(ChannelType.ANALOG);
 
-         viewerChannels.add(vc);
-      }
-
-      for (Date e : endTimes) {
-         if (endTime == null) {
-            endTime = e;
-         } else if (e.getTime() > endTime.getTime()) {
-            endTime = e;
+            viewerChannels.add(vc);
          }
       }
+   }
 
-      startTime = new Date(0);
-
-//      startTime.setYear((int) nsfi.getYear());
-//      startTime.setMonth((int) (nsfi.getMonth() - 1));
-//      startTime.setDate((int) nsfi.getDayOfMonth());
-//      startTime.setHours((int) nsfi.getHourOfDay());
-//      startTime.setMinutes((int) nsfi.getMinOfDay());
-//      startTime.setSeconds((int) nsfi.getSecOfDay());
-//      startTime.setTime(startTime.getTime() + nsfi.getMilliSecOfDay());
-
-//      endTime.setTime(endTime.getTime() + startTime.getTime());
-
-      numEntities = viewerChannels.size();
-
-      spanX = endTime.getTime();// - startTime.getTime();
-      spanY = numEntities * Y_SPACER;
-
-      zoomAll();
-
-      handler.setSpanX(spanX);
-      handler.setSpanY(spanY);
+   @Override
+   public void propertyChange(PropertyChangeEvent pce) {
+//      int numChannels = workspace.numChannels();
+//
+//      for (int i = 0; i < numChannels; i++) {
+//
+//
+//         Date end = new Date((long) (1000d * c.getEntity().getEntityInfo().getItemCount() * (1d / c.getTSHeader().getSamplingRate_Hz())));
+//         if (end.getTime() == 0) {
+//            end.setTime(1);
+//         }
+//
+//
+//
+//
+//         Entity e = c.getEntity();
+//         if (e.getTag().getElemType() == EntityType.ENTITY_ANALOG) {
+//            AnalogInfo ai = (AnalogInfo) e;
+//
+//            if (ai == null) {
+//               continue;
+//            }
+//
+//            double normalizer = Math.max(Math.abs(ai.getMaxVal()), Math.abs(ai.getMinVal()));
+//            double subtractor = 0;
+//            if (ai.getMinVal() > 0) {
+//               subtractor = ai.getMinVal();
+//               normalizer -= subtractor;
+//            } else if (ai.getMaxVal() < 0) {
+//               subtractor = -ai.getMaxVal();
+//               normalizer -= subtractor;
+//            }
+//            vc.setNormalizer(normalizer);
+//            vc.setSubtractor(subtractor);
+//            vc.setLabel(e.getEntityInfo().getEntityLabel());// + "-" + ai.getProbeInfo());
+//            vc.settSData(tSData);
+//            vc.setSampleRate(ai.getSampleRate());
+//            vc.setChannelType(ChannelType.ANALOG);
+//         }
+//
+//         viewerChannels.add(vc);
+//      }
+//
+//      for (Date e : endTimes) {
+//         if (endTime == null) {
+//            endTime = e;
+//         } else if (e.getTime() > endTime.getTime()) {
+//            endTime = e;
+//         }
+//      }
+//      startTime = new Date(0);
+////      startTime.setYear((int) nsfi.getYear());
+////      startTime.setMonth((int) (nsfi.getMonth() - 1));
+////      startTime.setDate((int) nsfi.getDayOfMonth());
+////      startTime.setHours((int) nsfi.getHourOfDay());
+////      startTime.setMinutes((int) nsfi.getMinOfDay());
+////      startTime.setSeconds((int) nsfi.getSecOfDay());
+////      startTime.setTime(startTime.getTime() + nsfi.getMilliSecOfDay());
+////      endTime.setTime(endTime.getTime() + startTime.getTime());
+//      numEntities = viewerChannels.size();
+//      spanX = endTime.getTime();// - startTime.getTime();
+//      spanY = numEntities * Y_SPACER;
+//
+//      zoomAll();
+//
+//      handler.setSpanX(spanX);
+//
+//      handler.setSpanY(spanY);
    }
 }

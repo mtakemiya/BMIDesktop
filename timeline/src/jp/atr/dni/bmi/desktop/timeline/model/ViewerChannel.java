@@ -4,8 +4,9 @@
  */
 package jp.atr.dni.bmi.desktop.timeline.model;
 
-import jp.atr.dni.bmi.desktop.model.ChannelType;
-import jp.atr.dni.bmi.desktop.workingfileutils.TSData;
+import java.util.Date;
+import jp.atr.dni.bmi.desktop.model.api.ChannelType;
+import jp.atr.dni.bmi.desktop.model.api.data.APIData;
 
 /**
  * 
@@ -14,12 +15,13 @@ import jp.atr.dni.bmi.desktop.workingfileutils.TSData;
 public class ViewerChannel {
 
    private boolean selected;
-   private double sampleRate;
+   private double samplingRate;
    private double normalizer;
    private double subtractor;
    private String label;
-   private ChannelType channelType;
-   private TSData tSData;
+   private ChannelType type;
+   private Date endTime;
+   private APIData data;
 
 //   private int depth;
    /**
@@ -39,43 +41,15 @@ public class ViewerChannel {
    /**
     * @return the channelType
     */
-   public ChannelType getChannelType() {
-      return channelType;
+   public ChannelType getType() {
+      return type;
    }
 
    /**
     * @param channelType the channelType to set
     */
-   public void setChannelType(ChannelType channelType) {
-      this.channelType = channelType;
-   }
-
-   /**
-    * @return the tSData
-    */
-   public TSData gettSData() {
-      return tSData;
-   }
-
-   /**
-    * @param tSData the tSData to set
-    */
-   public void settSData(TSData tSData) {
-      this.tSData = tSData;
-   }
-
-   /**
-    * @return the sampleRate
-    */
-   public double getSampleRate() {
-      return sampleRate;
-   }
-
-   /**
-    * @param sampleRate the sampleRate to set
-    */
-   public void setSampleRate(double sampleRate) {
-      this.sampleRate = sampleRate;
+   public void setType(ChannelType type) {
+      this.type = type;
    }
 
    /**
@@ -118,5 +92,47 @@ public class ViewerChannel {
     */
    public void setLabel(String label) {
       this.label = label;
+   }
+
+   /**
+    * @return the endTime
+    */
+   public Date getEndTime() {
+      return endTime;
+   }
+
+   /**
+    * @param endTime the endTime to set
+    */
+   public void setEndTime(Date endTime) {
+      this.endTime = endTime;
+   }
+
+   /**
+    * @return the data
+    */
+   public APIData getData() {
+      return data;
+   }
+
+   /**
+    * @param data the data to set
+    */
+   public void setData(APIData data) {
+      this.data = data;
+   }
+
+   /**
+    * @return the samplingRate
+    */
+   public double getSamplingRate() {
+      return samplingRate;
+   }
+
+   /**
+    * @param samplingRate the samplingRate to set
+    */
+   public void setSamplingRate(double samplingRate) {
+      this.samplingRate = samplingRate;
    }
 }

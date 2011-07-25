@@ -10,51 +10,51 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("tag")
 public class Tag {
 
-    private ElemType elemType;
-    private long elemLength;
+   private EntityType entityType;
+   private long elemLength;
 
-    /**
-     * Default constructor.
-     */
-    public Tag() {
-        super();
-    }
+   /**
+    * Default constructor.
+    */
+   public Tag() {
+      super();
+   }
 
-    /**
-     * @param elemType
-     * @param elemLength
-     */
-    public Tag(ElemType elemType, long elemLength) {
-        super();
-        this.elemType = elemType;
-        this.elemLength = elemLength;
-    }
+   /**
+    * @param elemType
+    * @param elemLength
+    */
+   public Tag(EntityType entityType, long elemLength) {
+      super();
+      this.entityType = entityType;
+      this.elemLength = elemLength;
+   }
 
-    /**
-     * @return the elemType
-     */
-    public ElemType getElemType() {
-        return elemType;
-    }
+   /**
+    * @return the elemLength
+    */
+   public long getElemLength() {
+      return elemLength;
+   }
 
-    /**
-     * @param elemType the elemType to set
-     */
-    public void setElemType(ElemType elemType) {
-        this.elemType = elemType;
-    }
+   /**
+    * @param elemLength the elemLength to set
+    */
+   public void setElemLength(long elemLength) {
+      this.elemLength = elemLength;
+   }
 
-    /**
-     * @return the elemLength
-     */
-    public long getElemLength() {
-        return elemLength;
-    }
+   /**
+    * @return the entityType
+    */
+   public EntityType getEntityType() {
+      return entityType;
+   }
 
-    /**
-     * @param elemLength the elemLength to set
-     */
-    public void setElemLength(long elemLength) {
-        this.elemLength = elemLength;
-    }
+   /**
+    * @param entityType the entityType to set
+    */
+   public void setEntityType(EntityType entityType) {
+      this.entityType = entityType;
+   }
 }
