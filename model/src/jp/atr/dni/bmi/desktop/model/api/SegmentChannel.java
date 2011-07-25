@@ -109,15 +109,15 @@ public final class SegmentChannel implements Channel<NSNSegmentData> {
    /**
     * @return the sampleRate
     */
-   public double getSampleRate() {
+   public double getSamplingRate() {
       return nsnEntity.getSampleRate();
    }
 
    /**
     * @param sampleRate the sampleRate to set
     */
-   public void setSampleRate(double sampleRate) {
-      nsnEntity.setSampleRate(sampleRate);
+   public void setSamplingRate(double samplingRate) {
+      nsnEntity.setSampleRate(samplingRate);
    }
 
    /**

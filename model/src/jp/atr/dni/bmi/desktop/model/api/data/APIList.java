@@ -70,6 +70,22 @@ public final class APIList<E> {
       return null;
    }
    
+   public synchronized boolean set(int ndx, E e) {
+      if (ndx >= 0 && ndx < this.size) {
+         if (ndx >= startIndex && ndx < maxIndex && data != null) {
+            
+         } else {
+            //DataFault
+            startIndex = ndx;
+            maxIndex = startIndex + INCR_SIZE;
+            data = dataProvider.getData(startIndex, maxIndex);
+            
+            return data.get(ndx - startIndex);
+         }
+      }
+      return true;
+   }
+   
    public synchronized boolean add(E e) {
       size++;
       return true;

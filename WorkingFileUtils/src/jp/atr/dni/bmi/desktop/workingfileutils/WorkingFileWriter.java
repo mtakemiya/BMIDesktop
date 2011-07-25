@@ -162,7 +162,7 @@ public class WorkingFileWriter {
 
       String co = ",";
       String formatCode = "TI";
-      double samplingRate = channel.getSampleRate();
+      double samplingRate = channel.getSamplingRate();
       BufferedWriter bw = null;
 
       try {
@@ -424,7 +424,7 @@ public class WorkingFileWriter {
 
       String co = ",";
       String formatCode = "TI";
-      double samplingRate = channel.getSampleRate();
+      double samplingRate = channel.getSamplingRate();
       BufferedWriter bw = null;
 
       try {
@@ -475,7 +475,7 @@ public class WorkingFileWriter {
 
       String co = ",";
       String formatCode = "TI";
-      double samplingRate = channel.getSampleRate();
+      double samplingRate = channel.getSamplingRate();
       BufferedWriter bw = null;
 
       try {
@@ -526,7 +526,7 @@ public class WorkingFileWriter {
 
       String co = ",";
       String formatCode = "TI";
-      double samplingRate = channel.getSampleRate();
+      double samplingRate = channel.getSamplingRate();
       BufferedWriter bw = null;
 
       try {

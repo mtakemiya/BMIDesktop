@@ -32,6 +32,10 @@ public final class EventChannel implements Channel<NSNEventData> {
    public ChannelType getType() {
       return ChannelType.EVENT;
    }
+   
+   public void setType(ChannelType type) {
+      
+   }
 
    @Override
    public String getLabel() {

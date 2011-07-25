@@ -240,7 +240,7 @@ public class CreateNewNeuroshareFile {
             // [can not edit] dwSourceCount. ::: For consistency of data.
             // [can not edit] dwMinSampleCount. ::: For consistency of data.
             // [can not edit] dwMaxSampleCount. ::: For consistency of data.
-            nsaSegmentInfo.setDSampleRate(channel.getSampleRate());
+            nsaSegmentInfo.setDSampleRate(channel.getSamplingRate());
             nsaSegmentInfo.setSzUnits(channel.getUnits());
 
             // Set it.
