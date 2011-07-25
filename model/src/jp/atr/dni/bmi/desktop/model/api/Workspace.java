@@ -65,7 +65,7 @@ public final class Workspace {
                if (ch.getType().equals(oldChannel.getType())) {
                   if (ch.getURI().equals(oldChannel.getURI())) {
                      channels.set(i, channel);
-                     fire("UpdateChannel", old, channels);
+                     fire("UpdateChannel", oldChannel, channel);
                      return;
                   }
                }
