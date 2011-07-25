@@ -1142,7 +1142,6 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
                //Create new viewer channel
                ViewerChannel vc = new ViewerChannel();
 
-
                double normalizer = Math.max(Math.abs(aChannel.getMaxVal()), Math.abs(aChannel.getMinVal()));
                double subtractor = 0;
                if (aChannel.getMinVal() > 0) {
