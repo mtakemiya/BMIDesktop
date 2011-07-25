@@ -25,8 +25,11 @@
             </module-dependencies>
             <public-packages>
                 <package>jp.atr.dni.bmi.desktop.model</package>
+<<<<<<< HEAD
                 <package>jp.atr.dni.bmi.desktop.model.api</package>
                 <package>jp.atr.dni.bmi.desktop.model.api.data</package>
+=======
+>>>>>>> a38e04a69ea1b0d4f54161984799628dc02c02e2
                 <package>jp.atr.dni.bmi.desktop.model.utils</package>
             </public-packages>
             <class-path-extension>

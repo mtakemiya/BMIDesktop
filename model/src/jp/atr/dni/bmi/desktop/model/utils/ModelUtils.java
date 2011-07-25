@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jp.atr.dni.bmi.desktop.model.utils;
 
 import jp.atr.dni.bmi.desktop.model.api.ChannelType;
@@ -15,18 +11,18 @@ import jp.atr.dni.bmi.desktop.model.api.ChannelType;
  */
 public class ModelUtils {
 
-    public static ChannelType getChannelTypeFromLong(long type) {
+   public static ChannelType getChannelTypeFromLong(long type) {
 
-        if (type == 1) {
-            return ChannelType.EVENT;
-        } else if (type == 2) {
-            return ChannelType.ANALOG;
-        } else if (type == 3) {
-            return ChannelType.SEGMENT;
-        } else if (type == 4) {
-            return ChannelType.NEURAL_SPIKE;
-        }
+      if (type == 1) {
+         return ChannelType.EVENT;
+      } else if (type == 2) {
+         return ChannelType.ANALOG;
+      } else if (type == 3) {
+         return ChannelType.SEGMENT;
+      } else if (type == 4) {
+         return ChannelType.NEURAL_SPIKE;
+      }
 
-        return ChannelType.UNKNOWN;
-    }
+      return ChannelType.UNKNOWN;
+   }
 }

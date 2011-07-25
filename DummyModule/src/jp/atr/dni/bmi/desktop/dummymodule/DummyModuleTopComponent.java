@@ -282,6 +282,10 @@ public final class DummyModuleTopComponent extends TopComponent {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         JFileChooser fc = new JFileChooser();
+        FileNameExtensionFilter[] ff = ModelUtils.getDataFileFileters();
+        for (int ii = 0; ii < ff.length; ii++) {
+            fc.addChoosableFileFilter(ff[ii]);
+        }
         fc.setMultiSelectionEnabled(false);
         fc.resetChoosableFileFilters();
 

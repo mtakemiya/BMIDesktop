@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jp.atr.dni.bmi.desktop.timeline;
 
 import static jp.atr.dni.bmi.desktop.timeline.TimelineTopComponent.SCROLLBAR_HEIGHT;
