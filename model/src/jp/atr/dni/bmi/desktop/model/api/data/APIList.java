@@ -43,14 +43,17 @@ public final class APIList<E> {
     * @return the data at index ndx
     */
    public synchronized E get(int ndx) {
-      if (ndx >= startIndex && ndx < maxIndex && data != null) {
-         return data.get(startIndex + ndx);
-         
-      } else {
-         //DataFault
-         startIndex = ndx;
-         maxIndex = startIndex + INCR_SIZE;
-         data = dataProvider.getData(startIndex, maxIndex);
+      if (ndx >= 0 && ndx < this.size) {
+         if (ndx >= startIndex && ndx < maxIndex && data != null) {
+            return data.get(ndx - startIndex);
+         } else {
+            //DataFault
+            startIndex = ndx;
+            maxIndex = startIndex + INCR_SIZE;
+            data = dataProvider.getData(startIndex, maxIndex);
+            
+            return data.get(ndx - startIndex);
+         }
       }
       //      data.
 

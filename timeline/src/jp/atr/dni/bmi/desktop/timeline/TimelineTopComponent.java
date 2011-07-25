@@ -1127,39 +1127,61 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
    public void setupChannels() {
       int numChannels = workspace.numChannels();
 
-      for (int i = 0; i < numChannels; i++) {
-         Channel c = workspace.getChannel(i);
-         if (c.getType() == ChannelType.ANALOG) {
-            AnalogChannel aChannel = (AnalogChannel) c;
+      if (numChannels > 0) {
 
-            Date end = new Date((long) (1000d * aChannel.getItemCount() * (1d / aChannel.getSamplingRate())));
-            if (end.getTime() == 0) {
-               end.setTime(1);
+         for (int i = 0; i < numChannels; i++) {
+            Channel c = workspace.getChannel(i);
+            if (c.getType() == ChannelType.ANALOG) {
+               AnalogChannel aChannel = (AnalogChannel) c;
+
+               Date end = new Date((long) (1000d * aChannel.getItemCount() * (1d / aChannel.getSamplingRate())));
+               if (end.getTime() == 0) {
+                  end.setTime(1);
+               }
+
+               //Create new viewer channel
+               ViewerChannel vc = new ViewerChannel();
+
+
+               double normalizer = Math.max(Math.abs(aChannel.getMaxVal()), Math.abs(aChannel.getMinVal()));
+               double subtractor = 0;
+               if (aChannel.getMinVal() > 0) {
+                  subtractor = aChannel.getMinVal();
+                  normalizer -= subtractor;
+               } else if (aChannel.getMaxVal() < 0) {
+                  subtractor = -aChannel.getMaxVal();
+                  normalizer -= subtractor;
+               }
+               vc.setNormalizer(normalizer);
+               vc.setSubtractor(subtractor);
+               vc.setLabel(aChannel.getLabel());
+               vc.setData(aChannel.getData());
+               vc.setSamplingRate(aChannel.getSamplingRate());
+               vc.setType(ChannelType.ANALOG);
+               vc.setEndTime(end);
+
+               viewerChannels.add(vc);
+            }
+         }
+
+         if (viewerChannels.size() > 0) {
+            for (ViewerChannel vc : viewerChannels) {
+               if (endTime == null) {
+                  endTime = vc.getEndTime();
+               } else if (vc.getEndTime().getTime() > endTime.getTime()) {
+                  endTime = vc.getEndTime();
+               }
             }
 
-            //Create new viewer channel
-            ViewerChannel vc = new ViewerChannel();
+            startTime = new Date(0);
+            numEntities = viewerChannels.size();
+            spanX = endTime.getTime();// - startTime.getTime();
+            spanY = numEntities * Y_SPACER;
 
+            zoomAll();
 
-            double normalizer = Math.max(Math.abs(aChannel.getMaxVal()), Math.abs(aChannel.getMinVal()));
-            double subtractor = 0;
-            if (aChannel.getMinVal() > 0) {
-               subtractor = aChannel.getMinVal();
-               normalizer -= subtractor;
-            } else if (aChannel.getMaxVal() < 0) {
-               subtractor = -aChannel.getMaxVal();
-               normalizer -= subtractor;
-            }
-            vc.setNormalizer(normalizer);
-            vc.setSubtractor(subtractor);
-            vc.setLabel(aChannel.getLabel());
-            vc.setData(aChannel.getData());
-            vc.setSamplingRate(aChannel.getSamplingRate());
-            vc.setType(ChannelType.ANALOG);
-
-            System.out.println("データ数：" + aChannel.getData().getValues().get(0).size());
-
-            viewerChannels.add(vc);
+            handler.setSpanX(spanX);
+            handler.setSpanY(spanY);
          }
       }
    }
