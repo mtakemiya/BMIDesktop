@@ -41,7 +41,7 @@ import org.openide.util.Lookup;
 @ConvertAsProperties(dtd = "-//jp.atr.dni.bmi.desktop.timeline//timeline//EN",
 autostore = false)
 public final class TimelineTopComponent extends TopComponent implements GLEventListener, PropertyChangeListener/*implements LookupListener */ {
-   
+
    private boolean SNAP_TO_GRID = false;
    private boolean SHOW_GRID;
    /** the x translation of the map */
@@ -80,10 +80,10 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
    private Animator animator;
    public static final int Y_SPACER = 5;
    private Workspace workspace;
-   
+
    public TimelineTopComponent() {
       setVisible(true);
-      
+
       SHOW_GRID = true;
       setName(NbBundle.getMessage(TimelineTopComponent.class, "CTL_TimelineTopComponent"));
       setToolTipText(NbBundle.getMessage(TimelineTopComponent.class, "HINT_TimelineTopComponent"));
@@ -139,7 +139,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
    private void initGL() {
       setPreferredSize(new java.awt.Dimension(0, 0));
       setSize(new java.awt.Dimension(0, 0));
-      
+
       GLProfile.initSingleton(true);
       GLProfile glp = GLProfile.getDefault();
       GLCapabilities caps = new GLCapabilities(glp);
@@ -151,7 +151,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 //setGlCanvas(GLWindow.create(caps));
 
       getGlCanvas().addGLEventListener(this);
-      
+
       handler = new InteractionHandler(this);
       getGlCanvas().addMouseListener(handler);
       getGlCanvas().addMouseMotionListener(handler);
@@ -236,10 +236,10 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 //         }
 //      });
 
-      
+
       this.setLayout(new BoxLayout(this, 1));
       this.add(getGlCanvas());
-      
+
       animator = new Animator(getGlCanvas());
 //      animator.add(getGlCanvas());
       animator.start();
@@ -326,34 +326,34 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
               + "' ID. That is a potential source of errors and unexpected behavior.");
       return getDefault();
    }
-   
+
    @Override
    public int getPersistenceType() {
       return TopComponent.PERSISTENCE_ALWAYS;
    }
-   
+
    @Override
    public void componentOpened() {
       /*fileInfos = Utilities.actionsGlobalContext().lookupResult(GeneralFileInfo.class);
       //      fileInfos.allItems();  // This means something. THIS IS IMPORTANT.
       fileInfos.addLookupListener(this);*/
       initGL();
-      
+
       if (workspace == null) {
          workspace = Lookup.getDefault().lookup(Workspace.class);
       }
-      
+
       workspace.addPropertyChangeListener(this);
-      
-      
+      setupChannels();
+
    }
-   
+
    @Override
    public void componentClosed() {
       animator.stop();
       glCanvas.invalidate();
       this.remove(getGlCanvas());
-      
+
       workspace.removePropertyChangeListener(this);
    }
 
@@ -446,7 +446,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       p.setProperty("version", "1.0");
       // TODO store your settings
    }
-   
+
    Object readProperties(java.util.Properties p) {
       if (instance == null) {
          instance = this;
@@ -454,28 +454,28 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       instance.readPropertiesImpl(p);
       return instance;
    }
-   
+
    private void readPropertiesImpl(java.util.Properties p) {
       String version = p.getProperty("version");
       // TODO read your settings according to their version
    }
-   
+
    @Override
    protected String preferredID() {
       return PREFERRED_ID;
    }
-   
+
    @Override
    public void display(GLAutoDrawable drawable) {
 //      update();
       render(drawable);
    }
-   
+
    @Override
    public void dispose(GLAutoDrawable arg0) {
       // TODO Auto-generated method stub
    }
-   
+
    @Override
    public void init(GLAutoDrawable drawable) {
       GL2 gl = (GL2) drawable.getGL();
@@ -491,12 +491,12 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       gl.glHint(GL2.GL_LINE_SMOOTH_HINT, GL2.GL_DONT_CARE);
       gl.glLineWidth(1.5f);
       drawable.getGL().setSwapInterval(1);
-      
+
       gl.glMatrixMode(GL2.GL_PROJECTION);
       gl.glLoadIdentity();
       buildTransforms();
    }
-   
+
    @Override
    public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
       GL2 gl = (GL2) drawable.getGL();
@@ -532,14 +532,14 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
     * Rebuilds the view transform and the inverse view transforms.
     */
    private void buildTransforms() {
-      
+
       double width = getWidth();
       double height = getHeight();
       transform = new AffineTransform(1, 0, 0, 1, 0, 0);
 //      transform.translate(0.5 * width, 0.5 * height);
       transform.translate(translationX, translationY);
       transform.scale(scale, scale);
-      
+
       try {
          inverseTransform = transform.createInverse();
       } catch (Exception e) {
@@ -561,18 +561,18 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       GL2 gl = drawable.getGL().getGL2();
       gl.glClear(GL2.GL_COLOR_BUFFER_BIT);
       gl.glClearColor(1, 1, 1, 1);
-      
+
       if (workspace.numChannels() < 1) {
          return;
       }
-      
+
       int width = getWidth();
       int height = getHeight();
-      
+
       glCanvas.setSize(width, height);
-      
-      
-      
+
+
+
       gl.glMatrixMode(GL2.GL_PROJECTION);
 //        gl.glLoadIdentity();
 //        gl.glOrtho(0, 640, 480, 0, -1, 1);
@@ -594,26 +594,26 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
 //      gl.glViewport(0, 0, width, height);//TODO: look into this some more
 
-      
-      
+
+
       gl.glColor3i(0, 0, 0);
 
       //Draw data
       gl.glLineWidth(1);
       gl.glBegin(GL.GL_LINES);
-      
+
       double yOffset = 0;
       double maxX = 0;
 
       //TODO: The following code should be moved out of render to increase performance
       Point2D minPoint = getVirtualCoordinates(0, 0);
       Point2D maxPoint = getVirtualCoordinates(getWidth(), getHeight());
-      
+
       double prevY = 0;
-      
+
       int yMin = (int) (minPoint.getY() < 0 ? 0 : Math.abs(minPoint.getY()) / Y_SPACER);
       int yMax = (int) Math.abs(maxPoint.getY()) / Y_SPACER + 1;
-      
+
       if (yMax > workspace.numChannels()) {
          yMax = workspace.numChannels();
       }
@@ -621,32 +621,32 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       //draw data
       yOffset = yMin;
       for (ViewerChannel vc : viewerChannels) {
-         
+
          if (vc.getType() == ChannelType.ANALOG) {
             double timeIncrement = 1000.0 / vc.getSamplingRate();
 
             // Get TSData from the WorkingFile to display.
             APIList<Double> vals = ((NSNAnalogData) vc.getData()).getValues().get(0);
-            
+
             double prevX = minPoint.getX() > 2 ? (int) minPoint.getX() - 1 : 0;
             prevX /= timeIncrement;
             prevX = prevX % 2 == 0 ? prevX : prevX - 1;
-            
+
             int xLimit = (int) (maxPoint.getX() / timeIncrement);
             xLimit += prevX + 2;
-            
+
             if (vals.size() < xLimit) {
                xLimit = vals.size();
             }
             double xVal = prevX * timeIncrement;
-            
+
             int ndx = (int) prevX;
-            
+
             if (ndx < vals.size()) {
                prevY = ((vals.get(ndx) - vc.getSubtractor()) / vc.getNormalizer()) - yOffset * Y_SPACER;
             }
             ndx = ndx % 2 == 0 ? ndx : ndx - 1;
-            
+
             boolean drawed = false;
             for (; ndx < xLimit; ndx++) {
                drawed = true;
@@ -666,7 +666,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
                Point2D p = getScreenCoordinates(prevX, prevY);
                gl.glVertex2d(p.getX(), p.getY());
             }
-            
+
             if (xVal > maxX) {
                maxX = xVal;
             }
@@ -677,7 +677,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       //End drawing the data.
 
       boolean showMin = spanX > 60000, showHour = spanX > 360000;
-      
+
       width -= SCROLLBAR_HEIGHT;
       height -= SCROLLBAR_HEIGHT;
 
@@ -695,28 +695,28 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       //Calculate screen area for data
       dataLower = getScreenCoordinates(0, Y_SPACER);
       dataUpper = getScreenCoordinates(spanX, -spanY);
-      
+
       double diffX = dataUpper.getX() - dataLower.getX();
       double diffY = dataUpper.getY() - dataLower.getY();
-      
+
       double lowerDiffX = Math.abs(SCROLLBAR_HEIGHT - dataLower.getX());
       double upperDiffX = Math.abs(dataUpper.getX() - width);
-      
+
       dataLowerX = dataLower.getX() < 0 ? lowerDiffX * (width / diffX) + 0 : 0;
       dataUpperX = dataUpper.getX() > width ? width - (upperDiffX * (width / diffX)) : width;
-      
+
       double lowerDiffY = Math.abs(0 - dataLower.getY());
       double upperDiffY = Math.abs(dataUpper.getY() - height);
-      
+
       dataLowerY = dataLower.getY() < 0 ? lowerDiffY * (height / diffY) : 0;
       dataUpperY = dataUpper.getY() > height ? height - dataLowerY - upperDiffY * (height / diffY) : height - dataLowerY;
-      
+
       double incr = Math.abs(getScreenCoordinates(200, 0).getX() - dataLower.getX());
       incr = (200 / incr) * 200;
       if (incr < 1) {
          incr = 1;
       }
-      
+
       double lastScreenData = getVirtualCoordinates(getWidth(), 0).getX();
       if (lastScreenData > spanX) {
          lastScreenData = spanX;
@@ -730,7 +730,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
          ms = ms.length() > 3 ? ms.substring(ms.length() - 3) : ms;
          drawTextUnscaled(gl, (showHour ? currDate.getHours() + ":" : "") + (showMin ? currDate.getMinutes() + ":" : "") + currDate.getSeconds() + ":" + ms, p.getX(), height, 0.15f, 2f);
          drawVerticalLine(gl, p.getX());
-         
+
          if (i + incr >= lastScreenData) {
             i += incr;
             p = getScreenCoordinates(i, 0);
@@ -747,7 +747,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       drawHorizontalTimelineScroller(gl, dataLowerX + SCROLLBAR_HEIGHT, height, dataUpperX - dataLowerX);
       drawVerticalTimelineScroller(gl, SCROLLBAR_HEIGHT, dataLowerY, dataUpperY);
    }
-   
+
    public void drawVerticalLine(GL2 gl, double x) {
       gl.glPushMatrix();
       gl.glLineWidth(1);
@@ -759,7 +759,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       gl.glEnd();
       gl.glPopMatrix();
    }
-   
+
    public void drawTextUnscaled(GL2 gl, String text, double x, double y, float size, float width) {
       gl.glColor3i(0, 0, 0);
       gl.glPushMatrix();
@@ -801,7 +801,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       glut.glutStrokeString(GLUT.STROKE_ROMAN, text);
       gl.glPopMatrix();
    }
-   
+
    public void drawHorizontalTimelineScroller(GL2 gl, double x, double y, double x2) {
       gl.glPushMatrix();
       gl.glTranslated(x, y, 0);
@@ -814,7 +814,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       gl.glEnd();
       gl.glPopMatrix();
    }
-   
+
    public void drawVerticalTimelineScroller(GL2 gl, double x, double y, double y2) {
       gl.glPushMatrix();
       gl.glTranslated(x, y, 0);
@@ -862,12 +862,12 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
       if (zoom) {
          translationX = -(maxX + minX) / 2 + getWidth() / 2;
          translationY = -(maxY + minY) / 2 + getHeight() / 2;
-         
+
          double dx = maxX - minX;
          dx = Math.max(dx, maxY - minY);
          scale = getHeight() / dx;
       }
-      
+
       buildTransforms();
    }
 
@@ -889,7 +889,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
       // sort the visible objects from highest depth to lowest depth
       TreeSet<ViewerChannel> objects = new TreeSet<ViewerChannel>(new Comparator<ViewerChannel>() {
-         
+
          public int compare(ViewerChannel arg0, ViewerChannel arg1) {
 //            int depth1 = arg0.getDepth();
 //            int depth2 = arg1.getDepth();
@@ -901,7 +901,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 //            }
          }
       });
-      
+
       for (ViewerChannel object : viewerChannels) {
          objects.add(object);
       }
@@ -923,7 +923,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 //				}
 //			}
       }
-      
+
       if (selected != null) {
          return selected;
       }
@@ -1123,15 +1123,15 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
    public void setDataUpper(Point2D dataUpper) {
       this.dataUpper = dataUpper;
    }
-   
+
    public void setupChannels() {
       int numChannels = workspace.numChannels();
-      
+
       for (int i = 0; i < numChannels; i++) {
          Channel c = workspace.getChannel(i);
          if (c.getType() == ChannelType.ANALOG) {
             AnalogChannel aChannel = (AnalogChannel) c;
-            
+
             Date end = new Date((long) (1000d * aChannel.getItemCount() * (1d / aChannel.getSamplingRate())));
             if (end.getTime() == 0) {
                end.setTime(1);
@@ -1139,8 +1139,8 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
 
             //Create new viewer channel
             ViewerChannel vc = new ViewerChannel();
-            
-            
+
+
             double normalizer = Math.max(Math.abs(aChannel.getMaxVal()), Math.abs(aChannel.getMinVal()));
             double subtractor = 0;
             if (aChannel.getMinVal() > 0) {
@@ -1156,14 +1156,17 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
             vc.setData(aChannel.getData());
             vc.setSamplingRate(aChannel.getSamplingRate());
             vc.setType(ChannelType.ANALOG);
-            
+
+            System.out.println("データ数：" + aChannel.getData().getValues().get(0).size());
+
             viewerChannels.add(vc);
          }
       }
    }
-   
+
    @Override
    public void propertyChange(PropertyChangeEvent pce) {
+      setupChannels();
 //      int numChannels = workspace.numChannels();
 //
 //      for (int i = 0; i < numChannels; i++) {

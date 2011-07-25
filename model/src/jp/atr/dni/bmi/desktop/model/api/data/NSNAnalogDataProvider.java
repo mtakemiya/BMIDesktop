@@ -1,21 +1,18 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jp.atr.dni.bmi.desktop.model.api.data;
 
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogInfo;
 import jp.atr.dni.bmi.desktop.neuroshareutils.ConstantValues;
 import jp.atr.dni.bmi.desktop.neuroshareutils.ReaderUtils;
 
 /**
+ * The package-level access on this class is intentional.
  *
  * @author makoto
  */
-class NSNAnalogDataProvider implements APIDataProvider {
+final class NSNAnalogDataProvider implements APIDataProvider {
 
    private int segmentNum;
    private String filePath;
@@ -27,18 +24,18 @@ class NSNAnalogDataProvider implements APIDataProvider {
       entity = nsnEntity;
 
       this.filePath = nsnEntity.getEntityInfo().getFilePath();
-      this.byteOffset = -1;
+      this.byteOffset = nsnEntity.getEntityInfo().getDataPosition();
       this.dataCount = -1;
    }
 
    @Override
-   public int size() {
+   public synchronized int size() {
       return (int) (dataCount > 0 ? dataCount
               : getDataCount());
    }
 
    @Override
-   public Collection<Double> getData(int from, int to) {
+   public synchronized List<Double> getData(int from, int to) {
       ArrayList<Double> data = new ArrayList<Double>();
       int count = 0;
       int iter = 0;
@@ -83,16 +80,16 @@ class NSNAnalogDataProvider implements APIDataProvider {
       return data;
    }
 
-   private long getDataCount() {
+   private synchronized long getDataCount() {
       try {
          int count = 0;
          int iter = 0;
          long itemCount = entity.getEntityInfo().getItemCount();
          RandomAccessFile file = new RandomAccessFile(filePath, "r");
+
          file.seek(byteOffset);
 
          while (count < itemCount) {
-
             ReaderUtils.readDouble(file);
             dataCount = ReaderUtils.readUnsignedInt(file);
 
@@ -104,6 +101,7 @@ class NSNAnalogDataProvider implements APIDataProvider {
             count += dataCount;
             iter++;
          }
+
          file.close();
       } catch (Exception err) {
          err.printStackTrace();

@@ -5,6 +5,7 @@
 package jp.atr.dni.bmi.desktop.model.api.data;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -18,7 +19,7 @@ public final class ChannelDataProvider<T> implements APIDataProvider<T> {
    }
 
    @Override
-   public Collection<T> getData(int from, int to) {
+   public List<T> getData(int from, int to) {
       return null; //TODO:
    }
 }

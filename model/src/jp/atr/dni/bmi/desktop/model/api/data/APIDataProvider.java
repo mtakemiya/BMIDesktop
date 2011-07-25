@@ -1,6 +1,6 @@
 package jp.atr.dni.bmi.desktop.model.api.data;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -26,5 +26,5 @@ interface APIDataProvider<T> {
     * up to the end of the data set will be returned, without any exception 
     * being thrown
     */
-   public Collection<T> getData(int from, int to);
+   public List<T> getData(int from, int to);
 }

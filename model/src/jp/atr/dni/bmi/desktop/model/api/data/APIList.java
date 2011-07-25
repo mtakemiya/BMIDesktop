@@ -1,7 +1,10 @@
 package jp.atr.dni.bmi.desktop.model.api.data;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import jp.atr.dni.bmi.desktop.model.api.data.APIDataProvider;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  *TODO: make iterable!
@@ -20,7 +23,12 @@ public final class APIList<E> {
    TODO: use this to grow/shrink the data chunk size*/
 //    private int dataFaults;
    private APIDataProvider<E> dataProvider;
+   //Inclusive
    private int startIndex;
+   //Exclusive
+   private int maxIndex;
+   private static final int INCR_SIZE = 5000;
+   private List<E> data;
 //   private HashMap<Integer, E> data;
 //    private APIListIterator<E> listIterator;
 
@@ -35,7 +43,15 @@ public final class APIList<E> {
     * @return the data at index ndx
     */
    public synchronized E get(int ndx) {
-
+      if (ndx >= startIndex && ndx < maxIndex && data != null) {
+         return data.get(startIndex + ndx);
+         
+      } else {
+         //DataFault
+         startIndex = ndx;
+         maxIndex = startIndex + INCR_SIZE;
+         data = dataProvider.getData(startIndex, maxIndex);
+      }
       //      data.
 
       /*if (data.containsKey(ndx)) {
@@ -47,10 +63,10 @@ public final class APIList<E> {
       dataProvider.getData(ndx, ndx + 5000);
       //            dataFaults++;
       }*/
-
+      
       return null;
    }
-
+   
    public synchronized boolean add(E e) {
       size++;
       return true;
@@ -64,7 +80,7 @@ public final class APIList<E> {
 //      data.remove(ndx);
       return true;
    }
-
+   
    public synchronized int size() {
       return size;
    }
