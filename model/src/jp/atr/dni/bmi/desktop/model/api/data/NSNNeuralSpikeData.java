@@ -13,7 +13,7 @@ package jp.atr.dni.bmi.desktop.model.api.data;
  */
 public final class NSNNeuralSpikeData implements APIData {
 
-    private APIList<Double> timeStamps;;
+    private APIList<Double> timeStamps;
 
     /**
      * @return the timeStamps
