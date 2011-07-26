@@ -1125,6 +1125,7 @@ public final class TimelineTopComponent extends TopComponent implements GLEventL
    }
 
    public void setupChannels() {
+      viewerChannels = new ArrayList<ViewerChannel>();
       int numChannels = workspace.numChannels();
 
       if (numChannels > 0) {
