@@ -9,7 +9,6 @@ import java.awt.CardLayout;
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import jp.atr.dni.bmi.desktop.model.api.AnalogChannel;
 import jp.atr.dni.bmi.desktop.model.api.Channel;
@@ -17,19 +16,14 @@ import jp.atr.dni.bmi.desktop.model.api.ChannelType;
 import jp.atr.dni.bmi.desktop.model.api.EventChannel;
 import jp.atr.dni.bmi.desktop.model.api.NeuralSpikeChannel;
 import jp.atr.dni.bmi.desktop.model.api.SegmentChannel;
+import jp.atr.dni.bmi.desktop.model.api.Workspace;
 import jp.atr.dni.bmi.desktop.model.api.data.APIList;
 import jp.atr.dni.bmi.desktop.model.api.data.NSNSegmentSource;
 import jp.atr.dni.bmi.desktop.model.utils.DoubleInputVerifierForJTextField;
 import jp.atr.dni.bmi.desktop.model.utils.UnsignedIntegerInputVerifierForJTextField;
-import jp.atr.dni.bmi.desktop.neuroshareutils.AnalogInfo;
-import jp.atr.dni.bmi.desktop.neuroshareutils.Entity;
-import jp.atr.dni.bmi.desktop.neuroshareutils.EntityInfo;
-import jp.atr.dni.bmi.desktop.neuroshareutils.EventInfo;
-import jp.atr.dni.bmi.desktop.neuroshareutils.NeuralInfo;
-import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentInfo;
-import jp.atr.dni.bmi.desktop.neuroshareutils.SegmentSourceInfo;
 import org.openide.DialogDescriptor;
 import org.openide.DialogDisplayer;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -37,11 +31,12 @@ import org.openide.DialogDisplayer;
  */
 public class ChannelPropertyEditor extends javax.swing.JPanel implements ActionListener {
 
-   DialogDescriptor dialogDescriptor;
-   Dialog dialog;
-   Channel oldChannel; // for search.
-   Channel channel;
-   CardLayout layout;
+   private DialogDescriptor dialogDescriptor;
+   private Dialog dialog;
+   private Channel oldChannel; // for search.
+   private Channel channel;
+   private CardLayout layout;
+   private Workspace workspace;
 
    /** Creates new form ChannelPropertyEditor */
    public ChannelPropertyEditor(Channel channel) {
@@ -900,8 +895,12 @@ public class ChannelPropertyEditor extends javax.swing.JPanel implements ActionL
             return;
          }
 
+         if (workspace == null) {
+            workspace = Lookup.getDefault().lookup(Workspace.class);
+         }
+
          // 2. update channel header.
-         Workspace.updateChannelHeader(oldChannel, channel);
+         workspace.updateChannelHeader(oldChannel, channel);
       }
 
    }
@@ -1137,18 +1136,9 @@ public class ChannelPropertyEditor extends javax.swing.JPanel implements ActionL
 
          // Set Values.
          nChannel.setLabel(neuralChannelLabel.getText());
-
-         Entity edittedEntity = this.channel.getEntity();
-         EntityInfo ei = edittedEntity.getEntityInfo();
-         ei.setEntityLabel(neuralChannelLabel.getText());
-         edittedEntity.setEntityInfo(ei);
-
-         NeuralInfo ni = (NeuralInfo) edittedEntity;
-         ni.setSourceEntityID(Long.parseLong(neuralSourceEntityID.getText()));
-         ni.setSourceUnitID(Long.parseLong(neuralSourceUnitID.getText()));
-         ni.setProbeInfo(neuralProbeInfo.getText());
-
-         this.channel.setEntity((Entity) ni);
+         nChannel.setSourceEntityID(Long.parseLong(neuralSourceEntityID.getText()));
+         nChannel.setSourceUnitID(Long.parseLong(neuralSourceUnitID.getText()));
+         nChannel.setProbeInfo(neuralProbeInfo.getText());
 
       } else {
          // UNKNOWN
