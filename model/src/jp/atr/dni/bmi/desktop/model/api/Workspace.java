@@ -20,10 +20,12 @@ public final class Workspace {
 
    public void addChannel(Channel channel) {
       channels.add(channel);
+      fire("ChannelAdd", null, channel);
    }
 
    public void removeChannel(Channel channel) {
       channels.remove(channel);
+      fire("ChannelRemove", channel, null);
    }
 
    public void addPropertyChangeListener(PropertyChangeListener listener) {
