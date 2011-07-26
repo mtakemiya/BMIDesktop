@@ -428,6 +428,18 @@ public final class WorkspaceTopComponent extends TopComponent implements Propert
    private void addNeuralDataRow(Channel channel) {
       ChannelType type = channel.getType();
       String sourceFilePath = channel.getURI();
+      if (sourceFilePath != null) {
+         int lengthPlusOne = sourceFilePath.length() + 1;
+         int forwardSlashNDX = sourceFilePath.lastIndexOf('/');
+         if (forwardSlashNDX > 0 && forwardSlashNDX < lengthPlusOne) {
+            sourceFilePath = sourceFilePath.substring(forwardSlashNDX + 1);
+         } else {
+            int backwardSlashNDX = sourceFilePath.lastIndexOf('\\');
+            if (backwardSlashNDX > 0 && backwardSlashNDX < lengthPlusOne) {
+               sourceFilePath = sourceFilePath.substring(backwardSlashNDX + 1);
+            }
+         }
+      }
 
       Vector newRow = new Vector();
       newRow.add(channel);
