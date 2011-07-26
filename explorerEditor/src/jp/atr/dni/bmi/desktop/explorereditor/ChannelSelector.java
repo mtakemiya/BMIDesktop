@@ -56,6 +56,7 @@ public class ChannelSelector extends javax.swing.JPanel implements ActionListene
    private Dialog dialog;
    private GeneralFileInfo generalFileInfo;
    private boolean dataFileFlag = false;
+   private Workspace workspace;
 
    /** Creates new form ChannelSelector
     * @param gfi
@@ -464,7 +465,8 @@ public class ChannelSelector extends javax.swing.JPanel implements ActionListene
    @Override
    public void actionPerformed(ActionEvent e) {
 
-      if (e.getSource() == DialogDescriptor.OK_OPTION) {
+      if (e.getSource() == DialogDescriptor.OK_OPTION && this.selectedChannelList.size() > 0) {
+         Channel[] channels = new Channel[selectedChannelList.size()];
          // Add Channels to the workspace.
          for (int i = 0; i < this.selectedChannelList.size(); i++) {
             Object obj = this.selectedChannelList.get(i);
@@ -486,13 +488,15 @@ public class ChannelSelector extends javax.swing.JPanel implements ActionListene
 
                   JOptionPane.showMessageDialog(null, "Channel: " + ch.getLabel() + " - Extra ns_SegSourceInfos were skipped!");
                }
+               segChannel.setSegmentSources(segSourceInfos);
             }
-
-            Workspace workspace = Lookup.getDefault().lookup(Workspace.class);
-            workspace.addChannel(ch);
+            channels[i] = ch;
          }
+         if (workspace == null) {
+            workspace = Lookup.getDefault().lookup(Workspace.class);
+         }
+         workspace.addChannels(channels);
       }
-
    }
 
    private void beforeInitComponents(GeneralFileInfo generalFileInfo) {

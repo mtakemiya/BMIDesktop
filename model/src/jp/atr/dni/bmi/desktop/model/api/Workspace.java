@@ -2,6 +2,7 @@ package jp.atr.dni.bmi.desktop.model.api;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,9 +24,26 @@ public final class Workspace {
       fire("ChannelAdd", null, channel);
    }
 
+   public void addChannels(Channel[] toAdd) {
+      for (Channel c : toAdd) {
+         channels.add(c);
+      }
+      fire("ChannelsAdd", null, toAdd);
+   }
+
+   public void addChannels(Collection<Channel> toAdd) {
+      channels.addAll(toAdd);
+      fire("ChannelsAdd", null, toAdd);
+   }
+
    public void removeChannel(Channel channel) {
       channels.remove(channel);
       fire("ChannelRemove", channel, null);
+   }
+
+   public void removeChannels(List<Channel> toRemove) {
+      channels.removeAll(channels);
+      fire("ChannelsRemove", toRemove, null);
    }
 
    public void addPropertyChangeListener(PropertyChangeListener listener) {

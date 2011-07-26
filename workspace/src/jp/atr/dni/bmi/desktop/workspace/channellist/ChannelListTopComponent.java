@@ -346,9 +346,11 @@ public final class ChannelListTopComponent extends TopComponent implements Looku
        JDialog jD = new JDialog();
        // Add Selected Channels to the Workspace.
        int length = selectedChannelList.size();
-       for (int ii = 0; ii < length; ii++) {
-          workspace.addChannel((Channel) selectedChannelList.get(ii));
+       Channel[] channels = new Channel[length];
+       for (int i = 0; i < length; i++) {
+          channels[i] = (Channel) selectedChannelList.get(i);
        }
+       workspace.addChannels(channels);
 
        JOptionPane.showMessageDialog(null, "Channel Count On the Workspace : " + workspace.numChannels());
 
