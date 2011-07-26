@@ -1089,7 +1089,7 @@ public class ChannelPropertyEditor extends javax.swing.JPanel implements ActionL
          if (!checker) {
             return checker;
          }
-         
+
          SegmentChannel sChannel = (SegmentChannel) channel;
 
          // Set Values.
@@ -1101,12 +1101,12 @@ public class ChannelPropertyEditor extends javax.swing.JPanel implements ActionL
 //         edittedEntity.setEntityInfo(ei);
 //
 //         SegmentInfo si = (SegmentInfo) edittedEntity;
-         
+
          sChannel.setSamplingRate(Double.parseDouble(segmentSampleRate.getText()));
          sChannel.setUnits(segmentUnit.getText());
-         APIList<NSNSegmentSource> alssi = sChannel.getSegmentSources();
-         
-         NSNSegmentSource ssi = alssi.get(0);
+         APIList<NSNSegmentSource> segSources = sChannel.getSegmentSources();
+
+         NSNSegmentSource ssi = segSources.get(0);
          ssi.setMinVal(Double.parseDouble(segmentMinVal.getText()));
          ssi.setMaxVal(Double.parseDouble(segmentMaxVal.getText()));
          ssi.setResolution(Double.parseDouble(segmentResolution.getText()));
@@ -1116,16 +1116,12 @@ public class ChannelPropertyEditor extends javax.swing.JPanel implements ActionL
          ssi.setLocationZ(Double.parseDouble(segmentLocationZ.getText()));
          ssi.setLocationUser(Double.parseDouble(segmentLocationUser.getText()));
          ssi.setHighFreqCorner(Double.parseDouble(segmentHighFreqCorner.getText()));
-         ssi.setHighFreqOrder(Long.parseLong(segmentHighFreqOrder.getText()));
+         ssi.setHighFreqOrder(Integer.parseInt(segmentHighFreqOrder.getText()));
          ssi.setHighFilterType(segmentHighFilterType.getText());
          ssi.setLowFreqCorner(Double.parseDouble(segmentLowFreqCorner.getText()));
-         ssi.setLowFreqOrder(Long.parseLong(segmentLowFreqOrder.getText()));
+         ssi.setLowFreqOrder(Integer.parseInt(segmentLowFreqOrder.getText()));
          ssi.setLowFilterType(segmentLowFilterType.getText());
          ssi.setProbeInfo(segmentProbeInfo.getText());
-         alssi.set(0, ssi);
-         si.setSegSourceInfos(alssi);
-
-         this.channel.setEntity((Entity) si);
 
       } else if (this.channel.getType() == ChannelType.NEURAL_SPIKE) {
          // NEURALEVENT Entity.
@@ -1137,8 +1133,10 @@ public class ChannelPropertyEditor extends javax.swing.JPanel implements ActionL
             return checker;
          }
 
+         NeuralSpikeChannel nChannel = (NeuralSpikeChannel) channel;
+
          // Set Values.
-         this.channel.setLabel(neuralChannelLabel.getText());
+         nChannel.setLabel(neuralChannelLabel.getText());
 
          Entity edittedEntity = this.channel.getEntity();
          EntityInfo ei = edittedEntity.getEntityInfo();

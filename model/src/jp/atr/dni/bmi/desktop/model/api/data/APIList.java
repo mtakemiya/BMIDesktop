@@ -1,8 +1,5 @@
 package jp.atr.dni.bmi.desktop.model.api.data;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import jp.atr.dni.bmi.desktop.model.api.data.APIDataProvider;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,6 +26,8 @@ public final class APIList<E> {
    private int maxIndex;
    private static final int INCR_SIZE = 5000;
    private List<E> data;
+   
+   private HashMap<Integer, E> changes;
 //   private HashMap<Integer, E> data;
 //    private APIListIterator<E> listIterator;
 
@@ -37,6 +36,7 @@ public final class APIList<E> {
    public APIList(APIDataProvider<E> dataProvider) {
       this.dataProvider = dataProvider;
       this.size = dataProvider.size();
+      changes = new HashMap<Integer, E>();
    }
 
    /**
@@ -70,25 +70,14 @@ public final class APIList<E> {
       return null;
    }
    
-   public synchronized boolean set(int ndx, E e) {
-      if (ndx >= 0 && ndx < this.size) {
-         if (ndx >= startIndex && ndx < maxIndex && data != null) {
-            
-         } else {
-            //DataFault
-            startIndex = ndx;
-            maxIndex = startIndex + INCR_SIZE;
-            data = dataProvider.getData(startIndex, maxIndex);
-            
-            return data.get(ndx - startIndex);
-         }
-      }
-      return true;
+   public synchronized void set(int ndx, E e) {    
+      changes.put(ndx, e);
+      //TODO: offload changes to the disk once this gets too big
    }
    
-   public synchronized boolean add(E e) {
-      size++;
-      return true;
+   public synchronized void add(E e) {
+      changes.put(size++, e);
+      //TODO: offload changes to the disk once this gets too big
    }
 
 //   public synchronized boolean remove(E e) {
